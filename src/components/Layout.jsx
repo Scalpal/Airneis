@@ -2,7 +2,7 @@ import { Quicksand } from '@next/font/google';
 import Navbar from '@/components/Navbar';
 
 const quicksand = Quicksand({
-  weight: "300",
+  weight: '300',
   subsets: ['latin']
 });
 
@@ -19,8 +19,7 @@ const Layout = ({ children }) => {
       </main>
 
     </div>
-  )
+  );
+};
 
-}
-
-export default Layout; 
+export default Layout;

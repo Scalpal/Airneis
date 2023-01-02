@@ -8,7 +8,7 @@ const Navbar = () => {
     <nav>
       <Link href="/home"> Airneis </Link>
 
-      <ul>  
+      <ul>
         <li> <Link href="/home"> Home </Link> </li>
         <li> <Link href="/products"> Products </Link> </li>
         <li> <Link href="/categories"> Categories </Link> </li>
@@ -17,13 +17,13 @@ const Navbar = () => {
       </ul>
 
       <ul>
-        <button> <MagnifyingGlassIcon className='navbar__icons'/> </button>
-        <button> <ShoppingCartIcon className='navbar__icons'/> </button>
-        <button> <UserIcon className='navbar__icons'/>  </button>
+        <button> <MagnifyingGlassIcon className='navbar__icons' /> </button>
+        <button> <ShoppingCartIcon className='navbar__icons' /> </button>
+        <button> <UserIcon className='navbar__icons' />  </button>
       </ul>
     
     </nav>
-  )
-}
+  );
+};
 
-export default Navbar; 
+export default Navbar;

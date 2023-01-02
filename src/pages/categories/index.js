@@ -8,5 +8,5 @@ export default function Home () {
       <h2> Categories page </h2>
 
     </>
-  )
+  );
 }
