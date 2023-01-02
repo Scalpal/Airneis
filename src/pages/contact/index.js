@@ -1,6 +1,6 @@
 
 
-export default function Home () {
+export default function Contact () {
 
   return (
     <>

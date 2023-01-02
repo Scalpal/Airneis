@@ -1,38 +1,23 @@
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
-
-/* 1rem is 10px */
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-  font-size: 62.5%; 
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
 /* Navbar */
 nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100vw;
 
-  border: 2px solid red; 
-  padding: 1rem 2rem;
-  font-size: 3rem;
+  padding: 2.5rem 2.5rem 1rem 2.5rem;
+  font-size: 2.7rem;
+  position: fixed;
+  top: 0; 
+  left: 0; 
+  color: white;
 }
 
 nav > ul {
   display: flex;
   justify-content: space-between;
   list-style: none;
-  gap: 3rem;
+  gap: 4rem;
 }
 
 nav > ul a {
@@ -52,6 +37,8 @@ nav > ul > button {
 
 .navbar__icons {
   height: 3rem;
-  width: 3rem; 
+  width: 3rem;
   background: none;
+  color: white;
+  cursor: pointer;
 }

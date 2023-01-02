@@ -1,6 +1,7 @@
 import { Quicksand } from '@next/font/google';
 import Navbar from '@/components/Navbar';
 
+
 const quicksand = Quicksand({
   weight: '300',
   subsets: ['latin']
@@ -13,7 +14,6 @@ const Layout = ({ children }) => {
     <div className={quicksand.className}>
 
       <Navbar />
-
       <main>
         {children}
       </main>
