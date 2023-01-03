@@ -1,5 +1,5 @@
-import Link from 'next/link'; 
-import { MagnifyingGlassIcon, ShoppingCartIcon, UserIcon } from '@heroicons/react/24/solid';
+import Link from "next/link"; 
+import { MagnifyingGlassIcon, ShoppingCartIcon, UserIcon } from "@heroicons/react/24/solid";
 
 
 const Navbar = () => {
