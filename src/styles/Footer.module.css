@@ -1,0 +1,28 @@
+.footer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 3rem;
+  margin-top: 8rem;
+  padding: 4rem 0 1.5rem 0; 
+
+  background-color: var(--primary);
+  font-size: 1rem;
+}
+
+.footerInfos {
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.footerInfosBrandTitle {
+  font-size: 2rem; 
+}
+
+.copyrightText {
+  width: 80%;
+  margin: 0 auto;
+}

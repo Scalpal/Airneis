@@ -1,5 +1,6 @@
 import { Quicksand } from "@next/font/google";
 import Navbar from "@/components/Navbar";
+import Footer from "./Footer";
 
 
 const quicksand = Quicksand({
@@ -16,6 +17,8 @@ const Layout = ({ children }) => {
       <main>
         {children}
       </main>
+
+      <Footer />
 
     </div>
   );
