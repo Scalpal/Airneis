@@ -13,9 +13,9 @@ const ProductCard = (props) => {
       onClick={() => router.push("/products/" + product.id)}
     >
       <div className={styles.productCardInfos}>
-        <p> <strong>{product.name}</strong> </p>
+        <p> {product.name} </p>
         <p> {product.type} </p>
-        <p> <strong>{product.price}</strong> </p>
+        <p> {product.price} </p>
       </div>
     </div>
   );

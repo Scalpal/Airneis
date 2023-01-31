@@ -48,13 +48,20 @@
   gap: 1.5rem; 
 }
 
+.productPage__infos__textBlock__topText h1 {
+  text-align: justify;
+  font-weight: 500;
+}
+
 .productPage__infos__textBlock__topText p {
   text-align: justify;
+  font-weight: 300;
 }
 
 .productPage__infos__textBlock__bottomText {
   display: flex;
   justify-content: space-between;
+  font-weight: 400;
 }
 
 /* Add to cart button */
@@ -84,6 +91,8 @@
 .productPage__similarProducts h1 {
   margin: 0 0 10vh 0;
   text-align: center;
+  font-weight: 300;
+  font-style: lighter;
 }
 
 .productPage__similarProducts__productsList {
