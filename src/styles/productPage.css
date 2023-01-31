@@ -1,0 +1,106 @@
+/* Product page infos block */
+.productPage__infos {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 2rem; 
+  margin: 0 auto;
+  width: 80vw;
+}
+
+
+/* Slider */
+.productPage__infos__slider{
+  overflow: hidden;
+  width: 50%;
+  max-width: 30vw;
+  border-radius: 15px;
+  aspect-ratio: 1/1 ;
+}
+
+.productPage__infos__slidesContainer {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+}
+
+.productPage__infos__slidesContainer__slide {
+  flex: 0 0 100%; 
+  min-width: 0;
+  position: relative;
+}
+
+
+/* Products infos (on the right of the slider) */
+.productPage__infos__textBlock {
+  width: 50%;
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1rem 0;
+}
+
+.productPage__infos__textBlock__topText {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem; 
+}
+
+.productPage__infos__textBlock__topText h1 {
+  text-align: justify;
+  font-weight: 500;
+}
+
+.productPage__infos__textBlock__topText p {
+  text-align: justify;
+  font-weight: 300;
+}
+
+.productPage__infos__textBlock__bottomText {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 400;
+}
+
+/* Add to cart button */
+.productPage__addToCartButton {
+  padding: 0.75rem 1rem;
+  width: fit-content;
+  display: block;
+  margin: 10vh auto 0 auto;
+  font-size: 1.1rem;
+  font-style: normal;
+  font-weight: 300; /* A revoir la police d'écriture est trop grosse */
+  border: 0;
+  border-radius: 10px;
+  outline: 0;
+  background-color: var(--primary);
+  color: black;
+}
+
+
+
+/* Similar products block */
+.productPage__similarProducts {
+  width: 100%;
+  margin: 20vh auto 0 auto;
+}
+
+.productPage__similarProducts h1 {
+  margin: 0 0 10vh 0;
+  text-align: center;
+  font-weight: 300;
+  font-style: lighter;
+}
+
+.productPage__similarProducts__productsList {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  margin: 0 0 0 3vw;
+  gap: 1.5rem;
+  overflow-x: scroll;
+}

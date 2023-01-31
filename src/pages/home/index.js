@@ -9,6 +9,7 @@ const Home = () => {
 
   const products = [
     {
+      id: 1, 
       name: "chaise",
       type: "bois",
       price: "145$"

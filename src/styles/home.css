@@ -2,7 +2,8 @@
 
 .popular-products__title {
   text-align: center;
-  font-size: 2.5rem;
+  font-size: 2rem;
+  font-weight: 300;
   margin: 3.125rem 0 2.5rem 0; 
 }
 
@@ -32,7 +33,8 @@
 /* Categories */
 .categories__title {
   text-align: center;
-  font-size: 2.5rem;
+  font-size: 2rem;
+  font-weight: 300;
   margin: 5rem 0 2.5rem 0;
 }
 
@@ -54,11 +56,12 @@
   align-items: center;
   gap: 1.25rem; 
   border-radius: 10px;
-  height: 16rem;
-  width: 25rem;
+  height: 11rem;
+  width: 20rem;
   background-color: rgb(193, 193, 193); 
   transition-duration: 300ms; 
-  font-size: 2rem; 
+  font-size: 1.3rem; 
+  font-weight: 300;
 }
 
 .categories__container div > button {
@@ -76,20 +79,18 @@
 
 /* ----------------- Customers reviews ---------------------*/
 
-/* .customer-reviews-container {
-  border: 2px solid red;
-} */
-
 .customer-reviews-container h1, .customer-reviews-container h2 {
   text-align: center;
+  font-weight: 300;
 }
 
 .customer-reviews-container h1 {
-  font-size: 2.5rem;
+  font-size: 2rem;
+  font-weight: 300;
 }
 
 .customer-reviews-container h2 {
-  margin: 1.5rem 0;
-  font-size: 2rem;
-  font-weight: 700;
+  margin: 1.7rem 0;
+  font-size: 1.5rem;
+  font-weight: 300;
 }
