@@ -1,6 +1,6 @@
 import { Quicksand } from "@next/font/google";
 import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import Footer from "./Footer";
 
 const quicksand = Quicksand({
   weight: "300",

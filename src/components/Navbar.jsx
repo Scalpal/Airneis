@@ -4,47 +4,63 @@ import {
   ShoppingCartIcon,
   UserIcon,
 } from "@heroicons/react/24/solid";
+import styles from "@/styles/Navbar.module.css";
 
 const Navbar = () => {
   return (
-    <nav>
+    <nav className={styles.navbar}>
       <Link href="/home"> Airneis </Link>
 
-      <ul>
+      <ul className={styles.navbarList}>
         <li>
           {" "}
-          <Link href="/home"> Home </Link>{" "}
+          <Link href="/home" className={styles.navbarLink}>
+            {" "}
+            Home{" "}
+          </Link>{" "}
         </li>
         <li>
           {" "}
-          <Link href="/products"> Products </Link>{" "}
+          <Link href="/products" className={styles.navbarLink}>
+            {" "}
+            Products{" "}
+          </Link>{" "}
         </li>
         <li>
           {" "}
-          <Link href="/categories"> Categories </Link>{" "}
+          <Link href="/category" className={styles.navbarLink}>
+            {" "}
+            Categories{" "}
+          </Link>{" "}
         </li>
         <li>
           {" "}
-          <Link href="/about"> About </Link>{" "}
+          <Link href="/about" className={styles.navbarLink}>
+            {" "}
+            About{" "}
+          </Link>{" "}
         </li>
         <li>
           {" "}
-          <Link href="/contact"> Contact us </Link>{" "}
+          <Link href="/contact" className={styles.navbarLink}>
+            {" "}
+            Contact us{" "}
+          </Link>{" "}
         </li>
       </ul>
 
-      <ul>
-        <button>
+      <ul className={styles.navbarList}>
+        <button className={styles.navbarButton}>
           {" "}
-          <MagnifyingGlassIcon className="navbar__icons" />{" "}
+          <MagnifyingGlassIcon className={styles.navbarButtonIcon} />{" "}
         </button>
-        <button>
+        <button className={styles.navbarButton}>
           {" "}
-          <ShoppingCartIcon className="navbar__icons" />{" "}
+          <ShoppingCartIcon className={styles.navbarButtonIcon} />{" "}
         </button>
-        <button>
+        <button className={styles.navbarButton}>
           {" "}
-          <UserIcon className="navbar__icons" />{" "}
+          <UserIcon className={styles.navbarButtonIcon} />{" "}
         </button>
       </ul>
     </nav>

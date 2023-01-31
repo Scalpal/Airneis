@@ -1,43 +1,44 @@
 /* Navbar */
-nav {
+.navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100vw;
+  z-index: 100;
 
-  padding: 2.5rem 2.5rem 1rem 2.5rem;
-  font-size: 2.7rem;
+  padding: 1.5rem 1.5rem 0.625rem 1.5rem;
+  font-size: 1.5rem;
   position: fixed;
   top: 0;
   left: 0;
   color: white;
 }
 
-nav > ul {
+.navbarList {
   display: flex;
   justify-content: space-between;
   list-style: none;
-  gap: 4rem;
+  gap: 2.5rem;
 }
 
-nav > ul a {
+.navbarLink {
   border-bottom: 2px solid transparent;
-  padding: 0 0 0.5rem 0;
+  padding: 0 0 0.25rem 0;
   transition-duration: 200ms;
 }
 
-nav > ul a:hover {
+.navbarLink:hover {
   border-bottom: 2px solid white;
 }
 
-nav > ul > button {
+.navbarButton{
   background: none;
   border: none;
 }
 
-.navbar__icons {
-  height: 3rem;
-  width: 3rem;
+.navbarButtonIcon {
+  height: 1.875rem;
+  width: 1.875rem;
   background: none;
   color: white;
   cursor: pointer;

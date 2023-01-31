@@ -1,0 +1,35 @@
+.productCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+
+  /* width: 250px; */
+  height: 22rem; 
+
+  border-radius: 16px;
+  background-color: rgb(237, 186, 119);
+  font-size: 1rem; 
+}
+
+.productCardInfos {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.875rem 4rem;
+  border-radius: 16px;
+  gap: 1rem;
+  transition-duration: 300ms;
+  height:100%;
+  width: 100%; 
+
+  opacity: 0;
+}
+
+.productCard:hover .productCardInfos {
+  opacity: 1;
+  background-color: rgb(0, 0 , 0, 0.5);
+  cursor: pointer;
+}

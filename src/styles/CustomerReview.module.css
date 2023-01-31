@@ -1,0 +1,29 @@
+.customerReview {
+  font-size: 1.25rem; 
+  display: flex; 
+  flex-direction: row;
+  justify-content: space-between; 
+  gap: 2rem; 
+  width: 60%; 
+  min-height: 18rem; 
+  margin: 0 auto; 
+  background-color: #D9D9D9; 
+  padding: 3rem 2.5rem 3rem 2.5rem; 
+  border-radius: 20px; 
+}
+
+.customerReviewPicture {
+  width: 30rem; 
+  border-radius: 15px;
+  background-color: yellow; 
+  
+}
+
+.customerReviewText {
+  display: flex;
+  flex-direction: column; 
+  justify-content: space-between;
+  gap: 1.25rem; 
+
+  padding: 0.5rem 0 0 0; 
+}  
