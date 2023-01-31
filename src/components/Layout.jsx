@@ -14,9 +14,7 @@ const Layout = ({ children }) => {
     <div className={quicksand.className}>
       <Navbar />
 
-      <main>
-        {children}
-      </main>
+      {children}
 
       <Footer />
 
