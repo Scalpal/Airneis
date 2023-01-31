@@ -9,6 +9,7 @@
 
   background-color: var(--primary);
   font-size: 1rem;
+  font-weight: 300;
 }
 
 .footerInfos {
@@ -16,6 +17,7 @@
   justify-content: space-between;
   width: 80%;
   margin: 0 auto;
+  font-weight: 300;
 }
 
 .footerInfosBrandTitle {
@@ -26,4 +28,5 @@
   width: 80%;
   margin: 0 auto;
   font-size: 1rem;
+  font-weight: 300;
 }
