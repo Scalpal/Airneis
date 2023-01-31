@@ -1,6 +1,6 @@
 .banner {
   height: 90vh;
-  width: 100vw;
+  /* width: 100vw; */
   background-color: grey;
 
   border-bottom-left-radius: 10rem;

@@ -1,0 +1,40 @@
+.footer {
+  height: 10vh;
+  font-size: 1.5rem;
+  padding-top: 5rem;
+}
+
+.footer__icons {
+  height: 3rem;
+  padding-right: 1rem;
+}
+
+.footer__column {
+  line-height: 3rem;
+  list-style-type: none;
+}
+
+.footer__child__column {
+  font-weight: bold;
+  padding-bottom: 1rem;
+}
+
+.footer__body {
+  background-color: #ffd084;
+  display: flex;
+  flex-direction: column;
+  padding: 4rem;
+}
+
+.footer__content {
+  display: flex;
+  justify-content: space-around;
+  align-content: center;
+  color: #07484a;
+}
+
+.footer__logo {
+  font-size: 4rem;
+  font-weight: bold;
+  color: #000;
+}
