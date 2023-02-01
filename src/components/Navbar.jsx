@@ -5,8 +5,15 @@ import {
   UserIcon,
 } from "@heroicons/react/24/solid";
 import styles from "@/styles/Navbar.module.css";
+import { useRouter } from "next/router";
 
 const Navbar = () => {
+  const router = useRouter();
+
+  const handleCart = () => {
+    router.push("/cart");
+  };
+
   return (
     <nav className={styles.navbar}>
       <Link href="/home"> Airneis </Link>
@@ -54,7 +61,7 @@ const Navbar = () => {
           {" "}
           <MagnifyingGlassIcon className={styles.navbarButtonIcon} />{" "}
         </button>
-        <button className={styles.navbarButton}>
+        <button className={styles.navbarButton} onClick={handleCart}>
           {" "}
           <ShoppingCartIcon className={styles.navbarButtonIcon} />{" "}
         </button>

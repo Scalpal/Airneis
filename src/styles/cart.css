@@ -1,0 +1,154 @@
+/* Cart */
+
+.cart__title {
+  text-align: center;
+  font-size: 2.5rem;
+  margin: 3.125rem 0 2.5rem 0;
+}
+
+.cart__container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+}
+
+/* Product list */
+
+.cart__productList {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  margin: 0.5rem;
+  padding: 1rem;
+  width: 50vw;
+  height: 75vh;
+  background-color: #fceed7;
+  border-radius: 1rem;
+  box-shadow: 4px 4px 0 #f9a826;
+  overflow-y: scroll;
+}
+
+.cart__productSummary {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  width: auto;
+  margin: 1rem;
+}
+
+.cart__productPicture {
+  width: 96px;
+  height: 96px;
+  border-radius: 1rem;
+  background-color: black;
+}
+
+.cart__productCol,
+.cart__deliveryForm,
+.cart__successDiv {
+  padding: 1rem;
+}
+
+.cart__productName {
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.cart__productDescription,
+.cart__successRight {
+  width: 25vw;
+}
+
+.cart__productPrice {
+  color: #659b5e;
+}
+
+.cart__productAmount {
+  display: flex;
+  align-items: center;
+  margin: 0.5rem 0;
+}
+
+.cart__productRemove {
+  background-color: transparent;
+  border: 0;
+}
+
+/* Total */
+
+.cart__productTotal {
+  display: flex;
+  flex-flow: column nowrap;
+  margin: 0.5rem;
+  padding: 1rem;
+  width: 25vw;
+  height: 25vh;
+  background-color: #fceed7;
+  border-radius: 1rem;
+  box-shadow: 4px 4px 0 #f9a826;
+}
+
+.cart__productTotalSummary {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+}
+
+.cart__productTotalRow {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cart__productTotalTitle {
+  font-weight: bold;
+  font-size: 24pt;
+}
+
+.cart__productTotalAmount {
+  font-weight: bold;
+  color: #f9a826;
+}
+
+.cart__productTotalTitleVat,
+.cart__productTotalAmountVat {
+  color: gray;
+  font-size: 10pt;
+}
+
+.cart__button {
+  background-color: #f9a826;
+  color: white;
+  width: auto;
+  padding: 1rem;
+  margin-top: 1rem;
+  border-radius: 1rem;
+  border: 0;
+  box-shadow: 0 4px 4px #00000044;
+  font-size: 16pt;
+}
+
+/* Checkout */
+
+.cart__deliveryRow {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  padding: 1rem;
+}
+
+/* Payment */
+
+/* Success */
+
+.cart__successSummary {
+  width: 50vw;
+  background-color: #fdfbf8;
+  border-radius: 1rem;
+  margin: 0.5rem;
+}
+.cart__successHead {
+  margin-bottom: 1rem;
+}
