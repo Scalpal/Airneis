@@ -1,71 +1,97 @@
-import Banner from "@/components/Banner";
+import CarouselBanner from "@/components/CarouselBanner";
 import ProductCard from "@/components/ProductCard";
 import CustomerReview from "@/components/CustomerReview";
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
+import CategoriesBlocks from "@/components/CategoriesBlocks";
 
 const Home = () => {
 
-  const router = useRouter();
+  // const router = useRouter();
 
   const products = [
     {
       id: 1, 
+      name: "Chaise moderne en bois de hêtre",
+      type: "bois",
+      price: "145$", 
+      stock: 25,
+      imageSrc: "/meuble-2.jpeg"
+    },
+    {
+      id: 2, 
       name: "chaise",
       type: "bois",
-      price: "145$"
+      price: "145$", 
+      stock: 25,
+      imageSrc: "/meuble-2.jpeg"
     },
     {
-      name: "table",
-      type: "chêne",
-      price: "105$"
+      id: 3, 
+      name: "chaise",
+      type: "bois",
+      price: "145$", 
+      stock: 25,
+      imageSrc: "/meuble-2.jpeg"
     },
     {
-      name: "rideau",
-      type: "laine",
-      price: "45$"
+      id: 4, 
+      name: "chaise",
+      type: "bois",
+      price: "145$", 
+      stock: 25,
+      imageSrc: "/meuble-2.jpeg"
     },
     {
-      name: "rideau",
-      type: "laine",
-      price: "45$"
+      id: 5, 
+      name: "chaise",
+      type: "bois",
+      price: "145$", 
+      stock: 25,
+      imageSrc: "/meuble-2.jpeg"
     },
     {
-      name: "rideau",
-      type: "laine",
-      price: "45$"
-    },
-    {
-      name: "rideau",
-      type: "laine",
-      price: "45$"
-    },
-    {
-      name: "rideau",
-      type: "laine",
-      price: "45$"
-    },
-    {
-      name: "rideau",
-      type: "laine",
-      price: "45$"
-    },
-    {
-      name: "rideau",
-      type: "laine",
-      price: "45$"
+      id: 6, 
+      name: "chaise",
+      type: "bois",
+      price: "145$", 
+      stock: 25,
+      imageSrc: "/meuble-2.jpeg"
     }
   ];
 
   const reviews = [
     {
       review: "My experience with Mark is a complete sucess, from customer service, wide range of products, clean store, purchasing experience, the newsletter. Thank you.",
-      customerName: "Leona Paul",  
+      customerName: "Leona Paul",
     }
-  ]
+  ];
+
+  const categories = [
+    {
+      name: "Moderne",
+    },
+    {
+      name: "Vintage",
+    },
+    {
+      name: "Chaises",
+    },
+    {
+      name: "Contemporain",
+    },
+    {
+      name: "Artisanal",
+    },
+    {
+      name: "Bois",
+    }
+  ];
+
+
 
   return (
     <>
-      <Banner />
+      <CarouselBanner />
 
       {/* Popular products block */}
       <section>  
@@ -92,36 +118,7 @@ const Home = () => {
       <section>
         <h1 className="categories__title"> Explore by category </h1>
 
-        <div
-          className="categories__container"
-        >
-          <div
-            onClick={() => { router.push("/category/moderne")}}
-          >
-            <p>Moderne</p>
-          </div>
-
-          <div>
-            <p>Chaises</p>
-          </div>
-
-          <div>
-            <p>Tables</p>
-          </div>
-
-          <div>
-            <p>Appartements</p>
-          </div>    
-          
-          <div>
-            <p>Maison</p>
-          </div>
-
-          <div>
-            <p>Vintage</p>
-          </div>
-
-        </div>
+        <CategoriesBlocks categories={categories} />
       </section>
 
 
