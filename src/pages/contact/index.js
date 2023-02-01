@@ -1,10 +1,10 @@
-import Banner from "@/components/Banner";
+import CarouselBanner from "@/components/CarouselBanner";
 
 export default function Contact () {
 
   return (
     <>
-      <Banner />
+      <CarouselBanner />
       <h2> Contact page </h2>
 
     </>

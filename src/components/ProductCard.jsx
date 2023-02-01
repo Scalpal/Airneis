@@ -1,5 +1,6 @@
 import styles from "@/styles/ProductCard.module.css";
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 const ProductCard = (props) => {
 
@@ -17,6 +18,13 @@ const ProductCard = (props) => {
         <p> {product.type} </p>
         <p> {product.price} </p>
       </div>
+
+      <Image
+        className={styles.productCardImage}
+        src={product.imageSrc}
+        alt={"Image du produit"}
+        fill
+      />
     </div>
   );
 };

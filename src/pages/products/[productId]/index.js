@@ -1,4 +1,4 @@
-import Banner from "@/components/Banner";
+import CarouselBanner from "@/components/CarouselBanner";
 import Image from "next/image";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
@@ -25,42 +25,50 @@ const ProductPage = () => {
       id: 1, 
       name: "chaise",
       type: "bois",
-      price: "145$"
+      price: "145$", 
+      imageSrc: "/meuble-2.jpeg",
     },
     {
       name: "table",
       type: "chêne",
-      price: "105$"
+      price: "105$", 
+      imageSrc: "/meuble-2.jpeg",
     },
     {
       name: "rideau",
       type: "laine",
-      price: "45$"
+      price: "45$", 
+      imageSrc: "/meuble-2.jpeg",
     },
     {
       name: "rideau",
       type: "laine",
-      price: "45$"
+      price: "45$", 
+      imageSrc: "/meuble-2.jpeg",
     },
     {
       name: "rideau",
       type: "laine",
-      price: "45$"
+      price: "45$", 
+      imageSrc: "/meuble-2.jpeg",
     },
     {
       name: "rideau",
       type: "laine",
-      price: "45$"
+      price: "45$", 
+      imageSrc: "/meuble-2.jpeg",
     },
     {
       name: "rideau",
       type: "laine",
-      price: "45$"
+      price: "45$", 
+      imageSrc: "/meuble-2.jpeg",
     },
     {
       name: "rideau",
       type: "laine",
-      price: "45$"
+      price: "45$", 
+      imageSrc: "/meuble-2.jpeg",
     },
   ];
 
@@ -72,7 +80,7 @@ const ProductPage = () => {
 
   return (
     <>
-      <Banner />
+      <CarouselBanner />
       <main>
 
         <section className="productPage__infos">

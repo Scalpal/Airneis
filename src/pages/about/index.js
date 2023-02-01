@@ -1,10 +1,10 @@
-import Banner from "@/components/Banner";
+import CarouselBanner from "@/components/CarouselBanner";
 
 export default function About() {
 
   return (
     <>
-      <Banner />
+      <CarouselBanner />
       <h2> About us page </h2>
 
     </>
