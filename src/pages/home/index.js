@@ -61,7 +61,7 @@ const Home = () => {
       review: "My experience with Mark is a complete sucess, from customer service, wide range of products, clean store, purchasing experience, the newsletter. Thank you.",
       customerName: "Leona Paul",  
     }
-  ]
+  ];
 
   return (
     <>
@@ -96,7 +96,7 @@ const Home = () => {
           className="categories__container"
         >
           <div
-            onClick={() => { router.push("/category/moderne")}}
+            onClick={() => { router.push("/category/moderne");}}
           >
             <p>Moderne</p>
           </div>

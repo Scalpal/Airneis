@@ -45,7 +45,7 @@ const Footer = () => {
 
       <p className={styles.copyrightText}> Copyright ©2022 Airneis. All Rights Reserved </p>
     </footer>
-  )
+  );
 };
 
 export default Footer; 
