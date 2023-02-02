@@ -1,0 +1,19 @@
+.categoryPage__descriptionText {
+  text-align: center;
+  width: 60vw;
+  margin: 15vh auto;
+  font-size: 1.3em;
+  font-weight: 300;
+}
+
+.categoryPage__productsList {
+  display: grid;
+  justify-content: center;
+  grid-template-rows: auto;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-gap: 1rem;
+  grid-row-start: auto;
+
+  width: 90vw;
+  margin: 10vh auto;
+}

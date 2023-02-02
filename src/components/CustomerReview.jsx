@@ -7,8 +7,11 @@ const CustomerReview = (props) => {
     <div className={styles.customerReview}>
       <div className={styles.customerReviewPicture}></div>
 
-      <div className={styles.customerReviewText}>
-        <p>{`"${review.review}"`}</p>
+
+      <div
+        className={styles.customerReviewText}
+      >
+        <p>{review.review}</p>
 
         <p>
           <strong>{review.customerName}</strong>
