@@ -6,11 +6,14 @@
 
 :root {
   --primary: rgb(237, 186, 119);
+  --primaryHovered: rgb(237, 186, 119)
 }
 
 html,
 body {
   max-width: 100vw;
+  font-size: calc(15px + 0.390625vw);
+  font-weight: 300;
   /* overflow-x: hidden; Hide horizontal scrollbar */
 }
 
@@ -21,28 +24,4 @@ a {
 
 ::-webkit-scrollbar {
   width: 0px;
-}
-
-.embla {
-  overflow: hidden;
-}
-
-.embla__container {
-  display: flex;
-}
-
-.embla__slide {
-  background-color: grey;
-}
-
-.one {
-  background-color: grey;
-}
-
-.two {
-  background-color: green;
-}
-
-.three {
-  background-color: blue;
 }

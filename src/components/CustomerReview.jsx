@@ -16,7 +16,7 @@ const CustomerReview = (props) => {
       <div
         className={styles.customerReviewText}
       >
-        <p>"{review.review}"</p>
+        <p>{review.review}</p>
 
         <p><strong>{review.customerName}</strong></p>
       </div>

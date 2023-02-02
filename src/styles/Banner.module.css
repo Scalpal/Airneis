@@ -1,22 +1,31 @@
 .banner {
   height: 90vh;
   width: 100vw;
-
-  border-bottom-left-radius: 10rem;
-  border-bottom-right-radius: 10rem;
-
-  overflow: hidden;
-}
-
-.bannerSlidesContainer {
-  display: flex;
-  height: 100%;
-}
-
-.bannerSlide {
-  flex: 0 0 100%;
-  min-width: 0;
-  height: 100%;
-
+  border-bottom-left-radius: 100px;
+  border-bottom-right-radius: 100px;
+  margin-bottom: 10vh;
   position: relative;
+  display: block ;
+}
+
+.bannerTitle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); 
+  z-index: 10;
+  color: white;
+  font-size: 3rem;
+  font-weight: 300;
+  letter-spacing: 14px;
+}
+
+.bannerImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+
+  border-bottom-left-radius: 100px;
+  border-bottom-right-radius: 100px;
 }

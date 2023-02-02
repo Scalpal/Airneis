@@ -1,9 +1,9 @@
-import Banner from "@/components/Banner";
+import CarouselBanner from "@/components/CarouselBanner";
 
 export default function Products() {
   return (
     <>
-      <Banner />
+      <CarouselBanner />
       <h2> Products page </h2>
     </>
   );

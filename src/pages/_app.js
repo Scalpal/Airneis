@@ -1,5 +1,7 @@
 import "@/styles/global.css";
 import "@/styles/home.css";
+import "@/styles/productPage.css";
+import "@/styles/categoryPage.css";
 import "@/styles/cart.css";
 import Layout from "@/components/Layout";
 import Head from "next/head";
