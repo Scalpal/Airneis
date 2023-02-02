@@ -1,12 +1,12 @@
 const Payment = () => {
   return (
     <>
-      <h1 className="cart__title">Payment</h1>
+      <h1 className="cartTitle">Payment</h1>
       <form>
-        <div className="cart__container">
-          <section className="cart__summary">
-            <div className="cart__deliveryForm">
-              <div className="cart__deliveryRow">
+        <div className="cartContainer">
+          <section className="cartPaymentSummary">
+            <div className="cartDeliveryForm">
+              <div className="cartDeliveryRow">
                 <label htmlFor="cardNumber">
                   <span className="">Card number*</span>
                   <input
@@ -17,13 +17,13 @@ const Payment = () => {
                   />
                 </label>
               </div>
-              <div className="cart__deliveryRow">
+              <div className="cartDeliveryRow">
                 <label htmlFor="cardName">
                   <span>Card name*</span>
                   <input name="cardName" type="text" required />
                 </label>
               </div>
-              <div className="cart__deliveryRow">
+              <div className="cartDeliveryRow">
                 <label htmlFor="expDate">
                   <span>Expiration date*</span>
                   <input name="expDate" type="date" required />
@@ -35,8 +35,8 @@ const Payment = () => {
               </div>
             </div>
           </section>
-          <section className="cart__total">
-            <button type="submit" className="cart__button">
+          <section className="cartTotal">
+            <button type="submit" className="cartButtonSubmit">
               Proceed to payment
             </button>
           </section>

@@ -1,60 +1,58 @@
 import { TrashIcon } from "@heroicons/react/24/outline";
-import { XMarkIcon } from "@heroicons/react/24/solid";
+import { MinusIcon, PlusIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
-import { useCallback, useState } from "react";
+import meublePic from "@@/public/meuble-1.jpeg";
 
 const ProductCart = (props) => {
-  const { products } = props;
-  const [productList, setProductList] = useState(products);
-
-  const handleDelete = useCallback(
-    (e) => {
-      const productListId = Number.parseInt(
-        e.currentTarget.getAttribute("data-product-list-id")
-      );
-
-      setProductList(
-        products.filter((product) => product.id !== productListId)
-      );
-    },
-    [products]
-  );
+  const { productsLists, handleDelete, handlePlus, handleMinus } = props;
 
   return (
     <>
-      {products.map((product) => (
-        <div className="cart__productSummary" key={product.id}>
-          <div className="cart__productPicture">
-            {product.picture !== "" && (
-              <Image src={`${product.picture}.png`} alt="Picture" />
-            )}
+      {productsLists.map((product) => (
+        <div className="cartProductSummary" key={product.id}>
+          <div className="cartProductFirstCol">
+            <div className="cartProductPicture">
+              {product.picture !== undefined && product.picture !== "" && (
+                <Image src={meublePic} alt="Picture" width="96" height="96" />
+              )}
+            </div>
           </div>
-          <div className="cart__productCol">
-            <p className="cart__productName">{product.name}</p>
-            <p className="cart__productDescription">{product.description}</p>
+          <div className="cartProductMidCol">
+            <p className="cartProductName">{product.name}</p>
+            <p className="cartProductDescription">{product.description}</p>
           </div>
-          <div>
-            <p className="cart__productPrice">
-              {`${Number.parseFloat(product.price).toFixed(2)} €`}
+          <div className="cartProductLastCol">
+            <p className="cartProductPrice">
+              {`${Number.parseFloat(product.price * product.quantity).toFixed(
+                2
+              )} €`}
             </p>
-            <div className="cart__productAmount">
-              <XMarkIcon style={{ width: "1rem", height: "1rem" }}></XMarkIcon>
-              <input
-                name="productAmount"
-                defaultValue={product.amount}
-                maxLength="2"
-                required
-              />
+            <div className="cartProductQuantity">
+              <button
+                type="button"
+                className="cartButtonAction"
+                data-product-id={product.id}
+                onClick={handleMinus}
+              >
+                <MinusIcon className="cartIcons" />
+              </button>
+              <p>{product.quantity}</p>
+              <button
+                type="button"
+                className="cartButtonAction"
+                data-product-id={product.id}
+                onClick={handlePlus}
+              >
+                <PlusIcon className="cartIcons" />
+              </button>
             </div>
             <button
               type="button"
-              className="cart__productRemove"
-              data-product-list-id={product.id}
+              className="cartButtonAction"
+              data-product-id={product.id}
               onClick={handleDelete}
             >
-              <TrashIcon
-                style={{ width: "1.5rem", height: "1.5rem" }}
-              ></TrashIcon>
+              <TrashIcon className="cartIcons" />
             </button>
           </div>
         </div>

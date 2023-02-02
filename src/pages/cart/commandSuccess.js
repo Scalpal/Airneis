@@ -1,19 +1,19 @@
 const CommandSuccess = () => {
   return (
     <>
-      <h1 className="cart__title">Command succed!</h1>
-      <div className="cart__container">
-        <section className="cart__successSummary">
-          <div className="cart__successDiv">
-            <h2 className="cart__successHead">Thank you for your purchase!</h2>
+      <h1 className="cartTitle">Command succed!</h1>
+      <div className="cartContainer">
+        <section className="cartSuccessSummary">
+          <div className="cartSuccessDiv">
+            <h2 className="cartSuccessHead">Thank you for your purchase!</h2>
             <p>
               Your order has been registered under the number XXXXXXXXXX. You
               can follow its status from your customer area.
             </p>
           </div>
         </section>
-        <section className="cart__successRight">
-          <button type="submit" className="cart__button">
+        <section className="cartSuccessRight">
+          <button type="submit" className="cartButtonSubmit">
             Continue shopping
           </button>
         </section>
