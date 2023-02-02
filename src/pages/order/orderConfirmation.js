@@ -1,4 +1,4 @@
-const CommandSuccess = () => {
+const OrderConfirmation = () => {
   return (
     <>
       <h1 className="cartTitle">Command succed!</h1>
@@ -22,4 +22,4 @@ const CommandSuccess = () => {
   );
 };
 
-export default CommandSuccess;
+export default OrderConfirmation;

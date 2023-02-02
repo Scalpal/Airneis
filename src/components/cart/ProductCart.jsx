@@ -1,7 +1,6 @@
 import { TrashIcon } from "@heroicons/react/24/outline";
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
-import meublePic from "@@/public/meuble-1.jpeg";
 
 const ProductCart = (props) => {
   const { productsLists, handleDelete, handlePlus, handleMinus } = props;
@@ -13,7 +12,12 @@ const ProductCart = (props) => {
           <div className="cartProductFirstCol">
             <div className="cartProductPicture">
               {product.picture !== undefined && product.picture !== "" && (
-                <Image src={meublePic} alt="Picture" width="96" height="96" />
+                <Image
+                  src={product.picture}
+                  alt="Picture"
+                  width="96"
+                  height="96"
+                />
               )}
             </div>
           </div>

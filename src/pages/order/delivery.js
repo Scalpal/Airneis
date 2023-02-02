@@ -1,4 +1,4 @@
-const Checkout = () => {
+const Delivery = () => {
   return (
     <>
       <h1 className="cartTitle">Delivery</h1>
@@ -59,4 +59,4 @@ const Checkout = () => {
   );
 };
 
-export default Checkout;
+export default Delivery;

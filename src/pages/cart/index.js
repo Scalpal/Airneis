@@ -6,11 +6,11 @@ import { useCallback, useState } from "react";
 const products = [
   {
     id: 1,
-    picture: "",
+    picture: "/meuble-1.jpeg",
     name: "Product #1",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae nibh pulvinar, scelerisque nunc id, accumsan augue. Cras placerat sem id est suscipit, sit amet venenatis ante mollis. Phasellus rutrum ex id semper elementum. Proin lobortis neque sem, in iaculis est efficitur id. Fusce ornare volutpat arcu, quis imperdiet quam.",
-    price: 5000000.0,
+    price: 50.0,
     quantity: 1,
   },
   {
@@ -41,7 +41,7 @@ const Cart = () => {
   const [productsLists, setProductsLists] = useState(products);
 
   const handleSubmit = useCallback(() => {
-    router.push("/cart/delivery");
+    router.push("/order/delivery");
   }, [router]);
 
   const handleDelete = (e) => {
