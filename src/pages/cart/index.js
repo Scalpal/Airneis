@@ -46,6 +46,10 @@ const Cart = () => {
     router.push("/order/delivery");
   }, [router]);
 
+  const handleHome = useCallback(() => {
+    router.push("/home");
+  }, [router]);
+
   const handleDelete = (e) => {
     const productId = Number.parseInt(
       e.currentTarget.getAttribute("data-product-id")
@@ -82,47 +86,64 @@ const Cart = () => {
   return (
     <>
       <h1 className="cartTitle">Cart</h1>
-      <div className="cartContainer">
-        <section className="cartProductList">
-          <ProductCart
-            productsLists={productsLists}
-            handleDelete={handleDelete}
-            handlePlus={handlePlus}
-            handleMinus={handleMinus}
-          />
-        </section>
-        <section className="cartProductTotal">
-          <div className="cartProductTotalSummary">
-            <div className="cartProductTotalRow">
-              <p>Excl. tax</p>
-              <p>{`${Number.parseFloat(totalSum)
-                .toFixed(2)
-                .replace(/\B(?=(\d{3})+(?!\d))/, " ")
-                .replace(/[.]/, ",")} €`}</p>
-            </div>
-            <div className="cartProductTotalRow">
-              <p>VAT</p>
-              <p>20%</p>
-            </div>
-            <div className="cartProductTotalRow">
-              <p className="cartProductTotalTitle">TOTAL</p>
-              <p className="cartProductTotalQuantity">
-                {`${Number.parseFloat(totalSum * 1.2)
+      {productsLists.length === 0 ? (
+        <div className="cartContainer">
+          <section className="cartProductList">
+            <p>Your cart is currently empty.</p>
+          </section>
+          <section className="cartSuccessRight">
+            <button
+              className="cartButtonSubmit"
+              type="submit"
+              onClick={handleHome}
+            >
+              Back to home page
+            </button>
+          </section>
+        </div>
+      ) : (
+        <div className="cartContainer">
+          <section className="cartProductList">
+            <ProductCart
+              productsLists={productsLists}
+              handleDelete={handleDelete}
+              handlePlus={handlePlus}
+              handleMinus={handleMinus}
+            />
+          </section>
+          <section className="cartProductTotal">
+            <div className="cartProductTotalSummary">
+              <div className="cartProductTotalRow">
+                <p>Excl. tax</p>
+                <p>{`${Number.parseFloat(totalSum)
                   .toFixed(2)
                   .replace(/\B(?=(\d{3})+(?!\d))/, " ")
-                  .replace(/[.]/, ",")} €`}
-              </p>
+                  .replace(/[.]/, ",")} €`}</p>
+              </div>
+              <div className="cartProductTotalRow">
+                <p>VAT</p>
+                <p>20%</p>
+              </div>
+              <div className="cartProductTotalRow">
+                <p className="cartProductTotalTitle">TOTAL</p>
+                <p className="cartProductTotalQuantity">
+                  {`${Number.parseFloat(totalSum * 1.2)
+                    .toFixed(2)
+                    .replace(/\B(?=(\d{3})+(?!\d))/, " ")
+                    .replace(/[.]/, ",")} €`}
+                </p>
+              </div>
             </div>
-          </div>
-          <button
-            className="cartButtonSubmit"
-            type="submit"
-            onClick={handleSubmit}
-          >
-            Place the order
-          </button>
-        </section>
-      </div>
+            <button
+              className="cartButtonSubmit"
+              type="submit"
+              onClick={handleSubmit}
+            >
+              Place the order
+            </button>
+          </section>
+        </div>
+      )}
     </>
   );
 };
