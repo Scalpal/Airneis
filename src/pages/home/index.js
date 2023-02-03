@@ -1,12 +1,15 @@
-import CarouselBanner from "@/components/CarouselBanner";
+import Carousel from "@/components/Carousel";
 import ProductCard from "@/components/ProductCard";
 import CustomerReview from "@/components/CustomerReview";
-// import { useRouter } from "next/router";
 import CategoriesBlocks from "@/components/CategoriesBlocks";
 
 const Home = () => {
 
-  // const router = useRouter();
+  const placeholderImages = [
+  "/meuble-1.jpeg",
+  "/meuble-2.jpeg",
+  "/meuble-3.png",
+];
 
   const products = [
     {
@@ -91,7 +94,9 @@ const Home = () => {
 
   return (
     <>
-      <CarouselBanner />
+      <header className="fullWidthCarousel">
+        <Carousel images={placeholderImages} Autoplay={true} controls={false} />
+      </header>
 
       {/* Popular products block */}
       <section>  

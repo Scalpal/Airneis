@@ -8,6 +8,15 @@
   width: 80vw;
 }
 
+.productPage__infos__carousel {
+  width: 50%;
+  max-width: 30vw;
+  min-height: 100%;
+  aspect-ratio: 1/1;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
 
 /* Slider */
 .productPage__infos__slider{

@@ -14,7 +14,6 @@ body {
   max-width: 100vw;
   font-size: calc(15px + 0.390625vw);
   font-weight: 300;
-  /* overflow-x: hidden; Hide horizontal scrollbar */
 }
 
 a {
@@ -24,5 +23,32 @@ a {
 
 ::-webkit-scrollbar {
   width: 0px;
+}
+
+/* Class for full size banner */
+.fullWidthCarousel {
+  height: 90vh;
+  width: 100vw;
+  border-bottom-left-radius: 100px;
+  border-bottom-right-radius: 100px;
+  overflow: hidden;
+}
+
+/* Navbar style when scroll down */
+.navbarBackground {
+  font-weight: 500 !important;
+  background: rgba(255, 255, 255, 0.18) !important;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(4.8px);
+  -webkit-backdrop-filter: blur(4.8px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3) !important;
+}
+
+.navbarBackground ul {
+  filter: invert(1);
+}
+
+.navbarBackground .navbarLogo {
+  filter: invert(1);
 }
 
