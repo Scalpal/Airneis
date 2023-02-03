@@ -6,10 +6,10 @@ import CategoriesBlocks from "@/components/CategoriesBlocks";
 const Home = () => {
 
   const placeholderImages = [
-  "/meuble-1.jpeg",
-  "/meuble-2.jpeg",
-  "/meuble-3.png",
-];
+    "/meuble-1.jpeg",
+    "/meuble-2.jpeg",
+    "/meuble-3.png",
+  ];
 
   const products = [
     {

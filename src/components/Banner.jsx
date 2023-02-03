@@ -12,10 +12,10 @@ const Banner = (props) => {
         src={"/meuble-3.png"}
         alt="Banner image"
         fill
-        className={styles.bannerImage} 
+        className={styles.bannerImage}
       />
     </header>
-  )
+  );
 };
 
 export default Banner; 
