@@ -1,5 +1,4 @@
 import ProductCart from "@/components/cart/ProductCart";
-import { Form, Formik } from "formik";
 import { useRouter } from "next/router";
 import { useCallback, useState } from "react";
 
@@ -35,10 +34,13 @@ const products = [
 
 const Cart = () => {
   const router = useRouter();
-  const [totalSum, setTotalSum] = useState(
-    products.reduce((x, product) => x + product.price * product.quantity, 0.0)
-  );
   const [productsLists, setProductsLists] = useState(products);
+  const [totalSum, setTotalSum] = useState(
+    productsLists.reduce(
+      (x, product) => x + product.price * product.quantity,
+      0.0
+    )
+  );
 
   const handleSubmit = useCallback(() => {
     router.push("/order/delivery");
@@ -80,41 +82,47 @@ const Cart = () => {
   return (
     <>
       <h1 className="cartTitle">Cart</h1>
-      <Formik onSubmit={handleSubmit}>
-        <Form className="cartContainer">
-          <section className="cartProductList">
-            <ProductCart
-              productsLists={productsLists}
-              handleDelete={handleDelete}
-              handlePlus={handlePlus}
-              handleMinus={handleMinus}
-            />
-          </section>
-          <section className="cartProductTotal">
-            <div className="cartProductTotalSummary">
-              <div className="cartProductTotalRow">
-                <p className="cartProductTotalTitleVat">Excl. tax</p>
-                <p className="cartProductTotalQuantityVat">
-                  {`${Number.parseFloat(totalSum).toFixed(2)} €`}
-                </p>
-              </div>
-              <div className="cartProductTotalRow">
-                <p className="cartProductTotalTitleVat">VAT</p>
-                <p className="cartProductTotalQuantityVat">20%</p>
-              </div>
-              <div className="cartProductTotalRow">
-                <p className="cartProductTotalTitle">TOTAL</p>
-                <p className="cartProductTotalQuantity">
-                  {`${Number.parseFloat(totalSum * 1.2).toFixed(2)} €`}
-                </p>
-              </div>
+      <div className="cartContainer">
+        <section className="cartProductList">
+          <ProductCart
+            productsLists={productsLists}
+            handleDelete={handleDelete}
+            handlePlus={handlePlus}
+            handleMinus={handleMinus}
+          />
+        </section>
+        <section className="cartProductTotal">
+          <div className="cartProductTotalSummary">
+            <div className="cartProductTotalRow">
+              <p>Excl. tax</p>
+              <p>{`${Number.parseFloat(totalSum)
+                .toFixed(2)
+                .replace(/\B(?=(\d{3})+(?!\d))/, " ")
+                .replace(/[.]/, ",")} €`}</p>
             </div>
-            <button className="cartButtonSubmit" type="submit">
-              Place the order
-            </button>
-          </section>
-        </Form>
-      </Formik>
+            <div className="cartProductTotalRow">
+              <p>VAT</p>
+              <p>20%</p>
+            </div>
+            <div className="cartProductTotalRow">
+              <p className="cartProductTotalTitle">TOTAL</p>
+              <p className="cartProductTotalQuantity">
+                {`${Number.parseFloat(totalSum * 1.2)
+                  .toFixed(2)
+                  .replace(/\B(?=(\d{3})+(?!\d))/, " ")
+                  .replace(/[.]/, ",")} €`}
+              </p>
+            </div>
+          </div>
+          <button
+            className="cartButtonSubmit"
+            type="submit"
+            onClick={handleSubmit}
+          >
+            Place the order
+          </button>
+        </section>
+      </div>
     </>
   );
 };

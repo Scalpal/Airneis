@@ -1,5 +1,4 @@
-import { TrashIcon } from "@heroicons/react/24/outline";
-import { MinusIcon, PlusIcon } from "@heroicons/react/24/solid";
+import { TrashIcon, MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 
 const ProductCart = (props) => {
@@ -9,27 +8,27 @@ const ProductCart = (props) => {
     <>
       {productsLists.map((product) => (
         <div className="cartProductSummary" key={product.id}>
-          <div className="cartProductFirstCol">
-            <div className="cartProductPicture">
-              {product.picture !== undefined && product.picture !== "" && (
-                <Image
-                  src={product.picture}
-                  alt="Picture"
-                  width="96"
-                  height="96"
-                />
-              )}
-            </div>
-          </div>
+          {product.picture !== undefined && product.picture !== "" ? (
+            <Image
+              src={product.picture}
+              alt="Picture"
+              className="cartProductPicture"
+              width="96"
+              height="96"
+            />
+          ) : (
+            <div className="cartProductPicture"></div>
+          )}
           <div className="cartProductMidCol">
             <p className="cartProductName">{product.name}</p>
             <p className="cartProductDescription">{product.description}</p>
           </div>
           <div className="cartProductLastCol">
             <p className="cartProductPrice">
-              {`${Number.parseFloat(product.price * product.quantity).toFixed(
-                2
-              )} €`}
+              {`${Number.parseFloat(product.price * product.quantity)
+                .toFixed(2)
+                .replace(/\B(?=(\d{3})+(?!\d))/, " ")
+                .replace(/[.]/, ",")} €`}
             </p>
             <div className="cartProductQuantity">
               <button
@@ -40,7 +39,7 @@ const ProductCart = (props) => {
               >
                 <MinusIcon className="cartIcons" />
               </button>
-              <p>{product.quantity}</p>
+              <p className="cartProductCounter">{product.quantity}</p>
               <button
                 type="button"
                 className="cartButtonAction"
