@@ -1,3 +1,4 @@
+import Banner from "@/components/Banner";
 import ProductCart from "@/components/cart/ProductCart";
 import { useRouter } from "next/router";
 import { useCallback, useState } from "react";
@@ -85,7 +86,7 @@ const Cart = () => {
 
   return (
     <>
-      <h1 className="cartTitle">Cart</h1>
+      <Banner title={"Cart"} />
       {productsLists.length === 0 ? (
         <div className="cartContainer">
           <section className="cartProductList">

@@ -6,6 +6,7 @@ import {
 } from "@heroicons/react/24/solid";
 import styles from "@/styles/Navbar.module.css";
 import { useEffect } from "react";
+import { useRouter } from "next/router";
 
 const Navbar = () => {
   useEffect(() => {
@@ -25,6 +26,11 @@ const Navbar = () => {
 
     carouselObserver.observe(document.querySelector("#carousel"));
   });
+
+  const router = useRouter();
+  const handleCart = () => {
+    router.push("/cart");
+  };
 
   return (
     <nav className={styles.navbar} id="navbar">
