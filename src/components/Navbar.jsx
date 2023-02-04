@@ -5,18 +5,33 @@ import {
   UserIcon,
 } from "@heroicons/react/24/solid";
 import styles from "@/styles/Navbar.module.css";
-import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 const Navbar = () => {
-  const router = useRouter();
+  useEffect(() => {
+    //IntersectionObserver pour la 1ère partie
+    const carouselObserver = new IntersectionObserver(
+      (entries) => {
+        const navbar = document.querySelector("#navbar");
 
-  const handleCart = () => {
-    router.push("/cart");
-  };
+        if (entries[0].isIntersecting === true) {
+          navbar.classList.remove("navbarBackground");
+        } else {
+          navbar.classList.add("navbarBackground");
+        }
+      },
+      { threshold: [0.1] }
+    );
+
+    carouselObserver.observe(document.querySelector("#carousel"));
+  });
 
   return (
-    <nav className={styles.navbar}>
-      <Link href="/home"> Airneis </Link>
+    <nav className={styles.navbar} id="navbar">
+      <Link href="/home" className="navbarLogo">
+        {" "}
+        Airneis{" "}
+      </Link>
 
       <ul className={styles.navbarList}>
         <li>

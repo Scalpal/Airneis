@@ -5,7 +5,7 @@ const Banner = (props) => {
   const { title } = props;
 
   return (
-    <header className={styles.banner}>
+    <header className={styles.banner} id="carousel">
       <h1 className={styles.bannerTitle}>{title}</h1>
       <Image
         src={"/meuble-3.png"}

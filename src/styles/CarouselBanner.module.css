@@ -1,23 +1,134 @@
-.banner {
-  height: 90vh;
-  width: 100vw;
-
-  border-bottom-left-radius: 100px;
-  border-bottom-right-radius: 100px;
-
+.carouselContainer {
+  height: 100%;
+  width: 100%;
+  max-width: 100vw;
   overflow: hidden;
   margin-bottom: 10vh;
-}
-
-.bannerSlidesContainer {
   display: flex;
-  height: 100%;
+  flex-direction: row;
+  position: relative;
 }
 
-.bannerSlide {
-  flex: 0 0 100%;
-  min-width: 0;
+/* Slide not showed */
+.carouselSlide {
   height: 100%;
-
+  width: 100%;
   position: relative;
+  opacity: 0;
+  object-fit: cover;
+  transition-duration: 1000ms;
+  transform: scale(1.2);
+}
+
+/* Slide showed */
+.carouselSlideActive {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  opacity: 1;
+  object-fit: cover;
+  transition-duration: 1000ms;
+  transform: scale(1);
+}
+
+
+/* ------------------ Control buttons -------------------- */
+.controlButtons {
+  display: flex;
+  flex-direction: row;
+  gap: 9px; 
+  position: absolute;
+  left: 50%;
+  bottom: 1.5rem;
+  transform: translate(-50%, 0);
+}
+
+.controlButton {
+  width: 30px;
+  height: 5px;
+  border-radius: 5px;
+  background-color: white;
+  transition-duration: 300ms;
+}
+
+.controlButton:hover {
+  cursor: pointer;
+  background-color: rgb(197, 197, 197);
+}
+
+.controlButtonActive {
+  width: 30px;
+  height: 5px;
+  border-radius: 5px;
+  background-color: black;
+  transition-duration: 300ms;
+}
+
+.hidden {
+  display: none;
+}
+
+/* ------------------- ARROW BUTTONS -------------------  */
+.arrowRightButton {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  right: 1.1rem; 
+  transform: translate(0, -50%);
+  border-radius: 50%;
+  color: white;
+  background: none;
+  outline: none;
+  border: 0px;
+  padding: 10px;
+  transition-duration: 300ms;
+}
+
+.arrowLeftButton {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 1.1rem;
+  transform: translate(0, -50%);
+  border-radius: 50%;
+  color: white;
+  background: none;
+  outline: none;
+  border: 0px;
+  padding: 10px;
+  transition-duration: 300ms;
+}
+
+.arrowLeftButton:hover, .arrowRightButton:hover {
+  cursor: pointer;
+}
+
+.icon {
+  width: 1.4rem;
+  height: 1.4rem;
+}
+
+@keyframes fade {
+  from {
+    opacity: .4
+  }
+
+  to {
+    opacity: 1
+  }
+}
+
+@keyframes fromRightToLeft {
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(-100%)
+  }
 }
