@@ -1,13 +1,31 @@
 import Link from "next/link"; 
 import { MagnifyingGlassIcon, ShoppingCartIcon, UserIcon } from "@heroicons/react/24/solid";
 import styles from "@/styles/Navbar.module.css";
+import { useEffect } from "react";
 
 
 const Navbar = () => {
 
+  useEffect(() => {
+    //IntersectionObserver pour la 1ère partie
+    const carouselObserver = new IntersectionObserver((entries) => {
+
+      const navbar = document.querySelector("#navbar");
+
+      if (entries[0].isIntersecting === true) {
+        navbar.classList.remove("navbarBackground"); 
+      }else{
+        navbar.classList.add("navbarBackground"); 
+      }
+
+    }, { threshold: [0.10] }); 
+
+    carouselObserver.observe(document.querySelector("#carousel"));
+  });
+
   return (
-    <nav className={styles.navbar}>
-      <Link href="/home"> Airneis </Link>
+    <nav className={styles.navbar} id="navbar">
+      <Link href="/home" className="navbarLogo"> Airneis </Link>
 
       <ul className={styles.navbarList}>
         <li> <Link href="/home" className={styles.navbarLink}> Home </Link> </li>
