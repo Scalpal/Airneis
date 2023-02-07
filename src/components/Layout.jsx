@@ -5,11 +5,10 @@ import Footer from "./Footer";
 const montserrat = Montserrat({
   variable: ["100", "200", "300", "400", "500", "600", "700"],
   style: ["normal", "italic"],
-  subsets: ["latin"]
+  subsets: ["latin"],
 });
 
 const Layout = ({ children }) => {
-
   return (
     <div className={montserrat.className}>
       <Navbar />
@@ -17,7 +16,6 @@ const Layout = ({ children }) => {
       {children}
 
       <Footer />
-
     </div>
   );
 };

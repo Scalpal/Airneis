@@ -3,8 +3,7 @@ import Banner from "@/components/Banner";
 import CategoriesBlocks from "@/components/CategoriesBlocks";
 
 export default function Categories() {
-
-  // const router = useRouter(); 
+  // const router = useRouter();
   const categories = [
     {
       name: "Moderne",
@@ -41,17 +40,16 @@ export default function Categories() {
     },
     {
       name: "Douche",
-    }
+    },
   ];
 
   return (
     <>
       <Banner title={"Categories"} />
-  
+
       <main>
         <CategoriesBlocks categories={categories} />
       </main>
     </>
   );
 }
-

@@ -18,6 +18,8 @@
     "react-dom": "18.2.0"
   },
   "devDependencies": {
-    "eslint-config-prettier": "^8.5.0"
+    "eslint-config-prettier": "^8.5.0",
+    "formik": "^2.2.9",
+    "yup": "^0.32.11"
   }
 }

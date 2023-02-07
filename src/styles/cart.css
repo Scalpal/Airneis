@@ -1,0 +1,271 @@
+/* (Laptop and Screen) */
+/* Cart */
+
+.cartTitle {
+  text-align: center;
+  font-size: 2.5rem;
+  margin: 3.125rem 0 2.5rem 0;
+}
+
+.cartContainer {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+}
+
+/* Product list */
+
+.cartProductList,
+.cartDeliverySummary,
+.cartPaymentSummary {
+  display: flex;
+  flex-flow: column nowrap;
+  margin: 0.5rem;
+  padding: 1rem;
+  width: 50vw;
+  height: 75vh;
+  background-color: #D9D9D9;
+  border-radius: 1rem;
+  overflow-y: scroll;
+}
+
+.cartProductSummary {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1rem 0
+}
+
+.cartProductPicture {
+  width: 96px;
+  height: 96px;
+  border-radius: 1rem;
+  background-color: black;
+}
+
+.cartProductMidCol {
+  width: 50%;
+  text-align: justify;
+}
+
+.cartProductLastCol {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 20%;
+}
+
+.cartProductName {
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.cartProductDescription {
+  font-size: 10pt;
+  height: 18vh;
+  overflow: hidden;
+}
+
+.cartProductPrice {
+  color: #659b5e;
+  margin-right: 0.5rem;
+}
+
+.cartProductQuantity {
+  display: flex;
+  align-items: center;
+}
+
+.cartProductCounter {
+  width: 2.5vw;
+  text-align: center;
+}
+
+/* Total */
+
+.cartProductTotal {
+  display: flex;
+  flex-flow: column nowrap;
+  margin: 0.5rem;
+  padding: 1rem;
+  width: 25vw;
+  height: 25%;
+  background-color: #D9D9D9;
+  border-radius: 1rem;
+}
+
+.cartProductTotalSummary {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.cartProductTotalRow {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  color: grey;
+  font-size: 10pt;
+}
+
+.cartProductTotalTitle {
+  font-weight: bold;
+  font-size: 20pt;
+  color: black;
+}
+
+.cartProductTotalQuantity {
+  font-weight: bold;
+  color: var(--primary);
+  font-size: 20pt;
+}
+
+/* Delivery */
+
+.cartDeliveryRow {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  padding: 1rem;
+}
+
+/* Payment */
+
+.cartDeliveryForm {
+  width: 20vw;
+}
+
+/* Success */
+
+.cartSuccessSummary {
+  width: 50vw;
+  background-color: #fdfbf8;
+  border-radius: 1rem;
+  margin: 0.5rem;
+}
+
+.cartSuccessHead {
+  margin-bottom: 1rem;
+}
+
+.cartSuccessDiv {
+  padding: 1rem;
+}
+
+.cartSuccessRight {
+  width: 25vw;
+  margin: 0.5rem;
+}
+
+/* Others */
+
+.cartError {
+  color: red;
+  width: 5vw;
+  font-size: 10pt;
+}
+
+.cartButtonAction {
+  background-color: transparent;
+  border: 0;
+  padding: 0.25rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition-duration: 250ms;
+}
+
+.cartButtonAction:hover {
+  background-color: #cccccc;
+  box-shadow: 0 4px 4px #00000044;
+}
+
+.cartButtonAction:active {
+  background-color: #aaaaaa;
+  box-shadow: none;
+}
+
+.cartButtonSubmit {
+  background-color: var(--primary);
+  width: auto;
+  padding: 1rem;
+  border-radius: 1rem;
+  border: 0;
+  box-shadow: 0 4px 4px #00000044;
+  font-size: 16pt;
+  font-weight: bold;
+  transition-duration: 250ms;
+}
+
+.cartButtonSubmit:hover {
+  background-color: #f9a826;
+}
+
+.cartButtonSubmit:active {
+  background-color: #f9a826;
+  color: white;
+  box-shadow: none;
+}
+
+.cartIcons {
+  width: 1rem;
+  height: 1rem;
+}
+
+/* (Small Laptop) */
+
+@media all and (max-width: 1024px) and (min-width: 769px) {
+
+  /* Cart */
+  .cartProductTotalTitle,
+  .cartProductTotalQuantity {
+    font-size: 14pt;
+  }
+
+  .cartButtonSubmit {
+    font-size: 12pt;
+  }
+}
+
+/* (Tablet and Smartphone) */
+@media all and (max-width: 768px) {
+
+  /* Cart */
+  .cartTitle {
+    text-align: start;
+    margin-left: 1rem;
+  }
+
+  .cartContainer {
+    flex-flow: column nowrap;
+    align-items: center;
+  }
+
+  .cartProductList,
+  .cartProductTotal {
+    width: 95vw;
+  }
+
+  .cartProductMidCol {
+    width: 40%;
+  }
+
+  .cartProductLastCol {
+    width: 30%;
+  }
+
+  .cartProductCounter {
+    width: 7.5vw;
+  }
+
+  .cartProductDescription {
+    height: 12vh;
+    overflow: hidden;
+  }
+
+  .cartSuccessRight {
+    width: auto;
+  }
+}
