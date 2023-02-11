@@ -5,6 +5,7 @@
   flex-direction: row;
   justify-content: space-between;
   width: 90vw;
+  min-height: 80vh;
   gap: 1rem;
   margin:5vh auto; 
 }

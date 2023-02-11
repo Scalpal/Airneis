@@ -95,10 +95,9 @@ const Cart = () => {
               })}
             </section>
               
-            <section className="cart__recap" id="cart__recap">
+            <section className="cart__recap">
                
               <div className="cart__recap__topRows">
-                  
                 <div className="cart__recap__row">
                   <p>Subtotal</p>
                   <p>{totalSum.toFixed(2)}€</p>
