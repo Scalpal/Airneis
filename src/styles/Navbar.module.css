@@ -1,16 +1,16 @@
-/* Navbar */
+/* ---------- Navbar -------------*/
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100vw;
+  position: fixed;
+  top: 0;
+  left: 0;
   z-index: 100;
   padding: 1rem 1.5rem;
   font-size: 1rem;
   font-weight: 300;
-  position: fixed;
-  top: 0;
-  left: 0;
   color: white;
   transition-duration: 500ms;
   border-bottom-left-radius: 15px;
@@ -18,7 +18,32 @@
   border-bottom: 1px solid transparent;
 }
 
+/* ---------- Navbar not fixed ----------- */
+.navbarNotFixed {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100vw;
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  padding: 1rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: black;
+  transition-duration: 500ms;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  border-bottom: 1px solid transparent;
+  background: rgba(255, 255, 255, 0.18) !important;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(4.8px);
+  -webkit-backdrop-filter: blur(4.8px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3) !important;
+}
 
+/* ---------- Navbar links list ------------- */
 .navbarList {
   display: flex;
   justify-content: space-between;
@@ -36,15 +61,39 @@
   border-bottom: 2px solid white;
 }
 
+/* ----------- Navbar icons -------------- */
 .navbarButton{
   background: none;
   border: none;
+  position: relative;
 }
 
 .navbarButtonIcon {
   height: 1.4rem;
   width: 1.4rem;
   background: none;
-  color: white;
   cursor: pointer;
 }
+
+.navbar .navbarButtonIcon {
+  color: white;
+}
+
+.navbarNotFixed .navbarButtonIcon {
+  color: black;
+}
+
+/* ------------ Cart product count notification --------------*/
+.navbarButtonCartCount {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  border-radius: 50%;
+  width: fit-content;
+  height: auto;
+  padding: 2px;
+  background-color: var(--grey);
+  color: black;
+}
+
+

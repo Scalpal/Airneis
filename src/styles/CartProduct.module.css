@@ -1,0 +1,92 @@
+.cartProduct {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  border-radius: 15px;
+  padding: 1rem 0.6rem;
+
+  background: rgba(255, 255, 255, 0.58);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(6.3px);
+  -webkit-backdrop-filter: blur(6.3px);
+  border: 1px solid rgba(255, 255, 255, 0.41);
+  transition-duration: 400ms;
+}
+
+
+/* -------------- Cart product image --------------- */
+.cartProductImageContainer {
+  width: 25%;
+  aspect-ratio: 1/1;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative; 
+}
+
+.cartProductImage {
+  object-fit: cover;
+}
+
+
+/* -------------- Cart product infos --------------- */
+.cartProductInfo {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 1.5rem;
+}
+
+.cartProductInfoName {
+  font-size: 1.3rem;
+}
+
+.cartProductInfoDescription {
+  font-size: 0.7rem;
+  text-align: justify;
+}
+
+
+/* -------------- Cart product right part --------------- */
+.cartProductControls {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  width: 10%;
+}
+
+.cartProductControlsQuantity {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem; 
+}
+
+.cartProductControlsQuantity button {
+  border: 0;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  transition-duration: 300ms;
+}
+
+.cartProductControlsQuantity button:hover {
+  transform: scale(1.4);
+}
+
+.cartProductControlIcon {
+  width: 30px;
+  transition-duration: 300ms;
+  background-color: white;
+  border-radius: 15px;
+  padding: 5px;
+}
+
+.cartProductControlIcon:hover {
+  filter: invert(1);
+}

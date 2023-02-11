@@ -5,10 +5,31 @@ import "@/styles/categoryPage.css";
 import "@/styles/cart.css";
 import Layout from "@/components/Layout";
 import Head from "next/head";
+import { Montserrat } from "@next/font/google";
+
+
+export const classnames = require("classnames");
+
+export const montserrat = Montserrat({
+  variable: ["100", "200", "300", "400", "500", "600", "700"],
+  style: ["normal", "italic"],
+  subsets: ["latin"],
+});
 
 export default function App({ Component, pageProps }) {
-  return (
-    <Layout>
+
+  const renderWithLayout =
+    Component.getLayout ||
+    ((page) => {
+      return (
+        <Layout>
+          {page}
+        </Layout>
+      );
+    });
+
+  return renderWithLayout(
+    <>
       <Head>
         <title> Airneis </title>
         <meta name="description" content="Airneis" />
@@ -17,6 +38,6 @@ export default function App({ Component, pageProps }) {
       </Head>
 
       <Component {...pageProps} />
-    </Layout>
+    </>
   );
 }

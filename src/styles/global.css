@@ -6,7 +6,8 @@
 
 :root {
   --primary: rgb(237, 186, 119);
-  --primaryHovered: rgb(237, 186, 119)
+  --primaryHovered: rgb(237, 186, 119);
+  --grey: grey
 }
 
 html,
