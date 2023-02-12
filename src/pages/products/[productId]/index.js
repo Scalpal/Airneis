@@ -1,6 +1,7 @@
 import Carousel from "@/components/Carousel";
 import ProductCard from "@/components/ProductCard";
 import Banner from "@/components/Banner";
+import Button from "@/components/Button";
 
 
 const ProductPage = () => {
@@ -98,8 +99,14 @@ const ProductPage = () => {
 
           </div>
         </section>
-
-        <button className="productPage__addToCartButton"> Add to cart </button>
+        
+        <div className="productPage__addToCartButton">
+          <Button
+            title="Add to cart"
+            action={() => console.log("haha")}
+            disabled={false}
+          />
+        </div>
 
         <section className="productPage__similarProducts">
 

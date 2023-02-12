@@ -1,4 +1,4 @@
-/* Product page infos block */
+/* ------------ Product page infos block --------------- */
 .productPage__infos {
   display: flex;
   flex-direction: row;
@@ -18,7 +18,7 @@
 }
 
 
-/* Slider */
+/* -------------- Slider ---------------- */
 .productPage__infos__slider{
   overflow: hidden;
   width: 50%;
@@ -41,7 +41,7 @@
 }
 
 
-/* Products infos (on the right of the slider) */
+/* ------------ Products infos (on the right of the slider) ----------- */
 .productPage__infos__textBlock {
   width: 50%;
   
@@ -75,23 +75,13 @@
 
 /* Add to cart button */
 .productPage__addToCartButton {
-  padding: 0.75rem 1rem;
   width: fit-content;
-  display: block;
-  margin: 10vh auto 0 auto;
-  font-size: 1.1rem;
-  font-style: normal;
-  font-weight: 300; /* A revoir la police d'écriture est trop grosse */
-  border: 0;
-  border-radius: 10px;
-  outline: 0;
-  background-color: var(--primary);
-  color: black;
+  margin: 5vh auto 0 auto;
 }
 
 
 
-/* Similar products block */
+/* ------------- Similar products block ----------------- */
 .productPage__similarProducts {
   width: 100%;
   margin: 20vh auto 0 auto;

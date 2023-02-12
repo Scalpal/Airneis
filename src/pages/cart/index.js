@@ -1,7 +1,9 @@
-import Banner from "@/components/Banner";
-import ProductCart from "@/components/cart/ProductCart";
+import Button from "@/components/Button";
+import CartProduct from "@/components/CartProduct";
 import { useRouter } from "next/router";
 import { useCallback, useState } from "react";
+import { ShoppingCartIcon } from "@heroicons/react/24/outline";
+import LayoutStickyNavbar from "@/components/LayoutStickyNavbar";
 
 const products = [
   {
@@ -15,7 +17,7 @@ const products = [
   },
   {
     id: 2,
-    picture: "",
+    picture: "/meuble-2.jpeg",
     name: "Product #2",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae nibh pulvinar, scelerisque nunc id, accumsan augue. Cras placerat sem id est suscipit, sit amet venenatis ante mollis. Phasellus rutrum ex id semper elementum. Proin lobortis neque sem, in iaculis est efficitur id. Fusce ornare volutpat arcu, quis imperdiet quam.",
@@ -24,7 +26,7 @@ const products = [
   },
   {
     id: 3,
-    picture: "",
+    picture: "/meuble-3.png",
     name: "Product #3",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae nibh pulvinar, scelerisque nunc id, accumsan augue. Cras placerat sem id est suscipit, sit amet venenatis ante mollis. Phasellus rutrum ex id semper elementum. Proin lobortis neque sem, in iaculis est efficitur id. Fusce ornare volutpat arcu, quis imperdiet quam.",
@@ -33,11 +35,12 @@ const products = [
   },
 ];
 
+
 const Cart = () => {
   const router = useRouter();
-  const [productsLists, setProductsLists] = useState(products);
+  const [productsList, setProductsList] = useState(products);
   const [totalSum, setTotalSum] = useState(
-    productsLists.reduce(
+    productsList.reduce(
       (x, product) => x + product.price * product.quantity,
       0.0
     )
@@ -47,105 +50,90 @@ const Cart = () => {
     router.push("/order/delivery");
   }, [router]);
 
-  const handleHome = useCallback(() => {
+  const redirectToHomePage = useCallback(() => {
     router.push("/home");
   }, [router]);
 
-  const handleDelete = (e) => {
-    const productId = Number.parseInt(
-      e.currentTarget.getAttribute("data-product-id")
-    );
-    const product = productsLists.find((product) => product.id === productId);
-    setTotalSum(totalSum - product.price * product.quantity);
-    setProductsLists(
-      productsLists.filter((product) => product.id !== productId)
-    );
-  };
-
-  const handlePlus = (e) => {
-    const productId = Number.parseInt(
-      e.currentTarget.getAttribute("data-product-id")
-    );
-    const product = productsLists.find((product) => product.id === productId);
-    if (product.quantity < 99) {
-      product.quantity++;
-      setTotalSum(totalSum + product.price);
-    }
-  };
-
-  const handleMinus = (e) => {
-    const productId = Number.parseInt(
-      e.currentTarget.getAttribute("data-product-id")
-    );
-    const product = productsLists.find((product) => product.id === productId);
-    if (product.quantity > 1) {
-      product.quantity--;
-      setTotalSum(totalSum - product.price);
-    }
-  };
 
   return (
-    <>
-      <Banner title={"Cart"} />
-      {productsLists.length === 0 ? (
-        <div className="cartContainer">
-          <section className="cartProductList">
-            <p>Your cart is currently empty.</p>
-          </section>
-          <section className="cartSuccessRight">
-            <button
-              className="cartButtonSubmit"
-              type="submit"
-              onClick={handleHome}
-            >
-              Back to home page
-            </button>
-          </section>
-        </div>
-      ) : (
-        <div className="cartContainer">
-          <section className="cartProductList">
-            <ProductCart
-              productsLists={productsLists}
-              handleDelete={handleDelete}
-              handlePlus={handlePlus}
-              handleMinus={handleMinus}
-            />
-          </section>
-          <section className="cartProductTotal">
-            <div className="cartProductTotalSummary">
-              <div className="cartProductTotalRow">
-                <p>Excl. tax</p>
-                <p>{`${Number.parseFloat(totalSum)
-                  .toFixed(2)
-                  .replace(/\B(?=(\d{3})+(?!\d))/, " ")
-                  .replace(/[.]/, ",")} €`}</p>
+    <>      
+      <div className="cart__container">
+        {productsList.length === 0 ? (
+          <>
+            <section className="cart__empty">
+              <ShoppingCartIcon className="cart__empty__icon" />
+
+              <p className="cart__empty__title">Your cart is currently empty </p>
+
+              <div className="cart__empty__text">
+                <p>Before proceed to checkout, you must add some products to your cart.</p>
+                <p>Won&apos;t you come here without buying anything...</p>
               </div>
-              <div className="cartProductTotalRow">
-                <p>VAT</p>
-                <p>20%</p>
+ 
+              <div>
+                <Button
+                  title="Return to shop"
+                  disabled={false}
+                  action={() => redirectToHomePage()}
+                />
               </div>
-              <div className="cartProductTotalRow">
-                <p className="cartProductTotalTitle">TOTAL</p>
-                <p className="cartProductTotalQuantity">
-                  {`${Number.parseFloat(totalSum * 1.2)
-                    .toFixed(2)
-                    .replace(/\B(?=(\d{3})+(?!\d))/, " ")
-                    .replace(/[.]/, ",")} €`}
+            </section>
+          </>
+        ) : (
+          <>
+            <section className="cart__productList">
+              {productsList.map((product, index) => {
+                return (
+                  <CartProduct
+                    key={index}
+                    index={index}
+                    product={product}
+                    productState={[productsList, setProductsList]}
+                    totalSumState={[totalSum, setTotalSum]}
+                  />
+                );
+              })}
+            </section>
+              
+            <section className="cart__recap">
+               
+              <div className="cart__recap__topRows">
+                <div className="cart__recap__row">
+                  <p>Subtotal</p>
+                  <p>{totalSum.toFixed(2)}€</p>
+                </div>
+                  
+                <div className="cart__recap__row">
+                  <p>TAX (20%)</p>
+                  <p>{(totalSum * 0.2).toFixed(2)}€</p>
+                </div>
+              </div>
+
+              <div className="cart__recap__totalRow">
+                <p>TOTAL</p>
+                <p>
+                  {(totalSum * 1.2).toFixed(2)}€
                 </p>
               </div>
-            </div>
-            <button
-              className="cartButtonSubmit"
-              type="submit"
-              onClick={handleSubmit}
-            >
-              Place the order
-            </button>
-          </section>
-        </div>
-      )}
+                
+              <Button
+                title={"Order"}
+                action={handleSubmit}
+                disabled={false}
+              />
+            </section>
+          </>
+        )}
+      </div>
     </>
+  );
+};
+
+Cart.getLayout = function(page) {
+  return (
+    <LayoutStickyNavbar>
+      {page}
+    </LayoutStickyNavbar>
   );
 };
 
