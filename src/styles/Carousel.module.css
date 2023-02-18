@@ -45,8 +45,8 @@
 
 .controlButton {
   width: 30px;
-  height: 5px;
-  border-radius: 5px;
+  height: 4px;
+  border-radius: 2px;
   background-color: white;
   transition-duration: 300ms;
 }
@@ -58,8 +58,8 @@
 
 .controlButtonActive {
   width: 30px;
-  height: 5px;
-  border-radius: 5px;
+  height: 4px;
+  border-radius: 2px;
   background-color: black;
   transition-duration: 300ms;
 }

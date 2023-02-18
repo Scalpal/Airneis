@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { MagnifyingGlassIcon,ShoppingCartIcon, UserIcon,} from "@heroicons/react/24/solid";
+import { MagnifyingGlassIcon,ShoppingCartIcon, Bars3Icon} from "@heroicons/react/24/solid";
 import styles from "@/styles/Navbar.module.css";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
@@ -8,8 +8,10 @@ import { classnames } from "@/pages/_app";
 const Navbar = (props) => {
 
   const router = useRouter();
-  const { fixed } = props; 
+  const { fixed, isDrawerToggledState } = props; 
 
+  const [isDrawerToggled, setIsDrawerToggled] = isDrawerToggledState; 
+  
   useEffect(() => {
     const navbar = document.querySelector("#navbar");
 
@@ -17,7 +19,7 @@ const Navbar = (props) => {
       const carouselObserver = new IntersectionObserver(
         (entries) => {
 
-          if (entries[0].isIntersecting === true) {
+          if (entries[0].isIntersecting === true || isDrawerToggled === true) {
             navbar.classList.remove("navbarBackground");
           } else {
             navbar.classList.add("navbarBackground");
@@ -41,8 +43,15 @@ const Navbar = (props) => {
       className={
         classnames(fixed ? styles.navbar : styles.navbarNotFixed)
       }
-      id="navbar">
-      <Link href="/home" className="navbarLogo">
+      id="navbar"
+    >
+      <Link
+        href="/home"
+        className={classnames(
+          "navbarLogo",
+          styles.navbarLogo
+        )}
+      >
         Airneis
       </Link>
 
@@ -64,18 +73,6 @@ const Navbar = (props) => {
             Categories
           </Link>
         </li>
-
-        <li>
-          <Link href="/about" className={styles.navbarLink}>
-            About
-          </Link>
-        </li>
-
-        <li>
-          <Link href="/contact" className={styles.navbarLink}>
-            Contact us
-          </Link>
-        </li>
       </ul>
 
       <ul className={styles.navbarList}>
@@ -88,7 +85,10 @@ const Navbar = (props) => {
         </button>
 
         <button className={styles.navbarButton}>
-          <UserIcon className={styles.navbarButtonIcon} />
+          <Bars3Icon
+            className={styles.navbarButtonIcon}
+            onClick={() => setIsDrawerToggled(!isDrawerToggled)}
+          />
         </button>
       </ul>
     </nav>
