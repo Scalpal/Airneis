@@ -5,9 +5,10 @@
 }
 
 :root {
-  --primary: rgb(237, 186, 119);
+  --primary: black;
+  --secondary: rgb(243, 243, 243);
   --primaryHovered: rgb(237, 186, 119);
-  --grey: grey
+  --grey: grey; 
 }
 
 html,
