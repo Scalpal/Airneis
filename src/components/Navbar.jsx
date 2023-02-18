@@ -43,8 +43,15 @@ const Navbar = (props) => {
       className={
         classnames(fixed ? styles.navbar : styles.navbarNotFixed)
       }
-      id="navbar">
-      <Link href="/home" className="navbarLogo">
+      id="navbar"
+    >
+      <Link
+        href="/home"
+        className={classnames(
+          "navbarLogo",
+          styles.navbarLogo
+        )}
+      >
         Airneis
       </Link>
 
@@ -64,18 +71,6 @@ const Navbar = (props) => {
         <li>
           <Link href="/category" className={styles.navbarLink}>
             Categories
-          </Link>
-        </li>
-
-        <li>
-          <Link href="/about" className={styles.navbarLink}>
-            About
-          </Link>
-        </li>
-
-        <li>
-          <Link href="/contact" className={styles.navbarLink}>
-            Contact us
           </Link>
         </li>
       </ul>
