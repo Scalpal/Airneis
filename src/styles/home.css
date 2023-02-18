@@ -28,53 +28,12 @@
   border: 0;
 }
 
-
-
 /* Categories */
 .categories__title {
   text-align: center;
   font-size: 2rem;
   font-weight: 300;
-  margin: 5rem 0 2.5rem 0;
-}
-
-.categories__container {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(3, 1fr);
-  grid-column-gap: 20px;
-  grid-row-gap: 20px;
-
-  width: fit-content; 
-  margin: 0 auto; 
-}
-
-.categories__container div {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 1.25rem; 
-  border-radius: 10px;
-  height: 11rem;
-  width: 20rem;
-  background-color: rgb(193, 193, 193); 
-  transition-duration: 300ms; 
-  font-size: 1.3rem; 
-  font-weight: 300;
-}
-
-.categories__container div > button {
-  border: 0px; 
-  padding: 10px 6px;
-  border-radius: 10px; 
-}
-
-.categories__container div:hover {
-  transform: scale(1.15); 
-  background-color: grey; 
-  z-index: 10; 
-  cursor: pointer;
+  margin: 5rem 0 0 0;
 }
 
 /* ----------------- Customers reviews ---------------------*/

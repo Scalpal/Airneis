@@ -1,0 +1,23 @@
+.banner {
+  height: 90vh;
+  width: 100vw;
+
+  border-bottom-left-radius: 100px;
+  border-bottom-right-radius: 100px;
+
+  overflow: hidden;
+  margin-bottom: 10vh;
+}
+
+.bannerSlidesContainer {
+  display: flex;
+  height: 100%;
+}
+
+.bannerSlide {
+  flex: 0 0 100%;
+  min-width: 0;
+  height: 100%;
+
+  position: relative;
+}

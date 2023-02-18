@@ -1,6 +1,7 @@
 import "@/styles/global.css";
 import "@/styles/home.css";
 import "@/styles/productPage.css";
+import "@/styles/categoryPage.css"; 
 import Layout from "@/components/Layout";
 import Head from "next/head";
 
@@ -19,6 +20,8 @@ export default function App({ Component, pageProps }) {
 
       <Component {...pageProps} />
     </Layout>
+
+    
   );
 }
 
