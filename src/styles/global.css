@@ -6,7 +6,7 @@
 
 :root {
   --primary: black;
-  --secondary: rgb(243, 243, 243);
+  --secondary: #F6F6F6;
   --primaryHovered: rgb(237, 186, 119);
   --grey: grey; 
 }
@@ -16,6 +16,8 @@ body {
   max-width: 100vw;
   font-size: calc(15px + 0.390625vw);
   font-weight: 300;
+  /* background-color: #FAFAFA; */
+  background-color: #F6F6F6;
 }
 
 a {
