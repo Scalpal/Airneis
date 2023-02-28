@@ -3,92 +3,93 @@ import ProductCard from "@/components/ProductCard";
 import CustomerReview from "@/components/CustomerReview";
 import CategoriesBlocks from "@/components/CategoriesBlocks";
 
+const placeholderImages = [
+  "/meuble-1.jpeg",
+  "/meuble-2.jpeg",
+  "/meuble-3.png",
+];
+
+const products = [
+  {
+    id: 1,
+    name: "Chaise moderne en bois de hêtre",
+    type: "bois",
+    price: "145$",
+    stock: 25,
+    imageSrc: "/meuble-2.jpeg",
+  },
+  {
+    id: 2,
+    name: "chaise",
+    type: "bois",
+    price: "145$",
+    stock: 25,
+    imageSrc: "/meuble-2.jpeg",
+  },
+  {
+    id: 3,
+    name: "chaise",
+    type: "bois",
+    price: "145$",
+    stock: 25,
+    imageSrc: "/meuble-2.jpeg",
+  },
+  {
+    id: 4,
+    name: "chaise",
+    type: "bois",
+    price: "145$",
+    stock: 25,
+    imageSrc: "/meuble-2.jpeg",
+  },
+  {
+    id: 5,
+    name: "chaise",
+    type: "bois",
+    price: "145$",
+    stock: 25,
+    imageSrc: "/meuble-2.jpeg",
+  },
+  {
+    id: 6,
+    name: "chaise",
+    type: "bois",
+    price: "145$",
+    stock: 25,
+    imageSrc: "/meuble-2.jpeg",
+  },
+];
+
+const reviews = [
+  {
+    review:
+      "My experience with Mark is a complete sucess, from customer service, wide range of products, clean store, purchasing experience, the newsletter. Thank you.",
+    customerName: "Leona Paul",
+  },
+];
+
+const categories = [
+  {
+    name: "Moderne",
+  },
+  {
+    name: "Vintage",
+  },
+  {
+    name: "Chaises",
+  },
+  {
+    name: "Contemporain",
+  },
+  {
+    name: "Artisanal",
+  },
+  {
+    name: "Bois",
+  },
+];
+
 const Home = () => {
-  const placeholderImages = [
-    "/meuble-1.jpeg",
-    "/meuble-2.jpeg",
-    "/meuble-3.png",
-  ];
-
-  const products = [
-    {
-      id: 1,
-      name: "Chaise moderne en bois de hêtre",
-      type: "bois",
-      price: "145$",
-      stock: 25,
-      imageSrc: "/meuble-2.jpeg",
-    },
-    {
-      id: 2,
-      name: "chaise",
-      type: "bois",
-      price: "145$",
-      stock: 25,
-      imageSrc: "/meuble-2.jpeg",
-    },
-    {
-      id: 3,
-      name: "chaise",
-      type: "bois",
-      price: "145$",
-      stock: 25,
-      imageSrc: "/meuble-2.jpeg",
-    },
-    {
-      id: 4,
-      name: "chaise",
-      type: "bois",
-      price: "145$",
-      stock: 25,
-      imageSrc: "/meuble-2.jpeg",
-    },
-    {
-      id: 5,
-      name: "chaise",
-      type: "bois",
-      price: "145$",
-      stock: 25,
-      imageSrc: "/meuble-2.jpeg",
-    },
-    {
-      id: 6,
-      name: "chaise",
-      type: "bois",
-      price: "145$",
-      stock: 25,
-      imageSrc: "/meuble-2.jpeg",
-    },
-  ];
-
-  const reviews = [
-    {
-      review:
-        "My experience with Mark is a complete sucess, from customer service, wide range of products, clean store, purchasing experience, the newsletter. Thank you.",
-      customerName: "Leona Paul",
-    },
-  ];
-
-  const categories = [
-    {
-      name: "Moderne",
-    },
-    {
-      name: "Vintage",
-    },
-    {
-      name: "Chaises",
-    },
-    {
-      name: "Contemporain",
-    },
-    {
-      name: "Artisanal",
-    },
-    {
-      name: "Bois",
-    },
-  ];
 
   return (
     <>

@@ -16,7 +16,6 @@ body {
   max-width: 100vw;
   font-size: calc(15px + 0.390625vw);
   font-weight: 300;
-  /* background-color: #FAFAFA; */
   background-color: #F6F6F6;
 }
 
@@ -29,6 +28,16 @@ a {
   width: 0px;
 }
 
+input,
+button,
+div {
+  font-family: inherit;
+}
+
+input:focus {
+  border: 0;
+}
+
 /* Class for full size banner */
 .fullWidthCarousel {
   height: 90vh;
@@ -38,7 +47,7 @@ a {
   overflow: hidden;
 }
 
-/* Navbar style when scroll down */
+/* ----------- Navbar style when scroll down  ------------- */
 .navbarBackground {
   font-weight: 500 !important;
   background: rgba(255, 255, 255, 0.18) !important;
@@ -55,3 +64,5 @@ a {
 .navbarBackground .navbarLogo {
   filter: invert(1);
 }
+
+

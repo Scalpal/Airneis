@@ -10,15 +10,14 @@ const montserrat = Montserrat({
 
 const Button = (props) => {
 
-  const { title, action, disabled } = props; 
+  const { children, ...otherProps } = props; 
 
   return (
     <button
       className={classnames(styles.button, montserrat.className)}
-      onClick={action}
-      disabled={disabled}
+      {...otherProps}
     >
-      <span className={styles.buttonText}>{title}</span>
+      <span className={styles.buttonText}>{children}</span>
     </button>
   );
 };

@@ -6,7 +6,8 @@ import {
   BuildingStorefrontIcon,
   TagIcon, 
   ChartBarIcon,
-  ArrowRightOnRectangleIcon
+  ArrowRightOnRectangleIcon,
+  ReceiptPercentIcon,
 } from "@heroicons/react/24/outline";
 import { montserrat } from "@/pages/_app";
 import { classnames } from "@/pages/_app";
@@ -26,6 +27,11 @@ const navLinks = [
     route: "/backoffice/products",
     text: "Products",
     icon: <TagIcon className={styles.linksIcon} />
+  },
+  {
+    route: "/backoffice/orders",
+    text: "Orders",
+    icon: <ReceiptPercentIcon className={styles.linksIcon} />
   },
   {
     route: "/backoffice/statistics",

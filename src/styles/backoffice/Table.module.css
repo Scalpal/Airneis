@@ -1,0 +1,33 @@
+.table {
+  width: 100%;
+  margin: 0 auto;
+  border-collapse: collapse;
+}
+
+.table thead {
+  border-bottom: 2px solid rgba(150, 150, 150, 0.7);
+}
+
+.table th {
+  padding: 1rem 0;
+  font-weight: 500;
+  font-size: 0.9rem;
+  text-align: left;
+}
+
+.table td {
+  padding: 0.8rem 0;
+  border-top: 1px solid rgba(150, 150, 150, 0.3);
+  font-size: 0.7rem;
+  font-weight: 400;
+  text-align: left;
+}
+
+.table td:first-child {
+  min-width: 30px;
+}
+
+.tableIcon {
+  width: 30px;
+  height: 30px; 
+}
