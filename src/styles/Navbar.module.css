@@ -44,15 +44,17 @@
 }
 
 .navbarLogo {
-  width: 20%;
+  width: 30%;
 }
 
 /* ---------- Navbar links list ------------- */
 .navbarList {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
+  gap: 1rem;
   list-style: none;
   gap: 2.5rem;
+  width: 30%;
 }
 
 .navbarLink {
