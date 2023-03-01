@@ -1,13 +1,12 @@
 /* Popular products */
-
-.popular-products__title {
+.popularProductsTitle {
   text-align: center;
   font-size: 2rem;
   font-weight: 300;
   margin: 3.125rem 0 2.5rem 0; 
 }
 
-.popular-products__list {
+.popularProductsList {
   display: flex;
   flex-wrap: nowrap;
   flex-direction: row;
@@ -19,7 +18,7 @@
   padding: 0 0 20px 0; 
 }
 
-.popular-products__button {
+.popularProductsButton {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -29,7 +28,7 @@
 }
 
 /* Categories */
-.categories__title {
+.categoriesTitle {
   text-align: center;
   font-size: 2rem;
   font-weight: 300;
@@ -38,17 +37,17 @@
 
 /* ----------------- Customers reviews ---------------------*/
 
-.customer-reviews-container h1, .customer-reviews-container h2 {
+.customerReviewsContainer h1, .customerReviewsContainer h2 {
   text-align: center;
   font-weight: 300;
 }
 
-.customer-reviews-container h1 {
+.customerReviewsContainer h1 {
   font-size: 2rem;
   font-weight: 300;
 }
 
-.customer-reviews-container h2 {
+.customerReviewsContainer h2 {
   margin: 1.7rem 0;
   font-size: 1.5rem;
   font-weight: 300;

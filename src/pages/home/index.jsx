@@ -2,6 +2,7 @@ import Carousel from "@/components/Carousel";
 import ProductCard from "@/components/ProductCard";
 import CustomerReview from "@/components/CustomerReview";
 import CategoriesBlocks from "@/components/CategoriesBlocks";
+import styles from "@/styles/home.module.css";
 
 const placeholderImages = [
   "/meuble-1.jpeg",
@@ -99,15 +100,15 @@ const Home = () => {
 
       {/* Popular products block */}
       <section>
-        <h1 className="popular-products__title"> Popular products </h1>
+        <h1 className={styles.popularProductsTitle}> Popular products </h1>
 
-        <div className="popular-products__list">
+        <div className={styles.popularProductsList}>
           {products.map((product, index) => {
             return <ProductCard key={index} product={product} />;
           })}
         </div>
 
-        <button className="popular-products__button">
+        <button className={styles.popularProductsButton}>
           {" "}
           See more products{" "}
         </button>
@@ -115,13 +116,13 @@ const Home = () => {
 
       {/* Categories block */}
       <section>
-        <h1 className="categories__title"> Explore by category </h1>
+        <h1 className={styles.categoriesTitle}> Explore by category </h1>
 
         <CategoriesBlocks categories={categories} />
       </section>
 
       {/* Customer reviews block */}
-      <section className="customer-reviews-container">
+      <section className={styles.customerReviewsContainer}>
         <h1>Customers reviews</h1>
 
         <h2>Our happy customers</h2>

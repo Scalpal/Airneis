@@ -1,4 +1,4 @@
-import styles from "@/styles/ProductCard.module.css";
+import styles from "@/styles/components/ProductCard.module.css";
 import { useRouter } from "next/router";
 import Image from "next/image";
 

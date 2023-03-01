@@ -60,11 +60,12 @@
 .navbarLink {
   border-bottom: 2px solid transparent;
   padding: 0 0 0.25rem 0;
-  transition-duration: 200ms;
+  transition-duration: 2000ms;
 }
 
 .navbarLink:hover {
-  border-bottom: 2px solid white;
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 /* ----------- Navbar icons -------------- */

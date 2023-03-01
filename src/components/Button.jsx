@@ -1,4 +1,4 @@
-import styles from "@/styles/Button.module.css"; 
+import styles from "@/styles/components/Button.module.css"; 
 import { Montserrat } from "@next/font/google";
 import { classnames } from "@/pages/_app";
 

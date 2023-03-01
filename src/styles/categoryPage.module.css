@@ -1,4 +1,4 @@
-.categoryPage__descriptionText {
+.descriptionText {
   text-align: center;
   width: 60vw;
   margin: 15vh auto;
@@ -6,7 +6,7 @@
   font-weight: 300;
 }
 
-.categoryPage__productsList {
+.productsList {
   display: grid;
   justify-content: center;
   grid-template-rows: auto;

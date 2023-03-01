@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { MagnifyingGlassIcon,ShoppingCartIcon, Bars3Icon} from "@heroicons/react/24/solid";
-import styles from "@/styles/Navbar.module.css";
+import styles from "@/styles/components/Navbar.module.css";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { classnames } from "@/pages/_app";

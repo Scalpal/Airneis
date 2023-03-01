@@ -1,6 +1,6 @@
 /* (Laptop and Screen) */
 /* ----------- Cart ------------- */
-.cart__container {
+.mainContent {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -11,7 +11,7 @@
 }
 
 /* ---------- Product list ----------- */
-.cart__productList {
+.productListContainer {
   display: flex;
   flex-direction: column;
   gap: 1rem; 
@@ -19,7 +19,7 @@
 }
 
 /* ------------- Recap -------------- */
-.cart__recap {
+.recapContainer {
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -36,13 +36,13 @@
   border: 1px solid rgba(255, 255, 255, 0.41);
 }
 
-.cart__recap__topRows {
+.recapTopRows {
   display: flex;
   flex-direction: column;
   gap: 0.2rem;
 }
 
-.cart__recap__row {
+.recapRow {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -51,7 +51,7 @@
   font-size: 10pt;
 }
 
-.cart__recap__totalRow {
+.recapTotalRow {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -61,7 +61,7 @@
 
 
 /* --------------- Empty cart block ---------------*/
-.cart__empty {
+.emptyCartContainer {
   width: 100%;
   height: 80vh;
   display: flex;
@@ -74,17 +74,17 @@
   transition-duration: 1000ms;
 }
 
-.cart__empty__icon {
+.emptyCartIcon {
   width: 10vw;
   height: 10vw;
 }
 
-.cart__empty__title {
+.emptyCartTitle {
   font-size: 1.7rem;
   font-weight: 500;
 }
 
-.cart__empty__text {
+.emptyCartText {
   display: flex;
   flex-direction: column;
   justify-content: center;

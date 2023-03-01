@@ -1,5 +1,5 @@
 /* ------------ Product page infos block --------------- */
-.productPage__infos {
+.mainContent {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -8,7 +8,7 @@
   width: 80vw;
 }
 
-.productPage__infos__carousel {
+.productCarousel {
   width: 50%;
   max-width: 30vw;
   min-height: 100%;
@@ -19,7 +19,7 @@
 
 
 /* -------------- Slider ---------------- */
-.productPage__infos__slider{
+.productPageInfos__slider{
   overflow: hidden;
   width: 50%;
   max-width: 30vw;
@@ -27,14 +27,14 @@
   aspect-ratio: 1/1 ;
 }
 
-.productPage__infos__slidesContainer {
+.productPageInfos__slidesContainer {
   display: flex;
   flex-direction: row;
   width: 100%;
   height: 100%;
 }
 
-.productPage__infos__slidesContainer__slide {
+.productPageInfos__slidesContainer__slide {
   flex: 0 0 100%; 
   min-width: 0;
   position: relative;
@@ -42,7 +42,7 @@
 
 
 /* ------------ Products infos (on the right of the slider) ----------- */
-.productPage__infos__textBlock {
+.productInfos {
   width: 50%;
   
   display: flex;
@@ -51,30 +51,30 @@
   padding: 1rem 0;
 }
 
-.productPage__infos__textBlock__topText {
+.productInfosTopBlock {
   display: flex;
   flex-direction: column;
   gap: 1.5rem; 
 }
 
-.productPage__infos__textBlock__topText h1 {
+.productInfosTopBlock h1 {
   text-align: justify;
   font-weight: 500;
 }
 
-.productPage__infos__textBlock__topText p {
+.productInfosTopBlock p {
   text-align: justify;
   font-weight: 300;
 }
 
-.productPage__infos__textBlock__bottomText {
+.productInfosBottomBlock {
   display: flex;
   justify-content: space-between;
   font-weight: 400;
 }
 
 /* Add to cart button */
-.productPage__addToCartButton {
+.addToCartBtnWrapper {
   width: fit-content;
   margin: 5vh auto 0 auto;
 }
@@ -82,19 +82,19 @@
 
 
 /* ------------- Similar products block ----------------- */
-.productPage__similarProducts {
+.similarProductsWrapper {
   width: 100%;
   margin: 20vh auto 0 auto;
 }
 
-.productPage__similarProducts h1 {
+.similarProductsWrapper h1 {
   margin: 0 0 10vh 0;
   text-align: center;
   font-weight: 300;
   font-style: lighter;
 }
 
-.productPage__similarProducts__productsList {
+.similarProductsContainer {
   display: flex;
   flex-direction: row;
   justify-content: space-between;

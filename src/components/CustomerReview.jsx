@@ -1,4 +1,4 @@
-import styles from "@/styles/CustomerReview.module.css"; 
+import styles from "@/styles/components/CustomerReview.module.css"; 
 
 const CustomerReview = (props) => {
 
