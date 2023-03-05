@@ -54,6 +54,7 @@
   transform: translateX(100%);
 }
 
+/* Mostly for arrow icon to close the drawer menu */
 .drawerMenuIcon {
   width: 30px;
   height: 30px;
@@ -75,4 +76,25 @@
   background-color: var(--primary);
   color: white;
   font-weight: 500;
+}
+
+@media only screen and (max-width: 480px) {
+
+  .overlay {
+    display: none;
+  }
+
+  .drawerMenu {
+    width: 100%;
+    right: -100%;
+  }
+
+  .drawerMenuActive {
+    transform: translateX(-100%);
+  }
+
+  .drawerMenuInactive {
+    transform: translateX(100%);
+  }
+
 }

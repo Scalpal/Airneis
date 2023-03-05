@@ -2,7 +2,7 @@ import Layout from "@/components/backoffice/Layout";
 import { useState } from "react";
 import Table from "@/components/backoffice/Table"; 
 import { classnames } from "@/pages/_app";
-import { montserrat } from "@/pages/_app";
+import { nunito } from "@/pages/_app";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import styles from "@/styles/backoffice/statsPages.module.css"; 
 
@@ -64,7 +64,7 @@ const BackofficeOrders = () => {
     <main
       className={classnames(
         styles.mainContainer,
-        montserrat.className
+        nunito.className
       )}
     >
       <div className={styles.topStats}>
@@ -86,7 +86,7 @@ const BackofficeOrders = () => {
             <p>Orders</p> 
 
             <div className={styles.customSearchInput}>
-              <input type="text" placeholder="Search a product" />
+              <input type="text" placeholder="Search an order" />
               <MagnifyingGlassIcon className={styles.actionBarIcon} />
             </div>
           </div>

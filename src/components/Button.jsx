@@ -1,20 +1,18 @@
 import styles from "@/styles/components/Button.module.css"; 
-import { Montserrat } from "@next/font/google";
 import { classnames } from "@/pages/_app";
-
-const montserrat = Montserrat({
-  variable: ["100", "200", "300", "400", "500", "600", "700"],
-  style: ["normal", "italic"],
-  subsets: ["latin"],
-});
+import { nunito } from "@/pages/_app";
 
 const Button = (props) => {
 
-  const { children, ...otherProps } = props; 
+  const { children, disabled, ...otherProps } = props; 
 
   return (
     <button
-      className={classnames(styles.button, montserrat.className)}
+      className={
+        classnames(
+          disabled ? styles.buttonDisabled : styles.button,
+          nunito.className,
+        )}
       {...otherProps}
     >
       <span className={styles.buttonText}>{children}</span>

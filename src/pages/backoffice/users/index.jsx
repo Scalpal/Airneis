@@ -1,7 +1,7 @@
 import Layout from "@/components/backoffice/Layout";
 import Table from "@/components/backoffice/Table"; 
 import { classnames } from "@/pages/_app";
-import { montserrat } from "@/pages/_app";
+import { nunito } from "@/pages/_app";
 import styles from "@/styles/backoffice/statsPages.module.css"; 
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
   
@@ -49,7 +49,7 @@ const BackofficeUsers = () => {
     <main
       className={classnames(
         styles.mainContainer,
-        montserrat.className
+        nunito.className
       )}
     >
       <div className={styles.topStats}>

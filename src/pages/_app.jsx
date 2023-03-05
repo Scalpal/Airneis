@@ -2,11 +2,18 @@ import "@/styles/global.css";
 import Layout from "@/components/Layout";
 import Head from "next/head";
 import { Montserrat } from "@next/font/google";
+import { Nunito } from "@next/font/google";
 
 
 export const classnames = require("classnames");
 
 export const montserrat = Montserrat({
+  variable: ["100", "200", "300", "400", "500", "600", "700"],
+  style: ["normal", "italic"],
+  subsets: ["latin"],
+});
+
+export const nunito = Nunito({
   variable: ["100", "200", "300", "400", "500", "600", "700"],
   style: ["normal", "italic"],
   subsets: ["latin"],

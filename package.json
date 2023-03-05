@@ -17,7 +17,8 @@
     "eslint-config-next": "13.1.1",
     "next": "13.1.1",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "yup-password": "^0.2.2"
   },
   "devDependencies": {
     "eslint-config-prettier": "^8.5.0",

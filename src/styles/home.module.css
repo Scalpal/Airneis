@@ -10,12 +10,12 @@
   display: flex;
   flex-wrap: nowrap;
   flex-direction: row;
+  align-items: stretch;
   gap: 2rem; 
 
-  overflow: scroll;
-  margin: 0 0 0 30px;
-  border-radius: 15px 0 0 15px;
-  padding: 0 0 20px 0; 
+  height: fit-content;
+  padding: 0 1.5rem;
+  overflow-x: scroll;
 }
 
 .popularProductsButton {
@@ -51,4 +51,15 @@
   margin: 1.7rem 0;
   font-size: 1.5rem;
   font-weight: 300;
+}
+
+/* --------- Mobile phones ---------- */
+@media only screen and (max-width: 480px) {
+  .popularProductsTitle {
+    font-size: 1.5rem;
+  }
+
+  .popularProductsList {
+    overflow-y: visible;
+  }
 }

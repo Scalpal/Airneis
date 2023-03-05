@@ -13,10 +13,11 @@
 
 html,
 body {
-  max-width: 100vw;
+  width: 100%;
   font-size: calc(15px + 0.390625vw);
   font-weight: 300;
   background-color: #F6F6F6;
+  overflow-x: hidden;
 }
 
 a {
@@ -25,13 +26,16 @@ a {
 }
 
 ::-webkit-scrollbar {
-  width: 0px;
+  display: none;
 }
 
 input,
 button,
 div {
   font-family: inherit;
+}
+input:hover, label:hover {
+  cursor: pointer;
 }
 
 input:focus {
@@ -64,5 +68,13 @@ input:focus {
 .navbarBackground .navbarLogo {
   filter: invert(1);
 }
+
+@media only screen and (max-width: 480px) {
+  .fullWidthCarousel {
+    height: 35vh;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+  }
+} 
 
 

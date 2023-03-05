@@ -9,7 +9,7 @@ import {
   ArrowRightOnRectangleIcon,
   ReceiptPercentIcon,
 } from "@heroicons/react/24/outline";
-import { montserrat } from "@/pages/_app";
+import { nunito } from "@/pages/_app";
 import { classnames } from "@/pages/_app";
 
 const navLinks = [
@@ -51,7 +51,7 @@ const Navbar = () => {
     <nav
       className={classnames(
         styles.navbar,
-        montserrat.className
+        nunito.className
       )}
     > 
       <div className={styles.adminInfosBlock}>

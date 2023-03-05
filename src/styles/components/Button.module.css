@@ -16,3 +16,20 @@
   outline-offset: 5px;
   filter: invert(1);
 }
+
+.buttonDisabled {
+  border-radius: 10px;
+  width: 100%;
+  padding: 0.5rem 1rem;
+  color: white;
+  font-size: 1rem;
+  font-weight: 300;
+  transition-duration: 500ms;
+  border: 2px solid white;
+  outline-offset: 0;
+  background-color:rgba(0, 0, 0, 0.2);
+}
+
+.buttonDisabled:hover {
+  cursor: not-allowed;
+}

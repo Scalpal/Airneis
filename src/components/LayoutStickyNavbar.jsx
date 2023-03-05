@@ -1,4 +1,4 @@
-import { montserrat } from "@/pages/_app";
+import { nunito } from "@/pages/_app";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import DrawerMenu from "./DrawerMenu";
@@ -10,7 +10,7 @@ const LayoutStickyNavbar = ({ children }) => {
 
 
   return ( 
-    <div className={montserrat.className}>
+    <div className={nunito.className}>
       <Navbar
         fixed={false}
         isDrawerToggledState={[isDrawerToggled, setIsDrawerToggled]}

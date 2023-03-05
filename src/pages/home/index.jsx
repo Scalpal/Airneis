@@ -1,11 +1,11 @@
 import Carousel from "@/components/Carousel";
-import ProductCard from "@/components/ProductCard";
 import CustomerReview from "@/components/CustomerReview";
 import CategoriesBlocks from "@/components/CategoriesBlocks";
 import styles from "@/styles/home.module.css";
+import ProductCard from "@/components/ProductCard";
 
 const placeholderImages = [
-  "/meuble-1.jpeg",
+  "/meuble-4.jpeg",
   "/meuble-2.jpeg",
   "/meuble-3.png",
 ];
@@ -94,7 +94,7 @@ const Home = () => {
 
   return (
     <>
-      <header className="fullWidthCarousel">
+      <header className="fullWidthCarousel" id="carousel">
         <Carousel images={placeholderImages} Autoplay={true} controls={false} />
       </header>
 

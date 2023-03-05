@@ -55,7 +55,10 @@ const Navbar = (props) => {
         Airneis
       </Link>
 
-      <ul className={styles.navbarList}>
+      <ul className={classnames(
+        styles.navbarList,
+        styles.midLinks
+      )}>
         <li>
           <Link href="/home" className={styles.navbarLink}>
             Home

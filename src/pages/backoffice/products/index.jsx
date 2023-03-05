@@ -2,7 +2,7 @@ import Layout from "@/components/backoffice/Layout";
 import { useState } from "react";
 import Table from "@/components/backoffice/Table"; 
 import { classnames } from "@/pages/_app";
-import { montserrat } from "@/pages/_app";
+import { nunito } from "@/pages/_app";
 import Button from "@/components/Button";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import styles from "@/styles/backoffice/statsPages.module.css"; 
@@ -111,7 +111,7 @@ const BackofficeProducts = () => {
     <main
       className={classnames(
         styles.mainContainer,
-        montserrat.className
+        nunito.className
       )}
     >
       <div className={styles.topStats}>
