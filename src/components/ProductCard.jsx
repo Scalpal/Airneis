@@ -13,17 +13,19 @@ const ProductCard = (props) => {
       className={styles.productCard}
       onClick={() => router.push("/products/" + product.id)}
     >
+      <div className={styles.productCardImageContainer}>
+        <Image
+          className={styles.productCardImage}
+          src={product.imageSrc}
+          alt={"Image du produit"}
+          fill
+        />
+      </div>
+
       <div className={styles.productCardInfos}>
         <p> {product.name} </p>
         <p> {product.price} </p>
       </div>
-
-      <Image
-        className={styles.productCardImage}
-        src={product.imageSrc}
-        alt={"Image du produit"}
-        fill
-      />
     </div>
   );
 };
