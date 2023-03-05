@@ -1,0 +1,38 @@
+.mainContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+} 
+
+
+/* Form */
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  width: 40%;
+}
+
+/* Titles */
+.titlesBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.logo {
+  font-size: 3rem;
+  font-weight: 500;
+}
+
+.buttonWrapper {
+  width: 60%;
+}
+
+.emptyDiv {
+  min-height: 10vh;
+  width: 100%;
+}

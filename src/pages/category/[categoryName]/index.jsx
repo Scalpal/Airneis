@@ -1,6 +1,7 @@
 import Banner from "@/components/Banner";
 import DetailedProductCard from "@/components/DetailedProductCard";
 import { useRouter } from "next/router";
+import styles from "@/styles/categoryPage.module.css"; 
 
 export default function Category () {
 
@@ -63,12 +64,12 @@ export default function Category () {
 
       <main>
         <p
-          className="categoryPage__descriptionText"
+          className={styles.descriptionText}
         >
           Nos chaises, fabriquée en bois de chêne sont d’une qualité premium, idéale pour une maison moderne.
         </p>
 
-        <div className="categoryPage__productsList">
+        <div className={styles.productsList}>
           {categoryProducts.map((product, index) => {
             return (
               <DetailedProductCard key={index} product={product} />

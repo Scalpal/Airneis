@@ -1,4 +1,4 @@
-import styles from "@/styles/ProductCard.module.css";
+import styles from "@/styles/components/ProductCard.module.css";
 import { useRouter } from "next/router";
 import Image from "next/image";
 
@@ -15,7 +15,6 @@ const ProductCard = (props) => {
     >
       <div className={styles.productCardInfos}>
         <p> {product.name} </p>
-        <p> {product.type} </p>
         <p> {product.price} </p>
       </div>
 

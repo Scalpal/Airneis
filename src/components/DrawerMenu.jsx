@@ -1,4 +1,4 @@
-import styles from "@/styles/DrawerMenu.module.css"; 
+import styles from "@/styles/components/DrawerMenu.module.css"; 
 import Link from "next/link";
 import { classnames } from "@/pages/_app";
 import { ArrowRightIcon } from "@heroicons/react/24/outline";

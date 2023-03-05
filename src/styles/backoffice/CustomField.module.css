@@ -1,0 +1,57 @@
+.fieldWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 60%;
+  position: relative;
+}
+
+.label {
+  order: -1; /* Make it the "first element" for visual issues */
+  transition-duration: 300ms;
+  transform: translate(0.5rem, 1.6rem);
+  font-size: 0.9rem;
+}
+
+.labelActive {
+  transform: translate(0, -0.2rem);
+}
+
+.input {
+  padding: 0.5rem;
+  font-size: 0.8rem;
+  font-family: inherit;
+  border: 1px solid grey;
+  border-radius: 10px;
+  width: 100%;
+  outline: none;
+  position: relative;
+}
+
+.input:focus {
+  border: 1px solid grey;
+}
+
+.input:focus + .label{
+  transform: translate(0, -0.2rem);
+}
+
+.inputIcon {
+  width: 30px;
+  height: 30px;
+  z-index: 999;
+  color: rgba(0, 0, 0, 0.2);
+}
+
+.eyeIcon {
+  position: absolute;
+  top: 50%;
+  right: 0.5rem;
+  transform: translateY(-10%);
+}
+
+.errorText {
+  color: red;
+  font-size: 0.8rem;
+  margin: 0.3rem 0 0 0;
+}

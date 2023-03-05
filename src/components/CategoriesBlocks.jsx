@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import styles from "@/styles/CategoriesBlocks.module.css"; 
+import styles from "@/styles/components/CategoriesBlocks.module.css"; 
 import Image from "next/image";
 
 const CategoriesBlocks = (props) => {

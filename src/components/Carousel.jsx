@@ -1,4 +1,4 @@
-import styles from "@/styles/Carousel.module.css";
+import styles from "@/styles/components/Carousel.module.css";
 import Image from "next/image"; 
 import { useCallback, useEffect, useState } from "react";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/solid"; 

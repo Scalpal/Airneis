@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import styles from "@/styles/DetailedProductCard.module.css";
+import styles from "@/styles/components/DetailedProductCard.module.css";
 import Image from "next/image";
 
 const DetailedProductCard = (props) => {

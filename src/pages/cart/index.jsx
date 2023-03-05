@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { useCallback, useState } from "react";
 import { ShoppingCartIcon } from "@heroicons/react/24/outline";
 import LayoutStickyNavbar from "@/components/LayoutStickyNavbar";
+import styles from "@/styles/cart.module.css";
 
 const products = [
   {
@@ -57,31 +58,31 @@ const Cart = () => {
 
   return (
     <>      
-      <div className="cart__container">
+      <div className={styles.mainContent}>
         {productsList.length === 0 ? (
           <>
-            <section className="cart__empty">
-              <ShoppingCartIcon className="cart__empty__icon" />
+            <section className={styles.emptyCartContainer}>
+              <ShoppingCartIcon className={styles.emptyCartIcon} />
 
-              <p className="cart__empty__title">Your cart is currently empty </p>
+              <p className={styles.emptyCartTitle}>Your cart is currently empty </p>
 
-              <div className="cart__empty__text">
+              <div className={styles.emptyCartText}>
                 <p>Before proceed to checkout, you must add some products to your cart.</p>
                 <p>Won&apos;t you come here without buying anything...</p>
               </div>
  
               <div>
                 <Button
-                  title="Return to shop"
-                  disabled={false}
-                  action={() => redirectToHomePage()}
-                />
+                  onClick={() => redirectToHomePage()}
+                >
+                  Return to shop
+                </Button>
               </div>
             </section>
           </>
         ) : (
           <>
-            <section className="cart__productList">
+            <section className={styles.productListContainer}>
               {productsList.map((product, index) => {
                 return (
                   <CartProduct
@@ -95,21 +96,21 @@ const Cart = () => {
               })}
             </section>
               
-            <section className="cart__recap">
+            <section className={styles.recapContainer}>
                
-              <div className="cart__recap__topRows">
-                <div className="cart__recap__row">
+              <div className={styles.recapTopRows}>
+                <div className={styles.recapRow}>
                   <p>Subtotal</p>
                   <p>{totalSum.toFixed(2)}€</p>
                 </div>
                   
-                <div className="cart__recap__row">
+                <div className={styles.recapRow}>
                   <p>TAX (20%)</p>
                   <p>{(totalSum * 0.2).toFixed(2)}€</p>
                 </div>
               </div>
 
-              <div className="cart__recap__totalRow">
+              <div className={styles.recapTotalRow}>
                 <p>TOTAL</p>
                 <p>
                   {(totalSum * 1.2).toFixed(2)}€
@@ -117,10 +118,10 @@ const Cart = () => {
               </div>
                 
               <Button
-                title={"Order"}
-                action={handleSubmit}
-                disabled={false}
-              />
+                onClick={() => handleSubmit()}
+              >
+                  Order
+              </Button>
             </section>
           </>
         )}
