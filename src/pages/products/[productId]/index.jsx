@@ -19,52 +19,52 @@ const productPrototype = {
 
 const similarProducts = [
   {
-    id: 1, 
+    id: 1,
     name: "chaise",
     type: "bois",
-    price: "145$", 
+    price: "145$",
     imageSrc: "/meuble-2.jpeg",
   },
   {
     name: "table",
     type: "chêne",
-    price: "105$", 
+    price: "105$",
     imageSrc: "/meuble-2.jpeg",
   },
   {
     name: "rideau",
     type: "laine",
-    price: "45$", 
+    price: "45$",
     imageSrc: "/meuble-2.jpeg",
   },
   {
     name: "rideau",
     type: "laine",
-    price: "45$", 
+    price: "45$",
     imageSrc: "/meuble-2.jpeg",
   },
   {
     name: "rideau",
     type: "laine",
-    price: "45$", 
+    price: "45$",
     imageSrc: "/meuble-2.jpeg",
   },
   {
     name: "rideau",
     type: "laine",
-    price: "45$", 
+    price: "45$",
     imageSrc: "/meuble-2.jpeg",
   },
   {
     name: "rideau",
     type: "laine",
-    price: "45$", 
+    price: "45$",
     imageSrc: "/meuble-2.jpeg",
   },
   {
     name: "rideau",
     type: "laine",
-    price: "45$", 
+    price: "45$",
     imageSrc: "/meuble-2.jpeg",
   },
 ];
