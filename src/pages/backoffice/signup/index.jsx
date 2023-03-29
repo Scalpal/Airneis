@@ -30,15 +30,16 @@ const SignUp = () => {
   const [error, setError] = useState(null)
   const handleSubmit = useCallback(
     async (values) => {
-      const [firstName, lastname] = values.name.split(" ");
+      const [firstName, lastName] = values.name.split(" ");
 
       const newValues = {
         email: values.email,
         firstName,
-        lastname,
-        password: values.password
+        lastName,
+        password: values.password,
+        phoneNumber: values.phone
       };
-
+      console.log(newValues);
       const [err] = await signUp(newValues)
 
       if (err) {
@@ -47,7 +48,7 @@ const SignUp = () => {
         return
       }
 
-      router.push("/sign-in")
+      router.push("/backoffice/login")
     },
     [signUp, router]
   )

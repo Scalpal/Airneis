@@ -1,4 +1,4 @@
-import { emailValidator, stringValidator } from "@/validator";
+import { createValidator, stringValidator, emailValidator } from "@/validator";
 import BackofficeLoginLayout from "@/web/components/backoffice/LoginLayout";
 import { Formik, Form } from "formik";
 import CustomField from "@/web/components/backoffice/CustomField";
