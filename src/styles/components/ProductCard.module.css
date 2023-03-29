@@ -28,11 +28,6 @@
   transition-duration: 300ms;
 }
 
-.productCard:hover .productCardImage {
-  opacity: 0.9;
-  cursor: pointer;
-}
-
 
 
 /* Product card infos overlay */
@@ -54,17 +49,24 @@
   text-align: center;
 }
 
-.productCard:hover .productCardInfos {
-  opacity: 1 !important;
-  background-color: rgb(0, 0, 0, 0.5);
-  cursor: pointer;
+/* Hover effects only for laptop or + width */
+@media only screen and (min-width: 769px) {
+
+  .productCard:hover .productCardImage {
+    opacity: 0.9;
+    cursor: pointer;
+  }
+
+  .productCard:hover .productCardInfos {
+    opacity: 1 !important;
+    background-color: rgb(0, 0, 0, 0.5);
+    cursor: pointer;
+  }
 }
 
 
 
-
-
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 768px) {
 
   .productCard {
     min-height: 15rem;
