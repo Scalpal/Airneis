@@ -1,4 +1,4 @@
-import Navbar from "@/components/Navbar";
+import Navbar from "@/web/components/Navbar";
 import Footer from "./Footer";
 import DrawerMenu from "./DrawerMenu";
 import { useState } from "react";
@@ -6,7 +6,7 @@ import { nunito } from "@/pages/_app";
 
 const Layout = ({ children }) => {
 
-  const [isDrawerToggled, setIsDrawerToggled] = useState(false); 
+  const [isDrawerToggled, setIsDrawerToggled] = useState(false);
 
   return (
     <div className={nunito.className}>
@@ -23,7 +23,7 @@ const Layout = ({ children }) => {
 
       <Footer />
     </div>
-  ); 
+  );
 };
 
 export default Layout;

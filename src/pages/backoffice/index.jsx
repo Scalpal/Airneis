@@ -1,4 +1,4 @@
-import Layout from "@/components/backoffice/Layout";
+import Layout from "@/web/components/backoffice/Layout";
 
 const Backoffice = () => {
 
@@ -7,8 +7,8 @@ const Backoffice = () => {
     <h2>Page index backoffice</h2>
   );
 };
-
-Backoffice.getLayout = function(page) {
+Backoffice.isPublic = true
+Backoffice.getLayout = function (page) {
   return (
     <Layout>
       {page}

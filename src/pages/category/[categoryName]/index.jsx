@@ -1,57 +1,57 @@
-import Banner from "@/components/Banner";
-import DetailedProductCard from "@/components/DetailedProductCard";
+import Banner from "@/web/components/Banner";
+import DetailedProductCard from "@/web/components/DetailedProductCard";
 import { useRouter } from "next/router";
-import styles from "@/styles/categoryPage.module.css"; 
+import styles from "@/styles/categoryPage.module.css";
 
-export default function Category () {
+const Category = () => {
 
-  const router = useRouter(); 
+  const router = useRouter();
   const categoryProducts = [
     {
-      id: 1, 
+      id: 1,
       name: "Chaise moderne en bois de hêtre",
       type: "bois",
-      price: "145$", 
+      price: "145$",
       stock: 25,
       imageSrc: "/meuble-2.jpeg"
     },
     {
-      id: 2, 
+      id: 2,
       name: "chaise",
       type: "bois",
-      price: "145$", 
+      price: "145$",
       stock: 25,
       imageSrc: "/meuble-2.jpeg"
     },
     {
-      id: 3, 
+      id: 3,
       name: "chaise",
       type: "bois",
-      price: "145$", 
+      price: "145$",
       stock: 25,
       imageSrc: "/meuble-2.jpeg"
     },
     {
-      id: 4, 
+      id: 4,
       name: "chaise",
       type: "bois",
-      price: "145$", 
+      price: "145$",
       stock: 25,
       imageSrc: "/meuble-2.jpeg"
     },
     {
-      id: 5, 
+      id: 5,
       name: "chaise",
       type: "bois",
-      price: "145$", 
+      price: "145$",
       stock: 25,
       imageSrc: "/meuble-2.jpeg"
     },
     {
-      id: 6, 
+      id: 6,
       name: "chaise",
       type: "bois",
-      price: "145$", 
+      price: "145$",
       stock: 25,
       imageSrc: "/meuble-2.jpeg"
     }
@@ -80,3 +80,5 @@ export default function Category () {
     </>
   );
 }
+Category.isPublic = true
+export default Category

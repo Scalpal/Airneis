@@ -1,9 +1,9 @@
-import Button from "@/components/Button";
-import CartProduct from "@/components/CartProduct";
+import Button from "@/web/components/Button";
+import CartProduct from "@/web/components/CartProduct";
 import { useRouter } from "next/router";
 import { useCallback, useState } from "react";
 import { ShoppingCartIcon } from "@heroicons/react/24/outline";
-import LayoutStickyNavbar from "@/components/LayoutStickyNavbar";
+import LayoutStickyNavbar from "@/web/components/LayoutStickyNavbar";
 import styles from "@/styles/cart.module.css";
 
 const products = [
@@ -57,7 +57,7 @@ const Cart = () => {
 
 
   return (
-    <>      
+    <>
       <div className={styles.mainContent}>
         {productsList.length === 0 ? (
           <>
@@ -70,7 +70,7 @@ const Cart = () => {
                 <p>Before proceed to checkout, you must add some products to your cart.</p>
                 <p>Won&apos;t you come here without buying anything...</p>
               </div>
- 
+
               <div>
                 <Button
                   onClick={() => redirectToHomePage()}
@@ -95,15 +95,15 @@ const Cart = () => {
                 );
               })}
             </section>
-              
+
             <section className={styles.recapContainer}>
-               
+
               <div className={styles.recapTopRows}>
                 <div className={styles.recapRow}>
                   <p>Subtotal</p>
                   <p>{totalSum.toFixed(2)}€</p>
                 </div>
-                  
+
                 <div className={styles.recapRow}>
                   <p>TAX (20%)</p>
                   <p>{(totalSum * 0.2).toFixed(2)}€</p>
@@ -116,11 +116,11 @@ const Cart = () => {
                   {(totalSum * 1.2).toFixed(2)}€
                 </p>
               </div>
-                
+
               <Button
                 onClick={() => handleSubmit()}
               >
-                  Order
+                Order
               </Button>
             </section>
           </>
@@ -129,8 +129,8 @@ const Cart = () => {
     </>
   );
 };
-
-Cart.getLayout = function(page) {
+Cart.isPublic = true
+Cart.getLayout = function (page) {
   return (
     <LayoutStickyNavbar>
       {page}

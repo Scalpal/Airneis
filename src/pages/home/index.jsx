@@ -1,8 +1,8 @@
-import Carousel from "@/components/Carousel";
-import CustomerReview from "@/components/CustomerReview";
-import CategoriesBlocks from "@/components/CategoriesBlocks";
+import Carousel from "@/web/components/Carousel";
+import CustomerReview from "@/web/components/CustomerReview";
+import CategoriesBlocks from "@/web/components/CategoriesBlocks";
 import styles from "@/styles/home.module.css";
-import ProductCard from "@/components/ProductCard";
+import ProductCard from "@/web/components/ProductCard";
 
 const placeholderImages = [
   "/meuble-4.jpeg",
@@ -136,5 +136,5 @@ const Home = () => {
     </>
   );
 };
-
+Home.isPublic = true
 export default Home;

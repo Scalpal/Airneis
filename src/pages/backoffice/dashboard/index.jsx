@@ -1,4 +1,4 @@
-import Layout from "@/components/backoffice/Layout"; 
+import Layout from "@/web/components/backoffice/Layout";
 
 const BackofficeDashboard = () => {
 
@@ -15,5 +15,5 @@ BackofficeDashboard.getLayout = (page) => {
     </Layout>
   );
 };
-
+BackofficeDashboard.isPublic = true
 export default BackofficeDashboard; 

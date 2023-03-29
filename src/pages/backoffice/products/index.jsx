@@ -1,11 +1,11 @@
-import Layout from "@/components/backoffice/Layout";
+import Layout from "@/web/components/backoffice/Layout";
 import { useState } from "react";
-import Table from "@/components/backoffice/Table"; 
+import Table from "@/web/components/backoffice/Table";
 import { classnames } from "@/pages/_app";
 import { nunito } from "@/pages/_app";
-import Button from "@/components/Button";
+import Button from "@/web/components/Button";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import styles from "@/styles/backoffice/statsPages.module.css"; 
+import styles from "@/styles/backoffice/statsPages.module.css";
 
 // Prototype datas 
 const productsProto = [
@@ -95,7 +95,7 @@ const productsProto = [
 
 const BackofficeProducts = () => {
 
-  const [products, _] = useState(productsProto); 
+  const [products, _] = useState(productsProto);
 
   // const sortByPrice = useCallback(() => {
   //   setProducts(
@@ -129,7 +129,7 @@ const BackofficeProducts = () => {
       <div className={styles.mainContent}>
         <div className={styles.actionBar}>
           <div>
-            <p>Products</p> 
+            <p>Products</p>
 
             <div className={styles.customSearchInput}>
               <input type="text" placeholder="Search a product" />
@@ -151,8 +151,8 @@ const BackofficeProducts = () => {
     </main>
   );
 };
-
-BackofficeProducts.getLayout = function(page) {
+BackofficeProducts.isPublic = true
+BackofficeProducts.getLayout = function (page) {
   return (
     <Layout>
       {page}

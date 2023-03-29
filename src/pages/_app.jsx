@@ -1,9 +1,9 @@
 import "@/styles/global.css";
-import Layout from "@/components/Layout";
+import Layout from "@/web/components/Layout";
 import Head from "next/head";
 import { Montserrat } from "@next/font/google";
 import { Nunito } from "@next/font/google";
-
+import { AppContextProvider } from "@/web/hooks/useAppContext.jsx"
 
 export const classnames = require("classnames");
 
@@ -40,7 +40,9 @@ export default function App({ Component, pageProps }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Component {...pageProps} />
+      <AppContextProvider isPublicPage={Component.isPublic}>
+        <Component {...pageProps} />
+      </AppContextProvider>
     </>
   );
 }

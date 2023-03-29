@@ -15,6 +15,7 @@
   outline: 2px solid black;
   outline-offset: 5px;
   filter: invert(1);
+  cursor: pointer;
 }
 
 .buttonDisabled {

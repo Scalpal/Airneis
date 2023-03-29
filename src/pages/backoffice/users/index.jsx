@@ -1,10 +1,10 @@
-import Layout from "@/components/backoffice/Layout";
-import Table from "@/components/backoffice/Table"; 
+import Layout from "@/web/components/backoffice/Layout";
+import Table from "@/web/components/backoffice/Table";
 import { classnames } from "@/pages/_app";
 import { nunito } from "@/pages/_app";
-import styles from "@/styles/backoffice/statsPages.module.css"; 
+import styles from "@/styles/backoffice/statsPages.module.css";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-  
+
 const users = [
   {
     id: 1,
@@ -70,15 +70,15 @@ const BackofficeUsers = () => {
 
         <div>
           <p>Percentage of customers in users</p>
-          <p>{((100 * 2) / users.length).toFixed(2) }%</p>
+          <p>{((100 * 2) / users.length).toFixed(2)}%</p>
         </div>
       </div>
-      
+
       <div className={styles.mainContent}>
 
         <div className={styles.actionBar}>
           <div>
-            <p>Users</p> 
+            <p>Users</p>
 
             <div className={styles.customSearchInput}>
               <input type="text" placeholder="Search a user" />
@@ -93,8 +93,8 @@ const BackofficeUsers = () => {
     </main>
   );
 };
-
-BackofficeUsers.getLayout = function(page) {
+BackofficeUsers.isPublic = true
+BackofficeUsers.getLayout = function (page) {
   return (
     <Layout>
       {page}

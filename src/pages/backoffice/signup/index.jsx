@@ -1,4 +1,4 @@
-import { emailValidator, stringValidator } from "@/validator";
+import { createValidator, displayNameValidator, phoneValidator, emailValidator, passwordValidator } from "@/validator";
 import BackofficeLoginLayout from "@/web/components/backoffice/LoginLayout";
 import { Formik, Form } from "formik";
 import CustomField from "@/web/components/backoffice/CustomField";
@@ -10,15 +10,19 @@ import useAppContext from "@/web/hooks/useAppContext";
 
 const validationSchema = createValidator({
   email: emailValidator.required(),
-  password: stringValidator.required(),
+  password: passwordValidator.required(),
+  phone: phoneValidator.required(),
+  name: displayNameValidator.required()
 })
 
 const initialValues = {
   email: "",
   password: "",
+  name: "",
+  phone: "",
 }
 
-const login = () => {
+const SignUp = () => {
   const router = useRouter()
   const {
     actions: { signUp },
@@ -73,8 +77,22 @@ const login = () => {
 
             <CustomField
               name="password"
-              type="text"
+              type="password"
               label="Password"
+              showError={false}
+            />
+
+            <CustomField
+              name="name"
+              type="text"
+              label="First and last name"
+              showError={false}
+            />
+
+            <CustomField
+              name="phone"
+              type="tel"
+              label="Mobile number"
               showError={false}
             />
 
@@ -93,8 +111,8 @@ const login = () => {
     </main>
   );
 }
-login.isPublic = true
-login.getLayout = function (page) {
+SignUp.isPublic = true
+SignUp.getLayout = function (page) {
   return (
     <BackofficeLoginLayout>
       {page}
@@ -102,4 +120,4 @@ login.getLayout = function (page) {
   );
 };
 
-export default login; 
+export default SignUp; 

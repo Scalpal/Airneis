@@ -1,5 +1,7 @@
 import Home from "./home";
 
-export default function Index() {
+const Index = () => {
   return <Home />;
 }
+Index.isPublic = true;
+export default Index;

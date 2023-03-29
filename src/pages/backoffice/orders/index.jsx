@@ -1,10 +1,10 @@
-import Layout from "@/components/backoffice/Layout";
+import Layout from "@/web/components/backoffice/Layout";
 import { useState } from "react";
-import Table from "@/components/backoffice/Table"; 
+import Table from "@/web/components/backoffice/Table";
 import { classnames } from "@/pages/_app";
 import { nunito } from "@/pages/_app";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import styles from "@/styles/backoffice/statsPages.module.css"; 
+import styles from "@/styles/backoffice/statsPages.module.css";
 
 // Prototype datas 
 const ordersProto = [
@@ -58,7 +58,7 @@ const ordersProto = [
 
 const BackofficeOrders = () => {
 
-  const [orders, _] = useState(ordersProto); 
+  const [orders, _] = useState(ordersProto);
 
   return (
     <main
@@ -83,7 +83,7 @@ const BackofficeOrders = () => {
         <div className={styles.actionBar}>
 
           <div>
-            <p>Orders</p> 
+            <p>Orders</p>
 
             <div className={styles.customSearchInput}>
               <input type="text" placeholder="Search an order" />
@@ -98,8 +98,8 @@ const BackofficeOrders = () => {
     </main>
   );
 };
-
-BackofficeOrders.getLayout = function(page) {
+BackofficeOrders.isPublic = false
+BackofficeOrders.getLayout = function (page) {
   return (
     <Layout>
       {page}

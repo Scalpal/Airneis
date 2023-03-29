@@ -1,4 +1,4 @@
-import Layout from "@/components/backoffice/Layout";
+import Layout from "@/web/components/backoffice/Layout";
 
 const BackofficeStats = () => {
 
@@ -7,8 +7,8 @@ const BackofficeStats = () => {
     <h2>Page index statistiques</h2>
   );
 };
-
-BackofficeStats.getLayout = function(page) {
+BackofficeStats.isPublic = true
+BackofficeStats.getLayout = function (page) {
   return (
     <Layout>
       {page}

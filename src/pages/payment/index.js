@@ -45,5 +45,5 @@ const Payment = () => {
     </>
   );
 };
-
+Payment.isPublic = false;
 export default Payment;

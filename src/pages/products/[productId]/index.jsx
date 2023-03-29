@@ -1,7 +1,7 @@
-import Carousel from "@/components/Carousel";
-import ProductCard from "@/components/ProductCard";
-import Banner from "@/components/Banner";
-import Button from "@/components/Button";
+import Carousel from "@/web/components/Carousel";
+import ProductCard from "@/web/components/ProductCard";
+import Banner from "@/web/components/Banner";
+import Button from "@/web/components/Button";
 import styles from "@/styles/productPage.module.css";
 
 const placeholderImages = [
@@ -19,52 +19,52 @@ const productPrototype = {
 
 const similarProducts = [
   {
-    id: 1, 
+    id: 1,
     name: "chaise",
     type: "bois",
-    price: "145$", 
+    price: "145$",
     imageSrc: "/meuble-2.jpeg",
   },
   {
     name: "table",
     type: "chêne",
-    price: "105$", 
+    price: "105$",
     imageSrc: "/meuble-2.jpeg",
   },
   {
     name: "rideau",
     type: "laine",
-    price: "45$", 
+    price: "45$",
     imageSrc: "/meuble-2.jpeg",
   },
   {
     name: "rideau",
     type: "laine",
-    price: "45$", 
+    price: "45$",
     imageSrc: "/meuble-2.jpeg",
   },
   {
     name: "rideau",
     type: "laine",
-    price: "45$", 
+    price: "45$",
     imageSrc: "/meuble-2.jpeg",
   },
   {
     name: "rideau",
     type: "laine",
-    price: "45$", 
+    price: "45$",
     imageSrc: "/meuble-2.jpeg",
   },
   {
     name: "rideau",
     type: "laine",
-    price: "45$", 
+    price: "45$",
     imageSrc: "/meuble-2.jpeg",
   },
   {
     name: "rideau",
     type: "laine",
-    price: "45$", 
+    price: "45$",
     imageSrc: "/meuble-2.jpeg",
   },
 ];
@@ -99,7 +99,7 @@ const ProductPage = () => {
 
           </div>
         </section>
-        
+
         <div className={styles.addToCartBtnWrapper}>
           <Button
             onClick={() => console.log("haha")}
@@ -111,7 +111,7 @@ const ProductPage = () => {
         <section className={styles.similarProductsWrapper}>
 
           <h1> Similar products </h1>
-          
+
           <div className={styles.similarProductsContainer}>
             {similarProducts.map((product, index) => {
               return (
@@ -128,5 +128,5 @@ const ProductPage = () => {
     </>
   );
 };
-
+ProductPage.isPublic = true
 export default ProductPage; 

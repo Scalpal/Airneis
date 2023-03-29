@@ -1,6 +1,6 @@
-import Banner from "@/components/Banner";
+import Banner from "@/web/components/Banner";
 
-export default function Products() {
+const Products = () => {
   return (
     <>
       <Banner title={"Products"} />
@@ -8,3 +8,5 @@ export default function Products() {
     </>
   );
 }
+Products.isPublic = true
+export default Products;
