@@ -14,7 +14,8 @@ export default function Category () {
       description: "Chaises noir en bois de hêtre centenaire d'Himalayad,zkdanaldza nzdn lkdn jlkdznland kzalzdnalkd nkldzndzlaknalkn",
       price: "145$", 
       stock: 25,
-      imageSrc: "/meuble-2.jpeg"
+      imageSrc: "/meuble-2.jpeg",
+      materials: ["métal", "acier", "fer"]
     },
     {
       id: 2, 
@@ -23,7 +24,8 @@ export default function Category () {
       description: "Chaises noir en bois de hêtre centenaire d'Himalaya",
       price: "145$", 
       stock: 25,
-      imageSrc: "/meuble-2.jpeg"
+      imageSrc: "/meuble-2.jpeg",
+      materials: ["métal", "acier", "fer"]
     },
     {
       id: 3, 
@@ -32,7 +34,8 @@ export default function Category () {
       description: "Chaises noir en bois de hêtre centenaire d'Himalaya",
       price: "145$", 
       stock: 25,
-      imageSrc: "/meuble-2.jpeg"
+      imageSrc: "/meuble-2.jpeg",
+      materials: ["métal", "acier", "fer"]
     },
     {
       id: 4, 
@@ -41,7 +44,8 @@ export default function Category () {
       description: "Chaises noir en bois de hêtre centenaire d'Himalaya",
       price: "145$", 
       stock: 25,
-      imageSrc: "/meuble-2.jpeg"
+      imageSrc: "/meuble-2.jpeg",
+      materials: ["métal", "acier", "fer"]
     },
     {
       id: 5, 
@@ -50,7 +54,8 @@ export default function Category () {
       description: "Chaises noir en bois de hêtre centenaire d'Himalaya",
       price: "145$", 
       stock: 25,
-      imageSrc: "/meuble-2.jpeg"
+      imageSrc: "/meuble-2.jpeg",
+      materials: ["métal", "acier", "fer"]
     },
     {
       id: 6, 
@@ -59,7 +64,8 @@ export default function Category () {
       description: "Chaises noir en bois de hêtre centenaire d'Himalaya",
       price: "145$", 
       stock: 25,
-      imageSrc: "/meuble-2.jpeg"
+      imageSrc: "/meuble-2.jpeg",
+      materials: ["métal", "acier", "fer"]
     }
   ];
 

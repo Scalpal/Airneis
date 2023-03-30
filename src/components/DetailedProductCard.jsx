@@ -1,7 +1,6 @@
 import { useRouter } from "next/router";
 import styles from "@/styles/components/DetailedProductCard.module.css";
 import Image from "next/image";
-import Button from "./Button";
 import { ArrowRightIcon } from "@heroicons/react/24/solid";
 
 const DetailedProductCard = (props) => {
@@ -27,14 +26,12 @@ const DetailedProductCard = (props) => {
 
 
       <div className={styles.productCardInfos}>
-        {/* <span className={styles.productCardInfoStock}>{product.stock} available</span> */}
 
         <p className={styles.productCardInfoName}> {product.name} </p>
 
-        <div className={styles.ellipsisWrapper}>
+        <div className={styles.descriptionWrapper}>
           <p className={styles.productCardInfoDescription}>{product.description}</p>
         </div>
-
 
         <div
           className={styles.showMoreButton}
@@ -44,16 +41,24 @@ const DetailedProductCard = (props) => {
           <ArrowRightIcon className={styles.showMoreIcon} />
         </div>
 
+        <div className={styles.productMaterialWrapper}>
+          <p>Matériaux : {product.materials.map((material, index) => {
+            const comma = index === product.materials.length - 1 ? " " : ", ";
+
+            return material + comma;
+          })}</p>
+        </div>
+
         <div className={styles.priceStockWrapper}>
           <p className={styles.productCardInfoPrice}> {product.price} </p>
           <span className={styles.productCardInfoStock}>{product.stock} available</span>
         </div>
 
-        <div className={styles.productCardInfoBtnWrapper}>
+        {/* <div className={styles.productCardInfoBtnWrapper}>
           <Button>
             Add to cart
           </Button>
-        </div>
+        </div> */}
       </div>
     </div>
   );
