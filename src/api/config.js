@@ -1,8 +1,8 @@
-import knexfile from "@@/knexfile.js"
-import dotenv from "dotenv"
-import { resolve } from "node:path"
+import knexfile from "@@/knexfile.js";
+import dotenv from "dotenv";
+import { resolve } from "node:path";
 
-dotenv.config({ path: resolve(".env.local") })
+dotenv.config({ path: resolve(".env.local") });
 
 const config = {
   port: 3000,
@@ -20,6 +20,6 @@ const config = {
       pepper: process.env.SECURITY_PASSWORD_PEPPER,
     },
   },
-}
+};
 
-export default config
+export default config;

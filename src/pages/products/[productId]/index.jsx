@@ -128,5 +128,5 @@ const ProductPage = () => {
     </>
   );
 };
-ProductPage.isPublic = true
+ProductPage.isPublic = true;
 export default ProductPage; 

@@ -7,6 +7,6 @@ const About = () => {
       <h2> About us page </h2>
     </>
   );
-}
-About.isPublic = true
-export default About
+};
+About.isPublic = true;
+export default About;

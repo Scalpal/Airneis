@@ -11,12 +11,12 @@ const CustomField = (props) => {
   const [passwordVisibility, setPasswordVisibility] = useState(false);
 
   const typeIs = () => {
-    if (type === 'password') {
-      return passwordVisibility ? "text" : "password"
+    if (type === "password") {
+      return passwordVisibility ? "text" : "password";
     }
 
-    return type
-  }
+    return type;
+  };
 
   const passwordIcon = () => {
     if (passwordVisibility) {
@@ -28,7 +28,7 @@ const CustomField = (props) => {
           )}
           onClick={() => setPasswordVisibility(false)}
         />
-      )
+      );
     }
     return (<EyeIcon
       className={classnames(
@@ -36,8 +36,8 @@ const CustomField = (props) => {
         styles.eyeIcon
       )}
       onClick={() => setPasswordVisibility(true)}
-    />)
-  }
+    />);
+  };
 
   return (
     <Field name={name}>

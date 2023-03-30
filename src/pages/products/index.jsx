@@ -7,6 +7,6 @@ const Products = () => {
       <h2> Products page </h2>
     </>
   );
-}
-Products.isPublic = true
+};
+Products.isPublic = true;
 export default Products;

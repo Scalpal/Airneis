@@ -1,8 +1,8 @@
-import { pbkdf2 as pbkdf2Callback, randomBytes } from "node:crypto"
-import { promisify } from "node:util"
-import config from "../config.js"
+import { pbkdf2 as pbkdf2Callback, randomBytes } from "node:crypto";
+import { promisify } from "node:util";
+import config from "../config.js";
 
-const pbkdf2 = promisify(pbkdf2Callback)
+const pbkdf2 = promisify(pbkdf2Callback);
 
 const hashPassword = async (
   password,
@@ -18,6 +18,6 @@ const hashPassword = async (
     )
   ).toString("hex"),
   salt,
-]
+];
 
-export default hashPassword
+export default hashPassword;

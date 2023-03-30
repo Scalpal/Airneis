@@ -53,6 +53,6 @@ const Categories = () => {
       </main>
     </>
   );
-}
-Categories.isPublic = true
-export default Categories
+};
+Categories.isPublic = true;
+export default Categories;

@@ -29,14 +29,24 @@ export const up = async (knex) => {
     table.text("name").notNullable();
     table.timestamps(true, true, true);
   });
+  await knex.schema.createTable("materials", (table) => {
+    table.increments("id");
+    table.text("name").notNullable();
+    table.timestamps(true, true, true);
+  });
   await knex.schema.createTable("product", (table) => {
     table.increments("id");
     table.string("title").notNullable();
     table.text("description").notNullable();
     table.integer("price").notNullable();
+    table
+      .integer("materialsId")
+      .references("id")
+      .inTable("materials")
+      .notNullable();
     table.integer("quantity").notNullable().defaultTo(1);
     table
-      .integer("category")
+      .integer("categoryId")
       .references("id")
       .inTable("category")
       .notNullable();

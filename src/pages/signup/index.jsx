@@ -13,21 +13,21 @@ const validationSchema = createValidator({
   password: passwordValidator.required(),
   phone: phoneValidator.required(),
   name: displayNameValidator.required()
-})
+});
 
 const initialValues = {
   email: "",
   password: "",
   name: "",
   phone: "",
-}
+};
 
 const SignUp = () => {
-  const router = useRouter()
+  const router = useRouter();
   const {
     actions: { signUp },
-  } = useAppContext()
-  const [error, setError] = useState(null)
+  } = useAppContext();
+  const [error, setError] = useState(null);
   const handleSubmit = useCallback(
     async (values) => {
       const [firstName, lastName] = values.name.split(" ");
@@ -39,19 +39,19 @@ const SignUp = () => {
         password: values.password,
         phoneNumber: values.phone
       };
-      console.log(newValues);
-      const [err] = await signUp(newValues)
+
+      const [err] = await signUp(newValues);
 
       if (err) {
-        setError(err)
+        setError(err);
 
-        return
+        return;
       }
 
-      router.push("/backoffice/login")
+      router.push("/login");
     },
     [signUp, router]
-  )
+  );
   return (
     <main className={styles.mainContent}>
 
@@ -101,7 +101,7 @@ const SignUp = () => {
               <Button
                 disabled={!(dirty && isValid)}
               >
-                Login
+                Sign-up
               </Button>
             </div>
 
@@ -111,8 +111,8 @@ const SignUp = () => {
 
     </main>
   );
-}
-SignUp.isPublic = true
+};
+SignUp.isPublic = true;
 SignUp.getLayout = function (page) {
   return (
     <BackofficeLoginLayout>

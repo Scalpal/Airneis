@@ -15,5 +15,5 @@ BackofficeDashboard.getLayout = (page) => {
     </Layout>
   );
 };
-BackofficeDashboard.isPublic = true
+BackofficeDashboard.isPublic = true;
 export default BackofficeDashboard; 

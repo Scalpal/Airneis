@@ -98,7 +98,7 @@ const BackofficeOrders = () => {
     </main>
   );
 };
-BackofficeOrders.isPublic = false
+BackofficeOrders.isPublic = false;
 BackofficeOrders.getLayout = function (page) {
   return (
     <Layout>

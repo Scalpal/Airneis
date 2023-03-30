@@ -7,6 +7,6 @@ const Contact = () => {
       <h2> Contact page </h2>
     </>
   );
-}
-Contact.isPublic = true
-export default Contact
+};
+Contact.isPublic = true;
+export default Contact;

@@ -79,6 +79,6 @@ const Category = () => {
       </main>
     </>
   );
-}
-Category.isPublic = true
-export default Category
+};
+Category.isPublic = true;
+export default Category;

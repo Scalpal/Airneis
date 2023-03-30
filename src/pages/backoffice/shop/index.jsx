@@ -12,7 +12,7 @@ const BackofficeShop = () => {
 
   );
 };
-BackofficeShop.isPublic = true
+BackofficeShop.isPublic = true;
 BackofficeShop.getLayout = function (page) {
   return (
     <Layout>

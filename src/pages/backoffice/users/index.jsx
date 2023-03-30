@@ -93,7 +93,7 @@ const BackofficeUsers = () => {
     </main>
   );
 };
-BackofficeUsers.isPublic = true
+BackofficeUsers.isPublic = true;
 BackofficeUsers.getLayout = function (page) {
   return (
     <Layout>

@@ -151,7 +151,7 @@ const BackofficeProducts = () => {
     </main>
   );
 };
-BackofficeProducts.isPublic = true
+BackofficeProducts.isPublic = true;
 BackofficeProducts.getLayout = function (page) {
   return (
     <Layout>

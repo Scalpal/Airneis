@@ -1,6 +1,6 @@
 const slowDown =
   (ms) =>
-  ({ next }) =>
-    setTimeout(() => next(), ms)
+    ({ next }) =>
+      setTimeout(() => next(), ms);
 
-export default slowDown
+export default slowDown;

@@ -4,6 +4,7 @@ import CategoriesBlocks from "@/web/components/CategoriesBlocks";
 import styles from "@/styles/home.module.css";
 import ProductCard from "@/web/components/ProductCard";
 
+
 const placeholderImages = [
   "/meuble-4.jpeg",
   "/meuble-2.jpeg",
@@ -136,5 +137,5 @@ const Home = () => {
     </>
   );
 };
-Home.isPublic = true
+Home.isPublic = true;
 export default Home;

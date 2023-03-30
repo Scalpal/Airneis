@@ -7,8 +7,6 @@ import styles from "@/styles/backoffice/loginPage.module.css";
 import { useRouter } from "next/router";
 import { useCallback, useState } from "react";
 import useAppContext from "@/web/hooks/useAppContext";
-const merge = require("deepmerge")
-
 
 const validationSchema = createValidator({
   email: emailValidator.required(),
@@ -28,8 +26,8 @@ const Login = () => {
   const [error, setError] = useState(null);
   const handleSubmit = useCallback(
     async (values) => {
-      const newValues = merge(values, { access: "admin" });
-      const [err] = await signIn(newValues);
+      const [err] = await signIn(values);
+
       if (err) {
         setError(err);
 
@@ -52,10 +50,8 @@ const Login = () => {
           <Form className={styles.formContainer}>
             <div className={styles.titlesBlock}>
               <p className={styles.logo}>Airneis</p>
-              <p> - </p>
-              <p>Backoffice</p>
             </div>
-            {error ? <p className={styles.error}>password or login incorrect</p> : null}
+            {error ? <p className={styles.error}>password or login incorect</p> : null}
             <CustomField
               name="email"
               type="text"
