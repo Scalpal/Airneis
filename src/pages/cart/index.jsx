@@ -10,7 +10,7 @@ const products = [
   {
     id: 1,
     picture: "/meuble-1.jpeg",
-    name: "Product #1",
+    name: "Chaise longue bleue siu sisu siu sisus isi sus ",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae nibh pulvinar, scelerisque nunc id, accumsan augue. Cras placerat sem id est suscipit, sit amet venenatis ante mollis. Phasellus rutrum ex id semper elementum. Proin lobortis neque sem, in iaculis est efficitur id. Fusce ornare volutpat arcu, quis imperdiet quam.",
     price: 50.0,
@@ -19,7 +19,7 @@ const products = [
   {
     id: 2,
     picture: "/meuble-2.jpeg",
-    name: "Product #2",
+    name: "Lit double king size",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae nibh pulvinar, scelerisque nunc id, accumsan augue. Cras placerat sem id est suscipit, sit amet venenatis ante mollis. Phasellus rutrum ex id semper elementum. Proin lobortis neque sem, in iaculis est efficitur id. Fusce ornare volutpat arcu, quis imperdiet quam.",
     price: 75.25,
@@ -28,7 +28,7 @@ const products = [
   {
     id: 3,
     picture: "/meuble-3.png",
-    name: "Product #3",
+    name: "Chaise panier en osier",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae nibh pulvinar, scelerisque nunc id, accumsan augue. Cras placerat sem id est suscipit, sit amet venenatis ante mollis. Phasellus rutrum ex id semper elementum. Proin lobortis neque sem, in iaculis est efficitur id. Fusce ornare volutpat arcu, quis imperdiet quam.",
     price: 10.99,
@@ -83,6 +83,7 @@ const Cart = () => {
         ) : (
           <>
             <section className={styles.productListContainer}>
+              <p className={styles.productListTitle}>Panier</p>
               {productsList.map((product, index) => {
                 return (
                   <CartProduct

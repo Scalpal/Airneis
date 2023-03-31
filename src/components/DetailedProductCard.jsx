@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import styles from "@/styles/components/DetailedProductCard.module.css";
 import Image from "next/image";
 import { ArrowRightIcon } from "@heroicons/react/24/solid";
+import Button from "./Button";
 
 const DetailedProductCard = (props) => {
 
@@ -25,7 +26,9 @@ const DetailedProductCard = (props) => {
       </div>
 
 
-      <div className={styles.productCardInfos}>
+      <div
+        className={styles.productCardInfos}
+      >
 
         <p className={styles.productCardInfoName}> {product.name} </p>
 
@@ -54,11 +57,11 @@ const DetailedProductCard = (props) => {
           <span className={styles.productCardInfoStock}>{product.stock} available</span>
         </div>
 
-        {/* <div className={styles.productCardInfoBtnWrapper}>
+        <div className={styles.productCardInfoBtnWrapper}>
           <Button>
             Add to cart
           </Button>
-        </div> */}
+        </div>
       </div>
     </div>
   );

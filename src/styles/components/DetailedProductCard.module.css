@@ -32,14 +32,12 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  /* justify-content: flex-end; */
   justify-content: space-between; 
-  gap: 0.5rem;
   padding: 1rem;
   border-bottom-left-radius: 16px;
   border-bottom-right-radius: 16px;
   transition-duration: 500ms;
-  height: 60%;
+  height: 70%;
   width: 100%;
   font-weight: 300;
   opacity: 0;
@@ -76,7 +74,6 @@
   color: rgb(133, 133, 133);}
 
 .priceStockWrapper {
-  order: 4;
   width: 100%;
   display: flex;
   justify-content: space-between;
