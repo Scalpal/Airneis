@@ -7,7 +7,7 @@ import styles from "@/styles/backoffice/loginPage.module.css";
 import { useRouter } from "next/router";
 import { useCallback, useState } from "react";
 import useAppContext from "@/web/hooks/useAppContext";
-const merge = require("deepmerge")
+const merge = require("deepmerge");
 
 
 const validationSchema = createValidator({
@@ -30,6 +30,20 @@ const Login = () => {
     async (values) => {
       const newValues = merge(values, { access: "admin" });
       const [err] = await signIn(newValues);
+
+      if (err && error) {
+        document.getElementById("errormsg").animate(
+          [
+            { opacity: "100" },
+            { opacity: "0" },
+            { opacity: "100" },
+          ],
+          {
+            duration: 1000,
+          }
+        );
+      }
+
       if (err) {
         setError(err);
 
@@ -37,7 +51,7 @@ const Login = () => {
       }
       router.push("/home");
     },
-    [signIn, router]
+    [signIn, error, router]
   );
   return (
     <main className={styles.mainContent}>
@@ -48,14 +62,14 @@ const Login = () => {
         initialValues={initialValues}
         error={error}
       >
-        {({ isValid, dirty }) => (
+        {({ isValid, dirty, isSubmitting }) => (
           <Form className={styles.formContainer}>
             <div className={styles.titlesBlock}>
               <p className={styles.logo}>Airneis</p>
               <p> - </p>
               <p>Backoffice</p>
             </div>
-            {error ? <p className={styles.error}>password or login incorrect</p> : null}
+            {error ? <p id="errormsg" className={styles.error}>password or login incorrect</p> : null}
             <CustomField
               name="email"
               type="text"
@@ -72,7 +86,7 @@ const Login = () => {
 
             <div className={styles.buttonWrapper}>
               <Button
-                disabled={!(dirty && isValid)}
+                disabled={!(dirty && isValid) || isSubmitting}
               >
                 Login
               </Button>

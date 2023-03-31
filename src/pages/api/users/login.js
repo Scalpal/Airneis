@@ -3,7 +3,7 @@ import UserModel from "@/api/db/models/UserModel.js";
 import slowDown from "@/api/middlewares/slowDown.js";
 import validate from "@/api/middlewares/validate.js";
 import mw from "@/api/mw.js";
-import { emailValidator, stringValidator } from "@/validator";
+import { emailValidator, stringValidator, roleValidator } from "@/validator";
 import jsonwebtoken from "jsonwebtoken";
 
 const handler = mw({
@@ -13,7 +13,7 @@ const handler = mw({
       body: {
         email: emailValidator.required(),
         password: stringValidator.required(),
-        access: stringValidator,
+        access: roleValidator.required(),
       },
     }),
     async ({
@@ -38,8 +38,8 @@ const handler = mw({
         return;
       }
 
-      if (access === "admin" && user.role.role !== "admin") {
-        res.status(404).send({ error: "You are not an admin" });
+      if (access !== user.role.role) {
+        res.status(404).send({ error: "You are not authorized" });
 
         return;
       }

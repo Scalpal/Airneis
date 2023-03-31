@@ -12,6 +12,17 @@
   width: 40%;
 }
 
+.select{
+padding: 0.5rem;
+  font-size: 0.8rem;
+  font-family: inherit;
+  border: 1px solid grey;
+  border-radius: 10px;
+  width: 100%;
+  outline: none;
+  position: relative;
+}
+
 .input:focus+.label {
   font-size: 0.75rem;
   top: -27%;

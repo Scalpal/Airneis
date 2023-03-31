@@ -19,9 +19,9 @@ export const up = async (knex) => {
     table.increments("id");
     table.integer("usersId").references("id").inTable("users").notNullable();
     table
-      .enu("role", ["admin", "utilisateurs"])
+      .enu("role", ["admin", "utilisateur"])
       .notNullable()
-      .defaultTo("utilisateurs");
+      .defaultTo("utilisateur");
     table.timestamps(true, true, true);
   });
   await knex.schema.createTable("category", (table) => {
@@ -102,6 +102,7 @@ export const down = async (knex) => {
   await knex.schema.dropTable("productImage");
   await knex.schema.dropTable("review");
   await knex.schema.dropTable("product");
+  await knex.schema.dropTable("materials");
   await knex.schema.dropTable("category");
   await knex.schema.dropTable("users");
 };

@@ -9,8 +9,8 @@ import {
   emailValidator,
   passwordValidator,
   phoneValidator,
-  roleValidator,
 } from "@/validator";
+import sgMail from "@sendgrid/mail";
 
 const handler = mw({
   POST: [
@@ -21,12 +21,11 @@ const handler = mw({
         email: emailValidator.required(),
         password: passwordValidator.required(),
         phoneNumber: phoneValidator.required(),
-        role: roleValidator,
       },
     }),
     async ({
       locals: {
-        body: { firstName, lastName, email, password, role, phoneNumber },
+        body: { firstName, lastName, email, password, phoneNumber },
       },
       res,
     }) => {
@@ -40,21 +39,43 @@ const handler = mw({
 
       const [passwordHash, passwordSalt] = await hashPassword(password);
 
-      await transaction(UserModel, RoleModel, async (UserModel, RoleModel) => {
-        const account = await UserModel.query().insert({
-          firstName,
-          lastName,
-          email,
-          passwordHash,
-          passwordSalt,
-          phoneNumber,
-        });
+      const newUser = await transaction(
+        UserModel,
+        RoleModel,
+        async (UserModel, RoleModel) => {
+          const account = await UserModel.query().insert({
+            firstName,
+            lastName,
+            email,
+            passwordHash,
+            passwordSalt,
+            phoneNumber,
+          });
 
-        return RoleModel.query().insert({
-          usersId: account.id,
-          role,
-        });
-      });
+          return RoleModel.query().insert({
+            usersId: account.id,
+          });
+        }
+      );
+
+      sgMail.setApiKey(process.env.SendGridKey);
+      const msg = {
+        to: email,
+        from: "airneis.supdevinci@gmail.com",
+        templateId: "d-9efeba00362b4087b9d10a892ce38e64",
+        // eslint-disable-next-line camelcase
+        dynamic_template_data: {
+          firstname: firstName,
+          lastname: lastName,
+          url: `http://localhost:3000/confirmAccount?id=${newUser.usersId}`,
+        },
+      };
+
+      try {
+        sgMail.send(msg);
+      } catch (error) {
+        console.log(error);
+      }
 
       res.send({ success: true });
     },

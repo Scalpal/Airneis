@@ -61,7 +61,7 @@ const SignUp = () => {
         initialValues={initialValues}
         error={error}
       >
-        {({ isValid, dirty }) => (
+        {({ isValid, dirty, isSubmitting }) => (
           <Form className={styles.formContainer}>
             <div className={styles.titlesBlock}>
               <p className={styles.logo}>Airneis</p>
@@ -99,7 +99,7 @@ const SignUp = () => {
 
             <div className={styles.buttonWrapper}>
               <Button
-                disabled={!(dirty && isValid)}
+                disabled={!(dirty && isValid) || isSubmitting}
               >
                 Sign-up
               </Button>

@@ -7,6 +7,7 @@ import styles from "@/styles/backoffice/loginPage.module.css";
 import { useRouter } from "next/router";
 import { useCallback, useState } from "react";
 import useAppContext from "@/web/hooks/useAppContext";
+const merge = require("deepmerge");
 
 const validationSchema = createValidator({
   email: emailValidator.required(),
@@ -26,7 +27,21 @@ const Login = () => {
   const [error, setError] = useState(null);
   const handleSubmit = useCallback(
     async (values) => {
-      const [err] = await signIn(values);
+      const newValues = merge(values, { access: "utilisateurs" });
+      const [err] = await signIn(newValues);
+
+      if (err && error) {
+        document.getElementById("errormsg").animate(
+          [
+            { opacity: "100" },
+            { opacity: "0" },
+            { opacity: "100" },
+          ],
+          {
+            duration: 1000,
+          }
+        );
+      }
 
       if (err) {
         setError(err);
@@ -35,7 +50,7 @@ const Login = () => {
       }
       router.push("/home");
     },
-    [signIn, router]
+    [signIn, error, router]
   );
   return (
     <main className={styles.mainContent}>
@@ -46,12 +61,12 @@ const Login = () => {
         initialValues={initialValues}
         error={error}
       >
-        {({ isValid, dirty }) => (
+        {({ isValid, dirty, isSubmitting }) => (
           <Form className={styles.formContainer}>
             <div className={styles.titlesBlock}>
               <p className={styles.logo}>Airneis</p>
             </div>
-            {error ? <p className={styles.error}>password or login incorect</p> : null}
+            {error ? <p id="errormsg" className={styles.error}>password or login incorrect</p> : null}
             <CustomField
               name="email"
               type="text"
@@ -68,7 +83,7 @@ const Login = () => {
 
             <div className={styles.buttonWrapper}>
               <Button
-                disabled={!(dirty && isValid)}
+                disabled={!(dirty && isValid) || isSubmitting}
               >
                 Login
               </Button>
