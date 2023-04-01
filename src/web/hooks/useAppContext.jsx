@@ -22,9 +22,9 @@ export const AppContextProvider = (props) => {
   const signUp = signUpService({ api });
   const signIn = signInService({ api, setSession, setJWT });
   const signOut = useCallback(() => {
-    localStorage.removeItem(config.session.localStorageKey)
-    setSession(false)
-  }, [])
+    localStorage.removeItem(config.session.localStorageKey);
+    setSession(false);
+  }, []);
 
   useEffect(() => {
     const jwt = localStorage.getItem(config.session.localStorageKey);

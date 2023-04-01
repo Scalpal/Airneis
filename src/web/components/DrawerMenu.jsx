@@ -2,22 +2,19 @@ import styles from "@/styles/components/DrawerMenu.module.css";
 import Link from "next/link";
 import { classnames } from "@/pages/_app";
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
-import useAppContext from "@/web/hooks/useAppContext";
 import { useRouter } from "next/router";
 
 const DrawerMenu = (props) => {
-  const {
-    actions: { signOut },
-    state: { session }
-  } = useAppContext();
-  const router = useRouter()
-  const logout = () => {
-    signOut()
-    router.push("/home")
-  }
 
-  const { isDrawerToggledState } = props;
+  const { isDrawerToggledState, actions } = props;
   const [isDrawerToggled, setIsDrawerToggled] = isDrawerToggledState;
+  const [signOut, session] = actions;
+
+  const router = useRouter();
+  const logout = () => {
+    signOut();
+    router.push("/home");
+  };
 
   return (
     <>

@@ -3,6 +3,8 @@ import "yup-phone";
 
 export const stringValidator = yup.string();
 
+export const idValidator = yup.string().min(1);
+
 // users
 export const displayNameValidator = yup.string().min(1).max(255);
 

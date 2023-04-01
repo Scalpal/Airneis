@@ -3,8 +3,16 @@ import Footer from "./Footer";
 import DrawerMenu from "./DrawerMenu";
 import { useState } from "react";
 import { nunito } from "@/pages/_app";
+import useAppContext from "@/web/hooks/useAppContext";
+
 
 const Layout = ({ children }) => {
+
+  const {
+    actions: { signOut },
+    state: { session }
+  } = useAppContext();
+
 
   const [isDrawerToggled, setIsDrawerToggled] = useState(false);
 
@@ -19,6 +27,7 @@ const Layout = ({ children }) => {
 
       <DrawerMenu
         isDrawerToggledState={[isDrawerToggled, setIsDrawerToggled]}
+        actions={[signOut, session]}
       />
 
       <Footer />

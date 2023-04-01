@@ -19,6 +19,7 @@ const config = {
       digest: "sha512",
       pepper: process.env.SECURITY_PASSWORD_PEPPER,
     },
+    sendgrid: process.env.SENDGRID_KEY,
   },
 };
 

@@ -1,4 +1,5 @@
 import hashPassword from "@/api/db/hashPassword.js";
+import config from "@/api/config.js";
 import UserModel from "@/api/db/models/UserModel.js";
 const { transaction } = require("objection");
 import RoleModel from "@/api/db/models/RoleModel.js";
@@ -58,26 +59,24 @@ const handler = mw({
         }
       );
 
-      sgMail.setApiKey(process.env.SendGridKey);
+      sgMail.setApiKey(config.security.sendgrid);
       const msg = {
         to: email,
-        from: "airneis.supdevinci@gmail.com",
-        templateId: "d-9efeba00362b4087b9d10a892ce38e64",
-        // eslint-disable-next-line camelcase
+        from: "Airneis.service@gmail.com",
+        templateId: "d-97f9566d2ae94701a8172e07cc82de28",
         dynamic_template_data: {
           firstname: firstName,
           lastname: lastName,
-          url: `http://localhost:3000/confirmAccount?id=${newUser.usersId}`,
+          url: `http://localhost:3000/mails/confirmation?id=${newUser.usersId}`,
         },
       };
 
       try {
         sgMail.send(msg);
+        res.send({ success: true });
       } catch (error) {
-        console.log(error);
+        res.status(404).send({ success: error });
       }
-
-      res.send({ success: true });
     },
   ],
 });
