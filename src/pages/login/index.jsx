@@ -27,7 +27,7 @@ const Login = () => {
   const [error, setError] = useState(null);
   const handleSubmit = useCallback(
     async (values) => {
-      const newValues = merge(values, { access: "utilisateurs" });
+      const newValues = merge(values, { access: "utilisateur" });
       const [err] = await signIn(newValues);
 
       if (err && error) {

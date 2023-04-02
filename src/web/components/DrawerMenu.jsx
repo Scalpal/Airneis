@@ -8,7 +8,8 @@ const DrawerMenu = (props) => {
 
   const { isDrawerToggledState, actions } = props;
   const [isDrawerToggled, setIsDrawerToggled] = isDrawerToggledState;
-  const [signOut, session] = actions;
+
+  const [signOut, session] = actions ? actions : [null, null];
 
   const router = useRouter();
   const logout = () => {

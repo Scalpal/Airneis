@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import BackofficeLoginLayout from "@/web/components/backoffice/LoginLayout";
 import routes from "@/web/routes";
 import axios from "axios";
+import styles from "@/styles/mails/confirmation.module.css";
 
 const MailConfirmation = ({ error }) => {
   const router = useRouter();
@@ -11,13 +12,13 @@ const MailConfirmation = ({ error }) => {
   };
 
   return (
-    <>
+    <div className={styles.div}>
       {error ?
-        <span>We cannot activate your account, please retry later</span> :
-        <span>Your account is validate with success</span>
+        <span className={styles.error}>We cannot activate your account, please retry later</span> :
+        <span className={styles.success}>Your account is validate with success</span>
       }
-      <button onClick={handleclick}>Return to Home</button>
-    </>
+      <button className={styles.button} onClick={handleclick}>Return to Home</button>
+    </div>
   );
 };
 MailConfirmation.isPublic = true;

@@ -38,6 +38,12 @@ const handler = mw({
         return;
       }
 
+      if (!user.activate) {
+        res.status(401).send({ error: "Account is not activate" });
+
+        return;
+      }
+
       if (access !== user.role.role) {
         res.status(404).send({ error: "You are not authorized" });
 
