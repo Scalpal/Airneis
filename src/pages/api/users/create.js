@@ -64,6 +64,7 @@ const handler = mw({
         to: email,
         from: "Airneis.service@gmail.com",
         templateId: "d-97f9566d2ae94701a8172e07cc82de28",
+        // eslint-disable-next-line camelcase
         dynamic_template_data: {
           firstname: firstName,
           lastname: lastName,
