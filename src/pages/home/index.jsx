@@ -100,7 +100,7 @@ const Home = () => {
       </header>
 
       {/* Popular products block */}
-      <section>
+      <section className={styles.popularProductsContainer}>
         <h1 className={styles.popularProductsTitle}> Popular products </h1>
 
         <div className={styles.popularProductsList}>
@@ -116,7 +116,7 @@ const Home = () => {
       </section>
 
       {/* Categories block */}
-      <section>
+      <section className={styles.categoriesContainer}>
         <h1 className={styles.categoriesTitle}> Explore by category </h1>
 
         <CategoriesBlocks categories={categories} />

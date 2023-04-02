@@ -1,9 +1,14 @@
 /* Popular products */
+
+.popularProductsContainer {
+  margin: 3rem 0 5rem 0;
+}
+
 .popularProductsTitle {
   text-align: center;
   font-size: 2rem;
   font-weight: 300;
-  margin: 3.125rem 0 2.5rem 0; 
+  margin: 0rem 0 2rem 0; 
 }
 
 .popularProductsList {
@@ -28,14 +33,21 @@
 }
 
 /* Categories */
+.categoriesContainer {
+  margin: 5rem 0;
+}
+
 .categoriesTitle {
   text-align: center;
   font-size: 2rem;
   font-weight: 300;
-  margin: 5rem 0 0 0;
+  margin: 0 0 2rem 0;
 }
 
 /* ----------------- Customers reviews ---------------------*/
+.customerReviewsContainer {
+  margin: 5rem 0; 
+}
 
 .customerReviewsContainer h1, .customerReviewsContainer h2 {
   text-align: center;
@@ -59,7 +71,22 @@
     font-size: 1.5rem;
   }
 
+  .categoriesTitle {
+    font-size: 1.5rem;
+  }
+
   .popularProductsList {
     overflow-y: visible;
+  }
+
+  .customerReviewsContainer h1 {
+    font-size: 1.5rem;
+    font-weight: 300;
+  }
+
+  .customerReviewsContainer h2 {
+    margin: 1rem 0;
+    font-size: 1.3rem;
+    font-weight: 300;
   }
 }

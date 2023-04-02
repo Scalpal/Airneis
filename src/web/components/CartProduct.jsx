@@ -56,8 +56,13 @@ const CartProduct = (props) => {
       </div>
       
       <div className={styles.cartProductInfo}>
-        <p className={styles.cartProductInfoName}>Product #{index}</p>
-        <p className={styles.cartProductInfoDescription}>{product.description}</p>
+        <div className={styles.cartProductInfoNameWrapper}>
+          <p className={styles.cartProductInfoName}>{product.name}</p>
+        </div>
+
+        <div className={styles.cartProductInfoDescriptionWrapper}>
+          <p>{product.description}</p>
+        </div>
       </div>
 
       <div className={styles.cartProductControls}>

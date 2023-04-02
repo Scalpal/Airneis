@@ -31,3 +31,20 @@
   border-bottom-left-radius: 100px;
   border-bottom-right-radius: 100px;
 }
+
+@media only screen and (max-width: 480px) {
+  .banner {
+    height: 35vh;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+  }
+
+  .bannerImage {
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+  }
+
+  .bannerTitle {
+    font-size: 1.3rem;
+  }
+}

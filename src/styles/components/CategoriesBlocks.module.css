@@ -49,17 +49,22 @@
   border-radius: 10px;
 }
 
-.categoriesContainer div:hover {
-  transform: scale(1.15);
-  z-index: 10;
-  cursor: pointer;
+
+@media only screen and (min-width: 769px) {
+  .categoriesContainer div:hover {
+    transform: scale(1.15);
+    z-index: 10;
+    cursor: pointer;
+  }
+
+  .categoriesContainer div:hover .categoriesContainerImage {
+    opacity: 0.4;
+  }
 }
 
-.categoriesContainer div:hover p {
-  border-radius: 15px;
-  padding: 5px 10px;
-}
-
-.categoriesContainer div:hover .categoriesContainerImage {
-  opacity: 0.4;
+/* Design for mobile + tablet */
+@media only screen and (max-width: 768px) {
+  .categoriesContainer {
+    margin: 0 auto;
+  }
 }

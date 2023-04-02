@@ -18,10 +18,15 @@
   width: 70%;
 }
 
+.productListTitle {
+  display: none;
+}
+
 /* ------------- Recap -------------- */
 .recapContainer {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   gap: 1rem;
   flex: 1;
   height: fit-content;
@@ -93,160 +98,32 @@
   margin: 0.5rem 0;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-/* Delivery */
-
-.cartDeliveryRow {
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: space-between;
-  padding: 1rem;
-}
-
-/* Payment */
-
-.cartDeliveryForm {
-  width: 20vw;
-}
-
-/* Success */
-
-.cartSuccessSummary {
-  width: 50vw;
-  background-color: #fdfbf8;
-  border-radius: 1rem;
-  margin: 0.5rem;
-}
-
-.cartSuccessHead {
-  margin-bottom: 1rem;
-}
-
-.cartSuccessDiv {
-  padding: 1rem;
-}
-
-.cartSuccessRight {
-  width: 25vw;
-  margin: 0.5rem;
-}
-
-/* Others */
-
-.cartError {
-  color: red;
-  width: 5vw;
-  font-size: 10pt;
-}
-
-.cartButtonAction {
-  background-color: transparent;
-  border: 0;
-  padding: 0.25rem;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  transition-duration: 250ms;
-}
-
-.cartButtonAction:hover {
-  background-color: #cccccc;
-  box-shadow: 0 4px 4px #00000044;
-}
-
-.cartButtonAction:active {
-  background-color: #aaaaaa;
-  box-shadow: none;
-}
-
-.cartButtonSubmit {
-  background-color: var(--primary);
-  width: auto;
-  padding: 1rem;
-  border-radius: 1rem;
-  border: 0;
-  box-shadow: 0 4px 4px #00000044;
-  font-size: 16pt;
-  font-weight: bold;
-  transition-duration: 250ms;
-}
-
-.cartButtonSubmit:hover {
-  background-color: #f9a826;
-}
-
-.cartButtonSubmit:active {
-  background-color: #f9a826;
-  color: white;
-  box-shadow: none;
-}
-
 .cartIcons {
   width: 1rem;
   height: 1rem;
 }
 
-/* (Small Laptop) */
-
-@media all and (max-width: 1024px) and (min-width: 769px) {
-
-  /* Cart */
-  .cartProductTotalTitle,
-  .cartProductTotalQuantity {
-    font-size: 14pt;
+@media only screen and (max-width: 480px) {
+  .mainContent {
+    flex-direction: column;
   }
 
-  .cartButtonSubmit {
-    font-size: 12pt;
-  }
-}
-
-/* (Tablet and Smartphone) */
-@media all and (max-width: 768px) {
-
-  /* Cart */
-  .cartTitle {
-    text-align: start;
-    margin-left: 1rem;
+  .productListContainer {
+    width: 100%;
   }
 
-  .cartContainer {
-    flex-flow: column nowrap;
-    align-items: center;
+  .productListTitle {
+    display: block;
+    text-align: center;
+    font-size: 1.6rem;
+    font-weight: 700;
   }
 
-  .cartProductList,
-  .cartProductTotal {
-    width: 95vw;
+  .emptyCartContainer {
+    text-align: center;
   }
 
-  .cartProductMidCol {
-    width: 40%;
-  }
-
-  .cartProductLastCol {
-    width: 30%;
-  }
-
-  .cartProductCounter {
-    width: 7.5vw;
-  }
-
-  .cartProductDescription {
-    height: 12vh;
-    overflow: hidden;
-  }
-
-  .cartSuccessRight {
-    width: auto;
+  .recapContainer {
+    flex: 0; 
   }
 }
