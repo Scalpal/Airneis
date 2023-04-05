@@ -1,8 +1,9 @@
-import Carousel from "@/components/Carousel";
-import CustomerReview from "@/components/CustomerReview";
-import CategoriesBlocks from "@/components/CategoriesBlocks";
+import Carousel from "@/web/components/Carousel";
+import CustomerReview from "@/web/components/CustomerReview";
+import CategoriesBlocks from "@/web/components/CategoriesBlocks";
 import styles from "@/styles/home.module.css";
-import ProductCard from "@/components/ProductCard";
+import ProductCard from "@/web/components/ProductCard";
+
 
 const placeholderImages = [
   "/meuble-4.jpeg",
@@ -99,7 +100,7 @@ const Home = () => {
       </header>
 
       {/* Popular products block */}
-      <section>
+      <section className={styles.popularProductsContainer}>
         <h1 className={styles.popularProductsTitle}> Popular products </h1>
 
         <div className={styles.popularProductsList}>
@@ -115,7 +116,7 @@ const Home = () => {
       </section>
 
       {/* Categories block */}
-      <section>
+      <section className={styles.categoriesContainer}>
         <h1 className={styles.categoriesTitle}> Explore by category </h1>
 
         <CategoriesBlocks categories={categories} />
@@ -136,5 +137,5 @@ const Home = () => {
     </>
   );
 };
-
+Home.isPublic = true;
 export default Home;

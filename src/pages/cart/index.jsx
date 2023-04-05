@@ -1,16 +1,16 @@
-import Button from "@/components/Button";
-import CartProduct from "@/components/CartProduct";
+import Button from "@/web/components/Button";
+import CartProduct from "@/web/components/CartProduct";
 import { useRouter } from "next/router";
 import { useCallback, useState } from "react";
 import { ShoppingCartIcon } from "@heroicons/react/24/outline";
-import LayoutStickyNavbar from "@/components/LayoutStickyNavbar";
+import LayoutStickyNavbar from "@/web/components/LayoutStickyNavbar";
 import styles from "@/styles/cart.module.css";
 
 const products = [
   {
     id: 1,
     picture: "/meuble-1.jpeg",
-    name: "Product #1",
+    name: "Chaise longue bleue siu sisu siu sisus isi sus ",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae nibh pulvinar, scelerisque nunc id, accumsan augue. Cras placerat sem id est suscipit, sit amet venenatis ante mollis. Phasellus rutrum ex id semper elementum. Proin lobortis neque sem, in iaculis est efficitur id. Fusce ornare volutpat arcu, quis imperdiet quam.",
     price: 50.0,
@@ -19,7 +19,7 @@ const products = [
   {
     id: 2,
     picture: "/meuble-2.jpeg",
-    name: "Product #2",
+    name: "Lit double king size",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae nibh pulvinar, scelerisque nunc id, accumsan augue. Cras placerat sem id est suscipit, sit amet venenatis ante mollis. Phasellus rutrum ex id semper elementum. Proin lobortis neque sem, in iaculis est efficitur id. Fusce ornare volutpat arcu, quis imperdiet quam.",
     price: 75.25,
@@ -28,7 +28,7 @@ const products = [
   {
     id: 3,
     picture: "/meuble-3.png",
-    name: "Product #3",
+    name: "Chaise panier en osier",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae nibh pulvinar, scelerisque nunc id, accumsan augue. Cras placerat sem id est suscipit, sit amet venenatis ante mollis. Phasellus rutrum ex id semper elementum. Proin lobortis neque sem, in iaculis est efficitur id. Fusce ornare volutpat arcu, quis imperdiet quam.",
     price: 10.99,
@@ -57,7 +57,7 @@ const Cart = () => {
 
 
   return (
-    <>      
+    <>
       <div className={styles.mainContent}>
         {productsList.length === 0 ? (
           <>
@@ -70,7 +70,7 @@ const Cart = () => {
                 <p>Before proceed to checkout, you must add some products to your cart.</p>
                 <p>Won&apos;t you come here without buying anything...</p>
               </div>
- 
+
               <div>
                 <Button
                   onClick={() => redirectToHomePage()}
@@ -83,6 +83,7 @@ const Cart = () => {
         ) : (
           <>
             <section className={styles.productListContainer}>
+              <p className={styles.productListTitle}>Panier</p>
               {productsList.map((product, index) => {
                 return (
                   <CartProduct
@@ -95,15 +96,15 @@ const Cart = () => {
                 );
               })}
             </section>
-              
+
             <section className={styles.recapContainer}>
-               
+
               <div className={styles.recapTopRows}>
                 <div className={styles.recapRow}>
                   <p>Subtotal</p>
                   <p>{totalSum.toFixed(2)}€</p>
                 </div>
-                  
+
                 <div className={styles.recapRow}>
                   <p>TAX (20%)</p>
                   <p>{(totalSum * 0.2).toFixed(2)}€</p>
@@ -116,11 +117,11 @@ const Cart = () => {
                   {(totalSum * 1.2).toFixed(2)}€
                 </p>
               </div>
-                
+
               <Button
                 onClick={() => handleSubmit()}
               >
-                  Order
+                Order
               </Button>
             </section>
           </>
@@ -129,8 +130,8 @@ const Cart = () => {
     </>
   );
 };
-
-Cart.getLayout = function(page) {
+Cart.isPublic = true;
+Cart.getLayout = function (page) {
   return (
     <LayoutStickyNavbar>
       {page}

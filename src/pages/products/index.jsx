@@ -1,10 +1,12 @@
-import Banner from "@/components/Banner";
+import Banner from "@/web/components/Banner";
 
-export default function Products() {
+const Products = () => {
   return (
     <>
       <Banner title={"Products"} />
       <h2> Products page </h2>
     </>
   );
-}
+};
+Products.isPublic = true;
+export default Products;

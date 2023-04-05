@@ -5,7 +5,9 @@
   align-items: center;
   flex: 1;
 } 
-
+.error{
+  color: red;
+}
 
 /* Form */
 .formContainer {

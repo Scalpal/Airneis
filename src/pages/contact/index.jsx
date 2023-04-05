@@ -1,10 +1,12 @@
-import Banner from "@/components/Banner"; 
+import Banner from "@/web/components/Banner";
 
-export default function Contact() {
+const Contact = () => {
   return (
     <>
       <Banner title={"Contact"} />
       <h2> Contact page </h2>
     </>
   );
-}
+};
+Contact.isPublic = true;
+export default Contact;

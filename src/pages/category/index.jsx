@@ -1,6 +1,6 @@
-import Banner from "@/components/Banner";
+import Banner from "@/web/components/Banner";
 // import { useRouter } from "next/router";
-import CategoriesBlocks from "@/components/CategoriesBlocks";
+import CategoriesBlocks from "@/web/components/CategoriesBlocks";
 
 const categories = [
   {
@@ -41,7 +41,7 @@ const categories = [
   },
 ];
 
-export default function Categories() {
+const Categories = () => {
   // const router = useRouter();
 
   return (
@@ -53,4 +53,6 @@ export default function Categories() {
       </main>
     </>
   );
-}
+};
+Categories.isPublic = true;
+export default Categories;

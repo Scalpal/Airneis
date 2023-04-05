@@ -1,9 +1,9 @@
 import "@/styles/global.css";
-import Layout from "@/components/Layout";
+import Layout from "@/web/components/Layout";
 import Head from "next/head";
 import { Montserrat } from "@next/font/google";
 import { Nunito } from "@next/font/google";
-
+import { AppContextProvider } from "@/web/hooks/useAppContext.jsx";
 
 export const classnames = require("classnames");
 
@@ -25,9 +25,11 @@ export default function App({ Component, pageProps }) {
     Component.getLayout ||
     ((page) => {
       return (
-        <Layout>
-          {page}
-        </Layout>
+        <AppContextProvider isPublicPage={Component.isPublic}>
+          <Layout>
+            {page}
+          </Layout>
+        </AppContextProvider>
       );
     });
 
@@ -39,8 +41,9 @@ export default function App({ Component, pageProps }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-      <Component {...pageProps} />
+      <AppContextProvider isPublicPage={Component.isPublic}>
+        <Component {...pageProps} />
+      </AppContextProvider>
     </>
   );
 }

@@ -6,15 +6,42 @@
   position: relative;
 }
 
-.label {
-  order: -1; /* Make it the "first element" for visual issues */
-  transition-duration: 300ms;
-  transform: translate(0.5rem, 1.6rem);
-  font-size: 0.9rem;
+.div {
+  position: relative;
+  margin-top: 0.75vw;
+  width: 40%;
 }
 
-.labelActive {
-  transform: translate(0, -0.2rem);
+.select{
+padding: 0.5rem;
+  font-size: 0.8rem;
+  font-family: inherit;
+  border: 1px solid grey;
+  border-radius: 10px;
+  width: 100%;
+  outline: none;
+  position: relative;
+}
+
+.input:focus+.label {
+  font-size: 0.75rem;
+  top: -27%;
+}
+
+.input:not([value=""])+.label {
+  font-size: 0.75rem;
+  top: -27%;
+}
+
+.label {
+  position: absolute;
+  background-color: transparent;
+  top: 50%;
+  left: 0.6vw;
+  padding: 0 0.12%;
+  transition-duration: 300ms;
+  font-size: 0.9rem;
+  transform: translateY(-50%);
 }
 
 .input {
@@ -27,13 +54,12 @@
   outline: none;
   position: relative;
 }
+.inputPassword{
+    padding-right: calc(0.5rem + 30px);
+}
 
 .input:focus {
   border: 1px solid grey;
-}
-
-.input:focus + .label{
-  transform: translate(0, -0.2rem);
 }
 
 .inputIcon {
@@ -47,9 +73,15 @@
   position: absolute;
   top: 50%;
   right: 0.5rem;
-  transform: translateY(-10%);
+  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
 }
-
+.eyeIcon:hover{
+  cursor: pointer;
+}
 .errorText {
   color: red;
   font-size: 0.8rem;

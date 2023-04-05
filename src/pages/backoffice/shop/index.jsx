@@ -1,4 +1,4 @@
-import Layout from "@/components/backoffice/Layout";
+import Layout from "@/web/components/backoffice/Layout";
 
 const BackofficeShop = () => {
 
@@ -12,8 +12,8 @@ const BackofficeShop = () => {
 
   );
 };
-
-BackofficeShop.getLayout = function(page) {
+BackofficeShop.isPublic = true;
+BackofficeShop.getLayout = function (page) {
   return (
     <Layout>
       {page}
