@@ -2,6 +2,8 @@ import styles from "@/styles/components/ProductFilterMenu.module.css";
 import CollapseMenu from "./CollapseMenu";
 import CheckboxItem from "./CheckboxItem";
 import Button from "./Button";
+import { useState } from "react";
+import { classnames } from "@/pages/_app";
 
 const materials = [
   {
@@ -44,75 +46,93 @@ const categories = [
 
 const ProductFilterMenu = (props) => {
 
-  const { handleQueryParamsFilters, setIsOpen } = props; 
+  const { handleQueryParamsFilters } = props; 
+
+  const [isOpen, setIsOpen] = useState(false); 
 
 
   return (
     <>
-      <p className={styles.filterTitle}>Filters</p>
+      <button
+        className={styles.filterButton}
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        F<br />
+        I<br/>
+        L<br/>
+        T<br/>
+        E<br/>
+        R<br/>
+        S<br/>
+      </button>
+      
+      <div className={classnames(
+        styles.filterMenu,
+        isOpen ? styles.open : styles.closed
+      )}>
+        <p className={styles.menuTitle}>Filters</p>
 
-      <div className={styles.priceRangeWrapper}>
-        <div className={styles.labelInputWrapper}>
-          <label>Min price $</label>
-          <input type="number" />
+        <div className={styles.priceRangeWrapper}>
+          <div className={styles.labelInputWrapper}>
+            <label>Min price $</label>
+            <input type="number" />
+          </div>
+
+          <div className={styles.labelInputWrapper}>
+            <label>Max price $</label>
+            <input type="number" />
+          </div>
+
         </div>
 
-        <div className={styles.labelInputWrapper}>
-          <label>Max price $</label>
-          <input type="number" />
+        <CollapseMenu title="Categories" key={"categories"}>
+          {categories.map(({ name, value }, index) => (
+            <CheckboxItem
+              key={index}
+              name={name}
+              value={value}
+              queryKey={"categories"}
+              handleQueryParamsFilters={handleQueryParamsFilters}
+            />
+          ))}
+        </CollapseMenu>
+
+        <CollapseMenu title="Materials" key={"materials"}>
+          {materials.map(({ name, value }, index) => (
+            <CheckboxItem
+              key={index}
+              name={name}
+              value={value}
+              queryKey={"materials"}
+              handleQueryParamsFilters={handleQueryParamsFilters}
+            />
+          ))}
+        </CollapseMenu>
+
+        <div>
+          <p className={styles.categoryTitle}>Stocks</p>
+          <CheckboxItem
+            name={"In stock"}
+            value={"In stock"}
+            queryKey={"stock"}
+            handleQueryParamsFilters={handleQueryParamsFilters}
+          />
         </div>
 
-      </div>
+        <div className={styles.buttonsWrapper}>
+          <Button
+            variant="outlined"
+          >
+            Reset
+          </Button>
 
-      <CollapseMenu title="Categories" key={"categories"}>
-        {categories.map(({ name, value }, index) => (
-          <CheckboxItem
-            key={value}
-            name={name}
-            value={value}
-            queryKey={"categories"}
-            handleQueryParamsFilters={handleQueryParamsFilters}
-          />
-        ))}
-      </CollapseMenu>
+          <Button
+            variant="contained"
+          >
+            Apply
+          </Button>
+        </div>
 
-      <CollapseMenu title="Materials" key={"materials"}>
-        {materials.map(({ name, value }, index) => (
-          <CheckboxItem
-            key={value}
-            name={name}
-            value={value}
-            queryKey={"materials"}
-            handleQueryParamsFilters={handleQueryParamsFilters}
-          />
-        ))}
-      </CollapseMenu>
-
-      <div>
-        <p className={styles.categoryTitle}>Stocks</p>
-        <CheckboxItem
-          name={"In stock"}
-          value={"In stock"}
-          queryKey={"stock"}
-          handleQueryParamsFilters={handleQueryParamsFilters}
-        />
-      </div>
-
-      <div className={styles.buttonsWrapper}>
-        <Button
-          variant="outlined"
-        >
-          Reset
-        </Button>
-
-        <Button
-          variant="contained"
-        >
-          Apply
-        </Button>
-      </div>
-
-      {setIsOpen && (
         <div className={styles.closeButton}>
           <Button
             onClick={() => { setIsOpen(false); }}
@@ -120,9 +140,10 @@ const ProductFilterMenu = (props) => {
             Close
           </Button>
         </div>
-      )}
 
+      </div>
     </>
+
   );
 };
 

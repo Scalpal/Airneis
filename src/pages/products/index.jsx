@@ -3,7 +3,6 @@ import styles from "@/styles/products.module.css";
 import DetailedProductCard from "@/web/components/DetailedProductCard";
 import { useCallback, useState } from "react";
 import ProductFilterMenu from "@/web/components/ProductFilterMenu";
-import DrawableFilterMenu from "@/web/components/DrawableFilterMenu";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 
 const categoryProducts = [
@@ -94,13 +93,6 @@ const Products = () => {
     });
   }, [queryParams, setQueryParams]);
 
-
-  // useEffect(() => {
-  //   console.log("queryParams: ", queryParams);
-  //   console.log("queryParams : ", queryParams.materials.length)
-  // }, [queryParams, setQueryParams]);
-
-
   return (
     <>
       <Banner title={"Products"} />
@@ -130,14 +122,7 @@ const Products = () => {
 
         <div className={styles.content}>
 
-          <div className={styles.filterMenu}>
-            <ProductFilterMenu
-              handleQueryParamsFilters={handleQueryParamsFilters}
-              key={"filter"}
-            />
-          </div>
-
-          <DrawableFilterMenu
+          <ProductFilterMenu
             handleQueryParamsFilters={handleQueryParamsFilters}
           />
 
