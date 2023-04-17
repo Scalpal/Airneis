@@ -54,7 +54,7 @@ const handler = mw({
           });
 
           return RoleModel.query().insert({
-            usersId: account.id,
+            userId: account.id,
           });
         }
       );
@@ -68,7 +68,7 @@ const handler = mw({
         dynamic_template_data: {
           firstname: firstName,
           lastname: lastName,
-          url: `http://localhost:3000/mails/confirmation?id=${newUser.usersId}`,
+          url: `http://localhost:3000/mails/confirmation?id=${newUser.userId}`,
         },
       };
 
