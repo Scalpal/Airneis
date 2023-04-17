@@ -1,6 +1,10 @@
 import Banner from "@/web/components/Banner";
 import styles from "@/styles/products.module.css";
 import DetailedProductCard from "@/web/components/DetailedProductCard";
+import { useCallback, useState } from "react";
+import ProductFilterMenu from "@/web/components/ProductFilterMenu";
+import DrawableFilterMenu from "@/web/components/DrawableFilterMenu";
+import { XMarkIcon } from "@heroicons/react/24/solid";
 
 const categoryProducts = [
   {
@@ -63,9 +67,40 @@ const categoryProducts = [
   },
 ];
 
+// const stockType = [
+//   {
+//     name: "In stock",
+//     value: 1
+//   },
+//   {
+//     name: "Out of stock",
+//     value: 2
+//   }
+// ];
 
 
 const Products = () => {
+
+  const [queryParams, setQueryParams] = useState({
+    materials: [],
+    stock: "",
+    categories: []
+  });
+
+  const handleQueryParamsFilters = useCallback((key, value) => {
+    setQueryParams({
+      ...queryParams,
+      [key]: !queryParams[key].includes(value) ? [...queryParams[key], value] : [...queryParams[key].filter(elt => elt !== value)]
+    });
+  }, [queryParams, setQueryParams]);
+
+
+  // useEffect(() => {
+  //   console.log("queryParams: ", queryParams);
+  //   console.log("queryParams : ", queryParams.materials.length)
+  // }, [queryParams, setQueryParams]);
+
+
   return (
     <>
       <Banner title={"Products"} />
@@ -76,13 +111,35 @@ const Products = () => {
 
         {/* It will show all the active filters with badges */}
         <div className={styles.filterBadgesContainer}>
+          {queryParams.materials.length > 0 &&
+            queryParams.materials.map((material, index) => (
+              <p
+                key={index}
+                className={styles.filterBadge}
+              >
+                Material : {material}
+                <XMarkIcon className={styles.filterBadgeIcon} />
+              </p>
+            ))
+          }
 
+          {/* {queryParams.categories.length > 0 && (
+            
+          )} */}
         </div>
 
         <div className={styles.content}>
+
           <div className={styles.filterMenu}>
-            <p>Filters</p>
+            <ProductFilterMenu
+              handleQueryParamsFilters={handleQueryParamsFilters}
+              key={"filter"}
+            />
           </div>
+
+          <DrawableFilterMenu
+            handleQueryParamsFilters={handleQueryParamsFilters}
+          />
 
           <section className={styles.productsContainer}>
             {categoryProducts.map((product,index) => (
