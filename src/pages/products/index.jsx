@@ -3,7 +3,7 @@ import styles from "@/styles/products.module.css";
 import DetailedProductCard from "@/web/components/DetailedProductCard";
 import { useCallback, useState } from "react";
 import ProductFilterMenu from "@/web/components/ProductFilterMenu";
-import { XMarkIcon } from "@heroicons/react/24/solid";
+import ParamBadge from "@/web/components/ParamBadge";
 
 const categoryProducts = [
   {
@@ -12,18 +12,18 @@ const categoryProducts = [
     type: "bois",
     description:
       "Chaises noir en bois de hêtre centenaire d'Himalayad,zkdanaldza nzdn lkdn jlkdznland kzalzdnalkd nkldzndzlaknalkn",
-    price: "145$",
+    price: 200,
     stock: 25,
-    imageSrc: "/meuble-2.jpeg",
+    picture: "/meuble-2.jpeg",
     materials: ["métal","acier","fer"],
   },
   {
     id: 2,
     name: "chaise",
     type: "bois",
-    price: "145$",
+    price: 29,
     stock: 25,
-    imageSrc: "/meuble-2.jpeg",
+    picture: "/meuble-2.jpeg",
     materials: ["métal","acier","fer"],
   },
   {
@@ -31,18 +31,18 @@ const categoryProducts = [
     name: "chaise",
     type: "bois",
     description: "Chaises noir en bois de hêtre centenaire d'Himalaya",
-    price: "145$",
+    price: 87,
     stock: 25,
-    imageSrc: "/meuble-2.jpeg",
+    picture: "/meuble-2.jpeg",
     materials: ["métal","acier","fer"],
   },
   {
     id: 4,
     name: "chaise",
     type: "bois",
-    price: "145$",
+    price: 129,
     stock: 25,
-    imageSrc: "/meuble-2.jpeg",
+    picture: "/meuble-2.jpeg",
     materials: ["métal","acier","fer"],
   },
   {
@@ -50,49 +50,92 @@ const categoryProducts = [
     name: "chaise",
     type: "bois",
     description: "Chaises noir en bois de hêtre centenaire d'Himalaya",
-    price: "145$",
+    price: 987,
     stock: 25,
-    imageSrc: "/meuble-2.jpeg",
+    picture: "/meuble-2.jpeg",
     materials: ["métal","acier","fer"],
   },
   {
     id: 6,
     name: "chaise",
     type: "bois",
-    price: "145$",
+    price: 100,
     stock: 25,
-    imageSrc: "/meuble-2.jpeg",
+    picture: "/meuble-2.jpeg",
     materials: ["métal","acier","fer"],
   },
 ];
 
-// const stockType = [
-//   {
-//     name: "In stock",
-//     value: 1
-//   },
-//   {
-//     name: "Out of stock",
-//     value: 2
-//   }
-// ];
 
 
 const Products = () => {
 
   const [queryParams, setQueryParams] = useState({
+    priceMin: 0,
+    priceMax: 0,
     materials: [],
-    stock: "",
+    onlyInStock: false,
     categories: []
   });
+  const [appliedQueryParams, setAppliedQueryParams] = useState({
+    priceMin: 0,
+    priceMax: 0,
+    materials: [],
+    stock: [],
+    categories: []
+  }); 
 
-  const handleQueryParamsFilters = useCallback((key, value) => {
+  const handleQueryParamsFilters = useCallback((key, { name, value }) => {
+    if (typeof queryParams[key] === "boolean") {
+      setQueryParams({
+        ...queryParams,
+        [key]: !value
+      });
+
+      return; 
+    }
+
+    if (typeof queryParams[key] === "number") {
+      setQueryParams({
+        ...queryParams,
+        [key]: Number.parseInt(value)
+      });
+
+      return; 
+    } 
+
     setQueryParams({
       ...queryParams,
-      [key]: !queryParams[key].includes(value) ? [...queryParams[key], value] : [...queryParams[key].filter(elt => elt !== value)]
+      [key]: queryParams[key].findIndex((elt) => elt.value === value) === -1 ?
+        [...queryParams[key], { name, value }] :
+        [...queryParams[key].filter(elt => elt.value !== value)]
     });
   }, [queryParams, setQueryParams]);
 
+
+  // const createQueryString = useCallback(() => {
+  //   let queryString = "?";
+
+  //   Object.entries(appliedQueryParams).map(([key, value]) => {
+  //     if (Array.isArray(value)) {
+  //       value.map((param) => (
+  //         queryString += key + "=" + param.value + "&"
+  //       ));
+  //     }
+
+  //     if (typeof value === "number" && value > 0) {
+  //       queryString += key + "=" + value + "&";
+  //     }
+
+  //     if (typeof value === "boolean") {
+  //       queryString += key + "=" + value + "&";
+  //     }
+  //   });
+
+  //   return queryString;
+
+  // }, [appliedQueryParams]); 
+  
   return (
     <>
       <Banner title={"Products"} />
@@ -103,26 +146,25 @@ const Products = () => {
 
         {/* It will show all the active filters with badges */}
         <div className={styles.filterBadgesContainer}>
-          {queryParams.materials.length > 0 &&
-            queryParams.materials.map((material, index) => (
-              <p
-                key={index}
-                className={styles.filterBadge}
-              >
-                Material : {material}
-                <XMarkIcon className={styles.filterBadgeIcon} />
-              </p>
-            ))
-          }
-
-          {/* {queryParams.categories.length > 0 && (
-            
-          )} */}
+          <ParamBadge
+            appliedQueryParams={appliedQueryParams}
+            queryKey={"materials"}
+            handleQueryParamsFilters={handleQueryParamsFilters}
+          />
+          
+          <ParamBadge
+            appliedQueryParams={appliedQueryParams}
+            queryKey={"categories"}
+            handleQueryParamsFilters={handleQueryParamsFilters}
+          />
         </div>
 
         <div className={styles.content}>
 
           <ProductFilterMenu
+            queryParams={queryParams}
+            setQueryParams={setQueryParams}
+            setAppliedQueryParams={setAppliedQueryParams}
             handleQueryParamsFilters={handleQueryParamsFilters}
           />
 

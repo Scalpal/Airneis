@@ -2,43 +2,43 @@ import styles from "@/styles/components/ProductFilterMenu.module.css";
 import CollapseMenu from "./CollapseMenu";
 import CheckboxItem from "./CheckboxItem";
 import Button from "./Button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { classnames } from "@/pages/_app";
 
 const materials = [
   {
     name: "Wood",
-    value: "wood",
+    id: 1
   },
   {
     name: "Steel",
-    value: "steel",
+    id: 2,
   },
   {
     name: "Plastic",
-    value: "plastic",
+    id: 3,
   },
   {
     name: "Glass",
-    value: "glass",
+    id: 4,
   },
   {
     name: "Copper",
-    value: "copper",
+    id: 5,
   }
 ];
 
 const categories = [
   {
     name: "Bed",
-    value: 1
+    id: 1
   },
   {
     name: "Table",
-    value: 2,
+    id: 2,
   }, {
     name: "Chair",
-    value: 3
+    id: 3
   }
 
 ];
@@ -46,10 +46,13 @@ const categories = [
 
 const ProductFilterMenu = (props) => {
 
-  const { handleQueryParamsFilters } = props; 
+  const { handleQueryParamsFilters, queryParams, setQueryParams, setAppliedQueryParams } = props; 
 
   const [isOpen, setIsOpen] = useState(false); 
 
+  useEffect(() => {
+    isOpen ? document.body.style.position = "fixed" : document.body.style.position = "initial"; 
+  }, [isOpen, setIsOpen]);
 
   return (
     <>
@@ -75,22 +78,31 @@ const ProductFilterMenu = (props) => {
         <div className={styles.priceRangeWrapper}>
           <div className={styles.labelInputWrapper}>
             <label>Min price $</label>
-            <input type="number" />
+            <input
+              type="number"
+              min={0}
+              onChange={(e) => handleQueryParamsFilters("priceMin", { name: "priceMin", value: e.target.value})}
+            />
           </div>
 
           <div className={styles.labelInputWrapper}>
             <label>Max price $</label>
-            <input type="number" />
+            <input
+              type="number"
+              min={0}
+              onChange={(e) => handleQueryParamsFilters("priceMax", { name: "priceMax", value: e.target.value})}
+            />
           </div>
 
         </div>
 
         <CollapseMenu title="Categories" key={"categories"}>
-          {categories.map(({ name, value }, index) => (
+          {categories.map(({ name, id }, index) => (
             <CheckboxItem
               key={index}
               name={name}
-              value={value}
+              value={id}
+              queryParams={queryParams}
               queryKey={"categories"}
               handleQueryParamsFilters={handleQueryParamsFilters}
             />
@@ -98,11 +110,12 @@ const ProductFilterMenu = (props) => {
         </CollapseMenu>
 
         <CollapseMenu title="Materials" key={"materials"}>
-          {materials.map(({ name, value }, index) => (
+          {materials.map(({ name, id }, index) => (
             <CheckboxItem
               key={index}
               name={name}
-              value={value}
+              value={id}
+              queryParams={queryParams}
               queryKey={"materials"}
               handleQueryParamsFilters={handleQueryParamsFilters}
             />
@@ -113,8 +126,9 @@ const ProductFilterMenu = (props) => {
           <p className={styles.categoryTitle}>Stocks</p>
           <CheckboxItem
             name={"In stock"}
-            value={"In stock"}
-            queryKey={"stock"}
+            value={queryParams.onlyInStock}
+            queryParams={queryParams}
+            queryKey={"onlyInStock"}
             handleQueryParamsFilters={handleQueryParamsFilters}
           />
         </div>
@@ -122,12 +136,20 @@ const ProductFilterMenu = (props) => {
         <div className={styles.buttonsWrapper}>
           <Button
             variant="outlined"
+            onClick={() => setQueryParams({
+              priceMin: 0,
+              priceMax: 0,
+              materials: [],
+              stock: [],
+              categories: []
+            })}
           >
             Reset
           </Button>
 
           <Button
             variant="contained"
+            onClick={() => setAppliedQueryParams(queryParams)}
           >
             Apply
           </Button>

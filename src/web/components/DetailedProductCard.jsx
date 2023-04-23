@@ -3,11 +3,35 @@ import styles from "@/styles/components/DetailedProductCard.module.css";
 import Image from "next/image";
 import { ArrowRightIcon } from "@heroicons/react/24/solid";
 import Button from "./Button";
+import { useCallback } from "react";
+import useAppContext from "../hooks/useAppContext";
 
 const DetailedProductCard = (props) => {
 
   const { product } = props;  
   const router = useRouter();
+  const { actions: { setCart }, state: { cart } } = useAppContext();
+
+  const addToCart = useCallback(() => {
+    if (typeof window !== "undefined" && window.localStorage) {
+      const localStorageProducts = JSON.parse(localStorage.getItem("products"));
+
+      // Create the array of products in localStorage
+      if (!Array.isArray(localStorageProducts)) {
+        const arrayProducts = []; 
+
+        arrayProducts.push(product);
+        localStorage.setItem("products", JSON.stringify(arrayProducts));
+        setCart(arrayProducts);
+
+        return; 
+      }
+
+      const updatedLocalStorageProducts = [...localStorageProducts, product];
+      localStorage.setItem("products", JSON.stringify(updatedLocalStorageProducts));
+      setCart([...cart, product]);
+    }
+  }, [product, cart, setCart]);
 
   return (
     <div
@@ -19,12 +43,11 @@ const DetailedProductCard = (props) => {
       >
         <Image
           className={styles.productCardImage}
-          src={product.imageSrc}
+          src={product.picture}
           alt={"Image du produit"}
           fill
         />
       </div>
-
 
       <div
         className={styles.productCardInfos}
@@ -58,7 +81,9 @@ const DetailedProductCard = (props) => {
         </div>
 
         <div className={styles.productCardInfoBtnWrapper}>
-          <Button>
+          <Button
+            onClick={() => addToCart()}
+          >
             Add to cart
           </Button>
         </div>
