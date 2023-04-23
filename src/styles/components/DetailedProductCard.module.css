@@ -121,7 +121,7 @@
 }
 
 /* Mobile phones */
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 767px) {
   .productCard {
     justify-content: flex-end;
     height: fit-content;

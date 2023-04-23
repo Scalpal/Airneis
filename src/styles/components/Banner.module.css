@@ -32,7 +32,7 @@
   border-bottom-right-radius: 100px;
 }
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 767px) {
   .banner {
     height: 35vh;
     border-bottom-left-radius: 20px;

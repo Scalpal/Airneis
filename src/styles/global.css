@@ -69,7 +69,7 @@ input:focus {
   filter: invert(1);
 }
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 767px) {
   .fullWidthCarousel {
     height: 35vh;
     border-bottom-left-radius: 20px;
