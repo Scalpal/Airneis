@@ -1,13 +1,11 @@
 import Link from "next/link";
-import { MagnifyingGlassIcon,ShoppingCartIcon, Bars3Icon} from "@heroicons/react/24/solid";
+import { MagnifyingGlassIcon, Bars3Icon} from "@heroicons/react/24/solid";
 import styles from "@/styles/components/Navbar.module.css";
 import { useEffect } from "react";
-import { useRouter } from "next/router";
 import { classnames } from "@/pages/_app";
+import CartButton from "./CartButton";
 
 const Navbar = (props) => {
-
-  const router = useRouter();
   const { fixed, isDrawerToggledState } = props; 
 
   const [isDrawerToggled, setIsDrawerToggled] = isDrawerToggledState; 
@@ -33,10 +31,6 @@ const Navbar = (props) => {
       navbar.classList.remove("navbarBackground");
     }
   });
-
-  const handleCart = () => {
-    router.push("/cart");
-  };
 
   return (
     <nav
@@ -82,10 +76,11 @@ const Navbar = (props) => {
         <button className={styles.navbarButton}>
           <MagnifyingGlassIcon className={styles.navbarButtonIcon} />
         </button>
-        <button className={styles.navbarButton} onClick={handleCart}>
+        {/* <button className={styles.navbarButton} onClick={handleCart}>
           <ShoppingCartIcon className={styles.navbarButtonIcon} />
-          {/* <span className={styles.navbarButtonCartCount}>2</span> */}
-        </button>
+          <span className={styles.navbarButtonCartCount}>2</span>
+        </button> */}
+        <CartButton />
 
         <button className={styles.navbarButton}>
           <Bars3Icon
