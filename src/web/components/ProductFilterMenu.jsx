@@ -136,11 +136,11 @@ const ProductFilterMenu = (props) => {
         <div className={styles.buttonsWrapper}>
           <Button
             variant="outlined"
-            onClick={() => setQueryParams({
+            onClick={() => setAppliedQueryParams({
               priceMin: 0,
               priceMax: 0,
               materials: [],
-              stock: [],
+              onlyInStock: false,
               categories: []
             })}
           >
