@@ -25,25 +25,23 @@ export default function App({ Component, pageProps }) {
     Component.getLayout ||
     ((page) => {
       return (
-        <AppContextProvider isPublicPage={Component.isPublic}>
-          <Layout>
-            {page}
-          </Layout>
-        </AppContextProvider>
+        <Layout>
+          {page}
+        </Layout>
       );
     });
 
-  return renderWithLayout(
-    <>
+  return (
+    <AppContextProvider isPublicPage={Component.isPublic}>
       <Head>
         <title> Airneis </title>
         <meta name="description" content="Airneis" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <AppContextProvider isPublicPage={Component.isPublic}>
+      {renderWithLayout(
         <Component {...pageProps} />
-      </AppContextProvider>
-    </>
+      )}
+    </AppContextProvider>
   );
 }

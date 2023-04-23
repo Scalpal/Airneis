@@ -133,7 +133,7 @@
   }
 }
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 767px) {
   .arrowLeftButton {
     left: 0.2rem;
   }

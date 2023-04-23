@@ -1,0 +1,31 @@
+.checkboxItem {
+  display: flex;
+  flex-direction: row;
+  align-items: center; 
+  gap: 0.5rem;
+  transition-duration: 1s;
+}
+
+.checkboxItem input {
+  display: none;
+}
+
+.checkboxItem label {
+  height: 28px;
+  width: 28px;
+  border: 2px solid black;  
+  border-radius: 50%;
+  color: black;
+  transition-duration: 200ms;
+  padding: 0.1rem;
+}
+
+.checked {
+  background-color: black;
+  color: white;
+}
+
+.icon {
+  color: white;
+  padding: 0 0 0.1rem 0;
+}

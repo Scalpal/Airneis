@@ -65,8 +65,8 @@
   font-weight: 300;
 }
 
-/* --------- Mobile phones ---------- */
-@media only screen and (max-width: 480px) {
+/* --------- Mobile phones and tablet ---------- */
+@media only screen and (max-width: 767px) {
   .popularProductsTitle {
     font-size: 1.5rem;
   }
