@@ -163,7 +163,6 @@ const Products = () => {
 
           <ProductFilterMenu
             queryParams={queryParams}
-            setQueryParams={setQueryParams}
             setAppliedQueryParams={setAppliedQueryParams}
             handleQueryParamsFilters={handleQueryParamsFilters}
           />

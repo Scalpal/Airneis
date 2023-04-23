@@ -46,7 +46,7 @@ const categories = [
 
 const ProductFilterMenu = (props) => {
 
-  const { handleQueryParamsFilters, queryParams, setQueryParams, setAppliedQueryParams } = props; 
+  const { handleQueryParamsFilters, queryParams, setAppliedQueryParams } = props; 
 
   const [isOpen, setIsOpen] = useState(false); 
 
