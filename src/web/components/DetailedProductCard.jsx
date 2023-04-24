@@ -16,20 +16,33 @@ const DetailedProductCard = (props) => {
     if (typeof window !== "undefined" && window.localStorage) {
       const localStorageProducts = JSON.parse(localStorage.getItem("products"));
 
-      // Create the array of products in localStorage
+      // Create the array of products in localStorage (init an array of products on first add)
       if (!Array.isArray(localStorageProducts)) {
         const arrayProducts = []; 
 
+        product.quantity = 1; 
         arrayProducts.push(product);
         localStorage.setItem("products", JSON.stringify(arrayProducts));
         setCart(arrayProducts);
 
         return; 
       }
+      
+      const productIndex = localStorageProducts.findIndex((elt) => elt.id === product.id);
 
-      const updatedLocalStorageProducts = [...localStorageProducts, product];
-      localStorage.setItem("products", JSON.stringify(updatedLocalStorageProducts));
-      setCart([...cart, product]);
+      // If product is not already in the cart, we add it
+      if (productIndex === -1) {
+        product.quantity = 1; 
+        localStorage.setItem("products", JSON.stringify([...localStorageProducts, product]));
+        setCart([...cart, product]);
+
+        return;
+      }
+
+      //Otherwise, we increment it's quantity
+      localStorageProducts[productIndex].quantity++; 
+      localStorage.setItem("products", JSON.stringify(localStorageProducts));
+      setCart(localStorageProducts);
     }
   }, [product, cart, setCart]);
 
