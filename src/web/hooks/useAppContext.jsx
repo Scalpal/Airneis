@@ -8,6 +8,7 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useMemo,
   useState,
 } from "react";
 
@@ -26,6 +27,18 @@ export const AppContextProvider = (props) => {
     setSession(false);
   }, []);
 
+  const [cart, setCart] = useState(() => {
+    if (typeof window !== "undefined" && window.localStorage) {
+      return (localStorage.getItem("products") !== "undefined") && 
+        (localStorage.getItem("products") !== "null") ?
+        JSON.parse(localStorage.getItem("products")) : [];
+    }
+  });
+
+  useEffect(() => {
+    localStorage.setItem("products", JSON.stringify(cart));
+  }, [cart]);
+
   useEffect(() => {
     const jwt = localStorage.getItem(config.session.localStorageKey);
 
@@ -39,27 +52,36 @@ export const AppContextProvider = (props) => {
     setJWT({ jwt });
   }, []);
 
+  const contextValues = useMemo(() => {
+    return {
+      actions: {
+        signUp,
+        signIn,
+        signOut,
+        setCart
+      },
+      state: {
+        session,
+        cart
+      },
+    };
+  }, [cart, session, signUp, signIn, signOut, setCart]);
+
   if (!isPublicPage && session === null) {
-    return (<span>No Connected</span>);
+    return (<span>Not Connected</span>);
   }
 
   return (
     <AppContext.Provider
       {...otherProps}
-      value={{
-        actions: {
-          signUp,
-          signIn,
-          signOut,
-        },
-        state: {
-          session,
-        },
-      }}
+      value={contextValues}
     />
   );
 };
 
-const useAppContext = () => useContext(AppContext);
+const useAppContext = () => {
+  const { state, actions } = useContext(AppContext);
+  return { state, actions };
+};
 
 export default useAppContext;

@@ -1,51 +1,89 @@
 import Button from "@/web/components/Button";
 import CartProduct from "@/web/components/CartProduct";
 import { useRouter } from "next/router";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ShoppingCartIcon } from "@heroicons/react/24/outline";
 import LayoutStickyNavbar from "@/web/components/LayoutStickyNavbar";
 import styles from "@/styles/cart.module.css";
+import useAppContext from "@/web/hooks/useAppContext";
 
-const products = [
-  {
-    id: 1,
-    picture: "/meuble-1.jpeg",
-    name: "Chaise longue bleue siu sisu siu sisus isi sus ",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae nibh pulvinar, scelerisque nunc id, accumsan augue. Cras placerat sem id est suscipit, sit amet venenatis ante mollis. Phasellus rutrum ex id semper elementum. Proin lobortis neque sem, in iaculis est efficitur id. Fusce ornare volutpat arcu, quis imperdiet quam.",
-    price: 50.0,
-    quantity: 1,
-  },
-  {
-    id: 2,
-    picture: "/meuble-2.jpeg",
-    name: "Lit double king size",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae nibh pulvinar, scelerisque nunc id, accumsan augue. Cras placerat sem id est suscipit, sit amet venenatis ante mollis. Phasellus rutrum ex id semper elementum. Proin lobortis neque sem, in iaculis est efficitur id. Fusce ornare volutpat arcu, quis imperdiet quam.",
-    price: 75.25,
-    quantity: 1,
-  },
-  {
-    id: 3,
-    picture: "/meuble-3.png",
-    name: "Chaise panier en osier",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae nibh pulvinar, scelerisque nunc id, accumsan augue. Cras placerat sem id est suscipit, sit amet venenatis ante mollis. Phasellus rutrum ex id semper elementum. Proin lobortis neque sem, in iaculis est efficitur id. Fusce ornare volutpat arcu, quis imperdiet quam.",
-    price: 10.99,
-    quantity: 1,
-  },
-];
+// const products = [
+//   {
+//     id: 1,
+//     picture: "/meuble-1.jpeg",
+//     name: "Chaise longue bleue siu sisu siu sisus isi sus ",
+//     description:
+//       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae nibh pulvinar, scelerisque nunc id, accumsan augue. Cras placerat sem id est suscipit, sit amet venenatis ante mollis. Phasellus rutrum ex id semper elementum. Proin lobortis neque sem, in iaculis est efficitur id. Fusce ornare volutpat arcu, quis imperdiet quam.",
+//     price: 50.0,
+//     quantity: 1,
+//   },
+//   {
+//     id: 2,
+//     picture: "/meuble-2.jpeg",
+//     name: "Lit double king size",
+//     description:
+//       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae nibh pulvinar, scelerisque nunc id, accumsan augue. Cras placerat sem id est suscipit, sit amet venenatis ante mollis. Phasellus rutrum ex id semper elementum. Proin lobortis neque sem, in iaculis est efficitur id. Fusce ornare volutpat arcu, quis imperdiet quam.",
+//     price: 75.25,
+//     quantity: 1,
+//   },
+//   {
+//     id: 3,
+//     picture: "/meuble-3.png",
+//     name: "Chaise panier en osier",
+//     description:
+//       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae nibh pulvinar, scelerisque nunc id, accumsan augue. Cras placerat sem id est suscipit, sit amet venenatis ante mollis. Phasellus rutrum ex id semper elementum. Proin lobortis neque sem, in iaculis est efficitur id. Fusce ornare volutpat arcu, quis imperdiet quam.",
+//     price: 10.99,
+//     quantity: 1,
+//   },
+// ];
 
 
 const Cart = () => {
   const router = useRouter();
-  const [productsList, setProductsList] = useState(products);
+  const { state: { cart } } = useAppContext(); 
+
+  const [productsList, setProductsList] = useState([]);
   const [totalSum, setTotalSum] = useState(
     productsList.reduce(
       (x, product) => x + product.price * product.quantity,
       0.0
     )
   );
+
+  const groupProducts = useCallback(() => {
+    const productsWithQuantity = []; 
+
+    if (cart) {
+      cart.map((product) => {
+        const productIndex = productsWithQuantity.findIndex(elt => elt.id === product.id);
+
+        // If product is not found in the already added products array, we add it
+        if (productIndex === -1) {
+          product.quantity = 1;
+          productsWithQuantity.push(product);
+
+          return;
+        }
+
+        productsWithQuantity[productIndex].quantity++;
+      });
+    }
+
+
+    return productsWithQuantity;
+  }, [cart]); 
+
+  useEffect(() => {
+    setProductsList(groupProducts());
+  }, [groupProducts]); 
+
+  useEffect(() => {
+    setTotalSum(
+      productsList.reduce(
+        (sum, product) => sum + product.price * product.quantity,
+        0.0
+      ));
+  }, [productsList]);
 
   const handleSubmit = useCallback(() => {
     router.push("/order/delivery");
@@ -55,6 +93,7 @@ const Cart = () => {
     router.push("/home");
   }, [router]);
 
+  console.log(productsList);
 
   return (
     <>

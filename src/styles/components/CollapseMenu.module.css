@@ -1,0 +1,57 @@
+.wrapper {
+  height: fit-content;
+}
+
+.button {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0;
+  width: 100%;
+  background-color: var(--secondary);  
+  border: none;
+  z-index: 999;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-bottom: 1px solid rgb(203, 203, 203);
+}
+
+.buttonIcon {
+  width: 25px;
+  height: 25px;
+  transition-duration: 300ms;
+}
+
+.iconCollapsed {
+  transform: rotate(-180deg);
+}
+
+/* Menu + content */
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem; 
+  font-size: 0.9rem;
+  overflow-y: hidden;
+  max-height: 100vh;
+  transition-duration: 500ms;
+  opacity: 0;
+}
+
+.collapsed {
+  opacity: 1;
+  padding: 0.5rem;
+  padding-top: 1rem;
+  transition-duration: 500ms;
+}
+
+.close {
+  max-height: 0;
+  padding: 0rem;
+}
+
+
+
+

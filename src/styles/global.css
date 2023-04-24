@@ -17,7 +17,7 @@ body {
   font-size: calc(15px + 0.390625vw);
   font-weight: 300;
   background-color: #F6F6F6;
-  overflow-x: hidden;
+  /* overflow-x: hidden; */
 }
 
 a {
@@ -69,11 +69,15 @@ input:focus {
   filter: invert(1);
 }
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 767px) {
   .fullWidthCarousel {
     height: 35vh;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
+  }
+
+  html, body {
+    overflow-x: hidden; 
   }
 } 
 
