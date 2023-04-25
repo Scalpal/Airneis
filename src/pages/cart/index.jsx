@@ -65,7 +65,7 @@ const Cart = () => {
     router.push("/home");
   }, [router]);
 
-  console.log(productsList);
+  // console.log("Products list : ",productsList);
 
   return (
     <>

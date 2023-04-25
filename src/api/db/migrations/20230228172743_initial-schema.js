@@ -95,6 +95,7 @@ export const up = async (knex) => {
     table.timestamps(true, true, true);
   });
 };
+// a changer : 2 etats : annulé / livré 
 
 export const down = async (knex) => {
   await knex.schema.dropTable("user_role");

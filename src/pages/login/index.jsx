@@ -1,12 +1,13 @@
 import { createValidator, stringValidator, emailValidator } from "@/validator";
-import BackofficeLoginLayout from "@/web/components/backoffice/LoginLayout";
 import { Formik, Form } from "formik";
-import CustomField from "@/web/components/backoffice/CustomField";
 import Button from "@/web/components/Button";
-import styles from "@/styles/backoffice/loginPage.module.css";
+import styles from "@/styles/login.module.css";
 import { useRouter } from "next/router";
 import { useCallback, useState } from "react";
 import useAppContext from "@/web/hooks/useAppContext";
+import LoginLayout from "@/web/components/LoginLayout";
+import LoginField from "@/web/components/LoginField";
+import Link from "next/link";
 const merge = require("deepmerge");
 
 const validationSchema = createValidator({
@@ -21,10 +22,9 @@ const initialValues = {
 
 const Login = () => {
   const router = useRouter();
-  const {
-    actions: { signIn },
-  } = useAppContext();
+  const { actions: { signIn } } = useAppContext();
   const [error, setError] = useState(null);
+
   const handleSubmit = useCallback(
     async (values) => {
       const newValues = merge(values, { access: "utilisateur" });
@@ -52,9 +52,9 @@ const Login = () => {
     },
     [signIn, error, router]
   );
-  return (
-    <main className={styles.mainContent}>
 
+  return (
+    <main className={styles.container}>
       <Formik
         onSubmit={handleSubmit}
         validationSchema={validationSchema}
@@ -63,30 +63,32 @@ const Login = () => {
       >
         {({ isValid, dirty, isSubmitting }) => (
           <Form className={styles.formContainer}>
-            <div className={styles.titlesBlock}>
-              <p className={styles.logo}>Airneis</p>
-            </div>
+            <p className={styles.formTitle}>Log into your account</p>
+            
             {error ? <p id="errormsg" className={styles.error}>password or login incorrect</p> : null}
-            <CustomField
+            <LoginField
               name="email"
               type="text"
               label="E-mail"
               showError={false}
             />
 
-            <CustomField
+            <LoginField
               name="password"
               type="password"
               label="Password"
               showError={false}
             />
 
-            <div className={styles.buttonWrapper}>
-              <Button
-                disabled={!(dirty && isValid) || isSubmitting}
-              >
-                Login
-              </Button>
+            <Button
+              disabled={!(dirty && isValid) || isSubmitting}
+            >
+              Login
+            </Button>
+
+            <div className={styles.noAccountText}>
+              <p>Don&apos;t have an account ? </p> 
+              <Link href="/register"> Register here</Link>
             </div>
 
           </Form>
@@ -99,9 +101,9 @@ const Login = () => {
 Login.isPublic = true;
 Login.getLayout = function (page) {
   return (
-    <BackofficeLoginLayout>
+    <LoginLayout>
       {page}
-    </BackofficeLoginLayout>
+    </LoginLayout>
   );
 };
 

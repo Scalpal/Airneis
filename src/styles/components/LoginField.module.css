@@ -1,0 +1,55 @@
+.wrapper  {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  position: relative;
+}
+
+.label {
+  font-weight: 500;
+  font-size: 0.8rem;
+}
+
+.input {
+  border: 0;
+  border-bottom: 1px solid var(--primary);
+  background-color: var(--secondary);
+  outline: 0;
+  font-size: 0.9rem;
+  font-weight: 300;
+  padding: 0 0 0.2rem 0;
+}
+
+.input:focus {
+  border-bottom: 1px solid var(--primary);
+}
+
+
+/* Icon */
+.inputIcon {
+  width: 30px;
+  height: 30px;
+  z-index: 999;
+  color: rgba(0, 0, 0, 0.2);
+}
+
+.eyeIcon {
+  position: absolute;
+  bottom: 0.1rem;
+  right: 0;
+}
+
+.eyeIcon:hover {
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 767px) {
+  .label {
+    font-size: 1.2rem;
+  }
+
+  .input {
+    background: none; 
+    font-size: 1rem;
+  }
+}

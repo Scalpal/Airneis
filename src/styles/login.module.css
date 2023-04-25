@@ -1,0 +1,55 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.formContainer {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.formTitle {
+  text-align: center;
+  font-size: 1.3rem;
+}
+
+.noAccountText {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 0.2rem;
+  font-size: 0.7rem;
+}
+
+.noAccountText p {
+  color: grey;
+}
+
+.noAccountText a {
+  font-weight: 600;
+}
+
+.noAccountText a:hover {
+  text-decoration: underline;
+}
+
+@media only screen and (max-width: 767px) {
+  .formTitle {
+    font-size: 1.4rem;
+  }
+
+  .noAccountText {
+    font-size: 0.9rem;
+  }
+
+  .noAccountText p {
+    color: white;
+  }
+}

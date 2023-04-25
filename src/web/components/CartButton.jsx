@@ -24,7 +24,8 @@ const CartButton = () => {
   return (
     <button className={styles.navbarButton} onClick={handleCart}>
       <ShoppingCartIcon className={styles.navbarButtonIcon} />
-      <span className={styles.navbarButtonCartCount}>{productsCount}</span>
+      {productsCount !== 0 && <span className={styles.navbarButtonCartCount}>{productsCount}</span>}
+      
     </button>
   );
 };
