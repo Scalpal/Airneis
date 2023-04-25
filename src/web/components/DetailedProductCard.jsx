@@ -3,48 +3,13 @@ import styles from "@/styles/components/DetailedProductCard.module.css";
 import Image from "next/image";
 import { ArrowRightIcon } from "@heroicons/react/24/solid";
 import Button from "./Button";
-import { useCallback } from "react";
 import useAppContext from "../hooks/useAppContext";
 
 const DetailedProductCard = (props) => {
 
   const { product } = props;  
   const router = useRouter();
-  const { actions: { setCart }, state: { cart } } = useAppContext();
-
-  const addToCart = useCallback(() => {
-    if (typeof window !== "undefined" && window.localStorage) {
-      const localStorageProducts = JSON.parse(localStorage.getItem("products"));
-
-      // Create the array of products in localStorage (init an array of products on first add)
-      if (!Array.isArray(localStorageProducts)) {
-        const arrayProducts = []; 
-
-        product.quantity = 1; 
-        arrayProducts.push(product);
-        localStorage.setItem("products", JSON.stringify(arrayProducts));
-        setCart(arrayProducts);
-
-        return; 
-      }
-      
-      const productIndex = localStorageProducts.findIndex((elt) => elt.id === product.id);
-
-      // If product is not already in the cart, we add it
-      if (productIndex === -1) {
-        product.quantity = 1; 
-        localStorage.setItem("products", JSON.stringify([...localStorageProducts, product]));
-        setCart([...cart, product]);
-
-        return;
-      }
-
-      //Otherwise, we increment it's quantity
-      localStorageProducts[productIndex].quantity++; 
-      localStorage.setItem("products", JSON.stringify(localStorageProducts));
-      setCart(localStorageProducts);
-    }
-  }, [product, cart, setCart]);
+  const { actions: { addToCart }} = useAppContext();
 
   return (
     <div
@@ -95,7 +60,7 @@ const DetailedProductCard = (props) => {
 
         <div className={styles.productCardInfoBtnWrapper}>
           <Button
-            onClick={() => addToCart()}
+            onClick={() => addToCart(product)}
           >
             Add to cart
           </Button>
