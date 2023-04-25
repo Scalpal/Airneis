@@ -7,94 +7,91 @@ import Button from "@/web/components/Button";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import styles from "@/styles/backoffice/statsPages.module.css";
 
-// Prototype datas 
+// Prototype datas
 const productsProto = [
   {
     id: 1,
-    name: "Chaise moderne en bois de hêtre",
-    type: "bois",
+    name: "Modern beechwood chair",
+    type: "Wood",
     price: 223,
     stock: 25,
     imageSrc: "/meuble-2.jpeg",
   },
   {
     id: 2,
-    name: "chaise",
-    type: "bois",
+    name: "Chair",
+    type: "Wood",
     price: 98,
     stock: 25,
     imageSrc: "/meuble-2.jpeg",
   },
   {
     id: 3,
-    name: "chaise",
-    type: "bois",
+    name: "Chair",
+    type: "Wood",
     price: 134,
     stock: 25,
     imageSrc: "/meuble-2.jpeg",
   },
   {
     id: 4,
-    name: "chaise",
-    type: "bois",
+    name: "Chair",
+    type: "Wood",
     price: 19,
     stock: 25,
     imageSrc: "/meuble-2.jpeg",
   },
   {
     id: 5,
-    name: "chaise",
-    type: "bois",
+    name: "Chair",
+    type: "Wood",
     price: 86,
     stock: 25,
     imageSrc: "/meuble-2.jpeg",
   },
   {
     id: 6,
-    name: "chaise",
-    type: "bois",
+    name: "Chair",
+    type: "Wood",
     price: 109,
     stock: 25,
     imageSrc: "/meuble-2.jpeg",
   },
   {
     id: 6,
-    name: "chaise",
-    type: "bois",
+    name: "Chair",
+    type: "Wood",
     price: 109,
     stock: 25,
     imageSrc: "/meuble-2.jpeg",
   },
   {
     id: 6,
-    name: "chaise",
-    type: "bois",
+    name: "Chair",
+    type: "Wood",
     price: 109,
     stock: 25,
     imageSrc: "/meuble-2.jpeg",
   },
   {
     id: 6,
-    name: "chaise",
-    type: "bois",
+    name: "Chair",
+    type: "Wood",
     price: 109,
     stock: 25,
     imageSrc: "/meuble-2.jpeg",
   },
   {
     id: 6,
-    name: "chaise",
-    type: "bois",
+    name: "Chair",
+    type: "Wood",
     price: 109,
     stock: 25,
     imageSrc: "/meuble-2.jpeg",
-  }
+  },
 ];
 
-
-
 const BackofficeProducts = () => {
-
   const [products, _] = useState(productsProto);
 
   // const sortByPrice = useCallback(() => {
@@ -103,17 +100,15 @@ const BackofficeProducts = () => {
   // }, [products]);
 
   const sumTotalProducts = () => {
-    const sumTotalProducts = products.reduce((sum, value) => sum + value.stock, 0);
+    const sumTotalProducts = products.reduce(
+      (sum, value) => sum + value.stock,
+      0
+    );
     return sumTotalProducts;
   };
 
   return (
-    <main
-      className={classnames(
-        styles.mainContainer,
-        nunito.className
-      )}
-    >
+    <main className={classnames(styles.mainContainer, nunito.className)}>
       <div className={styles.topStats}>
         <div>
           <p>Total of unique products</p>
@@ -138,9 +133,7 @@ const BackofficeProducts = () => {
           </div>
 
           <div>
-            <Button
-              onClick={() => console.log("Product added ! ")}
-            >
+            <Button onClick={() => console.log("Product added ! ")}>
               Add a product
             </Button>
           </div>
@@ -153,11 +146,7 @@ const BackofficeProducts = () => {
 };
 BackofficeProducts.isPublic = true;
 BackofficeProducts.getLayout = function (page) {
-  return (
-    <Layout>
-      {page}
-    </Layout>
-  );
+  return <Layout>{page}</Layout>;
 };
 
-export default BackofficeProducts; 
+export default BackofficeProducts;

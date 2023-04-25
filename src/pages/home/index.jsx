@@ -4,59 +4,54 @@ import CategoriesBlocks from "@/web/components/CategoriesBlocks";
 import styles from "@/styles/home.module.css";
 import ProductCard from "@/web/components/ProductCard";
 
-
-const placeholderImages = [
-  "/meuble-4.jpeg",
-  "/meuble-2.jpeg",
-  "/meuble-3.png",
-];
+const placeholderImages = ["/meuble-4.jpeg", "/meuble-2.jpeg", "/meuble-3.png"];
 
 const products = [
   {
     id: 1,
-    name: "Chaise moderne en bois de hêtre",
-    type: "bois",
-    price: "145$",
+    name: "Modern beechwood chair",
+    type: "Wood",
+    price: "$145",
     stock: 25,
     imageSrc: "/meuble-2.jpeg",
   },
   {
     id: 2,
-    name: "chaise",
-    type: "bois",
-    price: "145$",
+    name: "Chair",
+    type: "Wood",
+    price: "$145",
     stock: 25,
     imageSrc: "/meuble-2.jpeg",
   },
   {
     id: 3,
-    name: "chaise",
-    type: "bois",
-    price: "145$",
+    name: "Chair",
+    type: "Wood",
+    price: "$145",
     stock: 25,
     imageSrc: "/meuble-2.jpeg",
   },
   {
     id: 4,
-    name: "chaise",
-    type: "bois",
-    price: "145$",
+    name: "Chair",
+    type: "Wood",
+    price: "$145",
     stock: 25,
     imageSrc: "/meuble-2.jpeg",
   },
   {
     id: 5,
-    name: "chaise",
-    type: "bois",
-    price: "145$",
+    name: "Chair",
+    type: "Wood",
+    price: "$145",
     stock: 25,
     imageSrc: "/meuble-2.jpeg",
   },
   {
     id: 6,
-    name: "chaise",
-    type: "bois",
-    price: "145$",
+    name: "Chair",
+    type: "Wood",
+    price: "$145",
     stock: 25,
     imageSrc: "/meuble-2.jpeg",
   },
@@ -71,28 +66,15 @@ const reviews = [
 ];
 
 const categories = [
-  {
-    name: "Moderne",
-  },
-  {
-    name: "Vintage",
-  },
-  {
-    name: "Chaises",
-  },
-  {
-    name: "Contemporain",
-  },
-  {
-    name: "Artisanal",
-  },
-  {
-    name: "Bois",
-  },
+  { name: "Modern" },
+  { name: "Vintage" },
+  { name: "Chair" },
+  { name: "Contemporary" },
+  { name: "Artisanal" },
+  { name: "Wood" },
 ];
 
 const Home = () => {
-
   return (
     <>
       <header className="fullWidthCarousel" id="carousel">

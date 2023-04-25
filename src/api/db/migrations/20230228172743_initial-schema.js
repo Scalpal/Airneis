@@ -19,10 +19,7 @@ export const up = async (knex) => {
   await knex.schema.createTable("userRoles", (table) => {
     table.increments("id");
     table.integer("userId").references("id").inTable("users").notNullable();
-    table
-      .enu("role", ["admin", "utilisateur"])
-      .notNullable()
-      .defaultTo("utilisateur");
+    table.enu("role", ["admin", "user"]).notNullable().defaultTo("user");
     table.timestamps(true, true, true);
   });
 
@@ -32,11 +29,21 @@ export const up = async (knex) => {
       table.text("name").notNullable();
       table.timestamps(true, true, true);
     })
-    .then(
+    .then(() =>
       knex("categories").insert([
-        { name: "bois" },
-        { name: "chêne" },
-        { name: "laine" },
+        { name: "Bed" },
+        { name: "Table" },
+        { name: "Chair" },
+        { name: "Modern" },
+        { name: "Vintage" },
+        { name: "Contemporary" },
+        { name: "Artisanal" },
+        { name: "Wood" },
+        { name: "Bedding" },
+        { name: "Swedish special" },
+        { name: "Marble" },
+        { name: "Living room" },
+        { name: "Shower" },
       ])
     );
 
@@ -46,11 +53,17 @@ export const up = async (knex) => {
       table.text("name").notNullable();
       table.timestamps(true, true, true);
     })
-    .then(
+    .then(() =>
       knex("materials").insert([
-        { name: "métal" },
-        { name: "acier" },
-        { name: "fer" },
+        { name: "Wood" },
+        { name: "Steel" },
+        { name: "Plastic" },
+        { name: "Glass" },
+        { name: "Copper" },
+        { name: "Wool" },
+        { name: "Iron" },
+        { name: "Metal" },
+        { name: "Oak" },
       ])
     );
 
@@ -73,18 +86,26 @@ export const up = async (knex) => {
         .notNullable();
       table.timestamps(true, true, true);
     })
-    .then(
+    .then(() =>
       knex("products").insert([
         {
-          title: "chaise",
+          title: "Modern beechwood chair",
+          materialId: 1,
+          description: "Black chairs made of 100 year old Himalayan beech wood",
+          price: 145,
+          quantity: 25,
+          categoryId: 1,
+        },
+        {
+          title: "Chair",
           materialId: 1,
           description: "",
           price: 145,
           quantity: 1,
-          categoryId: 1,
+          categoryId: 3,
         },
         {
-          title: "table",
+          title: "Table",
           materialId: 1,
           description: "",
           price: 105,
@@ -92,37 +113,21 @@ export const up = async (knex) => {
           categoryId: 2,
         },
         {
-          title: "rideau",
-          materialId: 1,
+          title: "Curtain",
+          materialId: 6,
           description: "",
           price: 45,
           quantity: 1,
-          categoryId: 3,
-        },
-        {
-          title: "chaise",
-          materialId: 1,
-          description: "",
-          price: 145,
-          quantity: 25,
-          categoryId: 1,
-        },
-        {
-          title: "chaise",
-          materialId: 1,
-          description: "Chaises noir en bois de hêtre centenaire d'Himalaya",
-          price: 145,
-          quantity: 25,
-          categoryId: 1,
+          categoryId: 13,
         },
         {
           title: "Samsung TV OLED 4K",
-          materialId: 1,
+          materialId: 3,
           description:
-            "Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500, quand un imprimeur anonyme assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte. Il n'a pas fait que survivre cinq siècles, mais s'est aussi adapté à la bureautique informatique, sans que son contenu n'en soit modifié.",
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce consectetur ipsum eu fermentum pulvinar. Donec vitae egestas elit. Pellentesque et elementum nunc. Fusce a ligula nunc. Nunc interdum enim odio, id placerat ex convallis nec. Nam tempus sagittis libero, a cursus ipsum ullamcorper non. Duis quam lectus, volutpat non nisi.",
           price: 2499,
           quantity: 1,
-          categoryId: 1,
+          categoryId: 13,
         },
       ])
     );
@@ -141,18 +146,25 @@ export const up = async (knex) => {
     table.timestamps(true, true, true);
   });
 
-  await knex.schema.createTable("productImages", (table) => {
-    table.increments("id");
-    table
-      .integer("productId")
-      .references("id")
-      .inTable("products")
-      .notNullable();
-    table.binary("image").notNullable();
-    table.timestamps(true, true, true);
-  });
+  await knex.schema
+    .createTable("productImages", (table) => {
+      table.increments("id");
+      table
+        .integer("productId")
+        .references("id")
+        .inTable("products")
+        .notNullable();
+      table.binary("image").notNullable();
+      table.timestamps(true, true, true);
+    })
+    .then(() =>
+      knex("productImages").insert({
+        productId: 1,
+        image: "/meuble-2.jpeg",
+      })
+    );
 
-  await knex.schema.createTable("commands", (table) => {
+  await knex.schema.createTable("orders", (table) => {
     table.increments("id");
     table.integer("userId").references("id").inTable("users").notNullable();
     table
@@ -163,10 +175,10 @@ export const up = async (knex) => {
     table.integer("quantity").notNullable().defaultTo(1);
     table
       .enu("status", [
-        "en cours de validation",
-        "préparation de la commande",
-        "en cours de livraison",
-        "livré",
+        "pending validation",
+        "pending order",
+        "pending delivery",
+        "shipped",
       ])
       .notNullable();
     table.timestamps(true, true, true);
@@ -175,7 +187,7 @@ export const up = async (knex) => {
 
 export const down = async (knex) => {
   await knex.schema.dropTable("userRoles");
-  await knex.schema.dropTable("commands");
+  await knex.schema.dropTable("orders");
   await knex.schema.dropTable("productImages");
   await knex.schema.dropTable("reviews");
   await knex.schema.dropTable("products");

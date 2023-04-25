@@ -8,110 +8,109 @@ import ParamBadge from "@/web/components/ParamBadge";
 const categoryProducts = [
   {
     id: 1,
-    name: "Chaise moderne en bois de hêtre",
-    type: "bois",
-    description:
-      "Chaises noir en bois de hêtre centenaire d'Himalayad,zkdanaldza nzdn lkdn jlkdznland kzalzdnalkd nkldzndzlaknalkn",
+    name: "Modern beechwood chair",
+    type: "Wood",
+    description: "Black chairs made of 100 year old Himalayan beech wood",
     price: 200,
     stock: 25,
     picture: "/meuble-2.jpeg",
-    materials: ["métal","acier","fer"],
+    materials: ["metal", "steel", "iron"],
   },
   {
     id: 2,
-    name: "chaise",
-    type: "bois",
+    name: "Chair",
+    type: "Wood",
     price: 29,
     stock: 25,
     picture: "/meuble-2.jpeg",
-    materials: ["métal","acier","fer"],
+    materials: ["metal", "steel", "iron"],
   },
   {
     id: 3,
-    name: "chaise",
-    type: "bois",
-    description: "Chaises noir en bois de hêtre centenaire d'Himalaya",
+    name: "Chair",
+    type: "Wood",
+    description: "Black chairs made of 100 year old Himalayan beech wood",
     price: 87,
     stock: 25,
     picture: "/meuble-2.jpeg",
-    materials: ["métal","acier","fer"],
+    materials: ["metal", "steel", "iron"],
   },
   {
     id: 4,
-    name: "chaise",
-    type: "bois",
+    name: "Chair",
+    type: "Wood",
     price: 129,
     stock: 25,
     picture: "/meuble-2.jpeg",
-    materials: ["métal","acier","fer"],
+    materials: ["metal", "steel", "iron"],
   },
   {
     id: 5,
-    name: "chaise",
-    type: "bois",
-    description: "Chaises noir en bois de hêtre centenaire d'Himalaya",
+    name: "Chair",
+    type: "Wood",
+    description: "Black chairs made of 100 year old Himalayan beech wood",
     price: 987,
     stock: 25,
     picture: "/meuble-2.jpeg",
-    materials: ["métal","acier","fer"],
+    materials: ["metal", "steel", "iron"],
   },
   {
     id: 6,
-    name: "chaise",
-    type: "bois",
+    name: "Chair",
+    type: "Wood",
     price: 100,
     stock: 25,
     picture: "/meuble-2.jpeg",
-    materials: ["métal","acier","fer"],
+    materials: ["metal", "steel", "iron"],
   },
 ];
 
-
-
 const Products = () => {
-
   const [queryParams, setQueryParams] = useState({
     priceMin: 0,
     priceMax: 0,
     materials: [],
     onlyInStock: false,
-    categories: []
+    categories: [],
   });
   const [appliedQueryParams, setAppliedQueryParams] = useState({
     priceMin: 0,
     priceMax: 0,
     materials: [],
     stock: [],
-    categories: []
-  }); 
+    categories: [],
+  });
 
-  const handleQueryParamsFilters = useCallback((key, { name, value }) => {
-    if (typeof queryParams[key] === "boolean") {
+  const handleQueryParamsFilters = useCallback(
+    (key, { name, value }) => {
+      if (typeof queryParams[key] === "boolean") {
+        setQueryParams({
+          ...queryParams,
+          [key]: !value,
+        });
+
+        return;
+      }
+
+      if (typeof queryParams[key] === "number") {
+        setQueryParams({
+          ...queryParams,
+          [key]: Number.parseInt(value),
+        });
+
+        return;
+      }
+
       setQueryParams({
         ...queryParams,
-        [key]: !value
+        [key]:
+          queryParams[key].findIndex((elt) => elt.value === value) === -1
+            ? [...queryParams[key], { name, value }]
+            : [...queryParams[key].filter((elt) => elt.value !== value)],
       });
-
-      return; 
-    }
-
-    if (typeof queryParams[key] === "number") {
-      setQueryParams({
-        ...queryParams,
-        [key]: Number.parseInt(value)
-      });
-
-      return; 
-    } 
-
-    setQueryParams({
-      ...queryParams,
-      [key]: queryParams[key].findIndex((elt) => elt.value === value) === -1 ?
-        [...queryParams[key], { name, value }] :
-        [...queryParams[key].filter(elt => elt.value !== value)]
-    });
-  }, [queryParams, setQueryParams]);
-
+    },
+    [queryParams, setQueryParams]
+  );
 
   // const createQueryString = useCallback(() => {
   //   let queryString = "?";
@@ -134,14 +133,13 @@ const Products = () => {
 
   //   return queryString;
 
-  // }, [appliedQueryParams]); 
-  
+  // }, [appliedQueryParams]);
+
   return (
     <>
       <Banner title={"Products"} />
 
       <main className={styles.main}>
-
         <input type="text" className={styles.input} />
 
         {/* It will show all the active filters with badges */}
@@ -151,7 +149,7 @@ const Products = () => {
             queryKey={"materials"}
             handleQueryParamsFilters={handleQueryParamsFilters}
           />
-          
+
           <ParamBadge
             appliedQueryParams={appliedQueryParams}
             queryKey={"categories"}
@@ -160,7 +158,6 @@ const Products = () => {
         </div>
 
         <div className={styles.content}>
-
           <ProductFilterMenu
             queryParams={queryParams}
             setAppliedQueryParams={setAppliedQueryParams}
@@ -168,12 +165,11 @@ const Products = () => {
           />
 
           <section className={styles.productsContainer}>
-            {categoryProducts.map((product,index) => (
+            {categoryProducts.map((product, index) => (
               <DetailedProductCard key={index} product={product} />
             ))}
           </section>
         </div>
-
       </main>
     </>
   );
