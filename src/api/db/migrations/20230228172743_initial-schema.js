@@ -1,6 +1,6 @@
 export const up = async (knex) => {
   // Related to users
-  await knex.schema.createTable("role", (table) => { 
+  await knex.schema.createTable("roles", (table) => { 
     table.increments("id"); 
     table.enum("role", ["admin", "user"]).notNullable();  
   });
@@ -14,7 +14,7 @@ export const up = async (knex) => {
     table.text("lastName").notNullable();
     table.text("phoneNumber").notNullable();
     table.boolean("active").notNullable().defaultTo(false);
-    table.integer("roleId").notNullable().references("id").inTable("role").defaultTo(2); 
+    table.integer("roleId").notNullable().references("id").inTable("roles").defaultTo(2); 
     table.timestamps(true, true, true);
   });
 
@@ -94,15 +94,18 @@ export const up = async (knex) => {
     table.primary(["orderId", "productId"]);
   });
 };
-// a changer : 2 etats : annulé / livré 
 
 export const down = async (knex) => {
-  await knex.schema.dropTable("user_role");
-  await knex.schema.dropTable("command");
-  await knex.schema.dropTable("productImage");
+  await knex.schema.dropTable("orders_products_relation");
+  await knex.schema.dropTable("orders");
   await knex.schema.dropTable("review");
-  await knex.schema.dropTable("product");
+  await knex.schema.dropTable("products_material_relation");
+  await knex.schema.dropTable("product_image");
+  await knex.schema.dropTable("products");
   await knex.schema.dropTable("materials");
-  await knex.schema.dropTable("category");
+  await knex.schema.dropTable("categories");
+  await knex.schema.dropTable("adress");
   await knex.schema.dropTable("users");
+  await knex.schema.dropTable("role");
+
 };
