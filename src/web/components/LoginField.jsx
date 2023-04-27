@@ -22,19 +22,17 @@ const LoginField = (props) => {
     if (passwordVisibility) {
       return (
         <EyeSlashIcon
-          className={classnames(
-            styles.inputIcon,
-            styles.eyeIcon
-          )}
+          className={
+            styles.inputIcon
+          }
           onClick={() => setPasswordVisibility(false)}
         />
       );
     }
     return (<EyeIcon
-      className={classnames(
-        styles.inputIcon,
-        styles.eyeIcon
-      )}
+      className={
+        styles.inputIcon
+      }
       onClick={() => setPasswordVisibility(true)}
     />);
   };

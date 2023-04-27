@@ -7,7 +7,8 @@ import { useCallback, useState } from "react";
 import useAppContext from "@/web/hooks/useAppContext";
 import LoginLayout from "@/web/components/LoginLayout";
 import LoginField from "@/web/components/LoginField";
-import Link from "next/link";
+// import Image from "next/image";
+
 const merge = require("deepmerge");
 
 const validationSchema = createValidator({
@@ -63,6 +64,13 @@ const Login = () => {
       >
         {({ isValid, dirty, isSubmitting }) => (
           <Form className={styles.formContainer}>
+            {/* <Image
+              src={"/logo-airneis.png"}
+              alt={"Airneis logo"}
+              width={120}
+              height={80}
+            />  */}
+
             <p className={styles.formTitle}>Log into your account</p>
             
             {error ? <p id="errormsg" className={styles.error}>password or login incorrect</p> : null}
@@ -87,14 +95,13 @@ const Login = () => {
             </Button>
 
             <div className={styles.noAccountText}>
-              <p>Don&apos;t have an account ? </p> 
-              <Link href="/register"> Register here</Link>
+              <p>Forgot your password ? <span> Click here </span></p> 
+              <p>Don&apos;t have an account ? <span onClick={() => router.push("/register")}> Register here </span></p> 
             </div>
 
           </Form>
         )}
       </Formik>
-
     </main>
   );
 };

@@ -22,18 +22,21 @@
 
 .noAccountText {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
   gap: 0.2rem;
   font-size: 0.7rem;
 }
 
 .noAccountText p {
   color: grey;
+  white-space: nowrap;
 }
 
-.noAccountText a {
+.noAccountText p > span {
   font-weight: 600;
+  color: black;
 }
 
 .noAccountText a:hover {
@@ -41,6 +44,10 @@
 }
 
 @media only screen and (max-width: 767px) {
+  .formContainer {
+    width: 70%;
+  }
+
   .formTitle {
     font-size: 1.4rem;
   }
@@ -50,6 +57,16 @@
   }
 
   .noAccountText p {
-    color: white;
+    color: rgb(79, 79, 79);
+  }
+
+  .noAccountText p > span {
+    font-size: 1rem;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .formContainer {
+    width: 60%;
   }
 }
