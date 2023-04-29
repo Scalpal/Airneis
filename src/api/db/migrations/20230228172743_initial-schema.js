@@ -1,10 +1,5 @@
 module.exports.up = async (knex) => {
   // Related to users
-  await knex.schema.createTable("roles", (table) => { 
-    table.increments("id"); 
-    table.enum("role", ["admin", "user"]).notNullable();  
-  });
-
   await knex.schema.createTable("users", (table) => {
     table.increments("id");
     table.text("email").notNullable().unique();
@@ -14,7 +9,7 @@ module.exports.up = async (knex) => {
     table.text("lastName").notNullable();
     table.text("phoneNumber").notNullable();
     table.boolean("active").notNullable().defaultTo(true);
-    table.integer("roleId").notNullable().references("id").inTable("roles").defaultTo(2); 
+    table.boolean("isAdmin").notNullable().defaultTo(false);
     table.timestamps(true, true, true);
   });
 
@@ -111,5 +106,4 @@ module.exports.down = async (knex) => {
   await knex.schema.dropTable("categories");
   await knex.schema.dropTable("address");
   await knex.schema.dropTable("users");
-  await knex.schema.dropTable("roles");
 };
