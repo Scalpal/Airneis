@@ -98,7 +98,7 @@ module.exports.down = async (knex) => {
   await knex.schema.dropTable("image_home_carousel");
   await knex.schema.dropTable("orders_products_relation");
   await knex.schema.dropTable("orders");
-  await knex.schema.dropTable("review");
+  await knex.schema.dropTable("reviews");
   await knex.schema.dropTable("products_materials_relation");
   // await knex.schema.dropTable("product_image");
   await knex.schema.dropTable("products");
