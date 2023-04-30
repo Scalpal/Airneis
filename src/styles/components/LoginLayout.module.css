@@ -48,7 +48,6 @@
 .right {
   background-color: var(--secondary);
   z-index: 1000;
-  overflow: hidden;
   border-top-left-radius: 1rem;
   border-bottom-left-radius: 1rem;
   width: 50%;

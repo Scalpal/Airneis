@@ -9,11 +9,11 @@ class UserModel extends BaseModel {
       query.limit(limit).offset((page - 1) * limit),
   }
 
-  static relationMappings() {
-    return {
-    };
-  }
-  
+  // static relationMappings() {
+  //   return {
+  //   };
+  // }
+
   checkPassword = async (password) => {
     const [passwordHash] = await hashPassword(password, this.passwordSalt);
 
