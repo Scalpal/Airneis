@@ -1,7 +1,7 @@
 import * as yup from "yup";
 import "yup-phone";
 
-export const stringValidator = yup.string().min(1); 
+export const stringValidator = yup.string(); 
 
 export const idValidator = yup.string().min(1);
 

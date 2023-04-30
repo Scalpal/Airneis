@@ -4,20 +4,24 @@ import LoginLayout from "@/web/components/LoginLayout";
 import { Form, Formik } from "formik";
 import styles from "@/styles/register.module.css";
 import { useCallback, useState } from "react";
-import { createValidator, emailValidator, phoneValidator, stringValidator } from "@/validator";
+import { createValidator, emailValidator, passwordValidator, phoneValidator, stringValidator } from "@/validator";
 import Axios, { AxiosError } from "axios";
 import { useRouter } from "next/router";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/solid";
-import { classnames } from "../_app";
 import CollapseMenu from "@/web/components/CollapseMenu";
 import routes from "@/web/routes";
 
 const validationSchema = createValidator({
-  firstName: stringValidator.required().min(2, "Your firstname should be 2 characters long at least"),
-  lastName: stringValidator.required().min(2, "Your lastname should be 2 characters long at least"),
-  phoneNumber: phoneValidator.required(),  
-  email: emailValidator.required(),
-  password: stringValidator.required(),
+  firstName: stringValidator.required("First name is a required field.").min(2, "Your firstname should be 2 characters long at least"),
+  lastName: stringValidator.required("Last name is a required field.").min(2, "Your lastname should be 2 characters long at least"),
+  phoneNumber: phoneValidator.required("The phone number is a required field."),  
+  email: emailValidator.required("The email is a required field."),
+  password: passwordValidator.required("The password is  a required field."),
+  address: stringValidator,
+  city: stringValidator,
+  region: stringValidator,
+  postalCode: stringValidator,
+  country: stringValidator, 
 });
 
 const initialValues = {
@@ -26,6 +30,11 @@ const initialValues = {
   phoneNumber: "",
   email: "",
   password: "",
+  address: "",
+  city: "",
+  region: "",
+  postalCode: "",
+  country: "", 
 }; 
 
 const Register = () => {
@@ -34,7 +43,7 @@ const Register = () => {
   const [error, setError] = useState(null);
 
   const handleSubmit = useCallback(async (values) => {
-    const url = `http://localhost:3000/${routes.api.register}`; 
+    const url = `http://localhost:3000/${routes.api.register()}`; 
 
     try {
       const result = await Axios.post(url, values); 
@@ -44,7 +53,7 @@ const Register = () => {
 
     } catch (error) {
       if (error instanceof AxiosError) {
-        console.log(error); 
+        console.log(error.response); 
         const { response } = error; 
 
         if (response.status === 409) {
@@ -68,29 +77,27 @@ const Register = () => {
           <Form className={styles.formContainer}>
             <p className={styles.formTitle}>Register</p>
             
-            <p
-              className={classnames(
-                styles.error,
-                styles.errorNotVisible
-              )}
-            >
-              {/* {error} */}
-              <ExclamationTriangleIcon className={styles.errorIcon} />
-              E-mail already used 
-            </p>
+            {error &&
+              <p className={styles.error}>
+                <ExclamationTriangleIcon className={styles.errorIcon} />
+                {error}
+              </p>
+            }
 
             <LoginField
               name="firstName"
               type="text"
               label="First name"
-              showError={false}
+              showError={true}
+              required={true}
             />
 
             <LoginField
               name="lastName"
               type="text"
               label="Last name"
-              showError={false}
+              showError={true}
+              required={true}
             />
 
 
@@ -98,31 +105,64 @@ const Register = () => {
               name="phoneNumber"
               type="text"
               label="Phone number"
-              showError={false}
+              showError={true}
+              required={true}
             />
             
             <LoginField
               name="email"
               type="text"
               label="E-mail"
-              showError={false}
+              showError={true}
+              required={true}
             />
 
             <LoginField
               name="password"
               type="password"
               label="Password"
-              showError={false}
+              showError={true}
+              required={true}
             />
 
-            <CollapseMenu title="Address" key={"materials"}>
+            <CollapseMenu title="Address" key={"address"}>
               <LoginField
-                name="lastName"
+                name="address"
                 type="text"
-                label="Last name"
-                showError={false}
+                label="Address"
+                showError={true}
+              />
+
+              <LoginField
+                name="city"
+                type="text"
+                label="City"
+                showError={true}
+              />
+              
+              <LoginField
+                name="region"
+                type="text"
+                label="Region"
+                showError={true}
+              />
+              
+              <LoginField
+                name="postalCode"
+                type="text"
+                label="Postal code"
+                showError={true}
+              />
+              
+              <LoginField
+                name="country"
+                type="text"
+                label="Country"
+                showError={true}
               />
             </CollapseMenu>
+
+            <p className={styles.requiredText}> <span className={styles.requiredStar}>*</span> : This field is required</p>
 
             <Button
               disabled={!(dirty && isValid) || isSubmitting}

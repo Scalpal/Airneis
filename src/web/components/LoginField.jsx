@@ -6,36 +6,9 @@ import { useState } from "react";
 
 const LoginField = (props) => {
 
-  const { name, type, label, showError, ...otherProps } = props;
+  const { name, type, label, required, showError, ...otherProps } = props;
 
-  const [passwordVisibility, setPasswordVisibility] = useState(false);
-
-  const typeIs = () => {
-    if (type === "password") {
-      return passwordVisibility ? "text" : "password";
-    }
-
-    return type;
-  };
-
-  const passwordIcon = () => {
-    if (passwordVisibility) {
-      return (
-        <EyeSlashIcon
-          className={
-            styles.inputIcon
-          }
-          onClick={() => setPasswordVisibility(false)}
-        />
-      );
-    }
-    return (<EyeIcon
-      className={
-        styles.inputIcon
-      }
-      onClick={() => setPasswordVisibility(true)}
-    />);
-  };
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   return (
     <Field name={name}>
@@ -47,28 +20,42 @@ const LoginField = (props) => {
           >
             <label
               name={label}
-              className={styles.label}
+              className={classnames(
+                styles.label,
+                meta.error ? styles.labelError : ""
+              )}
               htmlFor={label}
             >
               {label}
+              {required ? <span className={styles.requiredStar}> *</span> : ""}
             </label>
 
             <input
               {...field}
               {...otherProps}
-              type={typeIs()}
+              type={type === "password" ? (isPasswordVisible ? "text" : "password" ) : "text"}
               id={label}
               className={classnames(
                 styles.input,
+                meta.error ? styles.inputError : "",
                 name === "password" ? styles.inputPassword : null
               )}
             />
 
-            {name === "password" ?
-              passwordIcon()
-              :
-              null
-            }
+            {type === "password"&& (
+              isPasswordVisible ? (
+                <EyeSlashIcon
+                  className={styles.inputIcon}
+                  onClick={() => setIsPasswordVisible(false)}
+                />
+              ): (
+                <EyeIcon
+                  className={styles.inputIcon}
+                  onClick={() => setIsPasswordVisible(true)}
+                />
+              )
+            )}
+
 
             {showError && meta.touched && meta.error ? (
               <span className={styles.errorText}>

@@ -1,4 +1,5 @@
 import hashPassword from "@/api/db/hashPassword";
+import AddressModel from "@/api/db/models/AddressModel";
 import UserModel from "@/api/db/models/UserModel.js";
 import slowDown from "@/api/middlewares/slowDown.js";
 import validate from "@/api/middlewares/validate.js";
@@ -14,12 +15,17 @@ const handler = mw({
         lastName: stringValidator.required(),
         phoneNumber: phoneValidator.required(),
         email: emailValidator.required(),
-        password: passwordValidator.required()
+        password: passwordValidator.required(),
+        address: stringValidator,
+        city: stringValidator,
+        region: stringValidator,
+        postalCode: stringValidator,
+        country: stringValidator, 
       },
     }),
     async ({
       locals: {
-        body: { firstName, lastName, phoneNumber, email, password },
+        body: { firstName, lastName, phoneNumber, email, password, address, city, region, postalCode, country },
       },
       res,
     }) => {
@@ -30,7 +36,6 @@ const handler = mw({
 
         return;
       }
-
       const [passwordHash, passwordSalt] = await hashPassword(password);
 
       const addedUser = await UserModel.query()
@@ -44,7 +49,22 @@ const handler = mw({
         })
         .returning("*");
 
-      res.send({ result: addedUser });
+      if (address !== "" && city !== "" && region !== "" && postalCode !== "" && country !== "") {
+        const addedAddress = await AddressModel.query()
+          .insert({
+            address,
+            city,
+            region,
+            postalCode,
+            country,
+            userId : addedUser.id,
+          })
+          .returning("*");
+        
+        addedUser.address = addedAddress;
+      }
+
+      res.send({ result: { user: addedUser} });
     },
   ],
 });
