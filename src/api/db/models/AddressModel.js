@@ -1,5 +1,5 @@
 import BaseModel from "@/api/db/models/BaseModel.js";
-import RoleModel from "@/api/db/models/RoleModel.js";
+import UserModel from "./UserModel";
 
 class AddressModel extends BaseModel {
   static tableName = "address"
@@ -8,7 +8,7 @@ class AddressModel extends BaseModel {
     return {
       user: {
         relation: BaseModel.HasOneRelation,
-        modelClass: RoleModel,
+        modelClass: UserModel,
         join: {
           from: "address.userId",
           to: "users.id",
