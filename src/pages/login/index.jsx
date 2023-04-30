@@ -7,9 +7,8 @@ import { useCallback, useState } from "react";
 import useAppContext from "@/web/hooks/useAppContext";
 import LoginLayout from "@/web/components/LoginLayout";
 import LoginField from "@/web/components/LoginField";
+import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 // import Image from "next/image";
-
-const merge = require("deepmerge");
 
 const validationSchema = createValidator({
   email: emailValidator.required(),
@@ -26,33 +25,17 @@ const Login = () => {
   const { actions: { signIn } } = useAppContext();
   const [error, setError] = useState(null);
 
-  const handleSubmit = useCallback(
-    async (values) => {
-      const newValues = merge(values, { access: "utilisateur" });
-      const [err] = await signIn(newValues);
+  const handleSubmit = useCallback(async (values) => {
+    const [err] = await signIn(values);
 
-      if (err && error) {
-        document.getElementById("errormsg").animate(
-          [
-            { opacity: "100" },
-            { opacity: "0" },
-            { opacity: "100" },
-          ],
-          {
-            duration: 1000,
-          }
-        );
-      }
+    if (err) {
+      setError(err[0].response.data.error);
 
-      if (err) {
-        setError(err);
+      return;
+    }
 
-        return;
-      }
-      router.push("/home");
-    },
-    [signIn, error, router]
-  );
+    router.push("/home");
+  },[signIn, router]);
 
   return (
     <main className={styles.container}>
@@ -64,16 +47,15 @@ const Login = () => {
       >
         {({ isValid, dirty, isSubmitting }) => (
           <Form className={styles.formContainer}>
-            {/* <Image
-              src={"/logo-airneis.png"}
-              alt={"Airneis logo"}
-              width={120}
-              height={80}
-            />  */}
-
             <p className={styles.formTitle}>Log into your account</p>
             
-            {error ? <p id="errormsg" className={styles.error}>password or login incorrect</p> : null}
+            {error &&
+              <p className={styles.error}>
+                <ExclamationTriangleIcon className={styles.errorIcon} />
+                {error}
+              </p>
+            }
+            
             <LoginField
               name="email"
               type="text"

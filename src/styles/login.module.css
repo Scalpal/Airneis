@@ -20,6 +20,24 @@
   font-size: 1.3rem;
 }
 
+.error {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: var(--error);
+  border-radius: 0.25rem;
+  padding: 0.3rem 0.5rem;
+  color: black;
+  font-size: 0.8rem;
+  transition-duration: 500ms;
+}
+
+.errorIcon {
+  width: 20px;
+  height: 20px;
+}
+
 .noAccountText {
   display: flex;
   flex-direction: column;

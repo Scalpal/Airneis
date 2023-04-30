@@ -14,7 +14,7 @@ const routes = {
   login: () => "/login",
   api: {
     register: () => "/api/users/register",
-    login: () => "/api/users/login",
+    login: () => "/users/login",
     posts: {
       collection: (query) => createRouteWithQueryParams("/posts", query),
       single: (postId, query) =>
