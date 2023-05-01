@@ -1,0 +1,90 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.formContainer {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.formTitle {
+  text-align: center;
+  font-size: 1.3rem;
+}
+
+.error {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: var(--error);
+  border-radius: 0.25rem;
+  padding: 0.3rem 0.5rem;
+  color: black;
+  font-size: 0.8rem;
+  transition-duration: 500ms;
+}
+
+.errorIcon {
+  width: 20px;
+  height: 20px;
+}
+
+.noAccountText {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.2rem;
+  font-size: 0.7rem;
+}
+
+.noAccountText p {
+  color: grey;
+  white-space: nowrap;
+}
+
+.noAccountText p > span {
+  font-weight: 600;
+  color: black;
+}
+
+.noAccountText a:hover {
+  text-decoration: underline;
+}
+
+@media only screen and (max-width: 767px) {
+  .formContainer {
+    width: 70%;
+  }
+
+  .formTitle {
+    font-size: 1.4rem;
+  }
+
+  .noAccountText {
+    font-size: 0.9rem;
+  }
+
+  .noAccountText p {
+    color: rgb(79, 79, 79);
+  }
+
+  .noAccountText p > span {
+    font-size: 1rem;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .formContainer {
+    width: 60%;
+  }
+}

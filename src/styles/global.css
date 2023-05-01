@@ -9,6 +9,7 @@
   --secondary: #F6F6F6;
   --primaryHovered: rgb(237, 186, 119);
   --grey: #bababa; 
+  --error: rgb(183, 0, 0);
 }
 
 html,

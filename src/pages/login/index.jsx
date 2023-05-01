@@ -1,13 +1,13 @@
 import { createValidator, stringValidator, emailValidator } from "@/validator";
-import BackofficeLoginLayout from "@/web/components/backoffice/LoginLayout";
 import { Formik, Form } from "formik";
-import CustomField from "@/web/components/backoffice/CustomField";
 import Button from "@/web/components/Button";
-import styles from "@/styles/backoffice/loginPage.module.css";
+import styles from "@/styles/login.module.css";
 import { useRouter } from "next/router";
 import { useCallback, useState } from "react";
 import useAppContext from "@/web/hooks/useAppContext";
-const merge = require("deepmerge");
+import LoginLayout from "@/web/components/LoginLayout";
+import LoginField from "@/web/components/LoginField";
+import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 
 const validationSchema = createValidator({
   email: emailValidator.required(),
@@ -21,40 +21,23 @@ const initialValues = {
 
 const Login = () => {
   const router = useRouter();
-  const {
-    actions: { signIn },
-  } = useAppContext();
+  const { actions: { signIn } } = useAppContext();
   const [error, setError] = useState(null);
-  const handleSubmit = useCallback(
-    async (values) => {
-      const newValues = merge(values, { access: "utilisateur" });
-      const [err] = await signIn(newValues);
 
-      if (err && error) {
-        document.getElementById("errormsg").animate(
-          [
-            { opacity: "100" },
-            { opacity: "0" },
-            { opacity: "100" },
-          ],
-          {
-            duration: 1000,
-          }
-        );
-      }
+  const handleSubmit = useCallback(async (values) => {
+    const [err] = await signIn(values);
 
-      if (err) {
-        setError(err);
+    if (err) {
+      setError(err[0].response.data.error);
 
-        return;
-      }
-      router.push("/home");
-    },
-    [signIn, error, router]
-  );
+      return;
+    }
+
+    router.push("/home");
+  },[signIn, router]);
+
   return (
-    <main className={styles.mainContent}>
-
+    <main className={styles.container}>
       <Formik
         onSubmit={handleSubmit}
         validationSchema={validationSchema}
@@ -63,45 +46,52 @@ const Login = () => {
       >
         {({ isValid, dirty, isSubmitting }) => (
           <Form className={styles.formContainer}>
-            <div className={styles.titlesBlock}>
-              <p className={styles.logo}>Airneis</p>
-            </div>
-            {error ? <p id="errormsg" className={styles.error}>password or login incorrect</p> : null}
-            <CustomField
+            <p className={styles.formTitle}>Log into your account</p>
+            
+            {error &&
+              <p className={styles.error}>
+                <ExclamationTriangleIcon className={styles.errorIcon} />
+                {error}
+              </p>
+            }
+            
+            <LoginField
               name="email"
               type="text"
               label="E-mail"
               showError={false}
             />
 
-            <CustomField
+            <LoginField
               name="password"
               type="password"
               label="Password"
               showError={false}
             />
 
-            <div className={styles.buttonWrapper}>
-              <Button
-                disabled={!(dirty && isValid) || isSubmitting}
-              >
-                Login
-              </Button>
+            <Button
+              disabled={!(dirty && isValid) || isSubmitting}
+            >
+              Login
+            </Button>
+
+            <div className={styles.noAccountText}>
+              <p>Forgot your password ? <span> Click here </span></p> 
+              <p>Don&apos;t have an account ? <span onClick={() => router.push("/register")}> Register here </span></p> 
             </div>
 
           </Form>
         )}
       </Formik>
-
     </main>
   );
 };
 Login.isPublic = true;
 Login.getLayout = function (page) {
   return (
-    <BackofficeLoginLayout>
+    <LoginLayout>
       {page}
-    </BackofficeLoginLayout>
+    </LoginLayout>
   );
 };
 

@@ -13,6 +13,7 @@ const CollapseMenu = (props) => {
       <button
         className={styles.button}
         onClick={() => setIsMenuCollapsed(!isMenuCollapsed)}
+        type={"button"}
       >
         <p>{title}</p>
         <ChevronDownIcon

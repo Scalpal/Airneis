@@ -10,11 +10,11 @@ const createRouteWithQueryParams = (route, query) => {
 
 const routes = {
   home: () => "/",
-  signUp: () => "/sign-up",
-  signIn: () => "/sign-in",
+  register: () => "/register",
+  login: () => "/login",
   api: {
-    signUp: () => "/users/create",
-    signIn: () => "/users/login",
+    register: () => "/users/register",
+    login: () => "/users/login",
     posts: {
       collection: (query) => createRouteWithQueryParams("/posts", query),
       single: (postId, query) =>

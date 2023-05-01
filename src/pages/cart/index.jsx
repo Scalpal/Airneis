@@ -43,39 +43,11 @@ const Cart = () => {
   const { state: { cart } } = useAppContext(); 
 
   const [productsList, setProductsList] = useState([]);
-  const [totalSum, setTotalSum] = useState(
-    productsList.reduce(
-      (x, product) => x + product.price * product.quantity,
-      0.0
-    )
-  );
-
-  const groupProducts = useCallback(() => {
-    const productsWithQuantity = []; 
-
-    if (cart) {
-      cart.map((product) => {
-        const productIndex = productsWithQuantity.findIndex(elt => elt.id === product.id);
-
-        // If product is not found in the already added products array, we add it
-        if (productIndex === -1) {
-          product.quantity = 1;
-          productsWithQuantity.push(product);
-
-          return;
-        }
-
-        productsWithQuantity[productIndex].quantity++;
-      });
-    }
-
-
-    return productsWithQuantity;
-  }, [cart]); 
-
+  const [totalSum, setTotalSum] = useState(0);
+  
   useEffect(() => {
-    setProductsList(groupProducts());
-  }, [groupProducts]); 
+    setProductsList(cart); 
+  }, [cart]);
 
   useEffect(() => {
     setTotalSum(
@@ -93,7 +65,7 @@ const Cart = () => {
     router.push("/home");
   }, [router]);
 
-  console.log(productsList);
+  // console.log("Products list : ",productsList);
 
   return (
     <>
