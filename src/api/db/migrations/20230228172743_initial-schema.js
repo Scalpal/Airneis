@@ -45,12 +45,12 @@ module.exports.up = async (knex) => {
     table.timestamps(true, true, true);
   });
 
-  // await knex.schema.createTable("productImage", (table) => {
-  //   table.increments("id");
-  //   table.integer("productId").references("id").inTable("product").notNullable();
-  //   table.binary("image").notNullable();
-  //   table.timestamps(true, true, true);
-  // });
+  await knex.schema.createTable("products_images", (table) => {
+    table.increments("id");
+    table.integer("productId").references("id").inTable("product").notNullable();
+    table.string("imageSrc").notNullable();
+    table.timestamps(true, true, true);
+  });
 
   await knex.schema.createTable("products_materials_relation", (table) => {
     table.integer("productId").notNullable().references("id").inTable("products");
