@@ -11,6 +11,7 @@ import {
   useMemo,
   useState,
 } from "react";
+import { parseCookies } from "nookies";
 
 const AppContext = createContext();
 
@@ -99,17 +100,19 @@ export const AppContextProvider = (props) => {
   }, [cart]);
 
   useEffect(() => {
-    const jwt = localStorage.getItem(config.session.localStorageKey);
+  	const { token } = parseCookies(null);
 
-    if (!jwt) {
+    if (!token) {
       return;
     }
 
-    const session = parseSession(jwt);
+    const session = parseSession(token);
 
     setSession(session);
-    setJWT({ jwt });
+    setJWT(token);
   }, []);
+
+
 
   const contextValues = useMemo(() => {
     return {

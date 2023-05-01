@@ -8,7 +8,6 @@ import useAppContext from "@/web/hooks/useAppContext";
 import LoginLayout from "@/web/components/LoginLayout";
 import LoginField from "@/web/components/LoginField";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
-// import Image from "next/image";
 
 const validationSchema = createValidator({
   email: emailValidator.required(),
