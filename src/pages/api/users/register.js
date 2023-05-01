@@ -4,7 +4,13 @@ import UserModel from "@/api/db/models/UserModel.js";
 import slowDown from "@/api/middlewares/slowDown.js";
 import validate from "@/api/middlewares/validate.js";
 import mw from "@/api/mw.js";
-import { emailValidator, phoneValidator, stringValidator, passwordValidator } from "@/validator";
+import { AES } from "crypto-js";
+import {
+  emailValidator,
+  phoneValidator,
+  stringValidator,
+  passwordValidator,
+} from "@/validator";
 import sgMail from "@sendgrid/mail";
 import config from "@/api/config.js";
 
@@ -22,17 +28,28 @@ const handler = mw({
         city: stringValidator,
         region: stringValidator,
         postalCode: stringValidator,
-        country: stringValidator, 
+        country: stringValidator,
       },
     }),
     async ({
       locals: {
-        body: { firstName, lastName, phoneNumber, email, password, address, city, region, postalCode, country },
+        body: {
+          firstName,
+          lastName,
+          phoneNumber,
+          email,
+          password,
+          address,
+          city,
+          region,
+          postalCode,
+          country,
+        },
       },
       res,
     }) => {
-      const user = await UserModel.query().findOne({ email }); 
-      
+      const user = await UserModel.query().findOne({ email });
+
       if (user) {
         res.status(409).send({ error: "Email already used." });
 
@@ -51,7 +68,13 @@ const handler = mw({
         })
         .returning("*");
 
-      if (address !== "" && city !== "" && region !== "" && postalCode !== "" && country !== "") {
+      if (
+        address !== "" &&
+        city !== "" &&
+        region !== "" &&
+        postalCode !== "" &&
+        country !== ""
+      ) {
         await AddressModel.query()
           .insert({
             address,
@@ -59,10 +82,18 @@ const handler = mw({
             region,
             postalCode,
             country,
-            userId : addedUser.id,
+            userId: addedUser.id,
           })
           .returning("*");
       }
+
+      const encryptId = (id) => {
+        const encryptedId = AES.encrypt(
+          id.toString(),
+          config.security.encrypt
+        ).toString();
+        return encryptedId;
+      };
 
       sgMail.setApiKey(config.security.sendgrid);
 
@@ -74,7 +105,9 @@ const handler = mw({
         dynamic_template_data: {
           firstname: firstName,
           lastname: lastName,
-          url: `http://localhost:3000/mails/confirmation?id=${addedUser.id}`,
+          url: `http://localhost:3000/mails/confirmation?key=${encryptId(
+            addedUser.id
+          )}`,
         },
       };
 

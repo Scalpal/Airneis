@@ -4,15 +4,15 @@ import mw from "@/api/mw.js";
 import { idValidator } from "@/validator";
 
 const handler = mw({
-  PUT: [
+  PATCH: [
     validate({
-      query: {
+      body: {
         id: idValidator.required(),
       },
     }),
     async ({
       locals: {
-        query: { id },
+        body: { id },
       },
       res,
     }) => {
@@ -24,7 +24,7 @@ const handler = mw({
         return;
       }
 
-      await UserModel.query().findOne({ id }).update({ activate: true });
+      await UserModel.query().findOne({ id }).update({ active: true });
 
       res.send({ success: true });
     },

@@ -1,6 +1,9 @@
 import createAPIClient from "@/web/createAPIClient.js";
 import parseSession from "@/web/parseSession.js";
 import signInService from "@/web/services/signIn.js";
+import mailResetPasswordService from "@/web/services/mailResetPassword.js";
+import passwordResetService from "@/web/services/passwordReset.js";
+import cryptService from "@/web/services/crypt.js";
 import signUpService from "@/web/services/signUp.js";
 import {
   createContext,
@@ -15,21 +18,24 @@ import { parseCookies } from "nookies";
 const AppContext = createContext();
 
 export const AppContextProvider = (props) => {
-  const { isPublicPage, ...otherProps } = props;
-  const [session, setSession] = useState(null);
-  const [jwt, setJWT] = useState(null);
+  const { isPublicPage,...otherProps } = props;
+  const [session,setSession] = useState(null);
+  const [jwt,setJWT] = useState(null);
   const api = createAPIClient({ jwt });
 
   const signUp = signUpService({ api });
-  const signIn = signInService({ api, setSession, setJWT });
+  const signIn = signInService({ api,setSession,setJWT });
+  const mailResetPassword = mailResetPasswordService({ api });
+  const passwordReset = passwordResetService({ api });
+  const crypt = cryptService({ api });
   const signOut = useCallback(() => {
     document.cookie = "token" + "=;expires=Thu, 01 Jan 1970 00:00:01 GMT;";
     setSession(false);
-  }, []);
+  },[]);
 
-  const [cart, setCart] = useState(() => {
+  const [cart,setCart] = useState(() => {
     if (typeof window !== "undefined" && window.localStorage) {
-      return (localStorage.getItem("products") !== "undefined") && 
+      return (localStorage.getItem("products") !== "undefined") &&
         (localStorage.getItem("products") !== "null") ?
         JSON.parse(localStorage.getItem("products")) : [];
     }
@@ -41,41 +47,41 @@ export const AppContextProvider = (props) => {
 
       // Create the array of products in localStorage (init an array of products on first add)
       if (!Array.isArray(localStorageProducts)) {
-        const arrayProducts = []; 
+        const arrayProducts = [];
 
-        product.quantity = 1; 
+        product.quantity = 1;
         arrayProducts.push(product);
-        localStorage.setItem("products", JSON.stringify(arrayProducts));
+        localStorage.setItem("products",JSON.stringify(arrayProducts));
         setCart(arrayProducts);
 
-        return; 
+        return;
       }
-      
+
       const productIndex = localStorageProducts.findIndex((elt) => elt.id === product.id);
 
       // If product is not already in the cart, we add it
       if (productIndex === -1) {
-        product.quantity = 1; 
-        localStorage.setItem("products", JSON.stringify([...localStorageProducts, product]));
-        setCart([...cart, product]);
+        product.quantity = 1;
+        localStorage.setItem("products",JSON.stringify([...localStorageProducts,product]));
+        setCart([...cart,product]);
 
         return;
       }
 
       //Otherwise, we increment it's quantity
-      localStorageProducts[productIndex].quantity++; 
-      localStorage.setItem("products", JSON.stringify(localStorageProducts));
+      localStorageProducts[productIndex].quantity++;
+      localStorage.setItem("products",JSON.stringify(localStorageProducts));
       setCart(localStorageProducts);
     }
-  }, [cart, setCart]);
+  },[cart,setCart]);
 
   const deleteProductFromCart = useCallback((product) => {
     const localStorageProducts = JSON.parse(localStorage.getItem("products"));
 
     const updatedLocalStorageProducts = localStorageProducts.filter((elt) => elt.id !== product.id);
-    localStorage.setItem("products", updatedLocalStorageProducts); 
-    setCart(updatedLocalStorageProducts); 
-  }, [setCart]); 
+    localStorage.setItem("products",updatedLocalStorageProducts);
+    setCart(updatedLocalStorageProducts);
+  },[setCart]);
 
   const removeProductFromCart = useCallback((product) => {
     const localStorageProducts = JSON.parse(localStorage.getItem("products"));
@@ -89,17 +95,17 @@ export const AppContextProvider = (props) => {
     }
 
     localStorageProducts[productIndex].quantity--;
-    localStorage.setItem("products", localStorageProducts); 
-    setCart(localStorageProducts); 
+    localStorage.setItem("products",localStorageProducts);
+    setCart(localStorageProducts);
 
-  }, [deleteProductFromCart, setCart]);
-
-  useEffect(() => {
-    localStorage.setItem("products", JSON.stringify(cart));
-  }, [cart]);
+  },[deleteProductFromCart,setCart]);
 
   useEffect(() => {
-  	const { token } = parseCookies(null);
+    localStorage.setItem("products",JSON.stringify(cart));
+  },[cart]);
+
+  useEffect(() => {
+    const { token } = parseCookies(null);
 
     if (!token) {
       return;
@@ -109,7 +115,7 @@ export const AppContextProvider = (props) => {
 
     setSession(session);
     setJWT(token);
-  }, []);
+  },[]);
 
 
 
@@ -119,6 +125,9 @@ export const AppContextProvider = (props) => {
         signUp,
         signIn,
         signOut,
+        mailResetPassword,
+        passwordReset,
+        crypt,
         setCart,
         addToCart,
         removeProductFromCart,
@@ -129,7 +138,7 @@ export const AppContextProvider = (props) => {
         cart
       },
     };
-  }, [cart, session, signUp, signIn, signOut, setCart, addToCart, removeProductFromCart, deleteProductFromCart]);
+  },[signUp,signIn,signOut,mailResetPassword,passwordReset,crypt,addToCart,removeProductFromCart,deleteProductFromCart,session,cart]);
 
   if (!isPublicPage && session === null) {
     return (<span>Not Connected</span>);
@@ -144,8 +153,8 @@ export const AppContextProvider = (props) => {
 };
 
 const useAppContext = () => {
-  const { state, actions } = useContext(AppContext);
-  return { state, actions };
+  const { state,actions } = useContext(AppContext);
+  return { state,actions };
 };
 
 export default useAppContext;

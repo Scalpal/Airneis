@@ -12,9 +12,15 @@ const routes = {
   home: () => "/",
   register: () => "/register",
   login: () => "/login",
+  delivery: () => "/order/delivery",
+  resetPassword: () => "/reset-password",
   api: {
-    register: () => "/users/register",
-    login: () => "/users/login",
+    crypt: () => "/security/cryptoKey",
+    resetPassword: () => "/users/reset-password",
+    activate: () => "/mail/confirmation",
+    mailResetPassword: () => "/mail/reset-password",
+    signUp: () => "/users/register",
+    signIn: () => "/users/login",
     posts: {
       collection: (query) => createRouteWithQueryParams("/posts", query),
       single: (postId, query) =>
