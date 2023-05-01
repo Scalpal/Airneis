@@ -5,6 +5,8 @@ import slowDown from "@/api/middlewares/slowDown.js";
 import validate from "@/api/middlewares/validate.js";
 import mw from "@/api/mw.js";
 import { emailValidator, phoneValidator, stringValidator, passwordValidator } from "@/validator";
+import sgMail from "@sendgrid/mail";
+import config from "@/api/config.js";
 
 const handler = mw({
   POST: [
@@ -50,7 +52,7 @@ const handler = mw({
         .returning("*");
 
       if (address !== "" && city !== "" && region !== "" && postalCode !== "" && country !== "") {
-        const addedAddress = await AddressModel.query()
+        await AddressModel.query()
           .insert({
             address,
             city,
@@ -60,11 +62,28 @@ const handler = mw({
             userId : addedUser.id,
           })
           .returning("*");
-        
-        addedUser.address = addedAddress;
       }
 
-      res.send({ result: { user: addedUser} });
+      sgMail.setApiKey(config.security.sendgrid);
+
+      const msg = {
+        to: email,
+        from: "Airneis.service@gmail.com",
+        templateId: "d-97f9566d2ae94701a8172e07cc82de28",
+        // eslint-disable-next-line camelcase
+        dynamic_template_data: {
+          firstname: firstName,
+          lastname: lastName,
+          url: `http://localhost:3000/mails/confirmation?id=${addedUser.id}`,
+        },
+      };
+
+      try {
+        sgMail.send(msg);
+        res.send({ success: true });
+      } catch (error) {
+        res.status(404).send({ error: error });
+      }
     },
   ],
 });
