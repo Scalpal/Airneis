@@ -5,11 +5,10 @@ import { Form, Formik } from "formik";
 import styles from "@/styles/register.module.css";
 import { useCallback, useState } from "react";
 import { createValidator, emailValidator, passwordValidator, phoneValidator, stringValidator } from "@/validator";
-import Axios, { AxiosError } from "axios";
 import { useRouter } from "next/router";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/solid";
 import CollapseMenu from "@/web/components/CollapseMenu";
-import routes from "@/web/routes";
+import useAppContext from "@/web/hooks/useAppContext";
 
 const validationSchema = createValidator({
   firstName: stringValidator.required("First name is a required field.").min(2, "Your firstname should be 2 characters long at least"),
@@ -40,30 +39,26 @@ const initialValues = {
 const Register = () => {
 
   const router = useRouter();
+  const { actions: { signUp } } = useAppContext();
   const [error, setError] = useState(null);
 
   const handleSubmit = useCallback(async (values) => {
-    const url = `http://localhost:3000/${routes.api.register()}`; 
+    const [error] = await signUp(values); 
 
-    try {
-      const result = await Axios.post(url, values); 
-      console.log("result : ", result); 
+    if (error) {
+      if (error[0].response.status === 409) {
+        setError("E-mail already used.");
+        return;
 
-      router.push("/login");
-
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        console.log(error.response); 
-        const { response } = error; 
-
-        if (response.status === 409) {
-          setError("E-mail already used.");
-        } else {
-          setError("Oops, something went wrong."); 
-        }
+      } else {
+        setError("Oops, something went wrong."); 
+        return; 
+        
       }
     }
-  }, [router]); 
+
+    router.push("/login"); 
+  }, [router, signUp]); 
 
   return (
     <main className={styles.container}>
