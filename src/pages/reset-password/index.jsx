@@ -22,13 +22,13 @@ const ResetPassword = () => {
 
   const router = useRouter();
 
-  const { actions: { askPasswordReset } } = useAppContext();
+  const { actions: { mailResetPassword } } = useAppContext();
   const [error,setError] = useState(null);
 
   const handleSubmit = useCallback(
     async (values) => {
 
-      const [err] = await askPasswordReset(values);
+      const [err] = await mailResetPassword(values);
 
       if (err && error) {
         document.getElementById("errormsg").animate(
@@ -50,7 +50,7 @@ const ResetPassword = () => {
       }
       router.push(routes.login());
     },
-    [askPasswordReset,error,router]
+    [mailResetPassword,error,router]
   );
 
 

@@ -1,11 +1,12 @@
-import { createValidator, stringValidator, emailValidator } from "@/validator";
+import { createValidator,stringValidator,emailValidator } from "@/validator";
 import BackofficeLoginLayout from "@/web/components/backoffice/LoginLayout";
-import { Formik, Form } from "formik";
+import { Formik,Form } from "formik";
 import CustomField from "@/web/components/backoffice/CustomField";
 import Button from "@/web/components/Button";
+import routes from "@/web/routes.js";
 import styles from "@/styles/backoffice/loginPage.module.css";
 import { useRouter } from "next/router";
-import { useCallback, useState } from "react";
+import { useCallback,useState } from "react";
 import useAppContext from "@/web/hooks/useAppContext";
 const merge = require("deepmerge");
 
@@ -25,10 +26,10 @@ const Login = () => {
   const {
     actions: { signIn },
   } = useAppContext();
-  const [error, setError] = useState(null);
+  const [error,setError] = useState(null);
   const handleSubmit = useCallback(
     async (values) => {
-      const newValues = merge(values, { access: "admin" });
+      const newValues = merge(values,{ access: "admin" });
       const [err] = await signIn(newValues);
 
       if (err && error) {
@@ -49,9 +50,9 @@ const Login = () => {
 
         return;
       }
-      router.push("/home");
+      router.push(routes.home());
     },
-    [signIn, error, router]
+    [signIn,error,router]
   );
   return (
     <main className={styles.mainContent}>
@@ -62,7 +63,7 @@ const Login = () => {
         initialValues={initialValues}
         error={error}
       >
-        {({ isValid, dirty, isSubmitting }) => (
+        {({ isValid,dirty,isSubmitting }) => (
           <Form className={styles.formContainer}>
             <div className={styles.titlesBlock}>
               <p className={styles.logo}>Airneis</p>

@@ -19,7 +19,7 @@ const handler = mw({
       const user = await UserModel.query().findOne({ id });
 
       if (!user) {
-        res.status(404).send({ result: "User undefined" });
+        res.status(404).send({ result: "User undefined." });
 
         return;
       }

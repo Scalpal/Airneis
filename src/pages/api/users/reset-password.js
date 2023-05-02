@@ -2,7 +2,6 @@ import UserModel from "@/api/db/models/UserModel.js";
 import hashPassword from "@/api/db/hashPassword.js";
 import validate from "@/api/middlewares/validate.js";
 import mw from "@/api/mw.js";
-const timestring = require("timestring");
 import {
   idValidator,
   passwordValidator,
@@ -26,12 +25,17 @@ const handler = mw({
       },
       res,
     }) => {
-      const time = "5m";
-      const currentDate = new Date();
-      const timerDate = new Date(currentDate.getTime() - timestring(time));
+      if (password !== passwordConfirmation) {
+        res.status(400).send({ error: "Password need to be conform." });
 
-      if (timerDate > new Date(timer)) {
-        res.status(404).send({ result: "Token expired" });
+        return;
+      }
+
+      const timerNow = new Date();
+      timerNow.setMinutes(timerNow.getMinutes() - 15);
+
+      if (timerNow >= new Date(timer)) {
+        res.status(401).send({ error: "Token expired." });
 
         return;
       }
@@ -39,13 +43,11 @@ const handler = mw({
       const user = await UserModel.query().findOne({ id });
 
       if (!user) {
-        res.status(404).send({ result: "User undefined" });
+        res.status(404).send({ error: "User undefined." });
 
         return;
       }
 
-      // for dosn't have error on passwordConfirmation
-      password = passwordConfirmation;
       const [passwordHash, passwordSalt] = await hashPassword(password);
 
       await UserModel.query()

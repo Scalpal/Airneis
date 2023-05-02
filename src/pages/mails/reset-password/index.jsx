@@ -29,8 +29,8 @@ const MailResetPassword = () => {
 
   const handleSubmit = useCallback(
     async (values) => {
-      const cryptoId = decodeURIComponent(router.query.id);
-      const cryptoTimer = decodeURIComponent(router.query.timer);
+      const cryptoId = decodeURIComponent(router.query.keyA);
+      const cryptoTimer = decodeURIComponent(router.query.keyB);
 
       const [{ getCryptoId },{ getCryptoTimer }] = await crypt([{ cryptoId },{ cryptoTimer }]);
 

@@ -46,6 +46,36 @@
   font-size: 0.8rem;
 }
 
+.haveAccountText {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.2rem;
+  font-size: 0.7rem;
+}
+.haveAccountText p {
+  color: grey;
+  white-space: nowrap;
+}
+
+.haveAccountText p:hover {
+  cursor: default;
+}
+
+.haveAccountText p>span {
+  font-weight: 600;
+  color: black;
+}
+
+.haveAccountText p>span:hover {
+  cursor: pointer;
+}
+
+.haveAccountText a:hover {
+  text-decoration: underline;
+}
+
 @media only screen and (max-width: 767px) {
   .formContainer {
     width: 70%;

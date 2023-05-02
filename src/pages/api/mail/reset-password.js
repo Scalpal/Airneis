@@ -45,9 +45,11 @@ const handler = mw({
         dynamic_template_data: {
           firstname: user.firstName,
           lastname: user.lastName,
-          url: `${config.baseURL}/mails/reset-password?id=${encodeURIComponent(
+          url: `${
+            config.baseURL
+          }/mails/reset-password?keyA=${encodeURIComponent(
             encryptId(user.id)
-          )}&timer=${encodeURIComponent(encryptId(new Date().toISOString()))}`,
+          )}&keyB=${encodeURIComponent(encryptId(new Date().toISOString()))}`,
         },
       };
 
