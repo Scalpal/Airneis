@@ -39,8 +39,8 @@ export const getServerSideProps = async (context) => {
     };
   }
 
-  const user = await Axios.get(`http://localhost:3000/${routes.api.specificUser(payload.user.id)}`);
-
+  const { data: { user } } = await Axios.get(`http://localhost:3000/${routes.api.specificUser(payload.user.id)}`);
+   
   if (!user.isAdmin) {
     return {
       redirect: {
@@ -52,7 +52,7 @@ export const getServerSideProps = async (context) => {
 
   return {
     props: {
-      user: user
+      user
     }
   };
 };
