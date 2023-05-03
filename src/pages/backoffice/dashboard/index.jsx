@@ -23,7 +23,6 @@ BackofficeDashboard.getLayout = (page) => {
 };
 
 export const getServerSideProps = async (context) => {
-  
   const { token } = parseCookies(context);
   const { payload } = jsonwebtoken.verify(token, config.security.jwt.secret);
 
