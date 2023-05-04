@@ -1,23 +1,19 @@
 import routes from "@/web/routes";
+import { AxiosError } from "axios";
 
-const signUp =
-  ({ api }) =>
-    async ({ email, firstName, lastName, password, phoneNumber }) => {
-      try {
-        const { data } = await api.post(routes.api.signUp(), {
-          firstName,
-          email,
-          lastName,
-          password,
-          phoneNumber,
-        });
+const signUp = ({ api }) =>
+  async (values) => {
+    try {
+      const { data } = await api.post(routes.api.register(), values);
 
-        return [null, data];
-      } catch (err) {
-        const error = err.response?.data?.error || "Oops. Something went wrong";
-
-        return [Array.isArray(error) ? error : [error]];
+      return [null, data];
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        console.log(error.response);
       }
-    };
+
+      return [Array.isArray(error) ? error : [error]];
+    }
+  };
 
 export default signUp;

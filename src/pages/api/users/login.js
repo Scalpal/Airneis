@@ -3,7 +3,7 @@ import UserModel from "@/api/db/models/UserModel.js";
 import slowDown from "@/api/middlewares/slowDown.js";
 import validate from "@/api/middlewares/validate.js";
 import mw from "@/api/mw.js";
-import { emailValidator, stringValidator, roleValidator } from "@/validator";
+import { emailValidator, stringValidator } from "@/validator";
 import jsonwebtoken from "jsonwebtoken";
 
 const handler = mw({
@@ -13,56 +13,46 @@ const handler = mw({
       body: {
         email: emailValidator.required(),
         password: stringValidator.required(),
-        access: roleValidator.required(),
       },
     }),
     async ({
       locals: {
-        body: { email, password, access },
+        body: { email, password },
       },
       res,
     }) => {
       const user = await UserModel.query()
-        .findOne({ email })
-        .withGraphFetched("role");
-
+        .findOne({ email });
+      
       if (!user) {
-        res.status(401).send({ error: "Invalid user" });
+        res.status(401).send({ error: "Wrong email or password." });
 
         return;
       }
 
       if (!(await user.checkPassword(password))) {
-        res.status(401).send({ error: password });
+        res.status(401).send({ error: "Wrong email or password." });
 
         return;
       }
 
-      if (!user.activate) {
-        res.status(401).send({ error: "Account is not activate" });
+      if (!user.active) {
+        res.status(401).send({ error: "Wrong email or password." });
 
         return;
       }
 
-      if (access !== user.role.role) {
-        res.status(404).send({ error: "You are not authorized" });
-
-        return;
-      }
-
-      const jwt = jsonwebtoken.sign(
-        {
-          payload: {
-            user: {
-              id: user.id,
-              role: user.role.role,
-            },
+      const jwt = jsonwebtoken.sign({
+        payload: {
+          user: {
+            id: user.id,
           },
         },
-        config.security.jwt.secret,
-        { expiresIn: config.security.jwt.expiresIn }
+      },
+      config.security.jwt.secret,
+      { expiresIn: config.security.jwt.expiresIn }
       );
-
+    
       res.send({ result: jwt });
     },
   ],

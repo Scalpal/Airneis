@@ -38,7 +38,7 @@ const DrawerMenu = (props) => {
           onClick={() => setIsDrawerToggled(!isDrawerToggled)}
         />
         {session ? <Link href="/profil">My profil</Link> : <Link href="/login">Login</Link>}
-        {session ? <a onClick={logout}>Logout</a> : <Link href="/signup">Register</Link>}
+        {session ? <a onClick={logout}>Logout</a> : <Link href="/register">Register</Link>}
         <Link href="">CGU</Link>
         <Link href="">Legal mentions</Link>
         <Link href="">Contact</Link>

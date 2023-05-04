@@ -2,7 +2,6 @@ import createAPIClient from "@/web/createAPIClient.js";
 import parseSession from "@/web/parseSession.js";
 import signInService from "@/web/services/signIn.js";
 import signUpService from "@/web/services/signUp.js";
-import config from "@/web/config";
 import {
   createContext,
   useCallback,
@@ -11,6 +10,7 @@ import {
   useMemo,
   useState,
 } from "react";
+import { parseCookies } from "nookies";
 
 const AppContext = createContext();
 
@@ -23,7 +23,7 @@ export const AppContextProvider = (props) => {
   const signUp = signUpService({ api });
   const signIn = signInService({ api, setSession, setJWT });
   const signOut = useCallback(() => {
-    localStorage.removeItem(config.session.localStorageKey);
+    document.cookie = "token" + "=;expires=Thu, 01 Jan 1970 00:00:01 GMT;";
     setSession(false);
   }, []);
 
@@ -35,22 +35,83 @@ export const AppContextProvider = (props) => {
     }
   });
 
+  const addToCart = useCallback((product) => {
+    if (typeof window !== "undefined" && window.localStorage) {
+      const localStorageProducts = JSON.parse(localStorage.getItem("products"));
+
+      // Create the array of products in localStorage (init an array of products on first add)
+      if (!Array.isArray(localStorageProducts)) {
+        const arrayProducts = []; 
+
+        product.quantity = 1; 
+        arrayProducts.push(product);
+        localStorage.setItem("products", JSON.stringify(arrayProducts));
+        setCart(arrayProducts);
+
+        return; 
+      }
+      
+      const productIndex = localStorageProducts.findIndex((elt) => elt.id === product.id);
+
+      // If product is not already in the cart, we add it
+      if (productIndex === -1) {
+        product.quantity = 1; 
+        localStorage.setItem("products", JSON.stringify([...localStorageProducts, product]));
+        setCart([...cart, product]);
+
+        return;
+      }
+
+      //Otherwise, we increment it's quantity
+      localStorageProducts[productIndex].quantity++; 
+      localStorage.setItem("products", JSON.stringify(localStorageProducts));
+      setCart(localStorageProducts);
+    }
+  }, [cart, setCart]);
+
+  const deleteProductFromCart = useCallback((product) => {
+    const localStorageProducts = JSON.parse(localStorage.getItem("products"));
+
+    const updatedLocalStorageProducts = localStorageProducts.filter((elt) => elt.id !== product.id);
+    localStorage.setItem("products", updatedLocalStorageProducts); 
+    setCart(updatedLocalStorageProducts); 
+  }, [setCart]); 
+
+  const removeProductFromCart = useCallback((product) => {
+    const localStorageProducts = JSON.parse(localStorage.getItem("products"));
+
+    const productIndex = localStorageProducts.findIndex((elt) => elt.id === product.id);
+    const currentProduct = localStorageProducts[productIndex];
+
+    if (currentProduct.quantity - 1 === 0) {
+      deleteProductFromCart(product);
+      return;
+    }
+
+    localStorageProducts[productIndex].quantity--;
+    localStorage.setItem("products", localStorageProducts); 
+    setCart(localStorageProducts); 
+
+  }, [deleteProductFromCart, setCart]);
+
   useEffect(() => {
     localStorage.setItem("products", JSON.stringify(cart));
   }, [cart]);
 
   useEffect(() => {
-    const jwt = localStorage.getItem(config.session.localStorageKey);
+  	const { token } = parseCookies(null);
 
-    if (!jwt) {
+    if (!token) {
       return;
     }
 
-    const session = parseSession(jwt);
+    const session = parseSession(token);
 
     setSession(session);
-    setJWT({ jwt });
+    setJWT(token);
   }, []);
+
+
 
   const contextValues = useMemo(() => {
     return {
@@ -58,14 +119,17 @@ export const AppContextProvider = (props) => {
         signUp,
         signIn,
         signOut,
-        setCart
+        setCart,
+        addToCart,
+        removeProductFromCart,
+        deleteProductFromCart
       },
       state: {
         session,
         cart
       },
     };
-  }, [cart, session, signUp, signIn, signOut, setCart]);
+  }, [cart, session, signUp, signIn, signOut, setCart, addToCart, removeProductFromCart, deleteProductFromCart]);
 
   if (!isPublicPage && session === null) {
     return (<span>Not Connected</span>);

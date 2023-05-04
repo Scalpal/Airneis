@@ -112,28 +112,34 @@ const Products = () => {
     [queryParams, setQueryParams]
   );
 
-  // const createQueryString = useCallback(() => {
-  //   let queryString = "?";
+  {
+    /* const createQueryString = useCallback(() => {
+    let queryString = "?";
 
-  //   Object.entries(appliedQueryParams).map(([key, value]) => {
-  //     if (Array.isArray(value)) {
-  //       value.map((param) => (
-  //         queryString += key + "=" + param.value + "&"
-  //       ));
-  //     }
+    Object.entries(appliedQueryParams).map(([key, value]) => {
+      if (Array.isArray(value)) {
+        value.map((param) => (
+          queryString += key + "=" + param.value + "&"
+        ));
+      }
 
-  //     if (typeof value === "number" && value > 0) {
-  //       queryString += key + "=" + value + "&";
-  //     }
+      if (typeof value === "number" && value > 0) {
+        queryString += key + "=" + value + "&";
+      }
 
-  //     if (typeof value === "boolean") {
-  //       queryString += key + "=" + value + "&";
-  //     }
-  //   });
+      if (typeof value === "boolean") {
+        queryString += key + "=" + value + "&";
+      }
+    });
 
-  //   return queryString;
+    return queryString;
 
-  // }, [appliedQueryParams]);
+  }, [appliedQueryParams]); 
+
+  useEffect(() => {
+    console.log(createQueryString()); 
+  }, [appliedQueryParams, createQueryString]); */
+  }
 
   return (
     <>
