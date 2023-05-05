@@ -47,7 +47,7 @@ module.exports.up = async (knex) => {
 
   await knex.schema.createTable("products_images", (table) => {
     table.increments("id");
-    table.integer("productId").references("id").inTable("product").notNullable();
+    table.integer("productId").references("id").inTable("products").notNullable();
     table.string("imageSrc").notNullable();
     table.timestamps(true, true, true);
   });
@@ -100,7 +100,7 @@ module.exports.down = async (knex) => {
   await knex.schema.dropTable("orders");
   await knex.schema.dropTable("reviews");
   await knex.schema.dropTable("products_materials_relation");
-  // await knex.schema.dropTable("product_image");
+  await knex.schema.dropTable("products_images");
   await knex.schema.dropTable("products");
   await knex.schema.dropTable("materials");
   await knex.schema.dropTable("categories");

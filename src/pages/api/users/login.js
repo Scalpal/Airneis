@@ -42,16 +42,15 @@ const handler = mw({
         return;
       }
 
-      const jwt = jsonwebtoken.sign(
-        {
-          payload: {
-            user: {
-              id: user.id,
-            },
+      const jwt = jsonwebtoken.sign({
+        payload: {
+          user: {
+            id: user.id,
           },
         },
-        config.security.jwt.secret,
-        { expiresIn: config.security.jwt.expiresIn }
+      },
+      config.security.jwt.secret,
+      { expiresIn: config.security.jwt.expiresIn }
       );
     
       res.send({ result: jwt });
