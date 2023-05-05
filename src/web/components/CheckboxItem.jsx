@@ -1,6 +1,6 @@
 import styles from "@/styles/components/CheckboxItem.module.css"; 
 import { CheckIcon } from "@heroicons/react/24/solid";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 
 
 const CheckboxItem = (props) => {
@@ -21,15 +21,15 @@ const CheckboxItem = (props) => {
 
   }, [name, value, queryKey, queryParams, handleQueryParamsFilters, checked]);
 
-  // const isValueChecked = useCallback(() => {
-  //   const bool = queryParams[queryKey].findIndex((elt) => elt.value === id) === -1 ? false : true;
+  useEffect(() => {
+    if (Array.isArray(queryParams[queryKey])) {
+      const bool = queryParams[queryKey].findIndex((elt) => elt.value === value) === -1 ? false : true;
     
-  //   setChecked(bool ? true : false); 
-  // }, [queryParams, queryKey, id]);
+      setChecked(bool ? true : false);
+    }
 
-  // useEffect(() => {
-  //   isValueChecked();
-  // }, [isValueChecked]);
+  }, [queryParams, queryKey, value]);
+
 
   return (
     <div
