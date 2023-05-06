@@ -24,7 +24,6 @@ BackofficeDashboard.getLayout = (page) => {
 
 export const getServerSideProps = async (context) => {
   const { token } = parseCookies(context);
-  const { payload } = jsonwebtoken.verify(token, config.security.jwt.secret);
 
   if (!token) {
     return {
@@ -35,7 +34,9 @@ export const getServerSideProps = async (context) => {
     };
   }
 
-  const { data: { user } } = await Axios.get(`http://localhost:3000/${routes.api.specificUser(payload.user.id)}`);
+  const { payload } = jsonwebtoken.verify(token, config.security.jwt.secret);
+
+  const { data: { user } } = await Axios.get(`http://localhost:3000/api/${routes.api.users.single(payload.user.id)}`);
    
   if (!user.isAdmin) {
     return {
