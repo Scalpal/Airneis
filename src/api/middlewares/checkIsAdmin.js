@@ -1,4 +1,4 @@
-import jsonwebtoken from "jsonwebtoken"
+import jsonwebtoken from "jsonwebtoken";
 import config from "@/api/config.js";
 import UserModel from "../db/models/UserModel";
 import * as yup from "yup";
