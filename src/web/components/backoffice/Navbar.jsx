@@ -45,7 +45,9 @@ const navLinks = [
   },
 ];
 
-const Navbar = () => {
+const Navbar = (props) => {
+
+  const { loggedUser } = props; 
 
   return (
     <nav
@@ -55,7 +57,8 @@ const Navbar = () => {
       )}
     > 
       <div className={styles.adminInfosBlock}>
-
+        <p>Hello administrator </p>
+        <p>{loggedUser ? loggedUser.lastName : ""} {loggedUser ? loggedUser.firstName : ""}</p>
       </div>
 
 
