@@ -20,7 +20,18 @@ const handler = mw({
     }) => {
       const id = Number.parseInt(userId);
 
-      const user = await UserModel.query().findOne({ id });
+      const user = await UserModel.query()
+        .select(
+          "id",
+          "email",
+          "firstName",
+          "lastName",
+          "phoneNumber",
+          "active",
+          "isAdmin"
+        )
+        .findOne({ id })
+;
 
       if (!user) {
         res.status(404).send({ error: "User not found" });
