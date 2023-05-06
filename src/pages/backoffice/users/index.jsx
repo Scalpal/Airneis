@@ -10,45 +10,9 @@ import config from "@/api/config.js";
 import Axios from "axios";
 import routes from "@/web/routes";
 
-const users = [
-  {
-    id: 1,
-    firstName: "John",
-    lastName: "Michaels",
-    mail: "johnMichaels@gmail.com",
-    phoneNumber: "0601020304",
-  },
-  {
-    id: 1,
-    firstName: "Marc",
-    lastName: "Simons",
-    mail: "marcSimons@gmail.com",
-    phoneNumber: "0601020304",
-  },
-  {
-    id: 1,
-    firstName: "Jannah",
-    lastName: "Erikson",
-    mail: "jannahErikson@gmail.com",
-    phoneNumber: "0601020304",
-  },
-  {
-    id: 1,
-    firstName: "Sonny",
-    lastName: "Johnson",
-    mail: "sonnyJohnson@gmail.com",
-    phoneNumber: "0601020304",
-  },
-  {
-    id: 1,
-    firstName: "Micah",
-    lastName: "Bell",
-    mail: "micahBell@gmail.com",
-    phoneNumber: "0601020304",
-  }
-];
 
-const BackofficeUsers = () => {
+const BackofficeUsers = (props) => {
+  const { users } = props; 
 
   return (
     <main
@@ -63,14 +27,16 @@ const BackofficeUsers = () => {
           <p>{users.length}</p>
         </div>
 
+        {/* This will be a sum of users that has an order in the last 6 months */}
         <div>
           <p>Total of active users</p>
           <p>3</p>
         </div>
 
+
         <div>
           <p>Total of customers (at least 1 order)</p>
-          <p>2</p>
+          <p>{users.length}</p>
         </div>
 
         <div>
@@ -109,7 +75,6 @@ BackofficeUsers.getLayout = function (page) {
 
 export const getServerSideProps = async (context) => {
   const { token } = parseCookies(context);
-  const { payload } = jsonwebtoken.verify(token, config.security.jwt.secret);
 
   if (!token) {
     return {
@@ -119,6 +84,7 @@ export const getServerSideProps = async (context) => {
       }
     };
   }
+  const { payload } = jsonwebtoken.verify(token, config.security.jwt.secret);
 
   const { data: { user } } = await Axios.get(`http://localhost:3000/${routes.api.users.single(payload.user.id)}`);
    
@@ -131,11 +97,16 @@ export const getServerSideProps = async (context) => {
     };
   }
 
-  
+  const reqInstance = Axios.create({
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+  const { data: { users } } = await reqInstance.get(`http://localhost:3000/${routes.api.users.collection()}`);
 
   return {
     props: {
-      user
+      users: users
     }
   };
 };

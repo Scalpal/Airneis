@@ -46,7 +46,7 @@ const Table = (props) => {
                         </p>
                       ))
                     ) : (
-                      <p key={i}>{value}</p>
+                      <p key={i}>{value.toString()}</p>
                     )}
                   </td>
                 );
