@@ -28,7 +28,6 @@ BackofficeShop.getLayout = function (page) {
 
 export const getServerSideProps = async (context) => {
   const { token } = parseCookies(context);
-  const { payload } = jsonwebtoken.verify(token, config.security.jwt.secret);
 
   if (!token) {
     return {
@@ -38,6 +37,7 @@ export const getServerSideProps = async (context) => {
       }
     };
   }
+  const { payload } = jsonwebtoken.verify(token, config.security.jwt.secret);
 
   const { data: { user } } = await Axios.get(`http://localhost:3000/${routes.api.users.single(payload.user.id)}`);
    
