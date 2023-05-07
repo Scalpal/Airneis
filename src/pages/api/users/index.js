@@ -40,12 +40,12 @@ const handler = mw({
 
       const users = await query.modify("paginate", limit, page)
         .select(
-          "id as ID",
-          "email as E-mail",
-          "firstName as First name",
-          "lastName as Last name",
-          "phoneNumber as Phone number",
-          "active as Active",
+          "id",
+          "email",
+          "firstName",
+          "lastName",
+          "phoneNumber",
+          "active",
           "isAdmin"
         );
 
