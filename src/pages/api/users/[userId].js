@@ -31,7 +31,8 @@ const handler = mw({
           "isAdmin"
         )
         .findOne({ id })
-;
+        .withGraphFetched("address"); 
+
 
       if (!user) {
         res.status(404).send({ error: "User not found" });

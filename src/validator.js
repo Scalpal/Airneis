@@ -20,4 +20,12 @@ export const passwordValidator = yup
   )
   .required("This field cannot be empty");
 
+
 export const createValidator = (object) => yup.object().shape(object);
+
+// collection (pagination, order, etc.)
+export const limitValidator = yup.number().integer().min(1).max(100);
+export const pageValidator = yup.number().integer().min(1).default(1);
+export const orderFieldValidator = (fields) => yup.string().oneOf(fields);
+export const orderValidator = yup.string().lowercase().oneOf(["asc", "desc"]);
+export const searchValidator = yup.string().lowercase().default(""); 
