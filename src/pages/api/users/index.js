@@ -38,6 +38,9 @@ const handler = mw({
           .orWhere("email", "like", `%${search}%`);
       }
 
+      const countQuery = query.clone();
+      const [{ count }] = await countQuery.clearSelect().clearOrder().count();
+
       const users = await query.modify("paginate", limit, page)
         .select(
           "id",
@@ -49,7 +52,7 @@ const handler = mw({
           "isAdmin"
         );
 
-      res.send({ users: users });
+      res.send({ users: users, count: count });
     }
   ]
 });

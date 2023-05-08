@@ -120,7 +120,7 @@ export const AppContextProvider = (props) => {
   }, [cart]);
 
   useEffect(() => {
-  	const { token } = parseCookies(null);
+  	const { token } = parseCookies();
 
     if (!token) {
       return;
