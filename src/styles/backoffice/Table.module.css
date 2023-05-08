@@ -12,7 +12,29 @@
   padding: 1rem 0;
   font-weight: 500;
   font-size: 0.9rem;
+  width: fit-content;
   text-align: left;
+}
+
+.table th p span::first-letter {
+  text-transform: uppercase;
+}
+
+.table th:hover {
+  cursor: pointer;
+}
+
+.table th p {
+  display: flex; 
+  flex-direction: row; 
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.headerIcon {
+  width: 20px;
+  height: 20px;
 }
 
 .table td {
@@ -30,4 +52,11 @@
 .tableIcon {
   width: 30px;
   height: 30px; 
+}
+
+/* Table body empty */
+.emptyTextRow td {
+  height: 16rem;
+  text-align: center;
+  font-size: 1.1rem;
 }
