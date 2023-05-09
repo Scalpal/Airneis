@@ -24,6 +24,7 @@ const routes = {
       collection: (query) => createRouteWithQueryParams("/api/users", query),
       single: (userId, query) =>
         createRouteWithQueryParams(`/api/users/${userId}`, query),
+      self: () => "/api/users/self"
     }
   },
 };

@@ -11,6 +11,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { nunito } from "@/pages/_app";
 import { classnames } from "@/pages/_app";
+import { useUser } from "@/web/hooks/useUser";
 
 const navLinks = [
   {
@@ -45,9 +46,9 @@ const navLinks = [
   },
 ];
 
-const Navbar = (props) => {
+const Navbar = () => {
 
-  const { loggedUser } = props; 
+  const { data } = useUser(); 
 
   return (
     <nav
@@ -58,7 +59,7 @@ const Navbar = (props) => {
     > 
       <div className={styles.adminInfosBlock}>
         <p>Hello administrator </p>
-        <p>{loggedUser ? loggedUser.lastName : ""} {loggedUser ? loggedUser.firstName : ""}</p>
+        <p>{data ? data.lastName : ""} {data ? data.firstName : ""}</p>
       </div>
 
 
