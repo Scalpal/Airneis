@@ -3,14 +3,12 @@ import Table from "@/web/components/backoffice/Table";
 import { classnames } from "@/pages/_app";
 import { nunito } from "@/pages/_app";
 import styles from "@/styles/backoffice/statsPages.module.css";
-import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { parseCookies } from "nookies";
 import jsonwebtoken from "jsonwebtoken";
 import Axios, { AxiosError } from "axios";
 import routes from "@/web/routes";
 import { useCallback, useEffect, useState } from "react";
-import Select from "@/web/components/Select";
-import Pagination from "@/web/components/backoffice/Pagination";
+import ActionBar from "@/web/components/backoffice/ActionBar";
 
 
 const BackofficeUsers = (props) => {
@@ -131,7 +129,6 @@ const BackofficeUsers = (props) => {
           <p>3</p>
         </div>
 
-
         <div>
           <p>Total of customers (at least 1 order)</p>
           <p>{usersProps.length}</p>
@@ -144,34 +141,14 @@ const BackofficeUsers = (props) => {
       </div>
 
       <div className={styles.mainContent}>
-
-        <div className={styles.actionBar}>
-          <div>
-            <p>All users</p>
-
-            <div className={styles.customSearchInput}>
-              <input type="text" id="searchInput" placeholder="Search a user" onChange={(e) => setSearchValue(e.target.value)} />
-              <MagnifyingGlassIcon className={styles.actionBarIcon} />
-            </div>
-
-            <Select
-              defaultValue={10}
-              onChange={(e) => handleLimit(Number.parseInt(e.target.value))}
-            >
-              <option>Limit per page</option>
-              <option value={5}>5</option>
-              <option value={10}>10</option>
-              <option value={25}>25</option>
-              <option value={50}>50</option>
-            </Select>
-          </div>
-
-          <Pagination
-            dataCount={users.count}
-            queryParams={queryParams}
-            handleQueryParams={handleQueryParams}
-          />
-        </div>
+        <ActionBar
+          label={"All users"}
+          setSearchValue={setSearchValue}
+          handleLimit={handleLimit}
+          dataCount={users.count}
+          queryParams={queryParams}
+          handleQueryParams={handleQueryParams}
+        />
 
         <Table
           array={users.users}
@@ -194,7 +171,7 @@ BackofficeUsers.getLayout = function (page) {
 
 export const getServerSideProps = async (context) => {
   const { token } = parseCookies(context);
-  
+
   if (!token) {
     return {
       redirect: {
