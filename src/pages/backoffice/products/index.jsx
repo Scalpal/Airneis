@@ -8,7 +8,6 @@ import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import styles from "@/styles/backoffice/statsPages.module.css";
 import { parseCookies } from "nookies";
 import jsonwebtoken from "jsonwebtoken";
-import config from "@/api/config.js";
 import Axios from "axios";
 import routes from "@/web/routes";
 
@@ -167,7 +166,7 @@ BackofficeProducts.getLayout = function (page) {
 
 export const getServerSideProps = async (context) => {
   const { token } = parseCookies(context);
-
+  
   if (!token) {
     return {
       redirect: {
@@ -176,9 +175,26 @@ export const getServerSideProps = async (context) => {
       }
     };
   }
-  const { payload } = jsonwebtoken.verify(token, config.security.jwt.secret);
 
-  const { data: { user } } = await Axios.get(`http://localhost:3000/${routes.api.users.single(payload.user.id)}`);
+  const decodedToken = jsonwebtoken.decode(token); 
+  const isTokenExpired = Date.now() >= decodedToken.expires * 1000; 
+
+  if (isTokenExpired) {
+    return {
+      redirect: {
+        destination: "/home",
+        permanent: false
+      }
+    };
+  }
+
+  const reqInstance = Axios.create({
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+
+  const { data: { user } } = await reqInstance.get(`http://localhost:3000/${routes.api.users.self()}`);
    
   if (!user.isAdmin) {
     return {
