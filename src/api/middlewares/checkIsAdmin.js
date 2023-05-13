@@ -1,5 +1,3 @@
-import jsonwebtoken from "jsonwebtoken";
-import config from "@/api/config.js";
 import UserModel from "../db/models/UserModel";
 import * as yup from "yup";
 
@@ -7,12 +5,10 @@ import * as yup from "yup";
 const checkIsAdmin = () => {
 
   return async (ctx) => {
-    const { req, res, next, logger } = ctx;
-    const jwt = req.headers.authorization.slice(7);
-    const { payload } = jsonwebtoken.verify(jwt, config.security.jwt.secret);
+    const { res, next, logger, locals } = ctx;
+    const id = locals.userId;
 
     try {
-      const id = payload.user.id; 
       const user = await UserModel.query().findOne({ id });
 
       if (!user) {

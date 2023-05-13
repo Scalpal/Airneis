@@ -6,8 +6,13 @@ import * as yup from "yup";
 const auth = () => {
 
   return async (ctx) => {
-    const { req, res, next, logger } = ctx;
-    console.log("headers authorization : ", req.headers); 
+    const { req, res, next, logger, locals } = ctx;
+    if (!req.headers.authorization) {
+      res.status(401).json({ message: "No token provided" }); 
+
+      return;
+    }
+    
     const jwt = req.headers.authorization.slice(7);
 
     if (!jwt) {
@@ -15,8 +20,7 @@ const auth = () => {
     }
 
     const { payload: { user: { id } } } = jsonwebtoken.verify(jwt, config.security.jwt.secret);
-
-    console.log("JWT : ", jwt); 
+    locals.userId = id; 
 
     try {
       const user = await UserModel.query().findOne({ id });

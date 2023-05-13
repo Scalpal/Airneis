@@ -6,7 +6,6 @@ import styles from "@/styles/backoffice/statsPages.module.css";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { parseCookies } from "nookies";
 import jsonwebtoken from "jsonwebtoken";
-import config from "@/api/config.js";
 import Axios, { AxiosError } from "axios";
 import routes from "@/web/routes";
 import { useCallback, useEffect, useState } from "react";
@@ -21,7 +20,7 @@ const BackofficeUsers = (props) => {
   const [searchValue, setSearchValue] = useState("");
 
   const [queryParams, setQueryParams] = useState({
-    limit: 1,
+    limit: 10,
     page: 1,
     order: "asc",
     orderField: "id",
@@ -195,7 +194,7 @@ BackofficeUsers.getLayout = function (page) {
 
 export const getServerSideProps = async (context) => {
   const { token } = parseCookies(context);
-
+  
   if (!token) {
     return {
       redirect: {
@@ -204,11 +203,11 @@ export const getServerSideProps = async (context) => {
       }
     };
   }
-  const { payload } = jsonwebtoken.verify(token, config.security.jwt.secret);
 
-  const { data: { user } } = await Axios.get(`http://localhost:3000/${routes.api.users.single(payload.user.id)}`);
-   
-  if (!user.isAdmin) {
+  const decodedToken = jsonwebtoken.decode(token); 
+  const isTokenExpired = Date.now() >= decodedToken.expires * 1000; 
+
+  if (isTokenExpired) {
     return {
       redirect: {
         destination: "/home",
@@ -222,6 +221,18 @@ export const getServerSideProps = async (context) => {
       Authorization: `Bearer ${token}`
     }
   });
+
+  const { data: { user } } = await reqInstance.get(`http://localhost:3000/${routes.api.users.self()}`);
+   
+  if (!user.isAdmin) {
+    return {
+      redirect: {
+        destination: "/home",
+        permanent: false
+      }
+    };
+  }
+
   const { data: { users, count } } = await reqInstance.get(`http://localhost:3000/${routes.api.users.collection()}`);
 
   return {

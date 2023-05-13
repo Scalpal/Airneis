@@ -1,4 +1,5 @@
 import UserModel from "@/api/db/models/UserModel.js";
+import auth from "@/api/middlewares/auth";
 import checkIsAdmin from "@/api/middlewares/checkIsAdmin";
 import slowDown from "@/api/middlewares/slowDown.js";
 import validate from "@/api/middlewares/validate";
@@ -9,6 +10,8 @@ import { limitValidator, orderFieldValidator, orderValidator, pageValidator, sea
 const handler = mw({
   GET: [
     slowDown(500),
+    auth(),
+    checkIsAdmin(),
     validate({
       query: {
         limit: limitValidator.default(10),
@@ -18,7 +21,6 @@ const handler = mw({
         search: searchValidator
       }
     }),
-    checkIsAdmin(),
     async ({
       locals: {
         query: { limit, page, orderField, order, search}

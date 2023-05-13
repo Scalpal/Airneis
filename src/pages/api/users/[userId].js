@@ -1,4 +1,6 @@
 import UserModel from "@/api/db/models/UserModel";
+import auth from "@/api/middlewares/auth";
+import checkIsAdmin from "@/api/middlewares/checkIsAdmin";
 import slowDown from "@/api/middlewares/slowDown";
 import validate from "@/api/middlewares/validate";
 import mw from "@/api/mw.js";
@@ -7,6 +9,8 @@ import { idValidator } from "@/validator";
 const handler = mw({
   GET: [
     slowDown(500),
+    auth(),
+    checkIsAdmin(),
     validate({
       query: {
         userId: idValidator.required()
