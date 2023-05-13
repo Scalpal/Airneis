@@ -16,12 +16,9 @@ const routes = {
   resetPassword: () => "/reset-password",
   termsAndConditions: () => "/terms-and-conditions", 
   api: {
-    crypt: () => "/security/cryptoKey",
-    resetPassword: () => "/users/reset-password",
-    activate: () => "/mail/confirmation",
-    mailResetPassword: () => "/mail/reset-password",
-    signUp: () => "/users/register",
-    signIn: () => "/users/login",
+    register: () => "/users/register",
+    login: () => "/users/login",
+    specificUser: (userId) => `api/users/${userId}`,
     posts: {
       collection: (query) => createRouteWithQueryParams("/posts", query),
       single: (postId, query) =>

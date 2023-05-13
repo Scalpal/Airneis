@@ -108,5 +108,3 @@ Login.getLayout = function (page) {
     </BackofficeLoginLayout>
   );
 };
-
-export default Login; 
