@@ -120,7 +120,7 @@ const Pagination = (props) => {
         </button>
       </div>
       
-      <p className={styles.bottomText}>Page {queryParams.page} of {dataCount}</p>
+      <p className={styles.bottomText}>Page {queryParams.page} of {Math.ceil(dataCount / queryParams.limit)}</p>
     </div>
   );
 };
