@@ -1,18 +1,17 @@
 import UserModel from "@/api/db/models/UserModel";
 import slowDown from "@/api/middlewares/slowDown";
 import mw from "@/api/mw.js";
-import jsonwebtoken from "jsonwebtoken";
-import config from "@/api/config";
+import auth from "@/api/middlewares/auth";
 
 const handler = mw({
   GET: [
     slowDown(500),
+    auth(),
     async ({
-      req,
-      res
+      res,
+      locals
     }) => {
-      const token = req.headers.authorization.slice(7);
-      const { payload: { user: { id } } } = jsonwebtoken.verify(token, config.security.jwt.secret);
+      const id = locals.userId;
 
       try {
         const user = await UserModel.query()

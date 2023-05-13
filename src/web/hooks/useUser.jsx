@@ -18,7 +18,7 @@ const fetcher = async (url) => {
 
 export const useUser = () => {
 
-  const { data, error, isLoading } = useSWR(routes.api.users.self,(url) => fetcher(url));
+  const { data, error, isLoading } = useSWR(routes.api.users.self,fetcher);
 
   return {
     data: data,
