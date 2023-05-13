@@ -14,6 +14,7 @@ const routes = {
   login: () => "/login",
   delivery: () => "/order/delivery",
   resetPassword: () => "/reset-password",
+  termsAndConditions: () => "/terms-and-conditions", 
   api: {
     crypt: () => "/security/cryptoKey",
     resetPassword: () => "/users/reset-password",

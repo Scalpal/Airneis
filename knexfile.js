@@ -1,7 +1,7 @@
-const { resolve } = require("path")
-const { config } = require("dotenv")
+const { resolve } = require("path");
+const { config } = require("dotenv");
 
-config()
+config();
 
 const knexfile = {
   client: "pg",
@@ -16,6 +16,6 @@ const knexfile = {
     directory: resolve("src/api/db/migrations"),
     stub: resolve("src/api/db/migration.stub"),
   },
-}
+};
 
-module.exports = knexfile
+module.exports = knexfile;
