@@ -15,7 +15,6 @@ const BackofficeUsers = (props) => {
   const { usersProps, count } = props; 
 
   const [users, setUsers] = useState({ users: usersProps, count: count});
-  const [searchValue, setSearchValue] = useState("");
 
   const [queryParams, setQueryParams] = useState({
     limit: 10,
@@ -91,25 +90,6 @@ const BackofficeUsers = (props) => {
     updateUsers();
   }, [queryParams, updateUsers]);
 
-  useEffect(() => {
-    const searchInput = document.getElementById("searchInput");
-
-    const handleKeyDown = (event) => {
-      if (event.key === "Enter") {
-        setQueryParams({
-          ...queryParams,
-          page: 1,
-          search: searchValue
-        });
-      }
-    };
-    searchInput.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      searchInput.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [searchValue, queryParams]);
-
   return (
     <main
       className={classnames(
@@ -143,10 +123,10 @@ const BackofficeUsers = (props) => {
       <div className={styles.mainContent}>
         <ActionBar
           label={"All users"}
-          setSearchValue={setSearchValue}
           handleLimit={handleLimit}
           dataCount={users.count}
           queryParams={queryParams}
+          setQueryParams={setQueryParams}
           handleQueryParams={handleQueryParams}
         />
 
