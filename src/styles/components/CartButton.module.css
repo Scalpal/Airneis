@@ -12,19 +12,15 @@
   cursor: pointer;
 }
 
-.navbar .navbarButtonIcon {
-  color: white;
-}
-
-.navbarNotFixed .navbarButtonIcon {
-  color: white;
+.navbarButtonIcon.black {
+  color: black;
 }
 
 .navbarButtonCartCount {
   display: flex;
   flex-direction: row;
-  justify-content:center; 
-  align-items:center;
+  justify-content: center;
+  align-items: center;
   position: absolute;
   top: -8px;
   right: -8px;
