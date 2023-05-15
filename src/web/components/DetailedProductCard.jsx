@@ -3,13 +3,25 @@ import styles from "@/styles/components/DetailedProductCard.module.css";
 import Image from "next/image";
 import { ArrowRightIcon } from "@heroicons/react/24/solid";
 import Button from "./Button";
+import CircleAnimation from "./circleAnimation";
 import useAppContext from "../hooks/useAppContext";
+import { useState } from "react";
 
 const DetailedProductCard = (props) => {
 
   const { product } = props;  
   const router = useRouter();
-  const { actions: { addToCart }} = useAppContext();
+  const [bubbleAnimation, setBubbleAnimation] = useState(null);
+  const { actions: { addToCart } } = useAppContext();
+  
+  const handleAddToCart = () => {
+    !bubbleAnimation && setBubbleAnimation(true);
+    
+    setTimeout(() => {
+      addToCart(product);
+      setBubbleAnimation(false);
+    }, 2500);
+  };
 
   return (
     <div
@@ -54,15 +66,19 @@ const DetailedProductCard = (props) => {
         </div>
 
         <div className={styles.priceStockWrapper}>
-          <p className={styles.productCardInfoPrice}> {product.price} </p>
+          <p className={styles.productCardInfoPrice}> {product.price}$</p>
           <span className={styles.productCardInfoStock}>{product.stock} available</span>
         </div>
 
         <div className={styles.productCardInfoBtnWrapper}>
           <Button
-            onClick={() => addToCart(product)}
+            bgWhite={bubbleAnimation}
+            onClick={handleAddToCart}
           >
             Add to cart
+            {bubbleAnimation && (
+              <CircleAnimation />
+            )}
           </Button>
         </div>
       </div>
