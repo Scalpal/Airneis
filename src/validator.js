@@ -10,6 +10,7 @@ export const displayNameValidator = yup.string().min(1).max(255);
 export const phoneValidator = yup.string().phone("FR", false, "The phone number has to be valid in France.");
 export const roleValidator = yup.string().oneOf(["admin", "utilisateur"]);
 export const emailValidator = yup.string().email();
+export const boolValidator = yup.boolean();
 
 export const passwordValidator = yup
   .string()
