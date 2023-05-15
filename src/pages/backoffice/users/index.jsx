@@ -9,13 +9,19 @@ import Axios, { AxiosError } from "axios";
 import routes from "@/web/routes";
 import { useCallback, useEffect, useState } from "react";
 import ActionBar from "@/web/components/backoffice/ActionBar";
+import useAppContext from "@/web/hooks/useAppContext";
+import CustomAlert from "@/web/components/CustomAlert";
+import { useRouter } from "next/router";
 
 
 const BackofficeUsers = (props) => {
   const { usersProps, count } = props; 
+  const { actions: { api } } = useAppContext(); 
+  const router = useRouter(); 
 
-  const [users, setUsers] = useState({ users: usersProps, count: count});
-
+  const [alert, setAlert] = useState({ status: "", message: ""}); 
+  const [showAlert, setShowAlert] = useState(false); 
+  const [users, setUsers] = useState({ users: usersProps, count: count });
   const [queryParams, setQueryParams] = useState({
     limit: 10,
     page: 1,
@@ -86,6 +92,47 @@ const BackofficeUsers = (props) => {
     }
   }, [queryParams]);
 
+  // Table row functions
+  const showSpecificUser = useCallback((userId) => {
+    router.push(`/backoffice/users/${userId}`);
+  }, [router]); 
+
+  const editUser = useCallback(async(userId) => {
+    try {
+      const { data } = await api.patch(routes.api.users.patch(userId));
+
+      console.log(data); 
+
+      updateUsers();
+      setShowAlert(true);
+      setAlert({ status: data.status, message: data.message });
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        console.log(error.response);
+      }
+    }
+  }, [api, updateUsers]);
+
+  const deleteUser = useCallback(async(userId) => {
+    try {
+      const { data } = await api.delete(routes.api.users.delete(userId)); 
+      
+      updateUsers(); 
+      setAlert({ status: data.status, message: data.message });
+      setShowAlert(true);
+    }catch (error) {
+      if (error instanceof AxiosError) {
+        console.log(error.response);
+      }
+    }
+  }, [api, updateUsers]); 
+
+  useEffect(() => {
+    setTimeout(() => {
+      setShowAlert(false);
+    }, [5000]);
+  }, [showAlert]);
+
   useEffect(() => {
     updateUsers();
   }, [queryParams, updateUsers]);
@@ -135,11 +182,20 @@ const BackofficeUsers = (props) => {
           safeArray={usersProps}
           queryParams={queryParams}
           sortColumn={sortColumn}
+          showSpecificRowFunction={showSpecificUser}
+          editRowFunction={editUser}
+          deleteRowFunction={deleteUser}
         />
       </div>
+
+      <CustomAlert
+        alert={alert}
+        showAlert={showAlert}
+      />
     </main>
   );
 };
+
 BackofficeUsers.isPublic = false;
 BackofficeUsers.getLayout = function (page) {
   return (
