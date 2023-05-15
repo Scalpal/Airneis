@@ -13,7 +13,7 @@ module.exports.up = async (knex) => {
     table.timestamps(true, true, true);
   });
 
-  await knex.schema.createTable("address", (table) => {
+  await knex.schema.createTable("addresses", (table) => {
     table.increments("id");
     table.text("address");
     table.text("city");
@@ -94,10 +94,10 @@ module.exports.up = async (knex) => {
     table.increments("id");
     table.integer("userId").notNullable().references("id").inTable("users");
     table
-      .integer("deliveryAdress")
+      .integer("deliveryAddress")
       .notNullable()
       .references("id")
-      .inTable("address");
+      .inTable("addresses");
     table
       .enum("status", ["cancelled", "on standby", "delivered"])
       .notNullable();
@@ -133,6 +133,6 @@ module.exports.down = async (knex) => {
   await knex.schema.dropTable("products");
   await knex.schema.dropTable("materials");
   await knex.schema.dropTable("categories");
-  await knex.schema.dropTable("address");
+  await knex.schema.dropTable("addresses");
   await knex.schema.dropTable("users");
 };

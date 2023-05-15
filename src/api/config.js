@@ -1,6 +1,6 @@
-import knexfile from "@@/knexfile.js";
+import knexfile from "../../knexfile.js";
 import dotenv from "dotenv";
-import { resolve } from "node:path";
+import { resolve } from "path";
 
 dotenv.config({ path: resolve(".env.local") });
 
