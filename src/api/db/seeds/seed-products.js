@@ -8,7 +8,8 @@ export const seed = async (knex) => {
     categories.push({ name: faker.commerce.product() });
   }
   const uniqueCategories = categories.filter(
-    (category, i, self) => i === self.findIndex((o) => o.name === category.name)
+    (category, i, self) =>
+      i === self.findIndex((index) => index.name === category.name)
   );
   await knex("categories").insert(uniqueCategories);
 
@@ -16,8 +17,9 @@ export const seed = async (knex) => {
   for (let i = 0; i < loop; i++) {
     materials.push({ name: faker.commerce.productMaterial() });
   }
-  const uniqueMaterials = categories.filter(
-    (material, i, self) => i === self.findIndex((o) => o.name === material.name)
+  const uniqueMaterials = materials.filter(
+    (material, i, self) =>
+      i === self.findIndex((index) => index.name === material.name)
   );
   await knex("materials").insert(uniqueMaterials);
 
