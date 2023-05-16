@@ -14,8 +14,8 @@ export const seed = async (knex) => {
       lastName: faker.person.lastName(),
       email: faker.internet.email(),
       phoneNumber: faker.phone.number(),
-      passwordHash: passwordHash,
-      passwordSalt: passwordSalt,
+      passwordHash,
+      passwordSalt,
     };
     users.push(user);
   }
