@@ -8,6 +8,7 @@ import useAppContext from "@/web/hooks/useAppContext";
 import LoginLayout from "@/web/components/LoginLayout";
 import LoginField from "@/web/components/LoginField";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
+import routes from "@/web/routes";
 
 const validationSchema = createValidator({
   email: emailValidator.required(),
@@ -33,7 +34,7 @@ const Login = () => {
       return;
     }
 
-    router.push("/home");
+    router.push(routes.home());
   },[signIn, router]);
 
   return (
@@ -77,7 +78,7 @@ const Login = () => {
 
             <div className={styles.noAccountText}>
               <p>Forgot your password ? <span> Click here </span></p> 
-              <p>Don&apos;t have an account ? <span onClick={() => router.push("/register")}> Register here </span></p> 
+              <p>Don&apos;t have an account ? <span onClick={() => router.push(routes.register())}> Register here </span></p> 
             </div>
 
           </Form>

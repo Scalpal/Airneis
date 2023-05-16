@@ -6,6 +6,7 @@ import { ShoppingCartIcon } from "@heroicons/react/24/outline";
 import LayoutStickyNavbar from "@/web/components/LayoutStickyNavbar";
 import styles from "@/styles/cart.module.css";
 import useAppContext from "@/web/hooks/useAppContext";
+import routes from "@/web/routes";
 
 // const products = [
 //   {
@@ -58,11 +59,11 @@ const Cart = () => {
   }, [productsList]);
 
   const handleSubmit = useCallback(() => {
-    router.push("/order/delivery");
+    router.push(routes.delivery());
   }, [router]);
 
   const redirectToHomePage = useCallback(() => {
-    router.push("/home");
+    router.push(routes.home());
   }, [router]);
 
   // console.log("Products list : ",productsList);

@@ -17,6 +17,7 @@ const routes = {
   order: () => "/order",
   products: () => "/products",
   categories: () => "/category",
+  delivery: () => "/order/delivery",
   query: {
     category: (query) => "/category/" + query,
     products: (query) => "/products/" + query,
