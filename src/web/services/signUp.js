@@ -5,7 +5,7 @@ const signUp =
   ({ api }) =>
   async (values) => {
     try {
-      const { data } = await api.post(routes.api.register(), values);
+      const { data } = await api.post(routes.api.signUp(), values);
 
       return [null, data];
     } catch (error) {

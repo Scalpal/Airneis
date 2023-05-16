@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/solid";
 import CollapseMenu from "@/web/components/CollapseMenu";
 import useAppContext from "@/web/hooks/useAppContext";
+import routes from "@/web/routes";
 
 const validationSchema = createValidator({
   firstName: stringValidator.required("First name is a required field.").min(2, "Your firstname should be 2 characters long at least"),
@@ -57,7 +58,7 @@ const Register = () => {
       }
     }
 
-    router.push("/login"); 
+    router.push(routes.login()); 
   }, [router, signUp]); 
 
   return (

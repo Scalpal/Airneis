@@ -1,12 +1,12 @@
 import Button from "@/web/components/Button";
 import CartProduct from "@/web/components/CartProduct";
 import { useRouter } from "next/router";
-import { useCallback, useEffect, useState } from "react";
+import routes from "@/web/routes.js";
+import { useCallback,useEffect,useState } from "react";
 import { ShoppingCartIcon } from "@heroicons/react/24/outline";
 import LayoutStickyNavbar from "@/web/components/LayoutStickyNavbar";
 import styles from "@/styles/cart.module.css";
 import useAppContext from "@/web/hooks/useAppContext";
-import routes from "@/web/routes";
 
 // const products = [
 //   {
@@ -41,22 +41,22 @@ import routes from "@/web/routes";
 
 const Cart = () => {
   const router = useRouter();
-  const { state: { cart } } = useAppContext(); 
+  const { state: { cart } } = useAppContext();
 
-  const [productsList, setProductsList] = useState([]);
-  const [totalSum, setTotalSum] = useState(0);
-  
+  const [productsList,setProductsList] = useState([]);
+  const [totalSum,setTotalSum] = useState(0);
+
   useEffect(() => {
-    setProductsList(cart); 
-  }, [cart]);
+    setProductsList(cart);
+  },[cart]);
 
   useEffect(() => {
     setTotalSum(
       productsList.reduce(
-        (sum, product) => sum + product.price * product.quantity,
+        (sum,product) => sum + product.price * product.quantity,
         0.0
       ));
-  }, [productsList]);
+  },[productsList]);
 
   const handleSubmit = useCallback(() => {
     router.push(routes.delivery());
@@ -96,14 +96,14 @@ const Cart = () => {
           <>
             <section className={styles.productListContainer}>
               <p className={styles.productListTitle}>Panier</p>
-              {productsList.map((product, index) => {
+              {productsList.map((product,index) => {
                 return (
                   <CartProduct
                     key={index}
                     index={index}
                     product={product}
-                    productState={[productsList, setProductsList]}
-                    totalSumState={[totalSum, setTotalSum]}
+                    productState={[productsList,setProductsList]}
+                    totalSumState={[totalSum,setTotalSum]}
                   />
                 );
               })}

@@ -22,10 +22,10 @@ const routes = {
     category: (query) => "/category/" + query,
     products: (query) => "/products/" + query,
   },
+  resetPassword: () => "/reset-password",
   api: {
     register: () => "/users/register",
     login: () => "/users/login",
-    specificUser: (userId) => `api/users/${userId}`,
     // posts: {
     //   collection: (query) => createRouteWithQueryParams("/posts", query),
     //   single: (postId, query) =>
