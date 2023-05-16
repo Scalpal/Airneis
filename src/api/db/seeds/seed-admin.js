@@ -8,8 +8,8 @@ export const seed = async (knex) => {
     lastName: faker.person.lastName(),
     email: "lorem@ipsum.fr",
     phoneNumber: faker.phone.number(),
-    passwordHash: passwordHash,
-    passwordSalt: passwordSalt,
+    passwordHash,
+    passwordSalt,
     isAdmin: true,
   });
 
