@@ -29,9 +29,9 @@
   top: -8px;
   right: -8px;
   border-radius: 50%;
-  width: 18px;
-  height: 18px;
-  padding: 2px;
+  width: 1.35vw;
+  height: 1.35vw;
+  font-size: 0.8vw;
   background-color: var(--primary);
   color: white;
   font-weight: 600;

@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import styles from "@/styles/components/DetailedProductCard.module.css";
 import Image from "next/image";
+import routes from "@/web/routes";
 import { ArrowRightIcon } from "@heroicons/react/24/solid";
 import Button from "./Button";
 import useAppContext from "../hooks/useAppContext";
@@ -8,15 +9,23 @@ import useAppContext from "../hooks/useAppContext";
 const DetailedProductCard = (props) => {
   const { product } = props;
   const router = useRouter();
-  const {
-    actions: { addToCart },
-  } = useAppContext();
+  const [bubbleAnimation, setBubbleAnimation] = useState(null);
+  const { actions: { addToCart } } = useAppContext();
+  
+  const handleAddToCart = () => {
+    !bubbleAnimation && setBubbleAnimation(true);
+    addToCart(product);
+    
+    setTimeout(() => {
+      setBubbleAnimation(false);
+    }, 1900);
+  };
 
   return (
     <div className={styles.productCard}>
       <div
         className={styles.productCardImageContainer}
-        onClick={() => router.push("/products/" + product.id)}
+        onClick={() => router.push(routes.query.products(product.id))}
       >
         <Image
           className={styles.productCardImage}
@@ -37,7 +46,7 @@ const DetailedProductCard = (props) => {
 
         <div
           className={styles.showMoreButton}
-          onClick={() => router.push("/products/" + product.id)}
+          onClick={() => router.push(routes.query.products(product.id))}
         >
           <p>Voir plus</p>
           <ArrowRightIcon className={styles.showMoreIcon} />
