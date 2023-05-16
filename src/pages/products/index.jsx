@@ -1,71 +1,89 @@
 import Banner from "@/web/components/Banner";
 import styles from "@/styles/products.module.css";
 import DetailedProductCard from "@/web/components/DetailedProductCard";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import ProductFilterMenu from "@/web/components/ProductFilterMenu";
 import ParamBadge from "@/web/components/ParamBadge";
+import useAppContext from "@/web/hooks/useAppContext";
 
-const categoryProducts = [
-  {
-    id: 1,
-    name: "Modern beechwood chair",
-    type: "Wood",
-    description: "Black chairs made of 100 year old Himalayan beech wood",
-    price: 200,
-    stock: 25,
-    picture: "/meuble-2.jpeg",
-    materials: ["metal", "steel", "iron"],
-  },
-  {
-    id: 2,
-    name: "Chair",
-    type: "Wood",
-    price: 29,
-    stock: 25,
-    picture: "/meuble-2.jpeg",
-    materials: ["metal", "steel", "iron"],
-  },
-  {
-    id: 3,
-    name: "Chair",
-    type: "Wood",
-    description: "Black chairs made of 100 year old Himalayan beech wood",
-    price: 87,
-    stock: 25,
-    picture: "/meuble-2.jpeg",
-    materials: ["metal", "steel", "iron"],
-  },
-  {
-    id: 4,
-    name: "Chair",
-    type: "Wood",
-    price: 129,
-    stock: 25,
-    picture: "/meuble-2.jpeg",
-    materials: ["metal", "steel", "iron"],
-  },
-  {
-    id: 5,
-    name: "Chair",
-    type: "Wood",
-    description: "Black chairs made of 100 year old Himalayan beech wood",
-    price: 987,
-    stock: 25,
-    picture: "/meuble-2.jpeg",
-    materials: ["metal", "steel", "iron"],
-  },
-  {
-    id: 6,
-    name: "Chair",
-    type: "Wood",
-    price: 100,
-    stock: 25,
-    picture: "/meuble-2.jpeg",
-    materials: ["metal", "steel", "iron"],
-  },
-];
+// const categoryProducts = [
+//   {
+//     id: 1,
+//     name: "Modern beechwood chair",
+//     type: "Wood",
+//     description: "Black chairs made of 100 year old Himalayan beech wood",
+//     price: 200,
+//     stock: 25,
+//     picture: "/meuble-2.jpeg",
+//     materials: ["metal", "steel", "iron"],
+//   },
+//   {
+//     id: 2,
+//     name: "Chair",
+//     type: "Wood",
+//     price: 29,
+//     stock: 25,
+//     picture: "/meuble-2.jpeg",
+//     materials: ["metal", "steel", "iron"],
+//   },
+//   {
+//     id: 3,
+//     name: "Chair",
+//     type: "Wood",
+//     description: "Black chairs made of 100 year old Himalayan beech wood",
+//     price: 87,
+//     stock: 25,
+//     picture: "/meuble-2.jpeg",
+//     materials: ["metal", "steel", "iron"],
+//   },
+//   {
+//     id: 4,
+//     name: "Chair",
+//     type: "Wood",
+//     price: 129,
+//     stock: 25,
+//     picture: "/meuble-2.jpeg",
+//     materials: ["metal", "steel", "iron"],
+//   },
+//   {
+//     id: 5,
+//     name: "Chair",
+//     type: "Wood",
+//     description: "Black chairs made of 100 year old Himalayan beech wood",
+//     price: 987,
+//     stock: 25,
+//     picture: "/meuble-2.jpeg",
+//     materials: ["metal", "steel", "iron"],
+//   },
+//   {
+//     id: 6,
+//     name: "Chair",
+//     type: "Wood",
+//     price: 100,
+//     stock: 25,
+//     picture: "/meuble-2.jpeg",
+//     materials: ["metal", "steel", "iron"],
+//   },
+// ];
 
 const Products = () => {
+  const { actions: { productsViewer } } = useAppContext();
+  const [error,setError] = useState(null);
+  const [products,setProducts] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { result } = await productsViewer();
+        setProducts(result);
+      } catch (err) {
+        setError(err);
+      }
+    };
+
+    fetchData();
+  }, [productsViewer]);
+  
   const [queryParams, setQueryParams] = useState({
     priceMin: 0,
     priceMax: 0,
@@ -193,7 +211,7 @@ const Products = () => {
           />
 
           <section className={styles.productsContainer}>
-            {categoryProducts.map((product, index) => (
+            {products.map((product, index) => (
               <DetailedProductCard key={index} product={product} />
             ))}
           </section>
@@ -205,3 +223,4 @@ const Products = () => {
 
 Products.isPublic = true;
 export default Products;
+

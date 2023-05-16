@@ -1,5 +1,6 @@
 import createAPIClient from "@/web/createAPIClient.js";
 import parseSession from "@/web/parseSession.js";
+import signUpService from "@/web/services/signUp.js";
 import signInService from "@/web/services/signIn.js";
 import signUpService from "@/web/services/signUp.js";
 import {

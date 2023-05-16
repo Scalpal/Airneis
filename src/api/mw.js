@@ -14,9 +14,9 @@ const logger = winston.createLogger({
         winston.format.json(),
         winston.format((info) => {
           info[Symbol.for("message")] = `[${chalk[
-            info.level === "sql" ? "blue" : "magenta"
+            info.level === "sql" ? "whiteBright" : "magenta"
           ](info.level)}] ${chalk[
-            info.level === "sql" ? "blueBright" : "yellow"
+            info.level === "sql" ? "cyanBright" : "blueBright"
           ](info.message)}`;
 
           return info;
