@@ -30,7 +30,7 @@ const Layout = ({ children }) => {
         actions={[signOut, session]}
       />
 
-      <Footer />
+      <Footer actions={[signOut, session]}/>
     </div>
   );
 };

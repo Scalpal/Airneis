@@ -3,6 +3,10 @@ import ProductCard from "@/web/components/ProductCard";
 import Banner from "@/web/components/Banner";
 import Button from "@/web/components/Button";
 import styles from "@/styles/productPage.module.css";
+import useAppContext from "@/web/hooks/useAppContext";
+import CircleAnimation from "@/web/components/circleAnimation";
+import { useState } from "react";
+import { useRouter } from "next/router";
 
 const placeholderImages = [
   "/meuble-1.jpeg",
@@ -10,12 +14,66 @@ const placeholderImages = [
   "/meuble-3.png",
 ];
 
-const productPrototype = {
-  name: "Samsung TV OLED 4K",
-  description: "Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500, quand un imprimeur anonyme assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte. Il n'a pas fait que survivre cinq siècles, mais s'est aussi adapté à la bureautique informatique, sans que son contenu n'en soit modifié.",
-  price: 2499,
-  stockAvailaible: 25
-};
+const AllProducts = [
+  {
+    id: 1,
+    name: "Chaise moderne en bois de hêtre",
+    type: "bois",
+    description:
+      "Chaises noir en bois de hêtre centenaire d'Himalayad,zkdanaldza nzdn lkdn jlkdznland kzalzdnalkd nkldzndzlaknalkn",
+    price: 200,
+    stock: 25,
+    picture: "/meuble-2.jpeg",
+    materials: ["métal","acier","fer"],
+  },
+  {
+    id: 2,
+    name: "chaise",
+    type: "bois",
+    price: 29,
+    stock: 25,
+    picture: "/meuble-2.jpeg",
+    materials: ["métal","acier","fer"],
+  },
+  {
+    id: 3,
+    name: "chaise",
+    type: "bois",
+    description: "Chaises noir en bois de hêtre centenaire d'Himalaya",
+    price: 87,
+    stock: 25,
+    picture: "/meuble-2.jpeg",
+    materials: ["métal","acier","fer"],
+  },
+  {
+    id: 4,
+    name: "chaise",
+    type: "bois",
+    price: 129,
+    stock: 25,
+    picture: "/meuble-2.jpeg",
+    materials: ["métal","acier","fer"],
+  },
+  {
+    id: 5,
+    name: "chaise",
+    type: "bois",
+    description: "Chaises noir en bois de hêtre centenaire d'Himalaya",
+    price: 987,
+    stock: 25,
+    picture: "/meuble-2.jpeg",
+    materials: ["métal","acier","fer"],
+  },
+  {
+    id: 6,
+    name: "chaise",
+    type: "bois",
+    price: 100,
+    stock: 25,
+    picture: "/meuble-2.jpeg",
+    materials: ["métal","acier","fer"],
+  },
+];
 
 const similarProducts = [
   {
@@ -70,10 +128,24 @@ const similarProducts = [
 ];
 
 const ProductPage = () => {
+  const [bubbleAnimation,setBubbleAnimation] = useState(null);
+  const router = useRouter();
+  const { productId } = router.query;
+  const { actions: { addToCart } } = useAppContext();
+  const currentProduct = AllProducts.filter(product => product.id === Number.parseInt(productId))[0];
+
+  const handleAddToCart = () => {
+    !bubbleAnimation && setBubbleAnimation(true);
+    addToCart(currentProduct);
+    
+    setTimeout(() => {
+      setBubbleAnimation(false);
+    }, 1900);
+  };
 
   return (
     <>
-      <Banner title={productPrototype.name} />
+      <Banner title={currentProduct.name} />
 
       <main>
 
@@ -86,14 +158,14 @@ const ProductPage = () => {
           <div className={styles.productInfos}>
 
             <div className={styles.productInfosTopBlock}>
-              <h1>{productPrototype.name}</h1>
-              <p>{productPrototype.description}</p>
+              <h1>{currentProduct.name}</h1>
+              <p>{currentProduct.description}</p>
             </div>
 
             <div className={styles.productInfosBottomBlock}>
-              <p>{productPrototype.price}€</p>
+              <p>{currentProduct.price}€</p>
               <p>
-                {productPrototype.stockAvailaible > 0 ? "Stocks : " + productPrototype.stockAvailaible + " available" : "Out of stock"}
+                {currentProduct.stock > 0 ? "Stocks : " + currentProduct.stock + " available" : "Out of stock"}
               </p>
             </div>
 
@@ -102,9 +174,13 @@ const ProductPage = () => {
 
         <div className={styles.addToCartBtnWrapper}>
           <Button
-            onClick={() => console.log("haha")}
+            bgWhite={bubbleAnimation}
+            onClick={handleAddToCart}
           >
             Add to cart
+            {bubbleAnimation && (
+              <CircleAnimation />
+            )}
           </Button>
         </div>
 

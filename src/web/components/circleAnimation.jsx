@@ -13,7 +13,7 @@ const CircleAnimation = () => {
     <>
       <div className={styles.whiteBG}>
         <svg height="100%" width="100%">
-          <circle className={classNames(bubbleAnimation ? styles.circle : styles.reverse)} cx="50%" cy="50%" r="12%" stroke="#231f20" strokeWidth="5" fillOpacity="0" />
+          <circle className={classNames(bubbleAnimation ? styles.circle : styles.reverse)} cx="50%" cy="50%" r="11%" stroke="#231f20" strokeWidth="4" fillOpacity="0" />
         </svg>
         {!bubbleAnimation && (
           <CheckCircleIcon className={styles.check}/>

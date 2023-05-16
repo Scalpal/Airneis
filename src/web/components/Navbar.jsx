@@ -3,6 +3,7 @@ import { MagnifyingGlassIcon, Bars3Icon } from "@heroicons/react/24/solid";
 import styles from "@/styles/components/Navbar.module.css";
 import { useEffect } from "react";
 import { classnames } from "@/pages/_app";
+import routes from "@/web/routes";
 import CartButton from "./CartButton";
 
 const Navbar = (props) => {
@@ -37,7 +38,7 @@ const Navbar = (props) => {
       id="navbar"
     >
       <Link
-        href="/home"
+        href={routes.home()}
         className={classnames("navbarLogo", styles.navbarLogo)}
       >
         Airneis
@@ -45,19 +46,19 @@ const Navbar = (props) => {
 
       <ul className={classnames(styles.navbarList, styles.midLinks)}>
         <li>
-          <Link href="/home" className={styles.navbarLink}>
+          <Link href={routes.home()} className={styles.navbarLink}>
             Home
           </Link>
         </li>
 
         <li>
-          <Link href="/products" className={styles.navbarLink}>
+          <Link href={routes.products()} className={styles.navbarLink}>
             Products
           </Link>
         </li>
 
         <li>
-          <Link href="/category" className={styles.navbarLink}>
+          <Link href={routes.categories()} className={styles.navbarLink}>
             Categories
           </Link>
         </li>

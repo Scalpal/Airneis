@@ -1,5 +1,6 @@
 import styles from "@/styles/components/DrawerMenu.module.css";
 import Link from "next/link";
+import routes from "@/web/routes";
 import { classnames } from "@/pages/_app";
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/router";
@@ -14,7 +15,7 @@ const DrawerMenu = (props) => {
   const router = useRouter();
   const logout = () => {
     signOut();
-    router.push("/home");
+    router.push(routes.home());
   };
 
   return (
@@ -37,8 +38,8 @@ const DrawerMenu = (props) => {
           className={styles.drawerMenuIcon}
           onClick={() => setIsDrawerToggled(!isDrawerToggled)}
         />
-        {session ? <Link href="/profil">My profil</Link> : <Link href="/login">Login</Link>}
-        {session ? <a onClick={logout}>Logout</a> : <Link href="/register">Register</Link>}
+        {session ? <Link href={routes.profil()}>My profil</Link> : <Link href={routes.login()}>Login</Link>}
+        {session ? <a onClick={logout}>Logout</a> : <Link href={routes.register()}>Register</Link>}
         <Link href="">CGU</Link>
         <Link href="">Legal mentions</Link>
         <Link href="">Contact</Link>

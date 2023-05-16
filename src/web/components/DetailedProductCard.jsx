@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import styles from "@/styles/components/DetailedProductCard.module.css";
 import Image from "next/image";
+import routes from "@/web/routes";
 import { ArrowRightIcon } from "@heroicons/react/24/solid";
 import Button from "./Button";
 import CircleAnimation from "./circleAnimation";
@@ -16,11 +17,11 @@ const DetailedProductCard = (props) => {
   
   const handleAddToCart = () => {
     !bubbleAnimation && setBubbleAnimation(true);
+    addToCart(product);
     
     setTimeout(() => {
-      addToCart(product);
       setBubbleAnimation(false);
-    }, 2500);
+    }, 1900);
   };
 
   return (
@@ -29,7 +30,7 @@ const DetailedProductCard = (props) => {
     >
       <div
         className={styles.productCardImageContainer}
-        onClick={() => router.push("/products/" + product.id)}
+        onClick={() => router.push(routes.query.products(product.id))}
       >
         <Image
           className={styles.productCardImage}
@@ -51,7 +52,7 @@ const DetailedProductCard = (props) => {
 
         <div
           className={styles.showMoreButton}
-          onClick={() => router.push("/products/" + product.id)}
+          onClick={() => router.push(routes.query.products(product.id))}
         >
           <p>Voir plus</p>
           <ArrowRightIcon className={styles.showMoreIcon} />

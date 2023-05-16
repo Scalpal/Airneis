@@ -1,4 +1,6 @@
 .whiteBG{
+  border-radius: 10px;
+  border: 2px solid black;
   width: 100%;
   height: 100%;
   background-color: var(--secondary);
@@ -17,7 +19,7 @@
 }
 .check{
    animation: apear 0.45s ease-out forwards;
-   animation: disapear 0.45s ease-out forwards 1.2s;
+   animation: disapear 0.25s ease-out forwards 0.85s;
 }
 
 .check{
