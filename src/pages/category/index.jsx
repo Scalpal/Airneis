@@ -3,42 +3,19 @@ import Banner from "@/web/components/Banner";
 import CategoriesBlocks from "@/web/components/CategoriesBlocks";
 
 const categories = [
-  {
-    name: "Moderne",
-  },
-  {
-    name: "Vintage",
-  },
-  {
-    name: "Chaises",
-  },
-  {
-    name: "Contemporain",
-  },
-  {
-    name: "Artisanal",
-  },
-  {
-    name: "Bois",
-  },
-  {
-    name: "Tables",
-  },
-  {
-    name: "Literie",
-  },
-  {
-    name: "Spécial suédois",
-  },
-  {
-    name: "Marbre",
-  },
-  {
-    name: "Salons",
-  },
-  {
-    name: "Douche",
-  },
+  { name: "Modern" },
+  { name: "Vintage" },
+  { name: "Chair" },
+  { name: "Contemporary" },
+  { name: "Artisanal" },
+  { name: "Wood" },
+  { name: "Table" },
+  { name: "Bedding" },
+  { name: "Swedish special" },
+  { name: "Marble" },
+  { name: "Living room" },
+  { name: "Shower" },
+  { name: "Bed" },
 ];
 
 const Categories = () => {

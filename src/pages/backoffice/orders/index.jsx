@@ -11,7 +11,7 @@ import config from "@/api/config.js";
 import Axios from "axios";
 import routes from "@/web/routes";
 
-// Prototype datas 
+// Prototype datas
 const ordersProto = [
   {
     id: 1,
@@ -19,17 +19,17 @@ const ordersProto = [
     status: "Order placed",
     products: [
       {
-        name: "Chaise moderne en bois de hêtre",
+        name: "Modern beechwood chair",
         price: 223,
         stock: 25,
       },
       {
-        name: "chaise",
+        name: "Chair",
         price: 98,
         stock: 25,
       },
       {
-        name: "chaise",
+        name: "Chair",
         price: 134,
         stock: 25,
       },
@@ -41,17 +41,17 @@ const ordersProto = [
     status: "Ready for delivery",
     products: [
       {
-        name: "Chaise moderne en bois de hêtre",
+        name: "Modern beechwood chair",
         price: 223,
         stock: 25,
       },
       {
-        name: "chaise",
+        name: "Chair",
         price: 98,
         stock: 25,
       },
       {
-        name: "chaise",
+        name: "Chair",
         price: 134,
         stock: 25,
       },
@@ -59,19 +59,11 @@ const ordersProto = [
   },
 ];
 
-
-
 const BackofficeOrders = () => {
-
   const [orders, _] = useState(ordersProto);
 
   return (
-    <main
-      className={classnames(
-        styles.mainContainer,
-        nunito.className
-      )}
-    >
+    <main className={classnames(styles.mainContainer, nunito.className)}>
       <div className={styles.topStats}>
         <div>
           <p>Total of orders</p>
@@ -86,7 +78,6 @@ const BackofficeOrders = () => {
 
       <div className={styles.mainContent}>
         <div className={styles.actionBar}>
-
           <div>
             <p>Orders</p>
 
@@ -95,7 +86,6 @@ const BackofficeOrders = () => {
               <MagnifyingGlassIcon className={styles.actionBarIcon} />
             </div>
           </div>
-
         </div>
 
         <Table array={orders} />
@@ -105,11 +95,7 @@ const BackofficeOrders = () => {
 };
 BackofficeOrders.isPublic = false;
 BackofficeOrders.getLayout = function (page) {
-  return (
-    <Layout>
-      {page}
-    </Layout>
-  );
+  return <Layout>{page}</Layout>;
 };
 
 export const getServerSideProps = async (context) => {
@@ -120,27 +106,31 @@ export const getServerSideProps = async (context) => {
     return {
       redirect: {
         destination: "/home",
-        permanent: false
-      }
+        permanent: false,
+      },
     };
   }
 
-  const { data: { user } } = await Axios.get(`http://localhost:3000/${routes.api.specificUser(payload.user.id)}`);
-   
+  const {
+    data: { user },
+  } = await Axios.get(
+    `http://localhost:3000/${routes.api.specificUser(payload.user.id)}`
+  );
+
   if (!user.isAdmin) {
     return {
       redirect: {
         destination: "/home",
-        permanent: false
-      }
+        permanent: false,
+      },
     };
   }
 
   return {
     props: {
-      user
-    }
+      user,
+    },
   };
 };
 
-export default BackofficeOrders; 
+export default BackofficeOrders;

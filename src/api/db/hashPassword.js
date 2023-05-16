@@ -1,5 +1,5 @@
-import { pbkdf2 as pbkdf2Callback, randomBytes } from "node:crypto";
-import { promisify } from "node:util";
+import { pbkdf2 as pbkdf2Callback, randomBytes } from "crypto";
+import { promisify } from "util";
 import config from "../config.js";
 
 const pbkdf2 = promisify(pbkdf2Callback);
