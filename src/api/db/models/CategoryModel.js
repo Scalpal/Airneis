@@ -10,7 +10,7 @@ class CategoryModel extends BaseModel {
         relation: BaseModel.HasOneRelation,
         modelClass: UserModel,
         join: {
-          from: "address.userId",
+          from: "addresses.userId",
           to: "users.id",
         },
       },

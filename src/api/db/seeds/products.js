@@ -3,26 +3,6 @@ import { faker } from "@faker-js/faker";
 export const seed = async (knex) => {
   const loop = 100;
 
-  const categories = [];
-  for (let i = 0; i < loop; i++) {
-    categories.push({ name: faker.commerce.product() });
-  }
-  const uniqueCategories = categories.filter(
-    (category, i, self) =>
-      i === self.findIndex((index) => index.name === category.name)
-  );
-  await knex("categories").insert(uniqueCategories);
-
-  const materials = [];
-  for (let i = 0; i < loop; i++) {
-    materials.push({ name: faker.commerce.productMaterial() });
-  }
-  const uniqueMaterials = materials.filter(
-    (material, i, self) =>
-      i === self.findIndex((index) => index.name === material.name)
-  );
-  await knex("materials").insert(uniqueMaterials);
-
   const categoryIds = await knex("categories").pluck("id");
   const products = [];
   for (let i = 0; i < loop; i++) {
@@ -35,9 +15,13 @@ export const seed = async (knex) => {
       categoryId: randomCategoryId,
     });
   }
-  await knex("products").insert(products);
+  let productIds = [];
+  await knex("products")
+    .insert(products)
+    .returning("id")
+    .then((ids) => (productIds = ids));
+  productIds = productIds.map((product) => product.id);
 
-  const productIds = await knex("products").pluck("id");
   const productsImages = [];
   for (let i = 0; i < loop; i++) {
     productsImages.push({

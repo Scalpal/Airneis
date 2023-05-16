@@ -19,9 +19,13 @@ export const seed = async (knex) => {
     };
     users.push(user);
   }
-  await knex("users").insert(users);
+  let userIds = [];
+  await knex("users")
+    .insert(users)
+    .returning("id")
+    .then((ids) => (userIds = ids));
+  userIds = userIds.map((user) => user.id);
 
-  const userIds = await knex("users").pluck("id");
   const addresses = [];
   for (let i = 0; i < loop; i++) {
     const address = {
@@ -34,25 +38,31 @@ export const seed = async (knex) => {
     };
     addresses.push(address);
   }
-  await knex("addresses").insert(addresses);
+  let addressIds = [];
+  await knex("addresses")
+    .insert(addresses)
+    .returning("id")
+    .then((ids) => (addressIds = ids));
+  addressIds = addressIds.map((address) => address.id);
 
-  const reviews = [];
   const productIds = await knex("products").pluck("id");
-  for (let i = 0; i < loop; i++) {
-    const randomStars = faker.helpers.arrayElement([1, 2, 3, 4, 5]);
-    const review = {
-      title: faker.lorem.lines(1),
-      content: faker.lorem.text(),
-      stars: randomStars,
-      productId: productIds[i],
-      userId: userIds[i],
-    };
-    reviews.push(review);
+  if (productIds.length !== 0) {
+    const reviews = [];
+    for (let i = 0; i < loop; i++) {
+      const randomStars = faker.helpers.arrayElement([1, 2, 3, 4, 5]);
+      const review = {
+        title: faker.lorem.lines(1),
+        content: faker.lorem.text(),
+        stars: randomStars,
+        productId: productIds[i],
+        userId: userIds[i],
+      };
+      reviews.push(review);
+    }
+    await knex("reviews").insert(reviews);
   }
-  await knex("reviews").insert(reviews);
 
   const orders = [];
-  const addressIds = await knex("addresses").pluck("id");
   for (let i = 0; i < loop; i++) {
     const randomStatus = faker.helpers.arrayElement([
       "cancelled",
