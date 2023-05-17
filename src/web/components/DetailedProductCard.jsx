@@ -10,12 +10,14 @@ const DetailedProductCard = (props) => {
   const { product } = props;
   const router = useRouter();
   const [bubbleAnimation, setBubbleAnimation] = useState(null);
-  const { actions: { addToCart } } = useAppContext();
-  
+  const {
+    actions: { addToCart },
+  } = useAppContext();
+
   const handleAddToCart = () => {
     !bubbleAnimation && setBubbleAnimation(true);
     addToCart(product);
-    
+
     setTimeout(() => {
       setBubbleAnimation(false);
     }, 1900);
@@ -29,7 +31,7 @@ const DetailedProductCard = (props) => {
       >
         <Image
           className={styles.productCardImage}
-          src={product.picture}
+          src={product.images[0].imageSrc}
           alt={"Image du produit"}
           fill
         />
@@ -55,10 +57,10 @@ const DetailedProductCard = (props) => {
         <div className={styles.productMaterialWrapper}>
           <p>
             Matériaux :{" "}
-            {product.materials.map((material, index) => {
-              const comma = index === product.materials.length - 1 ? " " : ", ";
+            {product.materials.map((material, index, arr) => {
+              const comma = index < arr.length - 1 ? ", " : "";
 
-              return material + comma;
+              return material.name + comma;
             })}
           </p>
         </div>
@@ -78,4 +80,4 @@ const DetailedProductCard = (props) => {
   );
 };
 
-export default DetailedProductCard; 
+export default DetailedProductCard;

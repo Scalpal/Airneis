@@ -3,9 +3,9 @@ import { AxiosError } from "axios";
 
 const productsViewer =
   ({ api }) =>
-    async () => {
+    async (values) => {
       try {
-        const { data: result } = await api.get(routes.api.allProducts());
+        const { data: result } = await api.get(routes.api.allProducts(`page=${values}`));
 
         return result;
       } catch (err) {

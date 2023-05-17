@@ -5,22 +5,14 @@ import "yup-phone";
 export const stringValidator = yup.string(); 
 export const numberValidator = yup.number();
 export const idValidator = yup.string().min(1);
-export const arrayValidator = yup.array().of(stringValidator);
-export const arrayOrStringValidator = yup.mixed().test("isArrayOfStrings", "Invalid values", (value) => {
-  if (typeof value === "string") {
-    return true; // Accepts a single string
-  }
-  
-  if (Array.isArray(value) && value.every(item => typeof item === "string")) {
-    return true; // Accepts an array of strings
-  }
 
-  if (typeof value === "undefined") {
-    return true;
-  }
+export const dateValidator = yup.date();
 
-  return false;
-});
+export const stringArrayValidator = yup.array().of(
+  yup.object().shape({
+    value: yup.string(),
+  })
+);
 
 // users
 export const displayNameValidator = yup.string().min(1).max(255);
