@@ -11,7 +11,7 @@ class ProductModel extends BaseModel {
         modelClass: CategoryModel,
         join: {
           from: "products.categoryId",
-          to: "category.id",
+          to: "categories.id",
         },
       },
     };
