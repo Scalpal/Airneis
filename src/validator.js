@@ -12,6 +12,10 @@ export const stringArrayValidator = yup.array().of(
     value: yup.string(),
   })
 );
+  
+// pagination
+export const pageValidator = yup.string().min(1);
+  
 
 // users
 export const displayNameValidator = yup.string().min(1).max(255);

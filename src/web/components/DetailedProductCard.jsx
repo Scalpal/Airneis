@@ -24,6 +24,7 @@ const DetailedProductCard = (props) => {
     }, 1900);
   };
 
+
   return (
     <div
       className={styles.productCard}
@@ -34,7 +35,7 @@ const DetailedProductCard = (props) => {
       >
         <Image
           className={styles.productCardImage}
-          src={product.picture}
+          src={product.images[0].imageSrc}
           alt={"Image du produit"}
           fill
         />
@@ -59,10 +60,10 @@ const DetailedProductCard = (props) => {
         </div>
 
         <div className={styles.productMaterialWrapper}>
-          <p>Matériaux : {product.materials.map((material, index) => {
-            const comma = index === product.materials.length - 1 ? " " : ", ";
+          <p>Matériaux : {product.materials.map((material, index, arr) => {
+            const comma = index < arr.length - 1 ? ", " : "";
 
-            return material + comma;
+            return material.name + comma;
           })}</p>
         </div>
 

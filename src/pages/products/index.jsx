@@ -70,11 +70,12 @@ const Products = () => {
   const { actions: { productsViewer } } = useAppContext();
   const [error,setError] = useState(null);
   const [products,setProducts] = useState([]);
+  const [index,setIndex] = useState(1);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { result } = await productsViewer();
+        const { result } = await productsViewer(index);
         setProducts(result);
       } catch (err) {
         setError(err);
@@ -82,7 +83,7 @@ const Products = () => {
     };
 
     fetchData();
-  }, [productsViewer]);
+  },[index, productsViewer]);
   
   const [queryParams, setQueryParams] = useState({
     priceMin: 0,
@@ -129,35 +130,6 @@ const Products = () => {
     },
     [queryParams, setQueryParams]
   );
-
-  {
-    /* const createQueryString = useCallback(() => {
-    let queryString = "?";
-
-    Object.entries(appliedQueryParams).map(([key, value]) => {
-      if (Array.isArray(value)) {
-        value.map((param) => (
-          queryString += key + "=" + param.value + "&"
-        ));
-      }
-
-      if (typeof value === "number" && value > 0) {
-        queryString += key + "=" + value + "&";
-      }
-
-      if (typeof value === "boolean") {
-        queryString += key + "=" + value + "&";
-      }
-    });
-
-    return queryString;
-
-  }, [appliedQueryParams]); 
-
-  useEffect(() => {
-    console.log(createQueryString()); 
-  }, [appliedQueryParams, createQueryString]); */
-  }
 
   return (
     <>

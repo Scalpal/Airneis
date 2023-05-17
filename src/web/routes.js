@@ -1,12 +1,12 @@
-// const createRouteWithQueryParams = (route, query) => {
-//   if (!query) {
-//     return route;
-//   }
+const createRouteWithQueryParams = (route, query) => {
+  if (!query) {
+    return route;
+  }
 
-//   const qs = new URLSearchParams(query).toString();
+  const qs = new URLSearchParams(query).toString();
 
-//   return `${route}?${qs}`;
-// };
+  return `${route}?${qs}`;
+};
 
 const routes = {
   home: () => "/",
@@ -26,7 +26,7 @@ const routes = {
   api: {
     register: () => "/users/register",
     login: () => "/users/login",
-    allProducts: () => "/products/getProducts",
+    allProducts: (query) => createRouteWithQueryParams("/products/getProducts", query),
     // posts: {
     //   collection: (query) => createRouteWithQueryParams("/posts", query),
     //   single: (postId, query) =>
