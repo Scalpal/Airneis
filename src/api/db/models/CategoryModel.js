@@ -2,7 +2,7 @@ import BaseModel from "@/api/db/models/BaseModel.js";
 import UserModel from "./UserModel";
 
 class CategoryModel extends BaseModel {
-  static tableName = "categories"
+  static tableName = "categories";
 
   static relationMappings() {
     return {

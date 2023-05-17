@@ -1,10 +1,11 @@
 import createAPIClient from "@/web/createAPIClient.js";
 import parseSession from "@/web/parseSession.js";
+import signUpService from "@/web/services/signUp.js";
 import signInService from "@/web/services/signIn.js";
 import mailResetPasswordService from "@/web/services/mailResetPassword.js";
+import productsViewerService from "@/web/services/productsViewer.js";
 import passwordResetService from "@/web/services/passwordReset.js";
 import cryptService from "@/web/services/crypt.js";
-import signUpService from "@/web/services/signUp.js";
 import {
   createContext,
   useCallback,
@@ -26,6 +27,7 @@ export const AppContextProvider = (props) => {
   const signUp = signUpService({ api });
   const signIn = signInService({ api,setSession,setJWT });
   const mailResetPassword = mailResetPasswordService({ api });
+  const productsViewer = productsViewerService({ api });
   const passwordReset = passwordResetService({ api });
   const crypt = cryptService({ api });
   const signOut = useCallback(() => {
@@ -131,14 +133,15 @@ export const AppContextProvider = (props) => {
         setCart,
         addToCart,
         removeProductFromCart,
-        deleteProductFromCart
+        deleteProductFromCart,
+        productsViewer
       },
       state: {
         session,
         cart
       },
     };
-  },[signUp,signIn,signOut,mailResetPassword,passwordReset,crypt,addToCart,removeProductFromCart,deleteProductFromCart,session,cart]);
+  },[signUp, signIn, signOut, mailResetPassword, passwordReset, crypt, addToCart, removeProductFromCart, deleteProductFromCart, productsViewer, session, cart]);
 
   if (!isPublicPage && session === null) {
     return (<span>Not Connected</span>);

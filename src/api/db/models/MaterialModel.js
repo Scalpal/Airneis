@@ -1,7 +1,7 @@
 import BaseModel from "@/api/db/models/BaseModel.js";
 
 class MaterialModel extends BaseModel {
-  static tableName = "materials"
+  static tableName = "materials";
 
   // static relationMappings() {
   //   return {
