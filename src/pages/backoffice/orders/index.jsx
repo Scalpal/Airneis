@@ -6,9 +6,8 @@ import { nunito } from "@/pages/_app";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import styles from "@/styles/backoffice/statsPages.module.css";
 import { parseCookies } from "nookies";
-import jsonwebtoken from "jsonwebtoken";
-import Axios from "axios";
-import routes from "@/web/routes";
+import checkToken from "@/web/services/checkToken";
+import checkIsAdmin from "@/web/services/checkIsAdmin";
 
 // Prototype datas 
 const ordersProto = [
@@ -113,48 +112,22 @@ BackofficeOrders.getLayout = function (page) {
 
 export const getServerSideProps = async (context) => {
   const { token } = parseCookies(context);
-  
-  if (!token) {
-    return {
-      redirect: {
-        destination: "/home",
-        permanent: false
-      }
-    };
+  const badTokenRedirect = await checkToken(token);
+
+  if (badTokenRedirect) {
+    return badTokenRedirect; 
   }
 
-  const decodedToken = jsonwebtoken.decode(token); 
-  const isTokenExpired = Date.now() >= decodedToken.expires * 1000; 
+  const notAdminRedirect = await checkIsAdmin(context);
 
-  if (isTokenExpired) {
-    return {
-      redirect: {
-        destination: "/home",
-        permanent: false
-      }
-    };
+  if (notAdminRedirect) {
+    return notAdminRedirect;
   }
 
-  const reqInstance = Axios.create({
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  });
-
-  const { data: { user } } = await reqInstance.get(`http://localhost:3000/${routes.api.users.self()}`);
-   
-  if (!user.isAdmin) {
-    return {
-      redirect: {
-        destination: "/home",
-        permanent: false
-      }
-    };
-  }
 
   return {
     props: {
-      user
+      prototype: "nothing"
     }
   };
 };
