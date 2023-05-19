@@ -10,7 +10,7 @@ const Backoffice = (props) => {
 
   useEffect(() => {
     console.log("props : ", props); 
-  }, []);
+  }, [props]);
 
   return (
     <h2>Page index backoffice</h2>
