@@ -98,11 +98,9 @@ const BackofficeUsers = (props) => {
     router.push(`/backoffice/users/${userId}`);
   }, [router]); 
 
-  const editUser = useCallback(async(userId) => {
+  const desactivateUser = useCallback(async (userId) => {
     try {
-      const { data } = await api.patch(routes.api.users.patch(userId));
-
-      console.log(data); 
+      const { data } = await api.delete(routes.api.users.delete(userId));
 
       updateUsers();
       setShowAlert(true);
@@ -113,20 +111,6 @@ const BackofficeUsers = (props) => {
       }
     }
   }, [api, updateUsers]);
-
-  const deleteUser = useCallback(async(userId) => {
-    try {
-      const { data } = await api.delete(routes.api.users.delete(userId)); 
-      
-      updateUsers(); 
-      setAlert({ status: data.status, message: data.message });
-      setShowAlert(true);
-    }catch (error) {
-      if (error instanceof AxiosError) {
-        console.log(error.response);
-      }
-    }
-  }, [api, updateUsers]); 
 
   useEffect(() => {
     updateUsers();
@@ -178,8 +162,7 @@ const BackofficeUsers = (props) => {
           queryParams={queryParams}
           sortColumn={sortColumn}
           showSpecificRowFunction={showSpecificUser}
-          editRowFunction={editUser}
-          deleteRowFunction={deleteUser}
+          deleteRowFunction={desactivateUser}
         />
       </div>
 

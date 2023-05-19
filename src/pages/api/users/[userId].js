@@ -1,4 +1,3 @@
-import AddressModel from "@/api/db/models/AddressModel";
 import UserModel from "@/api/db/models/UserModel";
 import auth from "@/api/middlewares/auth";
 import checkIsAdmin from "@/api/middlewares/checkIsAdmin";
@@ -72,14 +71,12 @@ const handler = mw({
         return; 
       }
 
-      await AddressModel.query().delete().where({ userId: userId });
-
-      const deletedUser = await UserModel.query()
-        .delete()
+      const desactivatedUser = await UserModel.query()
+        .patch({ active: false })
         .where({ id: userId })
         .returning("*"); 
       
-      res.send({ status: "success" ,message: `User ${deletedUser[0].id} successfully deleted` }); 
+      res.send({ status: "success" ,message: `User ${desactivatedUser[0].id} successfully desactivated` }); 
     }
   ], 
   PATCH: [
