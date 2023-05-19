@@ -10,8 +10,6 @@ const BackofficeDashboard = () => {
   );
 };
 
-
-
 BackofficeDashboard.getLayout = (page) => {
   return (
     <Layout>
