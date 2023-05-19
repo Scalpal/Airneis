@@ -164,7 +164,7 @@ export const AppContextProvider = (props) => {
         getLoggedUser,
         setCart,
         addToCart,
-        removeProductFromCart,
+        changeValuesProductFromCart,
         deleteProductFromCart,
       },
       state: {

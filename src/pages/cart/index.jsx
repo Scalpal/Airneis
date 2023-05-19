@@ -106,7 +106,6 @@ const Cart = () => {
                 return (
                   <CartProduct
                     key={index}
-                    index={index}
                     product={product}
                     productState={[productsList, setProductsList]}
                     totalSumState={[totalSum, setTotalSum]}

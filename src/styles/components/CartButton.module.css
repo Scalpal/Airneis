@@ -35,4 +35,5 @@
   background-color: var(--primary);
   color: white;
   font-weight: 600;
+  cursor: pointer;
 }
