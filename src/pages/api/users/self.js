@@ -30,7 +30,8 @@ const handler = mw({
         res.send({ user: user });
 
       } catch (error) {
-        console.log(error); 
+        console.log(error);
+        res.json({ error: "Error." });
       }
     }
   ],

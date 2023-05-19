@@ -5,7 +5,7 @@ import checkIsAdmin from "@/api/middlewares/checkIsAdmin";
 import slowDown from "@/api/middlewares/slowDown";
 import validate from "@/api/middlewares/validate";
 import mw from "@/api/mw.js";
-import { boolValidator, stringValidator } from "@/validator";
+import { boolValidator, emailValidator, phoneValidator, stringValidator } from "@/validator";
 import { idValidator } from "@/validator";
 
 const handler = mw({
@@ -93,6 +93,8 @@ const handler = mw({
       body: {
         firstName: stringValidator,
         lastName: stringValidator, 
+        email: emailValidator,
+        phoneNumber: phoneValidator,
         active: boolValidator,
         isAdmin: boolValidator
       }
@@ -100,7 +102,7 @@ const handler = mw({
     async({
       locals: {
         query: { userId },
-        body: { firstName, lastName, active, isAdmin }
+        body: { firstName, lastName, email, phoneNumber, active, isAdmin }
       },
       res
     }) => {
@@ -119,13 +121,15 @@ const handler = mw({
         .patch({
           ...(firstName ? { firstName } : {}),
           ...(lastName ? { lastName } : {}),
+          ...(email ? { email } : {}),
+          ...(phoneNumber ? { phoneNumber } : {}),
           ...(active !== undefined ? { active } : {}),
           ...(isAdmin !== undefined ? { isAdmin } : {})
         })
         .where({ id: userId })
         .returning("*");
       
-      res.send({ status: "success", message: `User ${updatedUser[0].id} updated successfully`});
+      res.send({ status: "success", message: `User ${updatedUser[0].id} updated successfully`, user: updatedUser[0]});
     }
   ]
 });

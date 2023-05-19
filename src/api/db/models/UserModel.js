@@ -13,12 +13,12 @@ class UserModel extends BaseModel {
   static relationMappings() {
     return {
       address: {
-        relation: BaseModel.BelongsToOneRelation,
+        relation: BaseModel.HasManyRelation,
         modelClass: AddressModel,
         join: {
           from: "users.id",
           to: "address.userId"
-        }
+        },
       },
       modify: (query) => query.select(
         "id",

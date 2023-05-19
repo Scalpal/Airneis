@@ -26,7 +26,7 @@ const auth = () => {
       const user = await UserModel.query().findOne({ id });
 
       if (!user) {
-        res.status(401).send({ error: "Unauthorized" });
+        res.status(401).json({ error: "Unauthorized" });
 
         return;
       }
