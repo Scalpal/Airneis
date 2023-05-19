@@ -45,7 +45,7 @@ const ActionBar = (props) => {
           defaultValue={10}
           onChange={(e) => handleLimit(Number.parseInt(e.target.value))}
         >
-          <option>Limit per page</option>
+          <option disabled>Limit per page</option>
           <option value={5}>5</option>
           <option value={10}>10</option>
           <option value={25}>25</option>
