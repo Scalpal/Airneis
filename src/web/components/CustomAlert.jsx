@@ -1,10 +1,11 @@
 import { classnames } from "@/pages/_app";
 import styles from "@/styles/components/CustomAlert.module.css";
 import { CheckBadgeIcon, ExclamationTriangleIcon } from "@heroicons/react/24/solid";
+import { useEffect } from "react";
 
 const CustomAlert = (props) => {
 
-  const { alert, showAlert } = props;
+  const { alert, showAlert, setShowAlert } = props;
 
   let customStyle = "";
 
@@ -21,6 +22,12 @@ const CustomAlert = (props) => {
       customStyle = styles.error;
       break;
   }
+
+  useEffect(() => {
+    setTimeout(() => {
+      setShowAlert(false);
+    }, [5000]);
+  }, [showAlert, setShowAlert]);
   
   return (
     <div className={classnames(
