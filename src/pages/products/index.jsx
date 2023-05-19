@@ -4,9 +4,10 @@ import DetailedProductCard from "@/web/components/DetailedProductCard";
 import { useCallback, useEffect, useState } from "react";
 import ProductFilterMenu from "@/web/components/ProductFilterMenu";
 import ParamBadge from "@/web/components/ParamBadge";
+import IndexPages from "@/web/components/IndexPages";
 import useAppContext from "@/web/hooks/useAppContext";
+import { useRouter } from "next/router";
 
-// const categoryProducts = [
 //   {
 //     id: 1,
 //     name: "Modern beechwood chair",
@@ -17,73 +18,34 @@ import useAppContext from "@/web/hooks/useAppContext";
 //     picture: "/meuble-2.jpeg",
 //     materials: ["metal", "steel", "iron"],
 //   },
-//   {
-//     id: 2,
-//     name: "Chair",
-//     type: "Wood",
-//     price: 29,
-//     stock: 25,
-//     picture: "/meuble-2.jpeg",
-//     materials: ["metal", "steel", "iron"],
-//   },
-//   {
-//     id: 3,
-//     name: "Chair",
-//     type: "Wood",
-//     description: "Black chairs made of 100 year old Himalayan beech wood",
-//     price: 87,
-//     stock: 25,
-//     picture: "/meuble-2.jpeg",
-//     materials: ["metal", "steel", "iron"],
-//   },
-//   {
-//     id: 4,
-//     name: "Chair",
-//     type: "Wood",
-//     price: 129,
-//     stock: 25,
-//     picture: "/meuble-2.jpeg",
-//     materials: ["metal", "steel", "iron"],
-//   },
-//   {
-//     id: 5,
-//     name: "Chair",
-//     type: "Wood",
-//     description: "Black chairs made of 100 year old Himalayan beech wood",
-//     price: 987,
-//     stock: 25,
-//     picture: "/meuble-2.jpeg",
-//     materials: ["metal", "steel", "iron"],
-//   },
-//   {
-//     id: 6,
-//     name: "Chair",
-//     type: "Wood",
-//     price: 100,
-//     stock: 25,
-//     picture: "/meuble-2.jpeg",
-//     materials: ["metal", "steel", "iron"],
-//   },
-// ];
+
 
 const Products = () => {
   const { actions: { productsViewer } } = useAppContext();
   const [error,setError] = useState(null);
   const [products,setProducts] = useState([]);
   const [index,setIndex] = useState(1);
+  const [count,setCount] = useState(0);
+  const router = useRouter();
+  const { page } = router.query;
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { result } = await productsViewer(index);
+        const data = await productsViewer(index);
+        const { result, meta } = data;
         setProducts(result);
+        setCount(meta.count);
       } catch (err) {
         setError(err);
       }
     };
-
+    
     fetchData();
-  },[index, productsViewer]);
+    page ? setIndex(Number.parseInt(page)) : setIndex(1);
+    
+  },[index, page, productsViewer]);
+  console.log(error);
   
   const [queryParams, setQueryParams] = useState({
     priceMin: 0,
@@ -167,6 +129,7 @@ const Products = () => {
           </section>
         </div>
       </main>
+      <IndexPages count={count} page={index}/>
     </>
   );
 };

@@ -100,10 +100,7 @@ const Cart = () => {
                 return (
                   <CartProduct
                     key={index}
-                    index={index}
                     product={product}
-                    productState={[productsList,setProductsList]}
-                    totalSumState={[totalSum,setTotalSum]}
                   />
                 );
               })}
@@ -114,19 +111,19 @@ const Cart = () => {
               <div className={styles.recapTopRows}>
                 <div className={styles.recapRow}>
                   <p>Subtotal</p>
-                  <p>{totalSum.toFixed(2)}€</p>
+                  <p>{totalSum.toFixed(2)}$</p>
                 </div>
 
                 <div className={styles.recapRow}>
                   <p>TAX (20%)</p>
-                  <p>{(totalSum * 0.2).toFixed(2)}€</p>
+                  <p>{(totalSum * 0.2).toFixed(2)}$</p>
                 </div>
               </div>
 
               <div className={styles.recapTotalRow}>
                 <p>TOTAL</p>
                 <p>
-                  {(totalSum * 1.2).toFixed(2)}€
+                  {(totalSum * 1.2).toFixed(2)}$
                 </p>
               </div>
 

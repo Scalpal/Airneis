@@ -31,7 +31,9 @@
   background-color: var(--primary);
   color: white;
   font-weight: 600;
+  cursor: pointer;
 }
 .CartCountMax{
 font-size: 0.65vw;
+ cursor: pointer;
 }

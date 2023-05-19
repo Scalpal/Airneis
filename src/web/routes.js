@@ -22,6 +22,9 @@ const routes = {
     category: (query) => "/category/" + query,
     products: (query) => "/products/" + query,
   },
+  params: {
+    products: (query) => createRouteWithQueryParams("/products", query),
+  },
   resetPassword: () => "/reset-password",
   api: {
     register: () => "/users/register",

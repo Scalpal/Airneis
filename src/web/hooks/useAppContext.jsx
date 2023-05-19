@@ -85,20 +85,21 @@ export const AppContextProvider = (props) => {
     setCart(updatedLocalStorageProducts);
   },[setCart]);
 
-  const removeProductFromCart = useCallback((product) => {
-    const localStorageProducts = JSON.parse(localStorage.getItem("products"));
+  const changeValuesProductFromCart = useCallback((values) => {
 
-    const productIndex = localStorageProducts.findIndex((elt) => elt.id === product.id);
-    const currentProduct = localStorageProducts[productIndex];
-
-    if (currentProduct.quantity - 1 === 0) {
-      deleteProductFromCart(product);
+    if (values.values === 0) {
+      deleteProductFromCart(values.product);
       return;
     }
+    
+    const localStorageProducts = JSON.parse(localStorage.getItem("products"));
 
-    localStorageProducts[productIndex].quantity--;
+    const productIndex = localStorageProducts.findIndex((elt) => elt.id === values.product.id);
+
+    localStorageProducts[productIndex].quantity = values.values;
     localStorage.setItem("products",localStorageProducts);
     setCart(localStorageProducts);
+
 
   },[deleteProductFromCart,setCart]);
 
@@ -132,7 +133,7 @@ export const AppContextProvider = (props) => {
         crypt,
         setCart,
         addToCart,
-        removeProductFromCart,
+        changeValuesProductFromCart,
         deleteProductFromCart,
         productsViewer
       },
@@ -141,7 +142,7 @@ export const AppContextProvider = (props) => {
         cart
       },
     };
-  },[signUp, signIn, signOut, mailResetPassword, passwordReset, crypt, addToCart, removeProductFromCart, deleteProductFromCart, productsViewer, session, cart]);
+  },[signUp, signIn, signOut, mailResetPassword, passwordReset, crypt, addToCart, changeValuesProductFromCart, deleteProductFromCart, productsViewer, session, cart]);
 
   if (!isPublicPage && session === null) {
     return (<span>Not Connected</span>);

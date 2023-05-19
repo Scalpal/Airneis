@@ -16,7 +16,7 @@ const products = mw({
       },
       res,
     }) => {
-      const query = ProductModel.query().modify("paginate",28,page);
+      const query = ProductModel.query().modify("paginate",20,page);
       
       const [countResult] = await query.clone().limit(1).offset(0).count();
       const result = await query.withGraphFetched("[category, images, materials]");
