@@ -20,7 +20,7 @@ module.exports.up = async (knex) => {
     table.text("region");
     table.text("postalCode");
     table.text("country");
-    table.bool("mainAdress").notNullable().defaultTo(false); 
+    table.bool("mainAddress").notNullable().defaultTo(false); 
     table.integer("userId").notNullable().references("id").inTable("users");
   });
 
@@ -59,7 +59,7 @@ module.exports.up = async (knex) => {
   });
 
   // Related to reviews
-  await knex.schema.createTable("review", (table) => {
+  await knex.schema.createTable("reviews", (table) => {
     table.increments("id");
     table.integer("productId").references("id").inTable("products").notNullable();
     table.integer("userId").references("id").inTable("users").notNullable();
@@ -73,7 +73,7 @@ module.exports.up = async (knex) => {
   await knex.schema.createTable("orders", (table) => {
     table.increments("id");
     table.integer("userId").notNullable().references("id").inTable("users");
-    table.integer("deliveryAdress").notNullable().references("id").inTable("address"); 
+    table.integer("deliveryAddress").notNullable().references("id").inTable("address"); 
     table.enum("status", ["cancelled", "on standby", "delivered"]).notNullable();
     table.timestamps(true, true, true);
   });
