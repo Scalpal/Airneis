@@ -9,7 +9,7 @@ import { parseCookies } from "nookies";
 import checkToken from "@/web/services/checkToken";
 import checkIsAdmin from "@/web/services/checkIsAdmin";
 
-// Prototype datas 
+// Prototype datas
 const ordersProto = [
   {
     id: 1,
@@ -17,17 +17,17 @@ const ordersProto = [
     status: "Order placed",
     products: [
       {
-        name: "Chaise moderne en bois de hêtre",
+        name: "Modern beechwood chair",
         price: 223,
         stock: 25,
       },
       {
-        name: "chaise",
+        name: "Chair",
         price: 98,
         stock: 25,
       },
       {
-        name: "chaise",
+        name: "Chair",
         price: 134,
         stock: 25,
       },
@@ -39,17 +39,17 @@ const ordersProto = [
     status: "Ready for delivery",
     products: [
       {
-        name: "Chaise moderne en bois de hêtre",
+        name: "Modern beechwood chair",
         price: 223,
         stock: 25,
       },
       {
-        name: "chaise",
+        name: "Chair",
         price: 98,
         stock: 25,
       },
       {
-        name: "chaise",
+        name: "Chair",
         price: 134,
         stock: 25,
       },
@@ -57,19 +57,11 @@ const ordersProto = [
   },
 ];
 
-
-
 const BackofficeOrders = () => {
-
   const [orders, _] = useState(ordersProto);
 
   return (
-    <main
-      className={classnames(
-        styles.mainContainer,
-        nunito.className
-      )}
-    >
+    <main className={classnames(styles.mainContainer, nunito.className)}>
       <div className={styles.topStats}>
         <div>
           <p>Total of orders</p>
@@ -84,7 +76,6 @@ const BackofficeOrders = () => {
 
       <div className={styles.mainContent}>
         <div className={styles.actionBar}>
-
           <div>
             <p>Orders</p>
 
@@ -93,7 +84,6 @@ const BackofficeOrders = () => {
               <MagnifyingGlassIcon className={styles.actionBarIcon} />
             </div>
           </div>
-
         </div>
 
         <Table array={orders} />
@@ -103,11 +93,7 @@ const BackofficeOrders = () => {
 };
 BackofficeOrders.isPublic = false;
 BackofficeOrders.getLayout = function (page) {
-  return (
-    <Layout>
-      {page}
-    </Layout>
-  );
+  return <Layout>{page}</Layout>;
 };
 
 export const getServerSideProps = async (context) => {
@@ -115,7 +101,7 @@ export const getServerSideProps = async (context) => {
   const badTokenRedirect = await checkToken(token);
 
   if (badTokenRedirect) {
-    return badTokenRedirect; 
+    return badTokenRedirect;
   }
 
   const notAdminRedirect = await checkIsAdmin(context);
@@ -124,12 +110,10 @@ export const getServerSideProps = async (context) => {
     return notAdminRedirect;
   }
 
-
   return {
     props: {
-      prototype: "nothing"
-    }
+      prototype: "nothing",
+    },
   };
 };
-
-export default BackofficeOrders; 
+export default BackofficeOrders;

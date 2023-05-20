@@ -1,7 +1,7 @@
 import BaseModel from "@/api/db/models/BaseModel.js";
 
 class ReviewModel extends BaseModel {
-  static tableName = "reviews"
+  static tableName = "reviews";
 
   // static relationMappings() {
   //   return {

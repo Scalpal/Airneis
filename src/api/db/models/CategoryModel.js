@@ -2,7 +2,7 @@ import BaseModel from "@/api/db/models/BaseModel.js";
 import UserModel from "./UserModel";
 
 class CategoryModel extends BaseModel {
-  static tableName = "categories"
+  static tableName = "categories";
 
   static relationMappings() {
     return {
@@ -10,7 +10,7 @@ class CategoryModel extends BaseModel {
         relation: BaseModel.HasOneRelation,
         modelClass: UserModel,
         join: {
-          from: "address.userId",
+          from: "addresses.userId",
           to: "users.id",
         },
       },

@@ -8,61 +8,60 @@ const Category = () => {
   const categoryProducts = [
     {
       id: 1,
-      name: "Chaise moderne en bois de hêtre",
-      type: "bois",
-      description:
-        "Chaises noir en bois de hêtre centenaire d'Himalayad,zkdanaldza nzdn lkdn jlkdznland kzalzdnalkd nkldzndzlaknalkn",
-      price: "145$",
+      name: "Modern beechwood chair",
+      type: "Wood",
+      description: "Black chairs made of 100 year old Himalayan beech wood",
+      price: "$145",
       stock: 25,
       imageSrc: "/meuble-2.jpeg",
-      materials: ["métal","acier","fer"],
+      materials: ["metal", "steel", "iron"],
     },
     {
       id: 2,
-      name: "chaise",
-      type: "bois",
-      price: "145$",
+      name: "Chair",
+      type: "Wood",
+      price: "$145",
       stock: 25,
       imageSrc: "/meuble-2.jpeg",
-      materials: ["métal","acier","fer"],
+      materials: ["metal", "steel", "iron"],
     },
     {
       id: 3,
-      name: "chaise",
-      type: "bois",
-      description: "Chaises noir en bois de hêtre centenaire d'Himalaya",
-      price: "145$",
+      name: "Chair",
+      type: "Wood",
+      description: "Black chairs made of 100 year old Himalayan beech wood",
+      price: "$145",
       stock: 25,
       imageSrc: "/meuble-2.jpeg",
-      materials: ["métal","acier","fer"],
+      materials: ["metal", "steel", "iron"],
     },
     {
       id: 4,
-      name: "chaise",
-      type: "bois",
-      price: "145$",
+      name: "Chair",
+      type: "Wood",
+      price: "$145",
       stock: 25,
       imageSrc: "/meuble-2.jpeg",
-      materials: ["métal","acier","fer"],
+      materials: ["metal", "steel", "iron"],
     },
     {
       id: 5,
-      name: "chaise",
-      type: "bois",
-      description: "Chaises noir en bois de hêtre centenaire d'Himalaya",
-      price: "145$",
+      name: "Chair",
+      type: "Wood",
+      description: "Black chairs made of 100 year old Himalayan beech wood",
+      price: "$145",
       stock: 25,
       imageSrc: "/meuble-2.jpeg",
-      materials: ["métal","acier","fer"],
+      materials: ["metal", "steel", "iron"],
     },
     {
       id: 6,
-      name: "chaise",
-      type: "bois",
-      price: "145$",
+      name: "Chair",
+      type: "Wood",
+      price: "$145",
       stock: 25,
       imageSrc: "/meuble-2.jpeg",
-      materials: ["métal","acier","fer"],
+      materials: ["metal", "steel", "iron"],
     },
   ];
 
@@ -77,7 +76,7 @@ const Category = () => {
         </p>
 
         <div className={styles.productsList}>
-          {categoryProducts.map((product,index) => {
+          {categoryProducts.map((product, index) => {
             return <DetailedProductCard key={index} product={product} />;
           })}
         </div>
