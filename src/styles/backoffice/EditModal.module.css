@@ -1,0 +1,38 @@
+.icon {
+  width: 30px;
+  height: 30px;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  transition-duration: 500ms;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content:center;
+  border: 2px solid red;
+}
+
+.overlayInactive {
+  opacity: 0;
+  transition-duration: 500ms;
+  z-index: -100 !important;
+}
+
+.overlayActive {
+  opacity: 1;
+  transition-delay: 100ms;
+  z-index: 9998;
+}
+
+.modal {
+  width: 50%;
+  height: 300px;
+  border-radius: 1rem;
+  background-color: var(--secondary);
+}

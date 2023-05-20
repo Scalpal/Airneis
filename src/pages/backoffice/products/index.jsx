@@ -7,10 +7,8 @@ import Button from "@/web/components/Button";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import styles from "@/styles/backoffice/statsPages.module.css";
 import { parseCookies } from "nookies";
-import jsonwebtoken from "jsonwebtoken";
-import config from "@/api/config.js";
-import Axios from "axios";
-import routes from "@/web/routes";
+import checkToken from "@/web/services/checkToken";
+import checkIsAdmin from "@/web/services/checkIsAdmin";
 
 // Prototype datas
 const productsProto = [
@@ -156,37 +154,22 @@ BackofficeProducts.getLayout = function (page) {
 
 export const getServerSideProps = async (context) => {
   const { token } = parseCookies(context);
-  const { payload } = jsonwebtoken.verify(token, config.security.jwt.secret);
+  const badTokenRedirect = await checkToken(token);
 
-  if (!token) {
-    return {
-      redirect: {
-        destination: "/home",
-        permanent: false,
-      },
-    };
+  if (badTokenRedirect) {
+    return badTokenRedirect;
   }
 
-  const {
-    data: { user },
-  } = await Axios.get(
-    `http://localhost:3000/${routes.api.specificUser(payload.user.id)}`
-  );
+  const notAdminRedirect = await checkIsAdmin(context);
 
-  if (!user.isAdmin) {
-    return {
-      redirect: {
-        destination: "/home",
-        permanent: false,
-      },
-    };
+  if (notAdminRedirect) {
+    return notAdminRedirect;
   }
 
   return {
     props: {
-      user,
+      prototype: "nothing",
     },
   };
 };
-
 export default BackofficeProducts;

@@ -1,0 +1,53 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  gap: 0.7rem;
+  position: relative;
+}
+
+.chevronWrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 0.3rem;
+}
+
+.chevronButton {
+  background: none;
+  border: 0;
+  outline: 0;
+  display: flex;
+  align-items: center;
+}
+
+.button {
+  font-family: inherit;
+  padding: 0.3rem 0.4rem;
+  border: 0;
+  outline: 0;
+}
+
+.activeButton {
+  background-color: var(--primary);
+  color: white;
+  border-radius: 5px;
+  transition-duration: 300ms;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+}
+
+.button:hover, .chevronButton:hover {
+  cursor: pointer;
+}
+
+.bottomText {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 1rem);
+  color: grey;
+  font-size: 0.6rem;
+  white-space: nowrap;
+}

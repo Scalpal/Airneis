@@ -97,7 +97,7 @@ module.exports.up = async (knex) => {
       .integer("deliveryAddress")
       .notNullable()
       .references("id")
-      .inTable("addresses");
+      .inTable("address");
     table
       .enum("status", ["cancelled", "on standby", "delivered"])
       .notNullable();

@@ -112,6 +112,27 @@ const Products = () => {
     [queryParams, setQueryParams]
   );
 
+  const handleAppliedQueryParams = useCallback(
+    (key, { name, value }) => {
+      setQueryParams({
+        ...queryParams,
+        [key]:
+          queryParams[key].findIndex((elt) => elt.value === value) === -1
+            ? [...queryParams[key], { name, value }]
+            : [...queryParams[key].filter((elt) => elt.value !== value)],
+      });
+
+      setAppliedQueryParams({
+        ...appliedQueryParams,
+        [key]:
+          appliedQueryParams[key].findIndex((elt) => elt.value === value) === -1
+            ? [...appliedQueryParams[key], { name, value }]
+            : [...appliedQueryParams[key].filter((elt) => elt.value !== value)],
+      });
+    },
+    [appliedQueryParams, setAppliedQueryParams, queryParams]
+  );
+
   {
     /* const createQueryString = useCallback(() => {
     let queryString = "?";
@@ -153,19 +174,20 @@ const Products = () => {
           <ParamBadge
             appliedQueryParams={appliedQueryParams}
             queryKey={"materials"}
-            handleQueryParamsFilters={handleQueryParamsFilters}
+            handleAppliedQueryParams={handleAppliedQueryParams}
           />
 
           <ParamBadge
             appliedQueryParams={appliedQueryParams}
             queryKey={"categories"}
-            handleQueryParamsFilters={handleQueryParamsFilters}
+            handleAppliedQueryParams={handleAppliedQueryParams}
           />
         </div>
 
         <div className={styles.content}>
           <ProductFilterMenu
             queryParams={queryParams}
+            setQueryParams={setQueryParams}
             setAppliedQueryParams={setAppliedQueryParams}
             handleQueryParamsFilters={handleQueryParamsFilters}
           />

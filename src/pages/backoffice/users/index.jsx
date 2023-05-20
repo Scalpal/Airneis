@@ -3,52 +3,118 @@ import Table from "@/web/components/backoffice/Table";
 import { classnames } from "@/pages/_app";
 import { nunito } from "@/pages/_app";
 import styles from "@/styles/backoffice/statsPages.module.css";
-import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { parseCookies } from "nookies";
-import jsonwebtoken from "jsonwebtoken";
-import config from "@/api/config.js";
-import Axios from "axios";
+import Axios, { AxiosError } from "axios";
 import routes from "@/web/routes";
+import { useCallback, useEffect, useState } from "react";
+import ActionBar from "@/web/components/backoffice/ActionBar";
+import useAppContext from "@/web/hooks/useAppContext";
+import CustomAlert from "@/web/components/CustomAlert";
+import { useRouter } from "next/router";
+import checkToken from "@/web/services/checkToken";
+import getApiClient from "@/web/services/getApiClient";
+import checkIsAdmin from "@/web/services/checkIsAdmin";
 
-const users = [
-  {
-    id: 1,
-    firstName: "John",
-    lastName: "Michaels",
-    mail: "johnMichaels@gmail.com",
-    phoneNumber: "0601020304",
-  },
-  {
-    id: 1,
-    firstName: "Marc",
-    lastName: "Simons",
-    mail: "marcSimons@gmail.com",
-    phoneNumber: "0601020304",
-  },
-  {
-    id: 1,
-    firstName: "Jannah",
-    lastName: "Erikson",
-    mail: "jannahErikson@gmail.com",
-    phoneNumber: "0601020304",
-  },
-  {
-    id: 1,
-    firstName: "Sonny",
-    lastName: "Johnson",
-    mail: "sonnyJohnson@gmail.com",
-    phoneNumber: "0601020304",
-  },
-  {
-    id: 1,
-    firstName: "Micah",
-    lastName: "Bell",
-    mail: "micahBell@gmail.com",
-    phoneNumber: "0601020304",
-  }
-];
+const BackofficeUsers = (props) => {
+  const { usersProps, count } = props; 
+  const { actions: { api } } = useAppContext(); 
+  const router = useRouter(); 
 
-const BackofficeUsers = () => {
+  const [alert, setAlert] = useState({ status: "", message: ""}); 
+  const [showAlert, setShowAlert] = useState(false); 
+  const [users, setUsers] = useState({ users: usersProps, count: count });
+  const [queryParams, setQueryParams] = useState({
+    limit: 10,
+    page: 1,
+    order: "asc",
+    orderField: "id",
+    search: ""
+  });
+
+  const handleQueryParams = useCallback((key, value) => {
+    setQueryParams({
+      ...queryParams,
+      [key]: value
+    });
+  }, [queryParams]);
+
+  const sortColumn = useCallback((column) => {
+    const notSortableKeys = ["email", "phoneNumber", "active", "isAdmin"];
+
+    if (notSortableKeys.includes(column)) {
+      return false; 
+    }
+    
+    // By default, when we sort a column, we set it to ASC
+    if (column !== queryParams["orderField"]) {
+      setQueryParams({
+        ...queryParams,
+        page: 1,
+        orderField: column,
+        order: "asc"
+      }); 
+      
+      return;
+    }
+
+    setQueryParams({
+      ...queryParams,
+      page: 1,
+      orderField: column,
+      order: queryParams["order"] === "asc" ? "desc" : "asc"
+    }); 
+  }, [queryParams]); 
+
+  const handleLimit = useCallback((value) => {
+    setQueryParams({
+      ...queryParams,
+      page: 1,
+      limit: value
+    });
+  }, [queryParams]); 
+
+  const updateUsers = useCallback(async () => {
+    const { token } = parseCookies();
+
+    try {
+      const reqInstance = Axios.create({
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      const { data: { users, count} } = await reqInstance.get(`http://localhost:3000${routes.api.users.collection(queryParams)}`);
+
+      setUsers({users, count}); 
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        console.log(error);
+      }
+    }
+  }, [queryParams]);
+
+  // Table row functions
+  const showSpecificUser = useCallback((userId) => {
+    router.push(`/backoffice/users/${userId}`);
+  }, [router]); 
+
+  const desactivateUser = useCallback(async (userId) => {
+    try {
+      const { data } = await api.delete(routes.api.users.delete(userId));
+
+      updateUsers();
+      setShowAlert(true);
+      setAlert({ status: data.status, message: data.message });
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        console.log(error.response);
+      }
+    }
+  }, [api, updateUsers]);
+
+  useEffect(() => {
+    updateUsers();
+  }, [queryParams, updateUsers]);
 
   return (
     <main
@@ -60,9 +126,10 @@ const BackofficeUsers = () => {
       <div className={styles.topStats}>
         <div>
           <p>Total of users</p>
-          <p>{users.length}</p>
+          <p>{usersProps.length}</p>
         </div>
 
+        {/* This will be a sum of users that has an order in the last 6 months */}
         <div>
           <p>Total of active users</p>
           <p>3</p>
@@ -70,35 +137,45 @@ const BackofficeUsers = () => {
 
         <div>
           <p>Total of customers (at least 1 order)</p>
-          <p>2</p>
+          <p>{usersProps.length}</p>
         </div>
 
         <div>
           <p>Percentage of customers in users</p>
-          <p>{((100 * 2) / users.length).toFixed(2)}%</p>
+          <p>{((100 * 2) / usersProps.length).toFixed(2)}%</p>
         </div>
       </div>
 
       <div className={styles.mainContent}>
+        <ActionBar
+          label={"All users"}
+          handleLimit={handleLimit}
+          dataCount={users.count}
+          queryParams={queryParams}
+          setQueryParams={setQueryParams}
+          handleQueryParams={handleQueryParams}
+        />
 
-        <div className={styles.actionBar}>
-          <div>
-            <p>Users</p>
-
-            <div className={styles.customSearchInput}>
-              <input type="text" placeholder="Search a user" />
-              <MagnifyingGlassIcon className={styles.actionBarIcon} />
-            </div>
-          </div>
-        </div>
-
-        <Table array={users} />
+        <Table
+          array={users.users}
+          safeArray={usersProps}
+          queryParams={queryParams}
+          sortColumn={sortColumn}
+          showSpecificRowFunction={showSpecificUser}
+          deleteRowFunction={desactivateUser}
+        />
       </div>
 
+      <CustomAlert
+        alert={alert}
+        showAlert={showAlert}
+        setShowAlert={setShowAlert}
+      />
     </main>
   );
 };
-BackofficeUsers.isPublic = true;
+
+BackofficeUsers.isPublic = false;
 BackofficeUsers.getLayout = function (page) {
   return (
     <Layout>
@@ -109,9 +186,32 @@ BackofficeUsers.getLayout = function (page) {
 
 export const getServerSideProps = async (context) => {
   const { token } = parseCookies(context);
-  const { payload } = jsonwebtoken.verify(token, config.security.jwt.secret);
+  const badTokenRedirect = await checkToken(token);
 
-  if (!token) {
+  if (badTokenRedirect) {
+    return badTokenRedirect; 
+  }
+
+  const notAdminRedirect = await checkIsAdmin(context);
+
+  if (notAdminRedirect) {
+    return notAdminRedirect;
+  }
+
+  const reqInstance = getApiClient(context);
+
+  try {
+    const { data: { users, count } } = await reqInstance.get(`http://localhost:3000/${routes.api.users.collection()}`);
+
+    return {
+      props: {
+        usersProps: users,
+        count: count
+      }
+    };
+  } catch (error) {
+    console.log("Error in GetServerSideProps : ", error); 
+    
     return {
       redirect: {
         destination: "/home",
@@ -120,22 +220,6 @@ export const getServerSideProps = async (context) => {
     };
   }
 
-  const { data: { user } } = await Axios.get(`http://localhost:3000/${routes.api.specificUser(payload.user.id)}`);
-   
-  if (!user.isAdmin) {
-    return {
-      redirect: {
-        destination: "/home",
-        permanent: false
-      }
-    };
-  }
-
-  return {
-    props: {
-      user
-    }
-  };
 };
 
 export default BackofficeUsers; 
