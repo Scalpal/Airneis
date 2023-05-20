@@ -2,7 +2,7 @@ import styles from "@/styles/components/ProductFilterMenu.module.css";
 import CollapseMenu from "./CollapseMenu";
 import CheckboxItem from "./CheckboxItem";
 import Button from "./Button";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { classnames } from "@/pages/_app";
 
 const materials = [
@@ -46,13 +46,31 @@ const categories = [
 
 const ProductFilterMenu = (props) => {
 
-  const { handleQueryParamsFilters, queryParams, setAppliedQueryParams } = props; 
+  const { handleQueryParamsFilters,setQueryParams, queryParams, setAppliedQueryParams } = props; 
 
   const [isOpen, setIsOpen] = useState(false); 
 
   useEffect(() => {
     isOpen ? document.body.style.position = "fixed" : document.body.style.position = "initial"; 
   }, [isOpen, setIsOpen]);
+
+  const handleResetButton = useCallback(() => {
+    setQueryParams({
+      priceMin: 0,
+      priceMax: 0,
+      materials: [],
+      onlyInStock: false,
+      categories: []
+    });
+
+    setAppliedQueryParams({
+      priceMin: 0,
+      priceMax: 0,
+      materials: [],
+      onlyInStock: false,
+      categories: []
+    });
+  }, [setQueryParams, setAppliedQueryParams]);
 
   return (
     <>
@@ -136,13 +154,7 @@ const ProductFilterMenu = (props) => {
         <div className={styles.buttonsWrapper}>
           <Button
             variant="outlined"
-            onClick={() => setAppliedQueryParams({
-              priceMin: 0,
-              priceMax: 0,
-              materials: [],
-              onlyInStock: false,
-              categories: []
-            })}
+            onClick={() => handleResetButton()}
           >
             Reset
           </Button>

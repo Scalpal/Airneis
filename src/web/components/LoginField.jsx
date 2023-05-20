@@ -6,7 +6,7 @@ import { useState } from "react";
 
 const LoginField = (props) => {
 
-  const { name, type, label, required, showError, ...otherProps } = props;
+  const { name, type, label, required, showError, disabled, ...otherProps } = props;
 
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
@@ -22,6 +22,7 @@ const LoginField = (props) => {
               name={label}
               className={classnames(
                 styles.label,
+                disabled ? styles.labelDisabled : "", 
                 meta.error ? styles.labelError : ""
               )}
               htmlFor={label}
@@ -35,6 +36,7 @@ const LoginField = (props) => {
               {...otherProps}
               type={type === "password" ? (isPasswordVisible ? "text" : "password" ) : "text"}
               id={label}
+              disabled={disabled}
               className={classnames(
                 styles.input,
                 meta.error ? styles.inputError : "",

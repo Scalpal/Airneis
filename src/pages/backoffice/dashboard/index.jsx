@@ -1,9 +1,7 @@
 import Layout from "@/web/components/backoffice/Layout";
 import { parseCookies } from "nookies";
-import jsonwebtoken from "jsonwebtoken";
-import config from "@/api/config.js";
-import Axios from "axios";
-import routes from "@/web/routes";
+import checkToken from "@/web/services/checkToken";
+import checkIsAdmin from "@/web/services/checkIsAdmin";
 
 const BackofficeDashboard = () => {
 
@@ -11,8 +9,6 @@ const BackofficeDashboard = () => {
     <h2>Dashboard</h2>
   );
 };
-
-
 
 BackofficeDashboard.getLayout = (page) => {
   return (
@@ -24,31 +20,21 @@ BackofficeDashboard.getLayout = (page) => {
 
 export const getServerSideProps = async (context) => {
   const { token } = parseCookies(context);
-  const { payload } = jsonwebtoken.verify(token, config.security.jwt.secret);
+  const badTokenRedirect = await checkToken(token);
 
-  if (!token) {
-    return {
-      redirect: {
-        destination: "/home",
-        permanent: false
-      }
-    };
+  if (badTokenRedirect) {
+    return badTokenRedirect; 
   }
 
-  const { data: { user } } = await Axios.get(`http://localhost:3000/${routes.api.specificUser(payload.user.id)}`);
-   
-  if (!user.isAdmin) {
-    return {
-      redirect: {
-        destination: "/home",
-        permanent: false
-      }
-    };
+  const notAdminRedirect = await checkIsAdmin(context);
+
+  if (notAdminRedirect) {
+    return notAdminRedirect;
   }
 
   return {
     props: {
-      user
+      prototype: "nothing"
     }
   };
 };

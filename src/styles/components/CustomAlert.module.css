@@ -1,0 +1,35 @@
+.alert {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  gap: 0.5rem;
+  top: 10vh;
+  left: 100%;
+  border-radius: 0.5rem;
+  width: fit-content;
+  padding: 0.8rem;
+  font-size: 0.8rem;
+  transition-duration: 300ms; 
+  z-index: 1000;
+  white-space: nowrap;
+  color: white;
+}
+
+.success {
+  background-color: green;
+}
+
+.error {
+  background-color: var(--error);
+}
+
+.showError {
+  transform: translateX(calc(-100% - 1rem));
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+}

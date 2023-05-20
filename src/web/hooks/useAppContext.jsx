@@ -11,6 +11,8 @@ import {
   useState,
 } from "react";
 import { parseCookies } from "nookies";
+import Axios, { AxiosError } from "axios";
+import routes from "../routes";
 
 const AppContext = createContext();
 
@@ -26,6 +28,25 @@ export const AppContextProvider = (props) => {
     document.cookie = "token" + "=;expires=Thu, 01 Jan 1970 00:00:01 GMT;";
     setSession(false);
   }, []);
+
+  const getLoggedUser = useCallback(async () => {
+    if (session === null) {
+      return; 
+    }
+
+    try {
+      const { data: { user } } = await Axios.get(routes.api.users.single(session.user.id));
+
+      return user; 
+
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        console.log(error.response);
+      }
+
+      return error;
+    }
+  }, [session]);
 
   const [cart, setCart] = useState(() => {
     if (typeof window !== "undefined" && window.localStorage) {
@@ -99,7 +120,7 @@ export const AppContextProvider = (props) => {
   }, [cart]);
 
   useEffect(() => {
-  	const { token } = parseCookies(null);
+  	const { token } = parseCookies();
 
     if (!token) {
       return;
@@ -111,14 +132,14 @@ export const AppContextProvider = (props) => {
     setJWT(token);
   }, []);
 
-
-
   const contextValues = useMemo(() => {
     return {
       actions: {
+        api,
         signUp,
         signIn,
         signOut,
+        getLoggedUser,
         setCart,
         addToCart,
         removeProductFromCart,
@@ -126,10 +147,10 @@ export const AppContextProvider = (props) => {
       },
       state: {
         session,
-        cart
+        cart,
       },
     };
-  }, [cart, session, signUp, signIn, signOut, setCart, addToCart, removeProductFromCart, deleteProductFromCart]);
+  }, [api, cart, session, signUp, signIn, signOut, getLoggedUser, setCart, addToCart, removeProductFromCart, deleteProductFromCart]);
 
   if (!isPublicPage && session === null) {
     return (<span>Not Connected</span>);

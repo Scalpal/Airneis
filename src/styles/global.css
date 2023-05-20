@@ -10,6 +10,7 @@
   --primaryHovered: rgb(237, 186, 119);
   --grey: #bababa; 
   --error: rgb(183, 0, 0);
+  --disabled: rgb(165, 165, 165); 
 }
 
 html,
