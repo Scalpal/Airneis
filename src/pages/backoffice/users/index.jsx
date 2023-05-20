@@ -126,7 +126,7 @@ const BackofficeUsers = (props) => {
       <div className={styles.topStats}>
         <div>
           <p>Total of users</p>
-          <p>{usersProps.length}</p>
+          <p>{count}</p>
         </div>
 
         {/* This will be a sum of users that has an order in the last 6 months */}

@@ -106,11 +106,7 @@ module.exports.up = async (knex) => {
 
   await knex.schema.createTable("orders_products_relation", (table) => {
     table.integer("orderId").notNullable().references("id").inTable("orders");
-    table
-      .integer("productId")
-      .notNullable()
-      .references("id")
-      .inTable("products");
+    table.integer("productId").notNullable().references("id").inTable("products");
     table.integer("quantity").notNullable().defaultTo(1);
     table.primary(["orderId", "productId"]);
   });

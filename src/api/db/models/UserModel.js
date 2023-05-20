@@ -17,7 +17,7 @@ class UserModel extends BaseModel {
         modelClass: AddressModel,
         join: {
           from: "users.id",
-          to: "address.userId"
+          to: "addresses.userId"
         },
       },
       modify: (query) => query.select(

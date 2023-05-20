@@ -1,8 +1,9 @@
 import * as yup from "yup";
 import "yup-phone";
 
+// Base
 export const stringValidator = yup.string(); 
-
+export const numberValidator = yup.number();
 export const idValidator = yup.string().min(1);
 
 // users
@@ -11,7 +12,6 @@ export const phoneValidator = yup.string().phone("FR", false, "The phone number 
 export const roleValidator = yup.string().oneOf(["admin", "utilisateur"]);
 export const emailValidator = yup.string().email("Incorrect email address format. Please enter a valid email address.");
 export const boolValidator = yup.boolean();
-
 export const passwordValidator = yup
   .string()
   .min(8)
@@ -20,6 +20,8 @@ export const passwordValidator = yup
     "Password must contain at least 1 upper & 1 lower case letters, 1 digit, 1 spe. character"
   )
   .required("This field cannot be empty");
+
+// products 
 
 
 export const createValidator = (object) => yup.object().shape(object);
