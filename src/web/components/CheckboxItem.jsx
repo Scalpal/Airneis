@@ -2,34 +2,17 @@ import styles from "@/styles/components/CheckboxItem.module.css";
 import { CheckIcon } from "@heroicons/react/24/solid";
 import { useState, useCallback } from "react";
 
-
 const CheckboxItem = (props) => {
-  const { name, value, queryKey, queryParams, handleQueryParamsFilters } = props;
+  const { value, group, id, label, defaultChecked, onChangeEvent, ...otherProps } = props;
 
-  const [checked, setChecked] = useState(false); 
+  const [checked,setChecked] = useState(defaultChecked); 
 
-  const handleCheckbox = useCallback(() => { 
-    if (typeof queryParams[queryKey] === "boolean") {
-      handleQueryParamsFilters(queryKey, { name: name, value: value });
-      setChecked(!checked);
 
-      return;
-    }
-
-    handleQueryParamsFilters(queryKey, { name: name, value: value });
-    setChecked(!checked);
-
-  }, [name, value, queryKey, queryParams, handleQueryParamsFilters, checked]);
-
-  // const isValueChecked = useCallback(() => {
-  //   const bool = queryParams[queryKey].findIndex((elt) => elt.value === id) === -1 ? false : true;
-    
-  //   setChecked(bool ? true : false); 
-  // }, [queryParams, queryKey, id]);
-
-  // useEffect(() => {
-  //   isValueChecked();
-  // }, [isValueChecked]);
+  const handleChange = useCallback((event) => {
+    const { checked, value } = event.target;
+    setChecked(checked);
+    onChangeEvent({ name: group, value, checked });
+  }, [group, onChangeEvent]);
 
   return (
     <div
@@ -38,17 +21,17 @@ const CheckboxItem = (props) => {
       <input
         type="checkbox"
         value={value}
-        name={name}
-        id={name}
-        onClick={() => { handleCheckbox(); }}
+        id={id}
+        onChange={handleChange}
+        {...otherProps}
       />
       <label
-        htmlFor={name}
+        htmlFor={id}
         className={checked ? styles.checked : ""}
       >
         {checked && <CheckIcon className={styles.icon} />}
       </label>
-      <p>{name}</p>
+      <p>{label}</p>
     </div>
   );
 };

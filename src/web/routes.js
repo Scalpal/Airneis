@@ -29,7 +29,9 @@ const routes = {
   api: {
     register: () => "/users/register",
     login: () => "/users/login",
-    allProducts: (query) => createRouteWithQueryParams("/products/getProducts", query),
+    allcategories: () => "/categories/getCategories",
+    allmaterials: () => "/materials/getMaterials",
+    allProducts: () => "/products/getProducts",
     // posts: {
     //   collection: (query) => createRouteWithQueryParams("/posts", query),
     //   single: (postId, query) =>

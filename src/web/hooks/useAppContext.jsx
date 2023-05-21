@@ -4,6 +4,8 @@ import signUpService from "@/web/services/signUp.js";
 import signInService from "@/web/services/signIn.js";
 import mailResetPasswordService from "@/web/services/mailResetPassword.js";
 import productsViewerService from "@/web/services/productsViewer.js";
+import materialsViewerService from "@/web/services/materialsViewer.js";
+import categoriesViewerService from "@/web/services/categoriesViewer.js";
 import passwordResetService from "@/web/services/passwordReset.js";
 import cryptService from "@/web/services/crypt.js";
 import {
@@ -28,6 +30,8 @@ export const AppContextProvider = (props) => {
   const signIn = signInService({ api,setSession,setJWT });
   const mailResetPassword = mailResetPasswordService({ api });
   const productsViewer = productsViewerService({ api });
+  const materialsViewer = materialsViewerService({ api });
+  const categoriesViewer = categoriesViewerService({ api });
   const passwordReset = passwordResetService({ api });
   const crypt = cryptService({ api });
   const signOut = useCallback(() => {
@@ -135,14 +139,16 @@ export const AppContextProvider = (props) => {
         addToCart,
         changeValuesProductFromCart,
         deleteProductFromCart,
-        productsViewer
+        productsViewer,
+        materialsViewer,
+        categoriesViewer,
       },
       state: {
         session,
         cart
       },
     };
-  },[signUp, signIn, signOut, mailResetPassword, passwordReset, crypt, addToCart, changeValuesProductFromCart, deleteProductFromCart, productsViewer, session, cart]);
+  },[signUp, signIn, signOut, mailResetPassword, passwordReset, crypt, addToCart, changeValuesProductFromCart, deleteProductFromCart, productsViewer, materialsViewer, categoriesViewer, session, cart]);
 
   if (!isPublicPage && session === null) {
     return (<span>Not Connected</span>);

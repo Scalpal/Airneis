@@ -12,3 +12,5 @@
 - changement de la valeur local de la monaie en $
 - bouton + et - dans cart remplacer par un select
 - modification dans le useAppContect pour mettre la value dirrectement et nom plus ajouter ou retirer
+### filter product
+- produit filtrer via le back

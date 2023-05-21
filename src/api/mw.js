@@ -43,7 +43,7 @@ const mw = (methodHandlers) => async (req, res) => {
     ? methodHandler
     : [methodHandler];
   let handlerIndex = 0;
-  const locals = {};
+  const locals = {}; 
   const ctx = {
     db,
     logger,
