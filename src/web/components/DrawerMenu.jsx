@@ -12,6 +12,7 @@ const DrawerMenu = (props) => {
   const [signOut, session] = actions ? actions : [null, null];
 
   const router = useRouter();
+
   const logout = () => {
     signOut();
     router.push("/home");
@@ -39,6 +40,7 @@ const DrawerMenu = (props) => {
         />
         {session ? <Link href="/profil">My profil</Link> : <Link href="/login">Login</Link>}
         {session ? <a onClick={logout}>Logout</a> : <Link href="/register">Register</Link>}
+        {session && <a onClick={() => router.push("/backoffice/users")}>Backoffice</a>}
         <Link href="">CGU</Link>
         <Link href="">Legal mentions</Link>
         <Link href="">Contact</Link>
