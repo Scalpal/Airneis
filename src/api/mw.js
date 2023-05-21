@@ -42,7 +42,7 @@ const mw = (methodHandlers) => async (req, res) => {
   const handlers = Array.isArray(methodHandler) ? methodHandler : [methodHandler];
   
   let handlerIndex = 0;
-  const locals = {};
+  const locals = {}; 
   const ctx = {
     db,
     logger,

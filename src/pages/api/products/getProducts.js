@@ -1,27 +1,63 @@
 import ProductModel from "@/api/db/models/ProductModel";
+import ProductMaterialRelation from "@/api/db/models/ProductMaterialRelation";
 import mw from "@/api/mw.js";
 import validate from "@/api/middlewares/validate.js";
-import { pageValidator } from "@/validator";
+import { indexValidator, numberValidator, booleanValidator, arrayValidator } from "@/validator";
 
 const products = mw({
-  GET: [
+  POST: [
     validate({
-      query: {
-        page: pageValidator.required(),
+      body: {
+        index: indexValidator.required(),
+        range: indexValidator.required(),
+        categories: arrayValidator.nullable(),
+        materials: arrayValidator.nullable(),
+        onlyInStock: booleanValidator.required(),
+        priceMax: numberValidator.nullable(),
+        priceMin: numberValidator,
       },
     }),
     async ({
       locals: {
-        query: { page },
+        body: { index, categories, materials, onlyInStock, priceMax, priceMin, range },
       },
       res,
     }) => {
-      const query = ProductModel.query().modify("paginate",20,page);
+      let query = ProductModel.query().where("price",">=",Number.parseInt(priceMin,10));
       
+      if (categories?.length > 0) {
+        query = query.where((builder) => {
+          categories.forEach((id) => {
+            builder.orWhere({categoryId: id});
+          });
+        });
+      }
+      
+      if (materials?.length > 0) {
+        query.where((builder) => {
+          materials.forEach((material) => {
+            builder.orWhereExists(function () {
+              this.from(ProductMaterialRelation.tableName)
+                .whereColumn(`${ProductMaterialRelation.tableName}.productId`, "=", `${ProductModel.tableName}.id`)
+                .andWhere(`${ProductMaterialRelation.tableName}.materialId`, material);
+            });
+          });
+        });
+      }
+
+      if (onlyInStock) {
+        query = query.where("stock", ">=", 0);
+      }
+
+      if (Number.parseInt(priceMax,10) !== 0) {
+        query = query.where("price", "<=", Number.parseInt(priceMax,10));
+      }
+
+      query = query.modify("paginate",range,index);
+
       const [countResult] = await query.clone().limit(1).offset(0).count();
       const result = await query.withGraphFetched("[category, images, materials]");
       const count = Number.parseInt(countResult.count,10);
-      
       res.send({
         result: result,
         meta: {

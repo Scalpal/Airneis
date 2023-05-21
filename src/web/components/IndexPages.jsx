@@ -3,13 +3,12 @@ import { EllipsisHorizontalIcon } from "@heroicons/react/24/solid";
 import { ChevronLeftIcon } from "@heroicons/react/24/solid";
 import { ChevronRightIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
-import routes from "@/web/routes";
 import { useEffect,useState } from "react";
 import { classnames } from "@/pages/_app";
 import { useRouter } from "next/router";
 
 const IndexPages = (props) => {
-  const { count,page } = props;
+  const { count, page, redirectLink, range } = props;
   const [lastPage,setLastPage] = useState(0);
   const [pagination,setPagination] = useState([]);
   const router = useRouter();
@@ -29,27 +28,27 @@ const IndexPages = (props) => {
   };
 
   useEffect(() => {
-    setLastPage(count % 20 === 0 ? count / 20 : (count / 20) + 1);
+    setLastPage(count % range === 0 ? count / range : Number.parseInt((count / range) + 1));
     const array = getPageNumbers(lastPage,page);
     setPagination(array);
 
     if (Number.parseInt(page) > lastPage && lastPage !== 0) {
-      router.push(routes.params.products(`page=${lastPage}`)); 
+      router.push(redirectLink(`page=${lastPage}`)); 
     }
     if (Number.parseInt(page) < 1) {
-      router.push(routes.params.products("page=1")); 
+      router.push(redirectLink("page=1")); 
     }
-  },[count,lastPage,page,router,setLastPage]);
+  },[count, lastPage, page, range, redirectLink, router, setLastPage]);
   
   const handlePageChange = (event) => {
-    router.push(routes.params.products(event.target.value)); 
+    router.push(redirectLink(event.target.value)); 
   };
 
   const handlePreviousPage = () => {
-    router.push(routes.params.products(`page=${page - 1}`)); 
+    router.push(redirectLink(`page=${page - 1}`)); 
   };
   const handleNextPage = () => {
-    router.push(routes.params.products(`page=${page + 1}`)); 
+    router.push(redirectLink(`page=${page + 1}`)); 
   };
 
   return (
@@ -62,7 +61,7 @@ const IndexPages = (props) => {
               <span>Précédent</span>
             </div>
           ) : (
-            <Link href={routes.params.products(`page=${page - 1}`)}>
+            <Link href={redirectLink(`page=${page - 1}`)}>
               <ChevronLeftIcon />
               <span>Précédent</span>
             </Link>
@@ -74,7 +73,7 @@ const IndexPages = (props) => {
             {pageNumber === "dot" ? (
               <EllipsisHorizontalIcon className={styles.dot} />
             ) : (
-              <Link href={routes.params.products(`page=${pageNumber}`)} className={classnames(styles.items, {[styles.current]: pageNumber === page})}>
+              <Link href={redirectLink(`page=${pageNumber}`)} className={classnames(styles.items, {[styles.current]: pageNumber === page})}>
                 <span>{pageNumber}</span>
               </Link>
             )}
@@ -88,7 +87,7 @@ const IndexPages = (props) => {
               <ChevronRightIcon />
             </div>
           ) : (
-            <Link href={routes.params.products(`page=${page + 1}`)}>
+            <Link href={redirectLink(`page=${page + 1}`)}>
               <span>Suivant</span>
               <ChevronRightIcon />
             </Link>

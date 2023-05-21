@@ -6,7 +6,13 @@ export const stringValidator = yup.string();
 export const numberValidator = yup.number();
 export const idValidator = yup.string().min(1);
 
+export const numberValidator = yup.string().min(0);
+
 export const dateValidator = yup.date();
+
+export const arrayValidator = yup.array();
+
+export const booleanValidator = yup.boolean();
 
 export const stringArrayValidator = yup.array().of(
   yup.object().shape({

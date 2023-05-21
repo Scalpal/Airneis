@@ -9,7 +9,6 @@ const validate = ({ body, params, query }) => {
 
   return async (ctx) => {
     const { req, res, next, logger } = ctx;
-
     try {
       const { body, params, query } = await validator.validate(
         {
