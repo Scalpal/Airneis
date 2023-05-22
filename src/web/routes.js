@@ -29,6 +29,10 @@ const routes = {
   api: {
     register: () => "/users/register",
     login: () => "/users/login",
+    confirmAccount: () => "/users/activate",
+    crypt: () => "/security/crypt",
+    mailResetPassword: () => "/mail/reset-password",
+    resetPassword: () => "/users/reset-password",
     allcategories: () => "/categories/getCategories",
     allmaterials: () => "/materials/getMaterials",
     allProducts: () => "/products/getProducts",

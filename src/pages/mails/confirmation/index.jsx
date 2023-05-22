@@ -1,31 +1,54 @@
 import { useRouter } from "next/router"
 import BackofficeLoginLayout from "@/web/components/backoffice/LoginLayout"
 import routes from "@/web/routes"
-import config from "@/api/config.js"
-import axios from "axios"
 import styles from "@/styles/mails/confirmation.module.css"
+import { useEffect, useState } from "react"
+import useAppContext from "@/web/hooks/useAppContext"
+import classNames from "classnames"
 
-const MailConfirmation = ({ error, answer }) => {
-  if (error) {
-    console.log(answer)
-  }
-
+const MailConfirmation = () => {
+  const [err, setErr] = useState(false)
+  const [answer, setAnswer] = useState(null)
   const router = useRouter()
+  const { key } = router.query
+  const {
+    actions: { confirmAccount, crypt },
+  } = useAppContext()
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (key) {
+        const [{ getKey }] = await crypt([{ key }])
+
+        if (!getKey) {
+          setAnswer("Invalid password reset link")
+          setErr(true)
+
+          return
+        }
+
+        const [error, results] = await confirmAccount(getKey)
+
+        if (error) {
+          setAnswer(error)
+          setErr(true)
+        } else {
+          setAnswer(results)
+        }
+      }
+    }
+    fetchData()
+  }, [confirmAccount, crypt, key])
+
   const handleclick = () => {
     router.push(routes.home())
   }
 
   return (
     <div className={styles.div}>
-      {error ? (
-        <span className={styles.error}>
-          We cannot activate your account, please retry later
-        </span>
-      ) : (
-        <span className={styles.success}>
-          Your account is validate with success
-        </span>
-      )}
+      <span className={classNames(styles.answer, { [styles.error]: err })}>
+        {answer}
+      </span>
       <button className={styles.button} onClick={handleclick}>
         Return to Home
       </button>
@@ -38,50 +61,3 @@ MailConfirmation.getLayout = function (page) {
 }
 
 export default MailConfirmation
-
-export async function getServerSideProps(context) {
-  const cryptoId = decodeURIComponent(context.query.key)
-
-  const crypt = async (CryptoValues) => {
-    try {
-      const {
-        data: { CryptoKey },
-      } = await axios.post(`${config.baseURL}/api/${routes.api.crypt()}`, {
-        CryptoValues,
-      })
-
-      return CryptoKey
-    } catch (err) {
-      const error = err.response?.data?.error || "Oops. Something went wrong"
-
-      return {
-        props: {
-          error: true,
-          answer: [Array.isArray(error) ? error : [error]],
-        },
-      }
-    }
-  }
-  const [{ getCryptoId }] = await crypt([{ cryptoId }])
-
-  try {
-    await axios.patch(`${config.baseURL}/api/${routes.api.activate()}`, {
-      id: getCryptoId,
-    })
-
-    return {
-      props: {
-        error: false,
-      },
-    }
-  } catch (err) {
-    const error = err.response?.data?.error || "Oops. Something went wrong"
-
-    return {
-      props: {
-        error: true,
-        answer: [Array.isArray(error) ? error : [error]],
-      },
-    }
-  }
-}

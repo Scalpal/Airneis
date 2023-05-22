@@ -5,15 +5,15 @@ import { stringArrayValidator } from "@/validator"
 import { enc, AES } from "crypto-js"
 
 const handler = mw({
-  POST: [
+  GET: [
     validate({
-      body: {
-        CryptoValues: stringArrayValidator.required(),
+      query: {
+        "0[key]": stringArrayValidator.required(),
       },
     }),
     async ({
       locals: {
-        body: { CryptoValues },
+        query: { CryptoValues },
       },
       res,
     }) => {
@@ -23,7 +23,7 @@ const handler = mw({
         return bytes.toString(enc.Utf8)
       }
 
-      const decryptBalues = CryptoValues.map((obj) => {
+      const decryptValues = CryptoValues.map((obj) => {
         const decryptedObj = {}
         for (const [key, value] of Object.entries(obj)) {
           const newKey = `get${key.charAt(0).toUpperCase() + key.slice(1)}`
@@ -33,7 +33,7 @@ const handler = mw({
         return decryptedObj
       })
 
-      res.send({ CryptoKey: decryptBalues })
+      res.send({ CryptoKey: decryptValues })
     },
   ],
 })
