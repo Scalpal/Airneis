@@ -1,5 +1,4 @@
 import routes from "@/web/routes.js"
-import { AxiosError } from "axios"
 
 const productsViewer =
   ({ api }) =>
@@ -7,12 +6,8 @@ const productsViewer =
     try {
       const { data: result } = await api.get(routes.api.allmaterials())
 
-      return result
+      return [result]
     } catch (err) {
-      if (error instanceof AxiosError) {
-        return [Array.isArray(error) ? error : [error]]
-      }
-
       const error = err.response?.data?.error || "Oops. Something went wrong"
 
       return [Array.isArray(error) ? error : [error]]

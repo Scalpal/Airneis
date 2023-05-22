@@ -15,9 +15,7 @@ import { parseCookies } from "nookies";
 import Axios, { AxiosError } from "axios";
 import routes from "../routes";
 
-const AppContext = createContext({
-  redirectToIndex: () => {},
-})
+const AppContext = createContext()
 
 export const AppContextProvider = (props) => {
   const { isPublicPage, ...otherProps } = props;

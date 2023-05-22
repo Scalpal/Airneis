@@ -1,15 +1,16 @@
 import routes from "@/web/routes.js"
-import { AxiosError } from "axios"
 
 const mailResetPassword =
   ({ api }) =>
-  async ({ email }) => {
+  async (id) => {
     try {
-      const { data } = await api.get(routes.api.mailResetPassword(), {
-        params: { email },
+      const {
+        data: { result },
+      } = await api.patch(routes.api.confirmAccount(), {
+        id,
       })
 
-      return [null, data]
+      return [null, Array.isArray(result) ? result : [result]]
     } catch (err) {
       const error = err.response?.data?.error || "Oops. Something went wrong"
 

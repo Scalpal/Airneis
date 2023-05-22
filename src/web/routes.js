@@ -1,12 +1,12 @@
 const createRouteWithQueryParams = (route, query) => {
   if (!query) {
-    return route
+    return route;
   }
 
-  const qs = new URLSearchParams(query).toString()
+  const qs = new URLSearchParams(query).toString();
 
-  return `${route}?${qs}`
-}
+  return `${route}?${qs}`;
+};
 
 const routes = {
   home: () => "/",
@@ -15,12 +15,14 @@ const routes = {
   backoffice: {
     base: () => "/backoffice",
     users: {
-      single: (userId) => createRouteWithQueryParams(`/backoffice/users/${userId}`)
+      single: (userId) =>
+        createRouteWithQueryParams(`/backoffice/users/${userId}`),
     },
     products: {
       add: () => "/backoffice/products/add",
-      single: (productId) => createRouteWithQueryParams(`/backoffice/products/${productId}`)
-    }
+      single: (productId) =>
+        createRouteWithQueryParams(`/backoffice/products/${productId}`),
+    },
   },
   api: {
     register: () => "/users/register",
@@ -36,9 +38,9 @@ const routes = {
         createRouteWithQueryParams(`/api/users/${userId}`, query),
       self: () => "/api/users/self",
       patch: (userId) => createRouteWithQueryParams(`/users/${userId}`),
-      delete: (userId) => createRouteWithQueryParams(`/users/${userId}`)
-    }
+      delete: (userId) => createRouteWithQueryParams(`/users/${userId}`),
+    },
   },
-}
+};
 
-export default routes
+export default routes;

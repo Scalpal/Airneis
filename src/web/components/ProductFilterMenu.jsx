@@ -111,7 +111,7 @@ const ProductFilterMenu = (props) => {
           ))}
         </CollapseMenu>
 
-        <CollapseMenu title="Materials" key={"materials"}>
+        {/* <CollapseMenu title="Materials" key={"materials"}>
           {materials.map(({ name, id }, index) => (
             <CheckboxItem
               key={index}
@@ -123,7 +123,7 @@ const ProductFilterMenu = (props) => {
               onChangeEvent={handleChangeQueryParamsFilters}
             />
           ))}
-        </CollapseMenu>
+        </CollapseMenu> */}
 
         <div>
           <p className={styles.categoryTitle}>Stocks</p>
