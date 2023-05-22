@@ -1,15 +1,14 @@
-import { createValidator,stringValidator,emailValidator } from "@/validator";
+import { createValidator, stringValidator, emailValidator } from "@/validator";
 import BackofficeLoginLayout from "@/web/components/backoffice/LoginLayout";
-import { Formik,Form } from "formik";
+import { Formik, Form } from "formik";
 import CustomField from "@/web/components/backoffice/CustomField";
 import Button from "@/web/components/Button";
 import routes from "@/web/routes.js";
 import styles from "@/styles/backoffice/loginPage.module.css";
 import { useRouter } from "next/router";
-import { useCallback,useState } from "react";
+import { useCallback, useState } from "react";
 import useAppContext from "@/web/hooks/useAppContext";
 const merge = require("deepmerge");
-
 
 const validationSchema = createValidator({
   email: emailValidator.required(),
@@ -26,23 +25,18 @@ const Login = () => {
   const {
     actions: { signIn },
   } = useAppContext();
-  const [error,setError] = useState(null);
+  const [error, setError] = useState(null);
   const handleSubmit = useCallback(
     async (values) => {
-      const newValues = merge(values,{ access: "admin" });
+      const newValues = merge(values, { access: "admin" });
       const [err] = await signIn(newValues);
 
       if (err && error) {
-        document.getElementById("errormsg").animate(
-          [
-            { opacity: "100" },
-            { opacity: "0" },
-            { opacity: "100" },
-          ],
-          {
+        document
+          .getElementById("errormsg")
+          .animate([{ opacity: "100" }, { opacity: "0" }, { opacity: "100" }], {
             duration: 1000,
-          }
-        );
+          });
       }
 
       if (err) {
@@ -52,25 +46,28 @@ const Login = () => {
       }
       router.push(routes.home());
     },
-    [signIn,error,router]
+    [signIn, error, router]
   );
   return (
     <main className={styles.mainContent}>
-
       <Formik
         onSubmit={handleSubmit}
         validationSchema={validationSchema}
         initialValues={initialValues}
         error={error}
       >
-        {({ isValid,dirty,isSubmitting }) => (
+        {({ isValid, dirty, isSubmitting }) => (
           <Form className={styles.formContainer}>
             <div className={styles.titlesBlock}>
               <p className={styles.logo}>Airneis</p>
               <p> - </p>
               <p>Backoffice</p>
             </div>
-            {error ? <p id="errormsg" className={styles.error}>password or login incorrect</p> : null}
+            {error ? (
+              <p id="errormsg" className={styles.error}>
+                password or login incorrect
+              </p>
+            ) : null}
             <CustomField
               name="email"
               type="text"
@@ -86,25 +83,18 @@ const Login = () => {
             />
 
             <div className={styles.buttonWrapper}>
-              <Button
-                disabled={!(dirty && isValid) || isSubmitting}
-              >
+              <Button disabled={!(dirty && isValid) || isSubmitting}>
                 Login
               </Button>
             </div>
-
           </Form>
         )}
       </Formik>
-
     </main>
   );
 };
 Login.isPublic = true;
 Login.getLayout = function (page) {
-  return (
-    <BackofficeLoginLayout>
-      {page}
-    </BackofficeLoginLayout>
-  );
+  return <BackofficeLoginLayout>{page}</BackofficeLoginLayout>;
 };
+export default Login;

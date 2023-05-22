@@ -6,12 +6,10 @@ import { nunito } from "@/pages/_app";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import styles from "@/styles/backoffice/statsPages.module.css";
 import { parseCookies } from "nookies";
-import jsonwebtoken from "jsonwebtoken";
-import config from "@/api/config.js";
-import Axios from "axios";
-import routes from "@/web/routes";
+import checkToken from "@/web/services/checkToken";
+import checkIsAdmin from "@/web/services/checkIsAdmin";
 
-// Prototype datas 
+// Prototype datas
 const ordersProto = [
   {
     id: 1,
@@ -19,17 +17,17 @@ const ordersProto = [
     status: "Order placed",
     products: [
       {
-        name: "Chaise moderne en bois de hêtre",
+        name: "Modern beechwood chair",
         price: 223,
         stock: 25,
       },
       {
-        name: "chaise",
+        name: "Chair",
         price: 98,
         stock: 25,
       },
       {
-        name: "chaise",
+        name: "Chair",
         price: 134,
         stock: 25,
       },
@@ -41,17 +39,17 @@ const ordersProto = [
     status: "Ready for delivery",
     products: [
       {
-        name: "Chaise moderne en bois de hêtre",
+        name: "Modern beechwood chair",
         price: 223,
         stock: 25,
       },
       {
-        name: "chaise",
+        name: "Chair",
         price: 98,
         stock: 25,
       },
       {
-        name: "chaise",
+        name: "Chair",
         price: 134,
         stock: 25,
       },
@@ -59,19 +57,11 @@ const ordersProto = [
   },
 ];
 
-
-
 const BackofficeOrders = () => {
-
   const [orders, _] = useState(ordersProto);
 
   return (
-    <main
-      className={classnames(
-        styles.mainContainer,
-        nunito.className
-      )}
-    >
+    <main className={classnames(styles.mainContainer, nunito.className)}>
       <div className={styles.topStats}>
         <div>
           <p>Total of orders</p>
@@ -86,7 +76,6 @@ const BackofficeOrders = () => {
 
       <div className={styles.mainContent}>
         <div className={styles.actionBar}>
-
           <div>
             <p>Orders</p>
 
@@ -95,7 +84,6 @@ const BackofficeOrders = () => {
               <MagnifyingGlassIcon className={styles.actionBarIcon} />
             </div>
           </div>
-
         </div>
 
         <Table array={orders} />
@@ -105,42 +93,27 @@ const BackofficeOrders = () => {
 };
 BackofficeOrders.isPublic = false;
 BackofficeOrders.getLayout = function (page) {
-  return (
-    <Layout>
-      {page}
-    </Layout>
-  );
+  return <Layout>{page}</Layout>;
 };
 
 export const getServerSideProps = async (context) => {
   const { token } = parseCookies(context);
-  const { payload } = jsonwebtoken.verify(token, config.security.jwt.secret);
+  const badTokenRedirect = await checkToken(token);
 
-  if (!token) {
-    return {
-      redirect: {
-        destination: "/home",
-        permanent: false
-      }
-    };
+  if (badTokenRedirect) {
+    return badTokenRedirect;
   }
 
-  const { data: { user } } = await Axios.get(`http://localhost:3000/${routes.api.specificUser(payload.user.id)}`);
-   
-  if (!user.isAdmin) {
-    return {
-      redirect: {
-        destination: "/home",
-        permanent: false
-      }
-    };
+  const notAdminRedirect = await checkIsAdmin(context);
+
+  if (notAdminRedirect) {
+    return notAdminRedirect;
   }
 
   return {
     props: {
-      user
-    }
+      prototype: "nothing",
+    },
   };
 };
-
-export default BackofficeOrders; 
+export default BackofficeOrders;

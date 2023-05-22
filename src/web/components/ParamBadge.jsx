@@ -2,7 +2,7 @@ import styles from "@/styles/components/ParamBadge.module.css";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 
 const ParamBadge = (props) => {
-  const { appliedQueryParams, queryKey, handleQueryParamsFilters } = props;
+  const { appliedQueryParams, queryKey, handleAppliedQueryParams } = props;
 
   return (
     appliedQueryParams[queryKey].length > 0 &&
@@ -10,7 +10,7 @@ const ParamBadge = (props) => {
         <p
           key={index}
           className={styles.filterBadge}
-          onClick={() => handleQueryParamsFilters(queryKey, {name, value})}
+          onClick={() => handleAppliedQueryParams(queryKey, {name, value})}
         >
           {queryKey} : {name}
           <XMarkIcon className={styles.filterBadgeIcon} />

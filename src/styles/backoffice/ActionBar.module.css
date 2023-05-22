@@ -1,0 +1,50 @@
+/* ------------- Actions bar ------------- */
+.actionBar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin: 0 0 1rem 0;
+}
+
+/* Actions bar LEFT div */
+.actionBar > div:first-child {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+}
+
+.actionBar > p {
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.customSearchInput {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid grey;
+  border-radius: 10px;
+  padding: 0.3rem 0.8rem;
+  font-size: 0.8rem;
+  background-color: var(--secondary);
+}
+
+.actionBar input[type="text"] {
+  outline: 0;
+  border: 0;
+  background-color: var(--secondary);
+}
+
+.actionBar input[type="text"]:focus {
+  border: 0;
+  outline: 0;
+}
+
+.actionBarIcon {
+  width: 1.3rem;
+  height: 1.3rem;
+}

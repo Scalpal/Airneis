@@ -2,7 +2,7 @@ import BaseModel from "@/api/db/models/BaseModel.js";
 import CategoryModel from "@/api/db/models/CategoryModel.js";
 
 class ProductModel extends BaseModel {
-  static tableName = "products"
+  static tableName = "products";
 
   static relationMappings() {
     return {
@@ -11,7 +11,7 @@ class ProductModel extends BaseModel {
         modelClass: CategoryModel,
         join: {
           from: "products.categoryId",
-          to: "category.id",
+          to: "categories.id",
         },
       },
     };
