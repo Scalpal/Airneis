@@ -1,23 +1,15 @@
 import Button from "@/web/components/Button";
 import LoginField from "@/web/components/LoginField";
 import LoginLayout from "@/web/components/LoginLayout";
-import routes from "@/web/routes.js";
-import { Form,Formik } from "formik";
+import { Form, Formik } from "formik";
 import styles from "@/styles/register.module.css";
 import { useCallback, useState } from "react";
-import {
-  createValidator,
-  emailValidator,
-  passwordValidator,
-  phoneValidator,
-  stringValidator,
-} from "@/validator";
+import { createValidator, emailValidator, passwordValidator, phoneValidator, stringValidator } from "@/validator";
 import { useRouter } from "next/router";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/solid";
 import CollapseMenu from "@/web/components/CollapseMenu";
 import useAppContext from "@/web/hooks/useAppContext";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { useTranslation } from "next-i18next";
+import routes from "@/web/routes";
 
 const validationSchema = createValidator({
   firstName: stringValidator
@@ -33,7 +25,7 @@ const validationSchema = createValidator({
   city: stringValidator,
   region: stringValidator,
   postalCode: stringValidator,
-  country: stringValidator,
+  country: stringValidator, 
 });
 
 const initialValues = {
@@ -46,37 +38,31 @@ const initialValues = {
   city: "",
   region: "",
   postalCode: "",
-  country: "",
-};
+  country: "", 
+}; 
 
 const Register = () => {
-  const { t: translate } = useTranslation("register");
+
   const router = useRouter();
-  const {
-    actions: { signUp },
-  } = useAppContext();
+  const { actions: { signUp } } = useAppContext();
   const [error, setError] = useState(null);
 
-  const handleSubmit = useCallback(
-    async (values) => {
-      const [error] = await signUp(values);
+  const handleSubmit = useCallback(async (values) => {
+    const [error] = await signUp(values); 
 
-      if (error) {
-        if (error[0].response.status === 409) {
-          setError("E-mail already used.");
+    if (error) {
+      if (error[0].response.status === 409) {
+        setError("E-mail already used.");
+        return;
 
-          return;
-        } else {
-          setError("Oops, something went wrong.");
-
-          return;
-        }
+      } else {
+        setError("Oops, something went wrong."); 
+        return; 
+        
       }
 
-      router.push(routes.login());
-    },
-    [router, signUp]
-  );
+    router.push(routes.login()); 
+  }, [router, signUp]); 
 
   return (
     <main className={styles.container}>
@@ -88,9 +74,9 @@ const Register = () => {
       >
         {({ isValid, dirty, isSubmitting }) => (
           <Form className={styles.formContainer}>
-            <p className={styles.formTitle}>{translate("register")}</p>
-
-            {error && (
+            <p className={styles.formTitle}>Register</p>
+            
+            {error &&
               <p className={styles.error}>
                 <ExclamationTriangleIcon className={styles.errorIcon} />
                 {error}
@@ -177,11 +163,7 @@ const Register = () => {
               />
             </CollapseMenu>
 
-            <p className={styles.requiredText}>
-              {" "}
-              <span className={styles.requiredStar}>*</span>{" "}
-              {translate("requiredStarText")}
-            </p>
+            <p className={styles.requiredText}> <span className={styles.requiredStar}>*</span> : This field is required</p>
 
             <Button
               disabled={!(dirty && isValid) || isSubmitting}
@@ -203,20 +185,14 @@ const Register = () => {
         )}
       </Formik>
     </main>
-  );
-};
-
-export const getStaticProps = async ({ locale }) => {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ["register"])),
-    },
-  };
-};
+  )
+}
 
 Register.isPublic = true;
 Register.getLayout = function (page) {
-  return <LoginLayout>{page}</LoginLayout>;
+  return (
+    <LoginLayout>
+      {page}
+    </LoginLayout>
+  );
 };
-
-export default Register;

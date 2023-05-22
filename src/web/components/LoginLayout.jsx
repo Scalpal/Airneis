@@ -17,5 +17,3 @@ const LoginLayout = ({ children }) => {
     </div>
   );
 };
-
-export default LoginLayout;

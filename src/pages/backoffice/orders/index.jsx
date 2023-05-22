@@ -55,10 +55,10 @@ const ordersProto = [
       },
     ],
   },
-];
+]
 
 const BackofficeOrders = () => {
-  const [orders, _] = useState(ordersProto);
+  const [orders, _] = useState(ordersProto)
 
   return (
     <main className={classnames(styles.mainContainer, nunito.className)}>
@@ -89,12 +89,12 @@ const BackofficeOrders = () => {
         <Table array={orders} />
       </div>
     </main>
-  );
-};
-BackofficeOrders.isPublic = false;
+  )
+}
+BackofficeOrders.isPublic = false
 BackofficeOrders.getLayout = function (page) {
-  return <Layout>{page}</Layout>;
-};
+  return <Layout>{page}</Layout>
+}
 
 export const getServerSideProps = async (context) => {
   const { token } = parseCookies(context);

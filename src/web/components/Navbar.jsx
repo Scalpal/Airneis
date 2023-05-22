@@ -7,31 +7,31 @@ import routes from "@/web/routes";
 import CartButton from "./CartButton";
 
 const Navbar = (props) => {
-  const { fixed, isDrawerToggledState } = props;
+  const { fixed, isDrawerToggledState } = props
 
-  const [isDrawerToggled, setIsDrawerToggled] = isDrawerToggledState;
+  const [isDrawerToggled, setIsDrawerToggled] = isDrawerToggledState
 
   useEffect(() => {
-    const navbar = document.querySelector("#navbar");
+    const navbar = document.querySelector("#navbar")
 
     if (fixed) {
       const carouselObserver = new IntersectionObserver(
         (entries) => {
 
           if (entries[0].isIntersecting === true || isDrawerToggled === true) {
-            navbar.classList.remove("navbarBackground");
+            navbar.classList.remove("navbarBackground")
           } else {
-            navbar.classList.add("navbarBackground");
+            navbar.classList.add("navbarBackground")
           }
         },
         { threshold: [0.1] }
-      );
+      )
 
-      carouselObserver.observe(document.querySelector("#carousel"));
+      carouselObserver.observe(document.querySelector("#carousel"))
     } else {
-      navbar.classList.remove("navbarBackground");
+      navbar.classList.remove("navbarBackground")
     }
-  });
+  })
 
   return (
     <nav
@@ -83,7 +83,7 @@ const Navbar = (props) => {
         </button>
       </ul>
     </nav>
-  );
-};
+  )
+}
 
-export default Navbar;
+export default Navbar

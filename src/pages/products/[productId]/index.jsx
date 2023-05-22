@@ -4,7 +4,7 @@ import Banner from "@/web/components/Banner";
 import Button from "@/web/components/Button";
 import styles from "@/styles/productPage.module.css";
 
-const placeholderImages = ["/meuble-1.jpeg", "/meuble-2.jpeg", "/meuble-3.png"];
+const placeholderImages = ["/meuble-1.jpeg", "/meuble-2.jpeg", "/meuble-3.png"]
 
 const productPrototype = {
   name: "Samsung TV OLED 4K",
@@ -63,7 +63,7 @@ const similarProducts = [
     price: "$45",
     imageSrc: "/meuble-2.jpeg",
   },
-];
+]
 
 const ProductPage = () => {
 
@@ -109,7 +109,7 @@ const ProductPage = () => {
 
           <div className={styles.similarProductsContainer}>
             {similarProducts.map((product, index) => {
-              return <ProductCard key={index} product={product} />;
+              return <ProductCard key={index} product={product} />
             })}
           </div>
         </section>

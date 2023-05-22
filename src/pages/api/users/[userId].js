@@ -28,7 +28,7 @@ const handler = mw({
       },
       res,
     }) => {
-      const id = Number.parseInt(userId);
+      const id = Number.parseInt(userId)
 
       const user = await UserModel.query()
         .select(
@@ -141,5 +141,4 @@ const handler = mw({
     },
   ],
 });
-
 export default handler;

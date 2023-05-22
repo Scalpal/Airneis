@@ -17,5 +17,4 @@ const CustomerReview = (props) => {
     </div>
   );
 };
-
 export default CustomerReview;

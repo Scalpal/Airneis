@@ -15,12 +15,12 @@ import { useTranslation } from "next-i18next";
 const validationSchema = createValidator({
   email: emailValidator.required(),
   password: stringValidator.required(),
-});
+})
 
 const initialValues = {
   email: "",
   password: "",
-};
+}
 
 const Login = () => {
   const router = useRouter();

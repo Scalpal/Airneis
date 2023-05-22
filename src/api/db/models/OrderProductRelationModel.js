@@ -1,4 +1,4 @@
-import BaseModel from "@/api/db/models/BaseModel.js";
+import BaseModel from "@/api/db/models/BaseModel.js"
 
 class OrderProductRelationModel extends BaseModel {
   static tableName = "products";
@@ -17,4 +17,4 @@ class OrderProductRelationModel extends BaseModel {
   // }
 }
 
-export default OrderProductRelationModel;
+export default OrderProductRelationModel

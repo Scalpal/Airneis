@@ -1,12 +1,12 @@
 const createRouteWithQueryParams = (route, query) => {
   if (!query) {
-    return route;
+    return route
   }
 
-  const qs = new URLSearchParams(query).toString();
+  const qs = new URLSearchParams(query).toString()
 
-  return `${route}?${qs}`;
-};
+  return `${route}?${qs}`
+}
 
 const routes = {
   home: () => "/",
@@ -39,6 +39,6 @@ const routes = {
       delete: (userId) => createRouteWithQueryParams(`/users/${userId}`)
     }
   },
-};
+}
 
-export default routes;
+export default routes

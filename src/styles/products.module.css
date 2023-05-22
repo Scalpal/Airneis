@@ -7,15 +7,6 @@
   justify-content: center; 
 }
 
-.input {
-  margin: 0 auto 5vh auto; 
-  padding: 0.5rem 1.5rem;
-  width: 50%; 
-  border: 1px solid black;
-  border-radius: 0.45em;
-  font-size: 0.9rem;
-}
-
 .indexProducts {
   display: flex;
   flex-direction: row;

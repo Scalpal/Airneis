@@ -15,7 +15,7 @@ import { parseCookies } from "nookies";
 import Axios, { AxiosError } from "axios";
 import routes from "../routes";
 
-const AppContext = createContext();
+const AppContext = createContext()
 
 export const AppContextProvider = (props) => {
   const { isPublicPage, ...otherProps } = props;
@@ -57,7 +57,7 @@ export const AppContextProvider = (props) => {
         ? JSON.parse(localStorage.getItem("products"))
         : [];
     }
-  });
+  })
 
   const addToCart = useCallback(
     (product) => {
@@ -145,10 +145,10 @@ export const AppContextProvider = (props) => {
     const { token } = parseCookies();
 
     if (!token) {
-      return;
+      return
     }
 
-    const session = parseSession(token);
+    const session = parseSession(token)
 
     setSession(session);
     setJWT(token);
@@ -198,4 +198,4 @@ const useAppContext = () => {
   return { state, actions };
 };
 
-export default useAppContext;
+export default useAppContext

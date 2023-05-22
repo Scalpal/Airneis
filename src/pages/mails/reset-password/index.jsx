@@ -20,7 +20,7 @@ const merge = require("deepmerge");
 const validationSchema = createValidator({
   password: passwordValidator.required(),
   passwordConfirmation: confirmPasswordValidator.required(),
-});
+})
 
 const initialValues = {
   password: "",
@@ -37,8 +37,8 @@ const MailResetPassword = () => {
 
   const handleSubmit = useCallback(
     async (values) => {
-      const cryptoId = decodeURIComponent(router.query.keyA);
-      const cryptoTimer = decodeURIComponent(router.query.keyB);
+      const cryptoId = decodeURIComponent(router.query.keyA)
+      const cryptoTimer = decodeURIComponent(router.query.keyB)
 
       const [{ getCryptoId }, { getCryptoTimer }] = await crypt([
         { cryptoId },
@@ -60,9 +60,9 @@ const MailResetPassword = () => {
       }
 
       if (err) {
-        setError(err);
+        setError(err)
 
-        return;
+        return
       }
 
       router.push(routes.login());
@@ -120,8 +120,8 @@ const MailResetPassword = () => {
         )}
       </Formik>
     </main>
-  );
-};
+  )
+}
 
 export const getStaticProps = async ({ locale }) => {
   return {

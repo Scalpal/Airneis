@@ -15,9 +15,9 @@ const DrawerMenu = (props) => {
   const router = useRouter();
 
   const logout = () => {
-    signOut();
-    router.push(routes.home());
-  };
+    signOut()
+    router.push(routes.home())
+  }
 
   return (
     <>

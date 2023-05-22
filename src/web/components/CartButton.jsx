@@ -13,14 +13,14 @@ const CartButton = (props) => {
 
   useEffect(() => {
     if (cart) {
-      const totalQuantity = cart.reduce((acc,obj) => acc + obj.quantity,0);
-      setProductsCount(totalQuantity);
+      const totalQuantity = cart.reduce((acc, obj) => acc + obj.quantity, 0)
+      setProductsCount(totalQuantity)
     }
-  }, [cart, setCart]);
+  }, [cart, setCart])
 
   const handleCart = () => {
-    router.push(routes.cart());
-  };
+    router.push(routes.cart())
+  }
 
   return (
     <button className={styles.navbarButton} onClick={handleCart}>
@@ -30,7 +30,7 @@ const CartButton = (props) => {
       {productsCount !== 0 && <span className={styles.navbarButtonCartCount}>{productsCount}</span>}
       
     </button>
-  );
-};
+  )
+}
 
 export default CartButton;

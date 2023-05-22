@@ -13,7 +13,9 @@ const CategoriesBlocks = (props) => {
         return (
           <div
             key={index}
-            onClick={() => { router.push(routes.query.category(category.name));}}
+            onClick={() => {
+              router.push(routes.query.category(category.name))
+            }}
           >
             <p>{category.name}</p>
 

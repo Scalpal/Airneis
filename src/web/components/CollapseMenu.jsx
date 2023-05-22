@@ -36,5 +36,3 @@ const CollapseMenu = (props) => {
     </div>
   );
 };
-
-export default CollapseMenu;

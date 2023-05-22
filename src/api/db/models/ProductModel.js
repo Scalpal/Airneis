@@ -41,12 +41,12 @@ class ProductModel extends BaseModel {
           from: "products.id",
           through: {
             from: "products_materials_relation.productId",
-            to: "products_materials_relation.materialId"
+            to: "products_materials_relation.materialId",
           },
-          to: "materials.id"
-        }
+          to: "materials.id",
+        },
       },
-      modify: (query) => query.select("*")
+      modify: (query) => query.select("*"),
     };
   }
 }

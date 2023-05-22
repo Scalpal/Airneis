@@ -42,10 +42,10 @@ class UserModel extends BaseModel {
   }
 
   checkPassword = async (password) => {
-    const [passwordHash] = await hashPassword(password, this.passwordSalt);
+    const [passwordHash] = await hashPassword(password, this.passwordSalt)
 
-    return passwordHash === this.passwordHash;
+    return passwordHash === this.passwordHash
   };
 }
 
-export default UserModel;
+export default UserModel

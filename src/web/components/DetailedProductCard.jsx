@@ -79,5 +79,4 @@ const DetailedProductCard = (props) => {
     </div>
   );
 };
-
 export default DetailedProductCard;

@@ -22,4 +22,4 @@ class MaterialModel extends BaseModel {
   }
 }
 
-export default MaterialModel;
+export default MaterialModel

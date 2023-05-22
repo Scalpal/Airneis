@@ -142,12 +142,12 @@ const BackofficeProducts = (props) => {
         />
       </div>
     </main>
-  );
-};
-BackofficeProducts.isPublic = true;
+  )
+}
+BackofficeProducts.isPublic = true
 BackofficeProducts.getLayout = function (page) {
-  return <Layout>{page}</Layout>;
-};
+  return <Layout>{page}</Layout>
+}
 
 export const getServerSideProps = async (context) => {
   const { token } = parseCookies(context);

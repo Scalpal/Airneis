@@ -1,8 +1,8 @@
-import { nunito } from "@/pages/_app";
-import Navbar from "./Navbar";
-import Footer from "./Footer";
-import DrawerMenu from "./DrawerMenu";
-import { useState } from "react";
+import { nunito } from "@/pages/_app"
+import Navbar from "./Navbar"
+import Footer from "./Footer"
+import DrawerMenu from "./DrawerMenu"
+import { useState } from "react"
 
 const LayoutStickyNavbar = ({ children }) => {
   const [isDrawerToggled, setIsDrawerToggled] = useState(false);
@@ -23,5 +23,4 @@ const LayoutStickyNavbar = ({ children }) => {
     </div>
   );
 };
-
 export default LayoutStickyNavbar;

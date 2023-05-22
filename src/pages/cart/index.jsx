@@ -65,12 +65,12 @@ const Cart = () => {
   }, [productsList]);
 
   const handleSubmit = useCallback(() => {
-    router.push(routes.delivery());
-  }, [router]);
+    router.push(routes.delivery())
+  }, [router])
 
   const redirectToHomePage = useCallback(() => {
-    router.push(routes.home());
-  }, [router]);
+    router.push(routes.home())
+  }, [router])
 
   // console.log("Products list : ",productsList);
 
@@ -156,4 +156,4 @@ Cart.getLayout = function (page) {
   return <LayoutStickyNavbar>{page}</LayoutStickyNavbar>;
 };
 
-export default Cart;
+export default Cart
