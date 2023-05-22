@@ -194,4 +194,5 @@ const ProductPage = () => {
     </>
   )
 }
+ProductPage.isPublic = true
 export default ProductPage

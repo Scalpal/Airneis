@@ -1,3 +1,4 @@
+import { useRouter } from "next/router"
 import createAPIClient from "@/web/createAPIClient.js"
 import parseSession from "@/web/parseSession.js"
 import signUpService from "@/web/services/signUp.js"
@@ -18,10 +19,16 @@ import {
 } from "react"
 import { parseCookies } from "nookies"
 
-const AppContext = createContext()
+const AppContext = createContext({
+  redirectToIndex: () => {},
+})
 
 export const AppContextProvider = (props) => {
   const { isPublicPage, ...otherProps } = props
+  const router = useRouter()
+  const redirectToIndex = () => {
+    router.push("/")
+  }
   const [session, setSession] = useState(null)
   const [jwt, setJWT] = useState(null)
   const api = createAPIClient({ jwt })
@@ -183,7 +190,7 @@ export const AppContextProvider = (props) => {
   ])
 
   if (!isPublicPage && session === null) {
-    return <span>Not Connected</span>
+    return redirectToIndex()
   }
 
   return <AppContext.Provider {...otherProps} value={contextValues} />
