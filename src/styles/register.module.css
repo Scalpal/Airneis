@@ -63,12 +63,12 @@
   cursor: default;
 }
 
-.haveAccountText p>span {
+.haveAccountText p > span {
   font-weight: 600;
   color: black;
 }
 
-.haveAccountText p>span:hover {
+.haveAccountText p > span:hover {
   cursor: pointer;
 }
 

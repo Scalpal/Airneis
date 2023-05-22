@@ -1,13 +1,13 @@
-import UserModel from "@/api/db/models/UserModel.js";
-import hashPassword from "@/api/db/hashPassword.js";
-import validate from "@/api/middlewares/validate.js";
-import mw from "@/api/mw.js";
+import UserModel from "@/api/db/models/UserModel.js"
+import hashPassword from "@/api/db/hashPassword.js"
+import validate from "@/api/middlewares/validate.js"
+import mw from "@/api/mw.js"
 import {
   idValidator,
   passwordValidator,
   confirmPasswordValidator,
   dateValidator,
-} from "@/validator";
+} from "@/validator"
 
 const handler = mw({
   PATCH: [
@@ -26,37 +26,37 @@ const handler = mw({
       res,
     }) => {
       if (password !== passwordConfirmation) {
-        res.status(400).send({ error: "Password need to be conform." });
+        res.status(400).send({ error: "Password need to be conform." })
 
-        return;
+        return
       }
 
-      const timerNow = new Date();
-      timerNow.setMinutes(timerNow.getMinutes() - 15);
+      const timerNow = new Date()
+      timerNow.setMinutes(timerNow.getMinutes() - 15)
 
       if (timerNow >= new Date(timer)) {
-        res.status(401).send({ error: "Token expired." });
+        res.status(401).send({ error: "Token expired." })
 
-        return;
+        return
       }
 
-      const user = await UserModel.query().findOne({ id });
+      const user = await UserModel.query().findOne({ id })
 
       if (!user) {
-        res.status(404).send({ error: "User undefined." });
+        res.status(404).send({ error: "User undefined." })
 
-        return;
+        return
       }
 
-      const [passwordHash, passwordSalt] = await hashPassword(password);
+      const [passwordHash, passwordSalt] = await hashPassword(password)
 
       await UserModel.query()
         .findOne({ id })
-        .update({ passwordHash, passwordSalt });
+        .update({ passwordHash, passwordSalt })
 
-      res.send({ success: true });
+      res.send({ success: true })
     },
   ],
-});
+})
 
-export default handler;
+export default handler

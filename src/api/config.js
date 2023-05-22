@@ -1,8 +1,8 @@
-import knexfile from "@@/knexfile.js";
-import dotenv from "dotenv";
-import { resolve } from "path";
+import knexfile from "@@/knexfile.js"
+import dotenv from "dotenv"
+import { resolve } from "path"
 
-dotenv.config({ path: resolve(".env.local") });
+dotenv.config({ path: resolve(".env.local") })
 
 const config = {
   port: 3000,
@@ -23,6 +23,6 @@ const config = {
     },
     sendgrid: process.env.SENDGRID_KEY,
   },
-};
+}
 
-export default config;
+export default config

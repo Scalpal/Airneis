@@ -43,7 +43,7 @@ const Payment = () => {
         </div>
       </form>
     </>
-  );
-};
-Payment.isPublic = false;
-export default Payment;
+  )
+}
+Payment.isPublic = false
+export default Payment

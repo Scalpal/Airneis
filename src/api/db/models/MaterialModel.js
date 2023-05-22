@@ -1,4 +1,4 @@
-import BaseModel from "@/api/db/models/BaseModel.js";
+import BaseModel from "@/api/db/models/BaseModel.js"
 
 class MaterialModel extends BaseModel {
   static tableName = "materials";
@@ -17,4 +17,4 @@ class MaterialModel extends BaseModel {
   // }
 }
 
-export default MaterialModel;
+export default MaterialModel

@@ -1,10 +1,10 @@
-import config from "@/api/config.js";
-import UserModel from "@/api/db/models/UserModel.js";
-import validate from "@/api/middlewares/validate.js";
-import mw from "@/api/mw.js";
-import { emailValidator } from "@/validator";
-import sgMail from "@sendgrid/mail";
-import { AES } from "crypto-js";
+import config from "@/api/config.js"
+import UserModel from "@/api/db/models/UserModel.js"
+import validate from "@/api/middlewares/validate.js"
+import mw from "@/api/mw.js"
+import { emailValidator } from "@/validator"
+import sgMail from "@sendgrid/mail"
+import { AES } from "crypto-js"
 
 const handler = mw({
   GET: [
@@ -19,24 +19,24 @@ const handler = mw({
       },
       res,
     }) => {
-      console.log(email);
-      const user = await UserModel.query().findOne({ email });
+      const user = await UserModel.query().findOne({ email })
 
       if (!user) {
-        res.status(404).send({ error: "Email not found" });
+        res.status(404).send({ error: "Email not found" })
 
-        return;
+        return
       }
 
       const encryptId = (props) => {
         const encryptedId = AES.encrypt(
           props.toString(),
           config.security.encrypt
-        ).toString();
-        return encryptedId;
-      };
+        ).toString()
 
-      sgMail.setApiKey(config.security.sendgrid);
+        return encryptedId
+      }
+
+      sgMail.setApiKey(config.security.sendgrid)
       const msg = {
         to: email,
         from: "Airneis.service@gmail.com",
@@ -51,16 +51,16 @@ const handler = mw({
             encryptId(user.id)
           )}&keyB=${encodeURIComponent(encryptId(new Date().toISOString()))}`,
         },
-      };
+      }
 
       try {
-        sgMail.send(msg);
-        res.send({ success: true });
+        sgMail.send(msg)
+        res.send({ success: true })
       } catch (error) {
-        res.status(404).send({ success: error });
+        res.status(404).send({ success: error })
       }
     },
   ],
-});
+})
 
-export default handler;
+export default handler

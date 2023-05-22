@@ -1,58 +1,52 @@
-import Button from "@/web/components/Button";
-import LoginField from "@/web/components/LoginField";
-import LoginLayout from "@/web/components/LoginLayout";
-import { Form,Formik } from "formik";
-import routes from "@/web/routes.js";
-import styles from "@/styles/login.module.css";
-import { useRouter } from "next/router";
-import useAppContext from "@/web/hooks/useAppContext";
-import { useCallback,useState } from "react";
-import { createValidator,emailValidator } from "@/validator";
+import Button from "@/web/components/Button"
+import LoginField from "@/web/components/LoginField"
+import LoginLayout from "@/web/components/LoginLayout"
+import { Form, Formik } from "formik"
+import routes from "@/web/routes.js"
+import styles from "@/styles/login.module.css"
+import { useRouter } from "next/router"
+import useAppContext from "@/web/hooks/useAppContext"
+import { useCallback, useState } from "react"
+import { createValidator, emailValidator } from "@/validator"
 
 const validationSchema = createValidator({
   email: emailValidator.required(),
-});
+})
 
 const initialValues = {
   email: "",
-};
-
+}
 
 const ResetPassword = () => {
+  const router = useRouter()
 
-  const router = useRouter();
-
-  const { actions: { mailResetPassword } } = useAppContext();
-  const [error,setError] = useState(null);
+  const {
+    actions: { mailResetPassword },
+  } = useAppContext()
+  const [error, setError] = useState(null)
 
   const handleSubmit = useCallback(
     async (values) => {
-
-      const [err] = await mailResetPassword(values);
+      const [err] = await mailResetPassword(values)
 
       if (err && error) {
-        document.getElementById("errormsg").animate(
-          [
-            { opacity: "100" },
-            { opacity: "0" },
-            { opacity: "100" },
-          ],
-          {
+        document
+          .getElementById("errormsg")
+          .animate([{ opacity: "100" }, { opacity: "0" }, { opacity: "100" }], {
             duration: 1000,
-          }
-        );
+          })
       }
 
       if (err) {
-        setError(err);
+        setError(err)
 
-        return;
+        return
       }
-      router.push(routes.login());
-    },
-    [mailResetPassword,error,router]
-  );
 
+      router.push(routes.login())
+    },
+    [mailResetPassword, error, router]
+  )
 
   return (
     <main className={styles.container}>
@@ -62,11 +56,15 @@ const ResetPassword = () => {
         initialValues={initialValues}
         error={error}
       >
-        {({ isValid,dirty,isSubmitting }) => (
+        {({ isValid, dirty, isSubmitting }) => (
           <Form className={styles.formContainer}>
             <p className={styles.formTitle}>Forgot Password ?</p>
 
-            {error ? <p id="errormsg" className={styles.error}>Email not found</p> : null}
+            {error ? (
+              <p id="errormsg" className={styles.error}>
+                Email not found
+              </p>
+            ) : null}
 
             <LoginField
               name="email"
@@ -75,30 +73,29 @@ const ResetPassword = () => {
               showError={false}
             />
 
-            <Button
-              disabled={!(dirty && isValid) || isSubmitting}
-            >
+            <Button disabled={!(dirty && isValid) || isSubmitting}>
               Reset Password
             </Button>
 
             <div className={styles.noAccountText}>
-              <p>Already have an account ? <span onClick={() => router.push(routes.login())}> Sign here </span></p>
+              <p>
+                Already have an account ?{" "}
+                <span onClick={() => router.push(routes.login())}>
+                  {" "}
+                  Sign here{" "}
+                </span>
+              </p>
             </div>
-
           </Form>
         )}
       </Formik>
     </main>
-  );
-};
+  )
+}
 
-ResetPassword.isPublic = true;
+ResetPassword.isPublic = true
 ResetPassword.getLayout = function (page) {
-  return (
-    <LoginLayout>
-      {page}
-    </LoginLayout>
-  );
-};
+  return <LoginLayout>{page}</LoginLayout>
+}
 
-export default ResetPassword;
+export default ResetPassword

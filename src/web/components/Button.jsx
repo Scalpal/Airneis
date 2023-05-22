@@ -1,10 +1,9 @@
-import styles from "@/styles/components/Button.module.css"; 
-import { classnames } from "@/pages/_app";
-import { nunito } from "@/pages/_app";
+import styles from "@/styles/components/Button.module.css"
+import { classnames } from "@/pages/_app"
+import { nunito } from "@/pages/_app"
 
 const Button = (props) => {
-  
-  const { children, disabled, bgWhite, variant, ...otherProps } = props; 
+  const { children, disabled, bgWhite, variant, ...otherProps } = props
 
   return (
     <button
@@ -19,7 +18,7 @@ const Button = (props) => {
     >
       {children}
     </button>
-  );
-};
+  )
+}
 
-export default Button; 
+export default Button

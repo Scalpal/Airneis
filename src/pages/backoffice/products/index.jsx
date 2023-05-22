@@ -1,16 +1,16 @@
-import Layout from "@/web/components/backoffice/Layout";
-import { useState } from "react";
-import Table from "@/web/components/backoffice/Table";
-import { classnames } from "@/pages/_app";
-import { nunito } from "@/pages/_app";
-import Button from "@/web/components/Button";
-import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import styles from "@/styles/backoffice/statsPages.module.css";
-import { parseCookies } from "nookies";
-import jsonwebtoken from "jsonwebtoken";
-import config from "@/api/config.js";
-import Axios from "axios";
-import routes from "@/web/routes";
+import Layout from "@/web/components/backoffice/Layout"
+import { useState } from "react"
+import Table from "@/web/components/backoffice/Table"
+import { classnames } from "@/pages/_app"
+import { nunito } from "@/pages/_app"
+import Button from "@/web/components/Button"
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline"
+import styles from "@/styles/backoffice/statsPages.module.css"
+import { parseCookies } from "nookies"
+import jsonwebtoken from "jsonwebtoken"
+import config from "@/api/config.js"
+import Axios from "axios"
+import routes from "@/web/routes"
 
 // Prototype datas
 const productsProto = [
@@ -94,10 +94,10 @@ const productsProto = [
     stock: 25,
     imageSrc: "/meuble-2.jpeg",
   },
-];
+]
 
 const BackofficeProducts = () => {
-  const [products, _] = useState(productsProto);
+  const [products, _] = useState(productsProto)
 
   // const sortByPrice = useCallback(() => {
   //   setProducts(
@@ -108,9 +108,10 @@ const BackofficeProducts = () => {
     const sumTotalProducts = products.reduce(
       (sum, value) => sum + value.stock,
       0
-    );
-    return sumTotalProducts;
-  };
+    )
+
+    return sumTotalProducts
+  }
 
   return (
     <main className={classnames(styles.mainContainer, nunito.className)}>
@@ -147,16 +148,16 @@ const BackofficeProducts = () => {
         <Table array={products} />
       </div>
     </main>
-  );
-};
-BackofficeProducts.isPublic = true;
+  )
+}
+BackofficeProducts.isPublic = true
 BackofficeProducts.getLayout = function (page) {
-  return <Layout>{page}</Layout>;
-};
+  return <Layout>{page}</Layout>
+}
 
 export const getServerSideProps = async (context) => {
-  const { token } = parseCookies(context);
-  const { payload } = jsonwebtoken.verify(token, config.security.jwt.secret);
+  const { token } = parseCookies(context)
+  const { payload } = jsonwebtoken.verify(token, config.security.jwt.secret)
 
   if (!token) {
     return {
@@ -164,14 +165,14 @@ export const getServerSideProps = async (context) => {
         destination: "/home",
         permanent: false,
       },
-    };
+    }
   }
 
   const {
     data: { user },
   } = await Axios.get(
     `http://localhost:3000/${routes.api.specificUser(payload.user.id)}`
-  );
+  )
 
   if (!user.isAdmin) {
     return {
@@ -179,14 +180,14 @@ export const getServerSideProps = async (context) => {
         destination: "/home",
         permanent: false,
       },
-    };
+    }
   }
 
   return {
     props: {
       user,
     },
-  };
-};
+  }
+}
 
-export default BackofficeProducts;
+export default BackofficeProducts

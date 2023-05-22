@@ -1,8 +1,8 @@
-import Image from "next/image";
-import styles from "@/styles/components/Banner.module.css";
+import Image from "next/image"
+import styles from "@/styles/components/Banner.module.css"
 
 const Banner = (props) => {
-  const { title } = props;
+  const { title } = props
 
   return (
     <header className={styles.banner} id="carousel">
@@ -14,7 +14,7 @@ const Banner = (props) => {
         className={styles.bannerImage}
       />
     </header>
-  );
-};
+  )
+}
 
-export default Banner;
+export default Banner

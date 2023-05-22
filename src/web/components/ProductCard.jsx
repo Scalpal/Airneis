@@ -1,15 +1,13 @@
-import styles from "@/styles/components/ProductCard.module.css";
-import { useRouter } from "next/router";
-import routes from "@/web/routes";
-import Image from "next/image";
+import styles from "@/styles/components/ProductCard.module.css"
+import { useRouter } from "next/router"
+import routes from "@/web/routes"
+import Image from "next/image"
 
 const ProductCard = (props) => {
-
-  const { product } = props; 
-  const router = useRouter(); 
+  const { product } = props
+  const router = useRouter()
 
   return (
-
     <div
       className={styles.productCard}
       onClick={() => router.push(routes.query.products(product.id))}
@@ -28,7 +26,7 @@ const ProductCard = (props) => {
         <p> {product.price} </p>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ProductCard;
+export default ProductCard

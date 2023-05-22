@@ -1,14 +1,14 @@
-import { faker } from "@faker-js/faker";
-import hashPassword from "../hashPassword.js";
+import { faker } from "@faker-js/faker"
+import hashPassword from "../hashPassword.js"
 
 export const seed = async (knex) => {
-  const loop = 100;
+  const loop = 100
 
-  const users = [];
+  const users = []
   for (let i = 0; i < loop; i++) {
     const [passwordHash, passwordSalt] = await hashPassword(
       faker.internet.password()
-    );
+    )
     const user = {
       firstName: faker.person.firstName(),
       lastName: faker.person.lastName(),
@@ -16,13 +16,13 @@ export const seed = async (knex) => {
       phoneNumber: faker.phone.number(),
       passwordHash,
       passwordSalt,
-    };
-    users.push(user);
+    }
+    users.push(user)
   }
-  await knex("users").insert(users);
+  await knex("users").insert(users)
 
-  const userIds = await knex("users").pluck("id");
-  const addresses = [];
+  const userIds = await knex("users").pluck("id")
+  const addresses = []
   for (let i = 0; i < loop; i++) {
     const address = {
       address: faker.location.streetAddress(),
@@ -31,40 +31,40 @@ export const seed = async (knex) => {
       postalCode: faker.location.zipCode(),
       country: faker.location.country(),
       userId: userIds[i],
-    };
-    addresses.push(address);
+    }
+    addresses.push(address)
   }
-  await knex("addresses").insert(addresses);
+  await knex("addresses").insert(addresses)
 
-  const reviews = [];
-  const productIds = await knex("products").pluck("id");
+  const reviews = []
+  const productIds = await knex("products").pluck("id")
   for (let i = 0; i < loop; i++) {
-    const randomStars = faker.helpers.arrayElement([1, 2, 3, 4, 5]);
+    const randomStars = faker.helpers.arrayElement([1, 2, 3, 4, 5])
     const review = {
       title: faker.lorem.lines(1),
       content: faker.lorem.text(),
       stars: randomStars,
       productId: productIds[i],
       userId: userIds[i],
-    };
-    reviews.push(review);
+    }
+    reviews.push(review)
   }
-  await knex("reviews").insert(reviews);
+  await knex("reviews").insert(reviews)
 
-  const orders = [];
-  const addressIds = await knex("addresses").pluck("id");
+  const orders = []
+  const addressIds = await knex("addresses").pluck("id")
   for (let i = 0; i < loop; i++) {
     const randomStatus = faker.helpers.arrayElement([
       "cancelled",
       "on standby",
       "delivered",
-    ]);
+    ])
     const order = {
       status: randomStatus,
       deliveryAddress: addressIds[i],
       userId: userIds[i],
-    };
-    orders.push(order);
+    }
+    orders.push(order)
   }
-  await knex("orders").insert(orders);
-};
+  await knex("orders").insert(orders)
+}

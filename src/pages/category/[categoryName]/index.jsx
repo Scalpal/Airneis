@@ -1,10 +1,10 @@
-import Banner from "@/web/components/Banner";
-import DetailedProductCard from "@/web/components/DetailedProductCard";
-import { useRouter } from "next/router";
-import styles from "@/styles/categoryPage.module.css";
+import Banner from "@/web/components/Banner"
+import DetailedProductCard from "@/web/components/DetailedProductCard"
+import { useRouter } from "next/router"
+import styles from "@/styles/categoryPage.module.css"
 
 const Category = () => {
-  const router = useRouter();
+  const router = useRouter()
   const categoryProducts = [
     {
       id: 1,
@@ -63,7 +63,7 @@ const Category = () => {
       imageSrc: "/meuble-2.jpeg",
       materials: ["metal", "steel", "iron"],
     },
-  ];
+  ]
 
   return (
     <>
@@ -77,12 +77,12 @@ const Category = () => {
 
         <div className={styles.productsList}>
           {categoryProducts.map((product, index) => {
-            return <DetailedProductCard key={index} product={product} />;
+            return <DetailedProductCard key={index} product={product} />
           })}
         </div>
       </main>
     </>
-  );
-};
-Category.isPublic = true;
-export default Category;
+  )
+}
+Category.isPublic = true
+export default Category

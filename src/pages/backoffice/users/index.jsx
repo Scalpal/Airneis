@@ -1,14 +1,14 @@
-import Layout from "@/web/components/backoffice/Layout";
-import Table from "@/web/components/backoffice/Table";
-import { classnames } from "@/pages/_app";
-import { nunito } from "@/pages/_app";
-import styles from "@/styles/backoffice/statsPages.module.css";
-import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import { parseCookies } from "nookies";
-import jsonwebtoken from "jsonwebtoken";
-import config from "@/api/config.js";
-import Axios from "axios";
-import routes from "@/web/routes";
+import Layout from "@/web/components/backoffice/Layout"
+import Table from "@/web/components/backoffice/Table"
+import { classnames } from "@/pages/_app"
+import { nunito } from "@/pages/_app"
+import styles from "@/styles/backoffice/statsPages.module.css"
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline"
+import { parseCookies } from "nookies"
+import jsonwebtoken from "jsonwebtoken"
+import config from "@/api/config.js"
+import Axios from "axios"
+import routes from "@/web/routes"
 
 const users = [
   {
@@ -45,18 +45,12 @@ const users = [
     lastName: "Bell",
     mail: "micahBell@gmail.com",
     phoneNumber: "0601020304",
-  }
-];
+  },
+]
 
 const BackofficeUsers = () => {
-
   return (
-    <main
-      className={classnames(
-        styles.mainContainer,
-        nunito.className
-      )}
-    >
+    <main className={classnames(styles.mainContainer, nunito.className)}>
       <div className={styles.topStats}>
         <div>
           <p>Total of users</p>
@@ -80,7 +74,6 @@ const BackofficeUsers = () => {
       </div>
 
       <div className={styles.mainContent}>
-
         <div className={styles.actionBar}>
           <div>
             <p>Users</p>
@@ -94,48 +87,47 @@ const BackofficeUsers = () => {
 
         <Table array={users} />
       </div>
-
     </main>
-  );
-};
-BackofficeUsers.isPublic = true;
+  )
+}
+BackofficeUsers.isPublic = true
 BackofficeUsers.getLayout = function (page) {
-  return (
-    <Layout>
-      {page}
-    </Layout>
-  );
-};
+  return <Layout>{page}</Layout>
+}
 
 export const getServerSideProps = async (context) => {
-  const { token } = parseCookies(context);
-  const { payload } = jsonwebtoken.verify(token, config.security.jwt.secret);
+  const { token } = parseCookies(context)
+  const { payload } = jsonwebtoken.verify(token, config.security.jwt.secret)
 
   if (!token) {
     return {
       redirect: {
         destination: "/home",
-        permanent: false
-      }
-    };
+        permanent: false,
+      },
+    }
   }
 
-  const { data: { user } } = await Axios.get(`http://localhost:3000/${routes.api.specificUser(payload.user.id)}`);
-   
+  const {
+    data: { user },
+  } = await Axios.get(
+    `http://localhost:3000/${routes.api.specificUser(payload.user.id)}`
+  )
+
   if (!user.isAdmin) {
     return {
       redirect: {
         destination: "/home",
-        permanent: false
-      }
-    };
+        permanent: false,
+      },
+    }
   }
 
   return {
     props: {
-      user
-    }
-  };
-};
+      user,
+    },
+  }
+}
 
-export default BackofficeUsers; 
+export default BackofficeUsers

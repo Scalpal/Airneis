@@ -1,51 +1,62 @@
-import Button from "@/web/components/Button";
-import LoginField from "@/web/components/LoginField";
-import LoginLayout from "@/web/components/LoginLayout";
-import { Form,Formik } from "formik";
-import routes from "@/web/routes.js";
-import styles from "@/styles/login.module.css";
-import { useRouter } from "next/router";
-import useAppContext from "@/web/hooks/useAppContext";
-import { useCallback,useState } from "react";
-import { createValidator,passwordValidator,confirmPasswordValidator } from "@/validator";
-const merge = require("deepmerge");
+import Button from "@/web/components/Button"
+import LoginField from "@/web/components/LoginField"
+import LoginLayout from "@/web/components/LoginLayout"
+import { Form, Formik } from "formik"
+import routes from "@/web/routes.js"
+import styles from "@/styles/login.module.css"
+import { useRouter } from "next/router"
+import useAppContext from "@/web/hooks/useAppContext"
+import { useCallback, useState } from "react"
+import {
+  createValidator,
+  passwordValidator,
+  confirmPasswordValidator,
+} from "@/validator"
+const merge = require("deepmerge")
 
 const validationSchema = createValidator({
   password: passwordValidator.required(),
   passwordConfirmation: confirmPasswordValidator.required(),
-});
+})
 
 const initialValues = {
   password: "",
   passwordConfirmation: "",
-};
-
+}
 
 const MailResetPassword = () => {
-
-  const router = useRouter();
-  const { actions: { passwordReset,crypt } } = useAppContext();
-  const [error,setError] = useState(null);
+  const router = useRouter()
+  const {
+    actions: { passwordReset, crypt },
+  } = useAppContext()
+  const [error, setError] = useState(null)
 
   const handleSubmit = useCallback(
     async (values) => {
-      const cryptoId = decodeURIComponent(router.query.keyA);
-      const cryptoTimer = decodeURIComponent(router.query.keyB);
+      const cryptoId = decodeURIComponent(router.query.keyA)
+      const cryptoTimer = decodeURIComponent(router.query.keyB)
 
-      const [{ getCryptoId },{ getCryptoTimer }] = await crypt([{ cryptoId },{ cryptoTimer }]);
+      const [{ getCryptoId }, { getCryptoTimer }] = await crypt([
+        { cryptoId },
+        { cryptoTimer },
+      ])
 
-      const newValues = merge(values,{ id: getCryptoId,timer: getCryptoTimer });
-      const [err] = await passwordReset(newValues);
+      const newValues = merge(values, {
+        id: getCryptoId,
+        timer: getCryptoTimer,
+      })
+      const [err] = await passwordReset(newValues)
 
       if (err) {
-        setError(err);
+        setError(err)
 
-        return;
+        return
       }
-      router.push(routes.login());
+
+      router.push(routes.login())
     },
     [router, crypt, passwordReset]
-  );
+  )
 
   return (
     <main className={styles.container}>
@@ -55,11 +66,13 @@ const MailResetPassword = () => {
         initialValues={initialValues}
         error={error}
       >
-        {({ isValid,dirty,isSubmitting }) => (
+        {({ isValid, dirty, isSubmitting }) => (
           <Form className={styles.formContainer}>
             <p className={styles.formTitle}>Reset your password</p>
 
-            {error ? <p className={styles.error}>Error, please try later</p> : null}
+            {error ? (
+              <p className={styles.error}>Error, please try later</p>
+            ) : null}
 
             <LoginField
               name="password"
@@ -75,30 +88,29 @@ const MailResetPassword = () => {
               showError={false}
             />
 
-            <Button
-              disabled={!(dirty && isValid) || isSubmitting}
-            >
+            <Button disabled={!(dirty && isValid) || isSubmitting}>
               Reset Password
             </Button>
 
             <div className={styles.noAccountText}>
-              <p>Don&apos;t want to reset your password ? <span onClick={() => router.push(routes.home())}> Return home </span></p>
+              <p>
+                Don&apos;t want to reset your password ?{" "}
+                <span onClick={() => router.push(routes.home())}>
+                  {" "}
+                  Return home{" "}
+                </span>
+              </p>
             </div>
-
           </Form>
         )}
       </Formik>
     </main>
-  );
-};
+  )
+}
 
-MailResetPassword.isPublic = true;
+MailResetPassword.isPublic = true
 MailResetPassword.getLayout = function (page) {
-  return (
-    <LoginLayout>
-      {page}
-    </LoginLayout>
-  );
-};
+  return <LoginLayout>{page}</LoginLayout>
+}
 
-export default MailResetPassword;
+export default MailResetPassword

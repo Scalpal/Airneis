@@ -1,69 +1,80 @@
-import styles from "@/styles/components/ProductFilterMenu.module.css"; 
-import CollapseMenu from "./CollapseMenu";
-import CheckboxItem from "./CheckboxItem";
-import Button from "./Button";
-import { useCallback, useEffect, useState } from "react";
-import { classnames } from "@/pages/_app";
-import useAppContext from "@/web/hooks/useAppContext";
-
-
-
+import styles from "@/styles/components/ProductFilterMenu.module.css"
+import CollapseMenu from "./CollapseMenu"
+import CheckboxItem from "./CheckboxItem"
+import Button from "./Button"
+import { useCallback, useEffect, useState } from "react"
+import { classnames } from "@/pages/_app"
+import useAppContext from "@/web/hooks/useAppContext"
 
 const ProductFilterMenu = (props) => {
+  const {
+    appliquedQueryParams,
+    setIndex,
+    setQueryParams,
+    setAppliquedQueryParams,
+  } = props
 
-  const { appliquedQueryParams,setIndex,setQueryParams,setAppliquedQueryParams } = props; 
-  
-  const { actions: { categoriesViewer, materialsViewer } } = useAppContext();
-  const [error, setError] = useState(null);
-  const [categories, setCategories] = useState([]);
-  const [materials, setMaterials] = useState([]);
-  const [isOpen, setIsOpen] = useState(false);
-  
-  
+  const {
+    actions: { categoriesViewer, materialsViewer },
+  } = useAppContext()
+  const [error, setError] = useState(null)
+  const [categories, setCategories] = useState([])
+  const [materials, setMaterials] = useState([])
+  const [isOpen, setIsOpen] = useState(false)
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const categoriesResult = await categoriesViewer();
-        const materialsResult = await materialsViewer();
-  
-        setCategories(categoriesResult.result);
-        setMaterials(materialsResult.result);
+        const categoriesResult = await categoriesViewer()
+        const materialsResult = await materialsViewer()
+
+        setCategories(categoriesResult.result)
+        setMaterials(materialsResult.result)
       } catch (err) {
-        setError(err);
+        setError(err)
       }
-    };
+    }
     // console.error(error);
-    
-    fetchData();
-    
-    document.body.style.position = isOpen ? "fixed" : "initial";
-  }, [categoriesViewer, isOpen, materialsViewer]);
 
+    fetchData()
 
-  const handleChangeQueryParamsFilters = useCallback((values) => {
-    setAppliquedQueryParams((prevValues) => {
-      const { name,value,checked } = values;
-      if (name === "categories" || name === "materials") {
-        if (checked) {
-          return { ...prevValues, [name]: [...prevValues[name], value] };
-        } else {
-          const updatedArray = prevValues[name].filter((item) => item !== value);
-          return { ...prevValues, [name]: updatedArray };
+    document.body.style.position = isOpen ? "fixed" : "initial"
+  }, [categoriesViewer, isOpen, materialsViewer])
+
+  const handleChangeQueryParamsFilters = useCallback(
+    (values) => {
+      setAppliquedQueryParams((prevValues) => {
+        const { name, value, checked } = values
+
+        if (name === "categories" || name === "materials") {
+          if (checked) {
+            return { ...prevValues, [name]: [...prevValues[name], value] }
+          } else {
+            const updatedArray = prevValues[name].filter(
+              (item) => item !== value
+            )
+
+            return { ...prevValues, [name]: updatedArray }
+          }
         }
-      }
 
-      return { ...prevValues, [name]: value };
-    });
-  }, [setAppliquedQueryParams]);
+        return { ...prevValues, [name]: value }
+      })
+    },
+    [setAppliquedQueryParams]
+  )
 
-  const isValueChecked = useCallback((values) => {
-    return appliquedQueryParams[values.name].includes(values.id);
-  }, [appliquedQueryParams]);
+  const isValueChecked = useCallback(
+    (values) => {
+      return appliquedQueryParams[values.name].includes(values.id)
+    },
+    [appliquedQueryParams]
+  )
 
   const handleQueryParamsFilters = useCallback(() => {
-    setIndex(1);
-    setQueryParams(appliquedQueryParams);
-  }, [appliquedQueryParams, setIndex, setQueryParams]);
+    setIndex(1)
+    setQueryParams(appliquedQueryParams)
+  }, [appliquedQueryParams, setIndex, setQueryParams])
 
   const handleResetQueryParamsFilters = useCallback(() => {
     const defaultQueryParams = {
@@ -72,12 +83,14 @@ const ProductFilterMenu = (props) => {
       materials: [],
       onlyInStock: false,
       categories: [],
-    };
-
-    setAppliquedQueryParams(defaultQueryParams);
-    setQueryParams(defaultQueryParams);
-  },[setAppliquedQueryParams,setQueryParams]);
-
+    }
+    setAppliquedQueryParams((prevValues) => {
+      return { ...defaultQueryParams, searchProduct: prevValues.searchProduct }
+    })
+    setQueryParams((prevValues) => {
+      return { ...defaultQueryParams, searchProduct: prevValues.searchProduct }
+    })
+  }, [setAppliquedQueryParams, setQueryParams])
 
   return (
     <>
@@ -86,18 +99,20 @@ const ProductFilterMenu = (props) => {
         onClick={() => setIsOpen(!isOpen)}
       >
         F<br />
-        I<br/>
-        L<br/>
-        T<br/>
-        E<br/>
-        R<br/>
-        S<br/>
+        I<br />
+        L<br />
+        T<br />
+        E<br />
+        R<br />
+        S<br />
       </button>
-      
-      <div className={classnames(
-        styles.filterMenu,
-        isOpen ? styles.open : styles.closed
-      )}>
+
+      <div
+        className={classnames(
+          styles.filterMenu,
+          isOpen ? styles.open : styles.closed
+        )}
+      >
         <p className={styles.menuTitle}>Filters</p>
 
         <div className={styles.priceRangeWrapper}>
@@ -106,9 +121,18 @@ const ProductFilterMenu = (props) => {
             <input
               type="number"
               name="priceMin"
-              value={appliquedQueryParams.priceMin === 0 ? "" : appliquedQueryParams.priceMin}
+              value={
+                appliquedQueryParams.priceMin === 0
+                  ? ""
+                  : appliquedQueryParams.priceMin
+              }
               min={0}
-              onChange={(event) => handleChangeQueryParamsFilters({name: "priceMin", value: event.target.value})}
+              onChange={(event) =>
+                handleChangeQueryParamsFilters({
+                  name: "priceMin",
+                  value: event.target.value,
+                })
+              }
             />
           </div>
 
@@ -117,12 +141,20 @@ const ProductFilterMenu = (props) => {
             <input
               type="number"
               name="priceMax"
-              value={appliquedQueryParams.priceMax === 0 ? "" : appliquedQueryParams.priceMax}
+              value={
+                appliquedQueryParams.priceMax === 0
+                  ? ""
+                  : appliquedQueryParams.priceMax
+              }
               min={0}
-              onChange={(event) => handleChangeQueryParamsFilters({name: "priceMax", value: event.target.value})}
+              onChange={(event) =>
+                handleChangeQueryParamsFilters({
+                  name: "priceMax",
+                  value: event.target.value,
+                })
+              }
             />
           </div>
-
         </div>
 
         <CollapseMenu title="Categories" key={"categories"}>
@@ -133,7 +165,7 @@ const ProductFilterMenu = (props) => {
               label={name}
               id={`category-${index}`}
               value={id}
-              defaultChecked={isValueChecked({ id,name: "categories" })}
+              defaultChecked={isValueChecked({ id, name: "categories" })}
               onChangeEvent={handleChangeQueryParamsFilters}
             />
           ))}
@@ -147,7 +179,7 @@ const ProductFilterMenu = (props) => {
               label={name}
               id={`materials-${index}`}
               value={id}
-              defaultChecked={isValueChecked({id, name: "materials"})}
+              defaultChecked={isValueChecked({ id, name: "materials" })}
               onChangeEvent={handleChangeQueryParamsFilters}
             />
           ))}
@@ -173,26 +205,23 @@ const ProductFilterMenu = (props) => {
             Reset
           </Button>
 
-          <Button
-            variant="contained"
-            onClick={handleQueryParamsFilters}
-          >
+          <Button variant="contained" onClick={handleQueryParamsFilters}>
             Apply
           </Button>
         </div>
 
         <div className={styles.closeButton}>
           <Button
-            onClick={() => { setIsOpen(false); }}
+            onClick={() => {
+              setIsOpen(false)
+            }}
           >
             Close
           </Button>
         </div>
-
       </div>
     </>
+  )
+}
 
-  );
-};
-
-export default ProductFilterMenu;
+export default ProductFilterMenu

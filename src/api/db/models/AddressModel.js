@@ -1,5 +1,5 @@
-import BaseModel from "@/api/db/models/BaseModel.js";
-import UserModel from "./UserModel";
+import BaseModel from "@/api/db/models/BaseModel.js"
+import UserModel from "./UserModel"
 
 class AddressModel extends BaseModel {
   static tableName = "addresses";
@@ -14,8 +14,8 @@ class AddressModel extends BaseModel {
           to: "users.id",
         },
       },
-    };
+    }
   }
 }
 
-export default AddressModel;
+export default AddressModel

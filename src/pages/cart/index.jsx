@@ -1,12 +1,12 @@
-import Button from "@/web/components/Button";
-import CartProduct from "@/web/components/CartProduct";
-import { useRouter } from "next/router";
-import routes from "@/web/routes.js";
-import { useCallback,useEffect,useState } from "react";
-import { ShoppingCartIcon } from "@heroicons/react/24/outline";
-import LayoutStickyNavbar from "@/web/components/LayoutStickyNavbar";
-import styles from "@/styles/cart.module.css";
-import useAppContext from "@/web/hooks/useAppContext";
+import Button from "@/web/components/Button"
+import CartProduct from "@/web/components/CartProduct"
+import { useRouter } from "next/router"
+import routes from "@/web/routes.js"
+import { useCallback, useEffect, useState } from "react"
+import { ShoppingCartIcon } from "@heroicons/react/24/outline"
+import LayoutStickyNavbar from "@/web/components/LayoutStickyNavbar"
+import styles from "@/styles/cart.module.css"
+import useAppContext from "@/web/hooks/useAppContext"
 
 // const products = [
 //   {
@@ -38,33 +38,35 @@ import useAppContext from "@/web/hooks/useAppContext";
 //   },
 // ];
 
-
 const Cart = () => {
-  const router = useRouter();
-  const { state: { cart } } = useAppContext();
+  const router = useRouter()
+  const {
+    state: { cart },
+  } = useAppContext()
 
-  const [productsList,setProductsList] = useState([]);
-  const [totalSum,setTotalSum] = useState(0);
+  const [productsList, setProductsList] = useState([])
+  const [totalSum, setTotalSum] = useState(0)
 
   useEffect(() => {
-    setProductsList(cart);
-  },[cart]);
+    setProductsList(cart)
+  }, [cart])
 
   useEffect(() => {
     setTotalSum(
       productsList.reduce(
-        (sum,product) => sum + product.price * product.quantity,
+        (sum, product) => sum + product.price * product.quantity,
         0.0
-      ));
-  },[productsList]);
+      )
+    )
+  }, [productsList])
 
   const handleSubmit = useCallback(() => {
-    router.push(routes.delivery());
-  }, [router]);
+    router.push(routes.delivery())
+  }, [router])
 
   const redirectToHomePage = useCallback(() => {
-    router.push(routes.home());
-  }, [router]);
+    router.push(routes.home())
+  }, [router])
 
   // console.log("Products list : ",productsList);
 
@@ -76,17 +78,20 @@ const Cart = () => {
             <section className={styles.emptyCartContainer}>
               <ShoppingCartIcon className={styles.emptyCartIcon} />
 
-              <p className={styles.emptyCartTitle}>Your cart is currently empty </p>
+              <p className={styles.emptyCartTitle}>
+                Your cart is currently empty{" "}
+              </p>
 
               <div className={styles.emptyCartText}>
-                <p>Before proceed to checkout, you must add some products to your cart.</p>
+                <p>
+                  Before proceed to checkout, you must add some products to your
+                  cart.
+                </p>
                 <p>Won&apos;t you come here without buying anything...</p>
               </div>
 
               <div>
-                <Button
-                  onClick={() => redirectToHomePage()}
-                >
+                <Button onClick={() => redirectToHomePage()}>
                   Return to shop
                 </Button>
               </div>
@@ -96,18 +101,12 @@ const Cart = () => {
           <>
             <section className={styles.productListContainer}>
               <p className={styles.productListTitle}>Panier</p>
-              {productsList.map((product,index) => {
-                return (
-                  <CartProduct
-                    key={index}
-                    product={product}
-                  />
-                );
+              {productsList.map((product, index) => {
+                return <CartProduct key={index} product={product} />
               })}
             </section>
 
             <section className={styles.recapContainer}>
-
               <div className={styles.recapTopRows}>
                 <div className={styles.recapRow}>
                   <p>Subtotal</p>
@@ -122,30 +121,20 @@ const Cart = () => {
 
               <div className={styles.recapTotalRow}>
                 <p>TOTAL</p>
-                <p>
-                  {(totalSum * 1.2).toFixed(2)}$
-                </p>
+                <p>{(totalSum * 1.2).toFixed(2)}$</p>
               </div>
 
-              <Button
-                onClick={() => handleSubmit()}
-              >
-                Order
-              </Button>
+              <Button onClick={() => handleSubmit()}>Order</Button>
             </section>
           </>
         )}
       </div>
     </>
-  );
-};
-Cart.isPublic = true;
+  )
+}
+Cart.isPublic = true
 Cart.getLayout = function (page) {
-  return (
-    <LayoutStickyNavbar>
-      {page}
-    </LayoutStickyNavbar>
-  );
-};
+  return <LayoutStickyNavbar>{page}</LayoutStickyNavbar>
+}
 
-export default Cart;
+export default Cart
