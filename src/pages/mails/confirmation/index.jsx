@@ -1,9 +1,10 @@
 import { useRouter } from "next/router";
 import BackofficeLoginLayout from "@/web/components/backoffice/LoginLayout";
 import routes from "@/web/routes";
-import config from "@/api/config.js";
-import axios from "axios";
 import styles from "@/styles/mails/confirmation.module.css";
+import { useEffect, useState } from "react";
+import useAppContext from "@/web/hooks/useAppContext";
+import classNames from "classnames";
 
 const MailConfirmation = () => {
   const [err, setErr] = useState(false);
@@ -45,15 +46,9 @@ const MailConfirmation = () => {
 
   return (
     <div className={styles.div}>
-      {error ? (
-        <span className={styles.error}>
-          We cannot activate your account, please retry later
-        </span>
-      ) : (
-        <span className={styles.success}>
-          Your account is validate with success
-        </span>
-      )}
+      <span className={classNames(styles.answer, { [styles.error]: err })}>
+        {answer}
+      </span>
       <button className={styles.button} onClick={handleclick}>
         Return to Home
       </button>
