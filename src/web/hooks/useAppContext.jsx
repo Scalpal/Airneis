@@ -1,9 +1,9 @@
-import { useRouter } from "next/router"
 import createAPIClient from "@/web/createAPIClient.js"
 import parseSession from "@/web/parseSession.js"
 import signUpService from "@/web/services/signUp.js"
 import signInService from "@/web/services/signIn.js"
 import mailResetPasswordService from "@/web/services/mailResetPassword.js"
+import confirmAccountService from "@/web/services/confirmAccount.js"
 import productsViewerService from "@/web/services/productsViewer.js"
 import materialsViewerService from "@/web/services/materialsViewer.js"
 import categoriesViewerService from "@/web/services/categoriesViewer.js"
@@ -19,16 +19,10 @@ import {
 } from "react"
 import { parseCookies } from "nookies"
 
-const AppContext = createContext({
-  redirectToIndex: () => {},
-})
+const AppContext = createContext()
 
 export const AppContextProvider = (props) => {
   const { isPublicPage, ...otherProps } = props
-  const router = useRouter()
-  const redirectToIndex = () => {
-    router.push("/")
-  }
   const [session, setSession] = useState(null)
   const [jwt, setJWT] = useState(null)
   const api = createAPIClient({ jwt })
@@ -37,6 +31,7 @@ export const AppContextProvider = (props) => {
   const signIn = signInService({ api, setSession, setJWT })
   const mailResetPassword = mailResetPasswordService({ api })
   const productsViewer = productsViewerService({ api })
+  const confirmAccount = confirmAccountService({ api })
   const materialsViewer = materialsViewerService({ api })
   const categoriesViewer = categoriesViewerService({ api })
   const passwordReset = passwordResetService({ api })
@@ -166,6 +161,7 @@ export const AppContextProvider = (props) => {
         productsViewer,
         materialsViewer,
         categoriesViewer,
+        confirmAccount,
       },
       state: {
         session,
@@ -187,10 +183,11 @@ export const AppContextProvider = (props) => {
     categoriesViewer,
     session,
     cart,
+    confirmAccount,
   ])
 
   if (!isPublicPage && session === null) {
-    return redirectToIndex()
+    return <span>Not connected</span>
   }
 
   return <AppContext.Provider {...otherProps} value={contextValues} />

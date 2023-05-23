@@ -11,6 +11,7 @@ const validate = ({ body, params, query }) => {
     const { req, res, next, logger } = ctx
 
     try {
+      console.log(req.query)
       const { body, params, query } = await validator.validate(
         {
           body: req.body,

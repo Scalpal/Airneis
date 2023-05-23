@@ -4,12 +4,12 @@ import jsonwebtoken from "jsonwebtoken"
 import config from "@/api/config.js"
 import Axios from "axios"
 import routes from "@/web/routes"
-import { useEffect } from "react"
+// import { useEffect } from "react"
 
-const Backoffice = (props) => {
-  useEffect(() => {
-    console.log("props : ", props)
-  }, [props])
+const Backoffice = () => {
+  // useEffect(() => {
+  //   console.log("props : ", props)
+  // }, [props])
 
   return <h2>Page index backoffice</h2>
 }

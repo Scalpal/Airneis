@@ -4,19 +4,19 @@ import { AxiosError } from "axios"
 const crypt =
   ({ api }) =>
   async (CryptoValues) => {
+    const arr = JSON.stringify([{ key: "PL" }, "RU"])
+
     try {
       const {
         data: { CryptoKey },
-      } = await api.post(routes.api.crypt(), {
-        CryptoValues,
+      } = await api.get(routes.api.crypt(), {
+        params: {
+          arr,
+        },
       })
 
       return CryptoKey
     } catch (err) {
-      if (error instanceof AxiosError) {
-        return [Array.isArray(error) ? error : [error]]
-      }
-
       const error = err.response?.data?.error || "Oops. Something went wrong"
 
       return [Array.isArray(error) ? error : [error]]
