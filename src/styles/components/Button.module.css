@@ -1,8 +1,9 @@
 .button {
   border-radius: 10px;
   width: 100%;
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
+  padding: 0.3rem 1rem;
+  /* font-size: 1rem; */
+  font-size: inherit;
   font-weight: 300;
   transition-duration: 500ms;
   outline-offset: 0;
