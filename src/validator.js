@@ -5,6 +5,22 @@ import "yup-phone";
 export const stringValidator = yup.string(); 
 export const numberValidator = yup.number();
 export const idValidator = yup.string().min(1);
+export const arrayValidator = yup.array().of(stringValidator);
+export const arrayOrStringValidator = yup.mixed().test("isArrayOfStrings", "Invalid values", (value) => {
+  if (typeof value === "string") {
+    return true; // Accepts a single string
+  }
+  
+  if (Array.isArray(value) && value.every(item => typeof item === "string")) {
+    return true; // Accepts an array of strings
+  }
+
+  if (typeof value === "undefined") {
+    return true;
+  }
+
+  return false;
+});
 
 // users
 export const displayNameValidator = yup.string().min(1).max(255);
@@ -22,6 +38,10 @@ export const passwordValidator = yup
   .required("This field cannot be empty");
 
 // products 
+export const materialsValidator = yup.mixed().oneOf([arrayValidator, stringValidator]);
+export const categoriesValidator = yup.mixed().oneOf([arrayValidator, stringValidator]);
+
+
 
 
 export const createValidator = (object) => yup.object().shape(object);
