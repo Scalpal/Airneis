@@ -31,7 +31,7 @@ const Products = () => {
   })
   const [appliquedQueryParams, setAppliquedQueryParams] = useState(queryParams)
   const { page } = router.query
-  const productsPerPage = 20
+  const productsPerPage = 5
   useEffect(() => {
     const fetchData = async () => {
       const values = deepmerge({ index, range: productsPerPage }, queryParams)
