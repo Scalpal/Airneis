@@ -8,7 +8,7 @@ const crypt =
         data: { CryptoKey },
       } = await api.get(routes.api.crypt(), {
         params: {
-          CryptoValues: JSON.stringify(js),
+          CryptoValues: JSON.stringify(CryptoValues),
         },
       });
 

@@ -27,6 +27,8 @@ const handler = mw({
         return
       }
 
+      await user.query().update({ resetPassword: true })
+
       const encryptId = (props) => {
         const encryptedId = AES.encrypt(
           props.toString(),
@@ -39,7 +41,7 @@ const handler = mw({
       sgMail.setApiKey(config.security.sendgrid)
       const msg = {
         to: email,
-        from: "Airneis.service@gmail.com",
+        from: "airneis.supdevinci@gmail.com",
         templateId: "d-fddb8f38b1444266996c99653de3170d",
         // eslint-disable-next-line camelcase
         dynamic_template_data: {

@@ -41,6 +41,12 @@ const handler = mw({
         return
       }
 
+      if (user.resetPassword) {
+        await UserModel.query()
+          .findOne({ email })
+          .update({ resetPassword: false })
+      }
+
       const jwt = jsonwebtoken.sign(
         {
           payload: {

@@ -48,6 +48,12 @@ const handler = mw({
         return
       }
 
+      if (!user.resetPassword) {
+        res.status(404).send({ error: "User undefined." })
+
+        return
+      }
+
       const [passwordHash, passwordSalt] = await hashPassword(password)
 
       await UserModel.query()
