@@ -1,13 +1,23 @@
-import ProductMaterialRelationModel from "@/api/db/models/ProductMaterialRelationModel";
-import ProductModel from "@/api/db/models/ProductModel";
-import slowDown from "@/api/middlewares/slowDown";
-import validate from "@/api/middlewares/validate";
-import mw from "@/api/mw";
-import { arrayOrStringValidator, boolValidator, categoriesValidator, limitValidator, materialsValidator, numberValidator, orderFieldValidator, orderValidator, pageValidator, searchValidator, testValidator } from "@/validator";
+import ProductMaterialRelationModel from "@/api/db/models/ProductMaterialRelationModel"
+import ProductModel from "@/api/db/models/ProductModel"
+import validate from "@/api/middlewares/validate"
+import mw from "@/api/mw"
+import {
+  arrayOrStringValidator,
+  boolValidator,
+  categoriesValidator,
+  limitValidator,
+  materialsValidator,
+  numberValidator,
+  orderFieldValidator,
+  orderValidator,
+  pageValidator,
+  searchValidator,
+  testValidator,
+} from "@/validator"
 
 const handler = mw({
   GET: [
-    slowDown(500),
     validate({
       query: {
         priceMin: numberValidator,
@@ -15,71 +25,103 @@ const handler = mw({
         materials: arrayOrStringValidator,
         onlyInStock: boolValidator.default(false),
         categories: arrayOrStringValidator,
-        limit: limitValidator.default(10),
+        limit: limitValidator,
         page: pageValidator,
-        orderField: orderFieldValidator(["id", "name", "price", "stock"]).default("id"),
+        orderField: orderFieldValidator([
+          "id",
+          "name",
+          "price",
+          "stock",
+        ]).default("id"),
         order: orderValidator.default("asc"),
-        search: searchValidator
-      }
+        search: searchValidator,
+      },
     }),
     async ({
       locals: {
-        query: { priceMin, priceMax, materials, onlyInStock, categories, limit, page, orderField, order, search}
+        query: {
+          priceMin,
+          priceMax,
+          materials,
+          onlyInStock,
+          categories,
+          limit,
+          page,
+          orderField,
+          order,
+          search,
+        },
       },
-      res
+      res,
     }) => {
-      const materialsArray = Array.isArray(materials) ? materials : [materials];
-      const categoriesArray = Array.isArray(categories) ? categories : [categories];
+      const materialsArray = Array.isArray(materials) ? materials : [materials]
+      const categoriesArray = Array.isArray(categories)
+        ? categories
+        : [categories]
 
-      const searchValue = search.toLowerCase(); 
-      const query = ProductModel.query(); 
+      const searchValue = search.toLowerCase()
+      const query = ProductModel.query()
 
       if (orderField) {
-        query.orderBy(orderField, order); 
+        query.orderBy(orderField, order)
       }
 
       if (search) {
-        query
-          .whereRaw("LOWER(\"name\") LIKE ?", `%${searchValue}%`);
+        query.whereRaw('LOWER("name") LIKE ?', `%${searchValue}%`)
       }
 
       if (priceMin) {
-        query.where("price", ">", priceMin);
+        query.where("price", ">", priceMin)
       }
 
       if (priceMax) {
-        query.where("price", "<", priceMax);
+        query.where("price", "<", priceMax)
       }
 
       if (categories) {
-        query.whereIn("categoryId", categoriesArray);
-      } 
+        query.whereIn("categoryId", categoriesArray)
+      }
 
       if (materials) {
         const materialsProducts = await ProductMaterialRelationModel.query()
           .select("productId")
-          .whereIn("materialId", materialsArray);
-        
-        const productIds = materialsProducts.reduce((acc, { productId }) => [...acc, productId], []);
+          .whereIn("materialId", materialsArray)
 
-        query.whereIn("id", productIds);
+        const productIds = materialsProducts.reduce(
+          (acc, { productId }) => [...acc, productId],
+          []
+        )
+
+        query.whereIn("id", productIds)
       }
 
       if (onlyInStock === true) {
-        query.where("stock", ">", 0);
+        query.where("stock", ">", 0)
       }
 
-      const countQuery = query.clone();
-      const [{ count }] = await countQuery.clearSelect().clearOrder().count();
+      const [countResult] = await query
+        .clearSelect()
+        .clearOrder()
+        .limit(1)
+        .offset(0)
+        .count()
 
-      const products = await query.modify("paginate", limit, page)
+      const count = Number.parseInt(countResult.count, 10)
+
+      const products = await query
+        .modify("paginate", limit, page)
         .select("id", "name", "description", "price", "stock")
         .withGraphFetched("category")
-        .withGraphFetched("materials");
-      
-      res.send({ products: products, count: count });
-    }
-  ]
-});
+        .withGraphFetched("materials")
 
-export default handler;
+      res.send({
+        products,
+        meta: {
+          count,
+        },
+      })
+    },
+  ],
+})
+
+export default handler

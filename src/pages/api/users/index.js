@@ -1,7 +1,6 @@
 import UserModel from "@/api/db/models/UserModel.js"
 import auth from "@/api/middlewares/auth"
 import checkIsAdmin from "@/api/middlewares/checkIsAdmin"
-import slowDown from "@/api/middlewares/slowDown.js"
 import validate from "@/api/middlewares/validate"
 import mw from "@/api/mw.js"
 import {
@@ -14,7 +13,6 @@ import {
 
 const handler = mw({
   GET: [
-    slowDown(500),
     auth(),
     checkIsAdmin(),
     validate({

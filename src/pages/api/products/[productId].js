@@ -1,117 +1,106 @@
-import ProductImageModel from "@/api/db/models/ProductImageModel";
-import ProductMaterialRelationModel from "@/api/db/models/ProductMaterialRelationModel";
-import ProductModel from "@/api/db/models/ProductModel";
-import auth from "@/api/middlewares/auth";
-import checkIsAdmin from "@/api/middlewares/checkIsAdmin";
-import slowDown from "@/api/middlewares/slowDown";
-import validate from "@/api/middlewares/validate";
-import mw from "@/api/mw";
-import { idValidator, numberValidator, stringValidator } from "@/validator";
-
+import ProductImageModel from "@/api/db/models/ProductImageModel"
+import ProductMaterialRelationModel from "@/api/db/models/ProductMaterialRelationModel"
+import ProductModel from "@/api/db/models/ProductModel"
+import auth from "@/api/middlewares/auth"
+import checkIsAdmin from "@/api/middlewares/checkIsAdmin"
+import slowDown from "@/api/middlewares/slowDown"
+import validate from "@/api/middlewares/validate"
+import mw from "@/api/mw"
+import { idValidator, numberValidator, stringValidator } from "@/validator"
 
 const handler = mw({
   GET: [
-    slowDown(500),
     auth(),
     validate({
       query: {
-        productId: idValidator.required()
-      }
-    }),
-    async({
-      locals: {
-        query: { productId }
+        productId: idValidator.required(),
       },
-      res
+    }),
+    async ({
+      locals: {
+        query: { productId },
+      },
+      res,
     }) => {
-      const id = productId;
+      const id = productId
 
       const product = await ProductModel.query()
         .findOne({ id })
         .select("id", "name", "description", "price", "stock")
         .withGraphFetched("category")
-        .withGraphFetched("materials");
+        .withGraphFetched("materials")
 
       if (!product) {
-        res.status(404).send({ error: "Product not found" });
+        res.status(404).send({ error: "Product not found" })
 
-        return;
+        return
       }
 
-      res.send({ product: product });
-    }
+      res.send({ product: product })
+    },
   ],
   PATCH: [
     slowDown(500),
     auth(),
     checkIsAdmin(),
     validate({
-      query: { 
-        productId: idValidator
+      query: {
+        productId: idValidator,
       },
       body: {
         name: stringValidator,
         description: stringValidator,
         price: numberValidator,
         stock: numberValidator,
-        categoryId: numberValidator
-      }
-    }), 
-    async({
+        categoryId: numberValidator,
+      },
+    }),
+    async ({
       locals: {
         query: { productId },
-        body: { name, description, price, stock, categoryId }
-      }, 
-      res
+        body: { name, description, price, stock, categoryId },
+      },
+      res,
     }) => {
-      const id = productId; 
-      
+      const id = productId
 
-      res.send({ status: "success", message: "Product edited successfully." });
-    }
+      res.send({ status: "success", message: "Product edited successfully." })
+    },
   ],
   DELETE: [
-    slowDown(500), 
+    slowDown(500),
     auth(),
     checkIsAdmin(),
-    validate({ 
-      query: { 
-        productId: idValidator.required()
-      }
-    }), 
-    async({
-      locals: {
-        query: {
-          productId
-        }
+    validate({
+      query: {
+        productId: idValidator.required(),
       },
-      res
+    }),
+    async ({
+      locals: {
+        query: { productId },
+      },
+      res,
     }) => {
-      const id = productId;
+      const id = productId
 
-      const product = await ProductModel.query().findOne({ id });
+      const product = await ProductModel.query().findOne({ id })
 
       if (!product) {
-        res.status(404).send({ error: "Product not found" });
+        res.status(404).send({ error: "Product not found" })
 
-        return;
+        return
       }
 
-      await ProductMaterialRelationModel.query()
-        .delete()
-        .where("productId", id);
-      
-      await ProductImageModel.query()
-        .delete()
-        .where("productId", id);
-      
-      await ProductModel.query()
-        .delete()
-        .where("id", id);
+      await ProductMaterialRelationModel.query().delete().where("productId", id)
 
-      res.send({ status: "success", message: "Product deleted successfully" }); 
-    }
-  ]
-});
+      await ProductImageModel.query().delete().where("productId", id)
 
-export default handler;
+      await ProductModel.query().delete().where("id", id)
+
+      res.send({ status: "success", message: "Product deleted successfully" })
+    },
+  ],
+})
+
+export default handler

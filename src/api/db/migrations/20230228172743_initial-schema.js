@@ -10,6 +10,7 @@ module.exports.up = async (knex) => {
     table.text("phoneNumber").notNullable()
     table.boolean("active").notNullable().defaultTo(false)
     table.boolean("isAdmin").notNullable().defaultTo(false)
+    table.boolean("resetPassword").notNullable().defaultTo(false)
     table.timestamps(true, true, true)
   })
 

@@ -28,7 +28,7 @@ const MailResetPassword = () => {
   const router = useRouter()
   const { id, timer } = router.query
   const {
-    actions: { passwordReset, crypt },
+    actions: { resetPassword, crypt },
   } = useAppContext()
   const [errorURL, setErrorURL] = useState(null)
   const [error, setError] = useState(null)
@@ -41,7 +41,8 @@ const MailResetPassword = () => {
         const [{ getId }, { getTimer }] = await crypt([{ id }, { timer }])
 
         if (!getId || !getTimer) {
-          setErrorURL("Invalid page")
+          setErrorURL(true)
+          setError("Invalid page")
 
           return
         }
@@ -66,7 +67,7 @@ const MailResetPassword = () => {
         id: cryptoId,
         timer: cryptoTimer,
       })
-      const [err] = await passwordReset(newValues)
+      const [err] = await resetPassword(newValues)
 
       if (err) {
         setError(err)
@@ -76,7 +77,7 @@ const MailResetPassword = () => {
 
       router.push(routes.login())
     },
-    [cryptoId, cryptoTimer, errorURL, passwordReset, router]
+    [cryptoId, cryptoTimer, errorURL, resetPassword, router]
   )
 
   return (

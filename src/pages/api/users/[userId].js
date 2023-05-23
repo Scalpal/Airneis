@@ -14,7 +14,6 @@ import { idValidator } from "@/validator"
 
 const handler = mw({
   GET: [
-    slowDown(500),
     auth(),
     checkIsAdmin(),
     validate({
@@ -138,3 +137,5 @@ const handler = mw({
     },
   ],
 })
+
+export default handler
