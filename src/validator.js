@@ -13,16 +13,14 @@ export const arrayValidator = yup.array()
 
 export const booleanValidator = yup.boolean()
 
-export const stringArrayValidator = yup.array().of(
+export const cryptValidator = yup.array().of(
   yup.object().shape({
     value: yup.string(),
   })
 )
 
-  
 // pagination
 export const indexValidator = yup.string().min(1)
-  
 
 // users
 export const displayNameValidator = yup.string().min(1).max(255)

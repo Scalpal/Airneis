@@ -6,7 +6,7 @@ import routes from "@/web/routes.js"
 import styles from "@/styles/login.module.css"
 import { useRouter } from "next/router"
 import useAppContext from "@/web/hooks/useAppContext"
-import { useCallback, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import {
   createValidator,
   passwordValidator,
@@ -26,24 +26,45 @@ const initialValues = {
 
 const MailResetPassword = () => {
   const router = useRouter()
+  const { id, timer } = router.query
   const {
     actions: { passwordReset, crypt },
   } = useAppContext()
+  const [errorURL, setErrorURL] = useState(null)
   const [error, setError] = useState(null)
+  const [cryptoId, setCryptoId] = useState(null)
+  const [cryptoTimer, setCryptoTimer] = useState(null)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (id && timer) {
+        const [{ getId }, { getTimer }] = await crypt([{ id }, { timer }])
+
+        if (!getId || !getTimer) {
+          setErrorURL("Invalid page")
+
+          return
+        }
+
+        setCryptoId(getTimer)
+        setCryptoTimer(getId)
+      }
+    }
+
+    fetchData()
+  }, [crypt, id, timer])
 
   const handleSubmit = useCallback(
     async (values) => {
-      const cryptoId = decodeURIComponent(router.query.keyA)
-      const cryptoTimer = decodeURIComponent(router.query.keyB)
+      if (errorURL) {
+        setError(errorURL)
 
-      const [{ getCryptoId }, { getCryptoTimer }] = await crypt([
-        { cryptoId },
-        { cryptoTimer },
-      ])
+        return
+      }
 
       const newValues = merge(values, {
-        id: getCryptoId,
-        timer: getCryptoTimer,
+        id: cryptoId,
+        timer: cryptoTimer,
       })
       const [err] = await passwordReset(newValues)
 
@@ -55,7 +76,7 @@ const MailResetPassword = () => {
 
       router.push(routes.login())
     },
-    [router, crypt, passwordReset]
+    [cryptoId, cryptoTimer, errorURL, passwordReset, router]
   )
 
   return (
@@ -70,9 +91,7 @@ const MailResetPassword = () => {
           <Form className={styles.formContainer}>
             <p className={styles.formTitle}>Reset your password</p>
 
-            {error ? (
-              <p className={styles.error}>Error, please try later</p>
-            ) : null}
+            {error ? <p className={styles.error}>{error}</p> : null}
 
             <LoginField
               name="password"

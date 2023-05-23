@@ -1,14 +1,14 @@
 import config from "@/api/config.js"
 import validate from "@/api/middlewares/validate.js"
 import mw from "@/api/mw.js"
-import { stringArrayValidator } from "@/validator"
+import { arrayValidator } from "@/validator"
 import { enc, AES } from "crypto-js"
 
 const handler = mw({
   GET: [
     validate({
       query: {
-        "0[key]": stringArrayValidator.required(),
+        CryptoValues: arrayValidator.nullable(),
       },
     }),
     async ({
@@ -22,7 +22,6 @@ const handler = mw({
 
         return bytes.toString(enc.Utf8)
       }
-
       const decryptValues = CryptoValues.map((obj) => {
         const decryptedObj = {}
         for (const [key, value] of Object.entries(obj)) {

@@ -10,24 +10,24 @@ const MailConfirmation = () => {
   const [err, setErr] = useState(false)
   const [answer, setAnswer] = useState(null)
   const router = useRouter()
-  const { key } = router.query
+  const { id } = router.query
   const {
     actions: { confirmAccount, crypt },
   } = useAppContext()
 
   useEffect(() => {
     const fetchData = async () => {
-      if (key) {
-        const [{ getKey }] = await crypt([{ key }])
+      if (id) {
+        const [{ getId }] = await crypt([{ id }])
 
-        if (!getKey) {
-          setAnswer("Invalid password reset link")
+        if (!getId) {
+          setAnswer("Invalid page")
           setErr(true)
 
           return
         }
 
-        const [error, results] = await confirmAccount(getKey)
+        const [error, results] = await confirmAccount(getId)
 
         if (error) {
           setAnswer(error)
@@ -38,7 +38,7 @@ const MailConfirmation = () => {
       }
     }
     fetchData()
-  }, [confirmAccount, crypt, key])
+  }, [confirmAccount, crypt, id])
 
   const handleclick = () => {
     router.push(routes.home())
