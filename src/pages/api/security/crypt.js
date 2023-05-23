@@ -17,6 +17,7 @@ const handler = mw({
       },
       res,
     }) => {
+      console.log(CryptoValues)
       const decrypt = (props) => {
         const bytes = AES.decrypt(props, config.security.encrypt)
 

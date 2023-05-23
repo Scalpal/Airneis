@@ -1,16 +1,17 @@
 import routes from "@/web/routes.js"
 
 const crypt =
-  ({ api }, session) =>
+  ({ api }) =>
   async (CryptoValues) => {
-    console.log(session)
+    console.log(JSON.stringify(CryptoValues))
+    const js = [5, 8, 7]
 
     try {
       const {
         data: { CryptoKey },
       } = await api.get(routes.api.crypt(), {
         params: {
-          CryptoValues: JSON.stringify(CryptoValues),
+          CryptoValues: JSON.stringify(js),
         },
       })
 

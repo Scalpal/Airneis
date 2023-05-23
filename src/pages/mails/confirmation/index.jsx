@@ -5,8 +5,6 @@ import styles from "@/styles/mails/confirmation.module.css"
 import { useEffect, useState } from "react"
 import useAppContext from "@/web/hooks/useAppContext"
 import classNames from "classnames"
-import deepmerge from "deepmerge"
-deepmerge
 
 const MailConfirmation = () => {
   const [err, setErr] = useState(false)
@@ -20,7 +18,6 @@ const MailConfirmation = () => {
   useEffect(() => {
     const fetchData = async () => {
       if (id) {
-        const value = deepmerge({ id }, { id })
         const [{ getId }] = await crypt([{ id }])
 
         if (!getId) {
