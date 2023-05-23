@@ -5,38 +5,70 @@ import config from "@/api/config.js";
 import axios from "axios";
 import styles from "@/styles/mails/confirmation.module.css";
 
-const MailConfirmation = ({ error, answer }) => {
-  if (error) {
-    console.log(answer)
-  }
+const MailConfirmation = () => {
+  const [err, setErr] = useState(false);
+  const [answer, setAnswer] = useState(null);
   const router = useRouter();
+  const { id } = router.query;
+  const {
+    actions: { confirmAccount, crypt },
+  } = useAppContext();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (id) {
+        const [{ getId }] = await crypt([{ id }]);
+
+        if (!getId) {
+          setAnswer("Invalid page");
+          setErr(true);
+
+          return;
+        }
+
+        const [error, results] = await confirmAccount(getId);
+
+        if (error) {
+          setAnswer(error);
+          setErr(true);
+        } else {
+          setAnswer(results);
+        }
+      }
+    };
+    fetchData();
+  }, [confirmAccount, crypt, id]);
+
   const handleclick = () => {
     router.push(routes.home());
   };
 
   return (
     <div className={styles.div}>
-      {error ?
-        <span className={styles.error}>We cannot activate your account, please retry later</span> :
-        <span className={styles.success}>Your account is validate with success</span>
-      }
-      <button className={styles.button} onClick={handleclick}>Return to Home</button>
+      {error ? (
+        <span className={styles.error}>
+          We cannot activate your account, please retry later
+        </span>
+      ) : (
+        <span className={styles.success}>
+          Your account is validate with success
+        </span>
+      )}
+      <button className={styles.button} onClick={handleclick}>
+        Return to Home
+      </button>
     </div>
   );
 };
 MailConfirmation.isPublic = true;
 MailConfirmation.getLayout = function (page) {
-  return (
-    <BackofficeLoginLayout>
-      {page}
-    </BackofficeLoginLayout>
-  );
+  return <BackofficeLoginLayout>{page}</BackofficeLoginLayout>;
 };
 
-export default MailConfirmation
+export default MailConfirmation;
 
 export async function getServerSideProps(context) {
-  const cryptoId = decodeURIComponent(context.query.key)
+  const cryptoId = decodeURIComponent(context.query.key);
 
   const crypt = async (CryptoValues) => {
     try {
@@ -44,39 +76,40 @@ export async function getServerSideProps(context) {
         data: { CryptoKey },
       } = await axios.post(`${config.baseURL}/api/${routes.api.crypt()}`, {
         CryptoValues,
-      })
+      });
 
-      return CryptoKey
+      return CryptoKey;
     } catch (err) {
-      const error = err.response?.data?.error || "Oops. Something went wrong"
+      const error = err.response?.data?.error || "Oops. Something went wrong";
 
       return {
         props: {
           error: true,
-          answer: [Array.isArray(error) ? error : [error]]
-        }
+          answer: [Array.isArray(error) ? error : [error]],
+        },
       };
     }
-  }
-  const [{ getCryptoId }] = await crypt([{ cryptoId }])
+  };
+  const [{ getCryptoId }] = await crypt([{ cryptoId }]);
 
   try {
-    await axios.patch(`${config.baseURL}/api/${routes.api.activate()}`,{
-      id: getCryptoId
+    await axios.patch(`${config.baseURL}/api/${routes.api.activate()}`, {
+      id: getCryptoId,
     });
+
     return {
       props: {
-        error: false
-      }
+        error: false,
+      },
     };
   } catch (err) {
-    const error = err.response?.data?.error || "Oops. Something went wrong"
+    const error = err.response?.data?.error || "Oops. Something went wrong";
 
     return {
       props: {
         error: true,
-        answer: [Array.isArray(error) ? error : [error]]
-      }
+        answer: [Array.isArray(error) ? error : [error]],
+      },
     };
   }
 }
