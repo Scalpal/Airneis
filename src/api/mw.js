@@ -39,9 +39,8 @@ const mw = (methodHandlers) => async (req, res) => {
     return;
   }
 
-  const handlers = Array.isArray(methodHandler)
-    ? methodHandler
-    : [methodHandler];
+  const handlers = Array.isArray(methodHandler) ? methodHandler : [methodHandler];
+  
   let handlerIndex = 0;
   const locals = {};
   const ctx = {
