@@ -1,71 +1,19 @@
 import Banner from "@/web/components/Banner";
 import styles from "@/styles/products.module.css";
 import DetailedProductCard from "@/web/components/DetailedProductCard";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import ProductFilterMenu from "@/web/components/ProductFilterMenu";
 import ParamBadge from "@/web/components/ParamBadge";
+import useGetProducts from "@/web/hooks/useGetProducts";
+import Button from "@/web/components/Button";
 
-const categoryProducts = [
-  {
-    id: 1,
-    name: "Modern beechwood chair",
-    type: "Wood",
-    description: "Black chairs made of 100 year old Himalayan beech wood",
-    price: 200,
-    stock: 25,
-    picture: "/meuble-2.jpeg",
-    materials: ["metal", "steel", "iron"],
-  },
-  {
-    id: 2,
-    name: "Chair",
-    type: "Wood",
-    price: 29,
-    stock: 25,
-    picture: "/meuble-2.jpeg",
-    materials: ["metal", "steel", "iron"],
-  },
-  {
-    id: 3,
-    name: "Chair",
-    type: "Wood",
-    description: "Black chairs made of 100 year old Himalayan beech wood",
-    price: 87,
-    stock: 25,
-    picture: "/meuble-2.jpeg",
-    materials: ["metal", "steel", "iron"],
-  },
-  {
-    id: 4,
-    name: "Chair",
-    type: "Wood",
-    price: 129,
-    stock: 25,
-    picture: "/meuble-2.jpeg",
-    materials: ["metal", "steel", "iron"],
-  },
-  {
-    id: 5,
-    name: "Chair",
-    type: "Wood",
-    description: "Black chairs made of 100 year old Himalayan beech wood",
-    price: 987,
-    stock: 25,
-    picture: "/meuble-2.jpeg",
-    materials: ["metal", "steel", "iron"],
-  },
-  {
-    id: 6,
-    name: "Chair",
-    type: "Wood",
-    price: 100,
-    stock: 25,
-    picture: "/meuble-2.jpeg",
-    materials: ["metal", "steel", "iron"],
-  },
-];
+
 
 const Products = () => {
+  const { data, error, isLoading, isValidating, size, setSize } = useGetProducts(); 
+
+  const products = data && data.reduce((acc, { products }) => [...acc, ...products], []);
+
   const [queryParams, setQueryParams] = useState({
     priceMin: 0,
     priceMax: 0,
@@ -73,6 +21,7 @@ const Products = () => {
     onlyInStock: false,
     categories: [],
   });
+
   const [appliedQueryParams, setAppliedQueryParams] = useState({
     priceMin: 0,
     priceMax: 0,
@@ -133,8 +82,7 @@ const Products = () => {
     [appliedQueryParams, setAppliedQueryParams, queryParams]
   );
 
-  {
-    /* const createQueryString = useCallback(() => {
+  const createQueryString = useCallback(() => {
     let queryString = "?";
 
     Object.entries(appliedQueryParams).map(([key, value]) => {
@@ -155,12 +103,21 @@ const Products = () => {
 
     return queryString;
 
-  }, [appliedQueryParams]); 
+  }, [appliedQueryParams]);
 
+  const handleLoadMore = useCallback(() => { 
+    setSize(size + 1,);
+  }, [size, setSize]);
+  
   useEffect(() => {
     console.log(createQueryString()); 
-  }, [appliedQueryParams, createQueryString]); */
-  }
+  }, [appliedQueryParams, createQueryString]); 
+
+  useEffect(() => {
+    if (data !== undefined && !isLoading) {
+      console.log("data: ", data);
+    }
+  }, [data, isLoading]);
 
   return (
     <>
@@ -193,9 +150,16 @@ const Products = () => {
           />
 
           <section className={styles.productsContainer}>
-            {categoryProducts.map((product, index) => (
+            
+            {data && products.map((product, index) => (
               <DetailedProductCard key={index} product={product} />
             ))}
+
+            <Button
+              onClick={() => handleLoadMore()}
+            > 
+              See more
+            </Button>
           </section>
         </div>
       </main>
