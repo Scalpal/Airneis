@@ -12,6 +12,16 @@ const routes = {
   home: () => "/",
   register: () => "/register",
   login: () => "/login",
+  backoffice: {
+    base: () => "/backoffice",
+    users: {
+      single: (userId) => createRouteWithQueryParams(`/backoffice/users/${userId}`)
+    },
+    products: {
+      add: () => "/backoffice/products/add",
+      single: (productId) => createRouteWithQueryParams(`/backoffice/products/${productId}`)
+    }
+  },
   api: {
     register: () => "/users/register",
     login: () => "/users/login",

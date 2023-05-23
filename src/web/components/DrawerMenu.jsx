@@ -3,6 +3,7 @@ import Link from "next/link";
 import { classnames } from "@/pages/_app";
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/router";
+import routes from "../routes";
 
 const DrawerMenu = (props) => {
 
@@ -38,9 +39,9 @@ const DrawerMenu = (props) => {
           className={styles.drawerMenuIcon}
           onClick={() => setIsDrawerToggled(!isDrawerToggled)}
         />
-        {session ? <Link href="/profil">My profil</Link> : <Link href="/login">Login</Link>}
-        {session ? <a onClick={logout}>Logout</a> : <Link href="/register">Register</Link>}
-        {session && <a onClick={() => router.push("/backoffice/users")}>Backoffice</a>}
+        {session ? <Link href="/profil">My profil</Link> : <Link href={routes.login()}>Login</Link>}
+        {session ? <a onClick={logout}>Logout</a> : <Link href={routes.register()}>Register</Link>}
+        {session && <Link href={routes.backoffice.base()}>Backoffice</Link>}
         <Link href="">CGU</Link>
         <Link href="">Legal mentions</Link>
         <Link href="">Contact</Link>
