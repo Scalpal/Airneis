@@ -1,12 +1,18 @@
-import hashPassword from "@/api/db/hashPassword";
-import AddressModel from "@/api/db/models/AddressModel";
-import UserModel from "@/api/db/models/UserModel.js";
-import slowDown from "@/api/middlewares/slowDown.js";
-import validate from "@/api/middlewares/validate.js";
-import mw from "@/api/mw.js";
-import { emailValidator, phoneValidator, stringValidator, passwordValidator } from "@/validator";
-import sgMail from "@sendgrid/mail";
-import config from "@/api/config.js";
+import hashPassword from "@/api/db/hashPassword"
+import AddressModel from "@/api/db/models/AddressModel"
+import UserModel from "@/api/db/models/UserModel.js"
+import slowDown from "@/api/middlewares/slowDown.js"
+import validate from "@/api/middlewares/validate.js"
+import mw from "@/api/mw.js"
+import { AES } from "crypto-js"
+import {
+  emailValidator,
+  phoneValidator,
+  stringValidator,
+  passwordValidator,
+} from "@/validator"
+import sgMail from "@sendgrid/mail"
+import config from "@/api/config.js"
 
 const handler = mw({
   POST: [
@@ -22,23 +28,35 @@ const handler = mw({
         city: stringValidator,
         region: stringValidator,
         postalCode: stringValidator,
-        country: stringValidator, 
+        country: stringValidator,
       },
     }),
     async ({
       locals: {
-        body: { firstName, lastName, phoneNumber, email, password, address, city, region, postalCode, country },
+        body: {
+          firstName,
+          lastName,
+          phoneNumber,
+          email,
+          password,
+          address,
+          city,
+          region,
+          postalCode,
+          country,
+        },
       },
       res,
     }) => {
-      const user = await UserModel.query().findOne({ email }); 
-      
-      if (user) {
-        res.status(409).send({ error: "Email already used." });
+      const user = await UserModel.query().findOne({ email })
 
-        return;
+      if (user) {
+        res.status(409).send({ error: "Email already used." })
+
+        return
       }
-      const [passwordHash, passwordSalt] = await hashPassword(password);
+
+      const [passwordHash, passwordSalt] = await hashPassword(password)
 
       const addedUser = await UserModel.query()
         .insert({
@@ -49,9 +67,15 @@ const handler = mw({
           passwordSalt,
           phoneNumber,
         })
-        .returning("*");
+        .returning("*")
 
-      if (address !== "" && city !== "" && region !== "" && postalCode !== "" && country !== "") {
+      if (
+        address !== "" &&
+        city !== "" &&
+        region !== "" &&
+        postalCode !== "" &&
+        country !== ""
+      ) {
         await AddressModel.query()
           .insert({
             address,
@@ -59,33 +83,44 @@ const handler = mw({
             region,
             postalCode,
             country,
-            userId : addedUser.id,
+            userId: addedUser.id,
           })
-          .returning("*");
+          .returning("*")
       }
 
-      sgMail.setApiKey(config.security.sendgrid);
+      const encryptId = (id) => {
+        const encryptedId = AES.encrypt(
+          id.toString(),
+          config.security.encrypt
+        ).toString()
+
+        return encryptedId
+      }
+
+      sgMail.setApiKey(config.security.sendgrid)
 
       const msg = {
         to: email,
-        from: "Airneis.service@gmail.com",
+        from: "airneis.supdevinci@gmail.com",
         templateId: "d-97f9566d2ae94701a8172e07cc82de28",
         // eslint-disable-next-line camelcase
         dynamic_template_data: {
           firstname: firstName,
           lastname: lastName,
-          url: `http://localhost:3000/mails/confirmation?id=${addedUser.id}`,
+          url: `http://localhost:3000/mails/confirmation?key=${encryptId(
+            addedUser.id
+          )}`,
         },
-      };
+      }
 
       try {
-        sgMail.send(msg);
-        res.send({ success: true });
+        sgMail.send(msg)
+        res.send({ success: true })
       } catch (error) {
-        res.status(404).send({ error: error });
+        res.status(404).send({ error: error })
       }
     },
   ],
-});
+})
 
-export default handler;
+export default handler

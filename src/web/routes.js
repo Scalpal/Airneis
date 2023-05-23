@@ -1,12 +1,12 @@
 const createRouteWithQueryParams = (route, query) => {
   if (!query) {
-    return route;
+    return route
   }
 
-  const qs = new URLSearchParams(query).toString();
+  const qs = new URLSearchParams(query).toString()
 
-  return `${route}?${qs}`;
-};
+  return `${route}?${qs}`
+}
 
 const routes = {
   home: () => "/",
@@ -15,30 +15,45 @@ const routes = {
   backoffice: {
     base: () => "/backoffice",
     users: {
-      single: (userId) => createRouteWithQueryParams(`/backoffice/users/${userId}`)
+      single: (userId) =>
+        createRouteWithQueryParams(`/backoffice/users/${userId}`),
     },
     products: {
       add: () => "/backoffice/products/add",
-      single: (productId) => createRouteWithQueryParams(`/backoffice/products/${productId}`)
-    }
+      single: (productId) =>
+        createRouteWithQueryParams(`/backoffice/products/${productId}`),
+    },
   },
+  cart: () => "/cart",
+  profil: () => "/profil",
+  order: () => "/order",
+  products: () => "/products",
+  categories: () => "/category",
+  delivery: () => "/order/delivery",
+  query: {
+    category: (query) => "/category/" + query,
+    products: (query) => "/products/" + query,
+  },
+  params: {
+    products: (query) => createRouteWithQueryParams("/products", query),
+  },
+  resetPassword: () => "/reset-password",
   api: {
     register: () => "/users/register",
     login: () => "/users/login",
-    products: {
-      collection: (query) => createRouteWithQueryParams("/api/products", query),
-      single: (postId, query) =>
-        createRouteWithQueryParams(`/api/products/${postId}`, query),
-    },
-    users: {
-      collection: (query) => createRouteWithQueryParams("/api/users", query),
-      single: (userId, query) =>
-        createRouteWithQueryParams(`/api/users/${userId}`, query),
-      self: () => "/api/users/self",
-      patch: (userId) => createRouteWithQueryParams(`/users/${userId}`),
-      delete: (userId) => createRouteWithQueryParams(`/users/${userId}`)
-    }
+    confirmAccount: () => "/users/activate",
+    crypt: () => "/security/crypt",
+    mailResetPassword: () => "/mail/reset-password",
+    resetPassword: () => "/users/reset-password",
+    allcategories: () => "/categories/getCategories",
+    allmaterials: () => "/materials/getMaterials",
+    allProducts: () => "/products/getProducts",
+    // posts: {
+    //   collection: (query) => createRouteWithQueryParams("/posts", query),
+    //   single: (postId, query) =>
+    //     createRouteWithQueryParams(`/posts/${postId}`, query),
+    // },
   },
-};
+}
 
-export default routes;
+export default routes

@@ -1,5 +1,5 @@
-import BaseModel from "@/api/db/models/BaseModel.js";
-import UserModel from "./UserModel";
+import BaseModel from "@/api/db/models/BaseModel.js"
+import UserModel from "./UserModel"
 
 class CategoryModel extends BaseModel {
   static tableName = "categories";
@@ -14,8 +14,8 @@ class CategoryModel extends BaseModel {
           to: "users.id",
         },
       },
-    };
+    }
   }
 }
 
-export default CategoryModel;
+export default CategoryModel

@@ -10,6 +10,7 @@ import checkToken from "@/web/services/checkToken";
 import checkIsAdmin from "@/web/services/checkIsAdmin";
 
 // Prototype datas
+// Prototype datas
 const ordersProto = [
   {
     id: 1,
@@ -18,15 +19,18 @@ const ordersProto = [
     products: [
       {
         name: "Modern beechwood chair",
+        name: "Modern beechwood chair",
         price: 223,
         stock: 25,
       },
       {
         name: "Chair",
+        name: "Chair",
         price: 98,
         stock: 25,
       },
       {
+        name: "Chair",
         name: "Chair",
         price: 134,
         stock: 25,
@@ -40,15 +44,18 @@ const ordersProto = [
     products: [
       {
         name: "Modern beechwood chair",
+        name: "Modern beechwood chair",
         price: 223,
         stock: 25,
       },
       {
         name: "Chair",
+        name: "Chair",
         price: 98,
         stock: 25,
       },
       {
+        name: "Chair",
         name: "Chair",
         price: 134,
         stock: 25,
@@ -61,6 +68,7 @@ const BackofficeOrders = () => {
   const [orders, _] = useState(ordersProto);
 
   return (
+    <main className={classnames(styles.mainContainer, nunito.className)}>
     <main className={classnames(styles.mainContainer, nunito.className)}>
       <div className={styles.topStats}>
         <div>
@@ -89,9 +97,9 @@ const BackofficeOrders = () => {
         <Table array={orders} />
       </div>
     </main>
-  );
-};
-BackofficeOrders.isPublic = false;
+  )
+}
+BackofficeOrders.isPublic = false
 BackofficeOrders.getLayout = function (page) {
   return <Layout>{page}</Layout>;
 };

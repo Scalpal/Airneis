@@ -107,6 +107,7 @@ const BackofficeProducts = (props) => {
 
   return (
     <main className={classnames(styles.mainContainer, nunito.className)}>
+    <main className={classnames(styles.mainContainer, nunito.className)}>
       <div className={styles.topStats}>
         <div>
           <p>Total of unique products</p>
@@ -141,9 +142,9 @@ const BackofficeProducts = (props) => {
         />
       </div>
     </main>
-  );
-};
-BackofficeProducts.isPublic = true;
+  )
+}
+BackofficeProducts.isPublic = true
 BackofficeProducts.getLayout = function (page) {
   return <Layout>{page}</Layout>;
 };

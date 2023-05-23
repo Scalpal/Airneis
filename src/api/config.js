@@ -1,13 +1,15 @@
-import knexfile from "../../knexfile.js";
-import dotenv from "dotenv";
-import { resolve } from "path";
+import knexfile from "@@/knexfile.js"
+import dotenv from "dotenv"
+import { resolve } from "path"
 
-dotenv.config({ path: resolve(".env.local") });
+dotenv.config({ path: resolve(".env.local") })
 
 const config = {
   port: 3000,
+  baseURL: "http://localhost:3000",
   db: knexfile,
   security: {
+    encrypt: process.env.SECURITY_ENCRYPT_KEY,
     jwt: {
       secret: process.env.SECURITY_JWT_SECRET,
       expiresIn: "2 days",
@@ -21,6 +23,6 @@ const config = {
     },
     sendgrid: process.env.SENDGRID_KEY,
   },
-};
+}
 
-export default config;
+export default config

@@ -7,6 +7,7 @@
   font-weight: 300;
   transition-duration: 500ms;
   outline-offset: 0;
+  cursor: pointer;
 }
 
 /* Contained */
@@ -27,8 +28,15 @@
 .disabled {
   border: 0;
   background-color:rgba(0, 0, 0, 0.2);
+  cursor: not-allowed;
 }
 
+/* bgWhite */
+.bgWhite {
+  border: 2px solid black;
+  background-color: var(--secondary);
+  color: black;
+}
 
 
 @media only screen and (min-width: 768px) {

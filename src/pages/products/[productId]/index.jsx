@@ -1,18 +1,75 @@
-import Carousel from "@/web/components/Carousel";
-import ProductCard from "@/web/components/ProductCard";
-import Banner from "@/web/components/Banner";
-import Button from "@/web/components/Button";
-import styles from "@/styles/productPage.module.css";
+import Carousel from "@/web/components/Carousel"
+import ProductCard from "@/web/components/ProductCard"
+import Banner from "@/web/components/Banner"
+import Button from "@/web/components/Button"
+import styles from "@/styles/productPage.module.css"
+import useAppContext from "@/web/hooks/useAppContext"
+import CircleAnimation from "@/web/components/circleAnimation"
+import { useState } from "react"
+import { useRouter } from "next/router"
 
-const placeholderImages = ["/meuble-1.jpeg", "/meuble-2.jpeg", "/meuble-3.png"];
+const placeholderImages = ["/meuble-1.jpeg", "/meuble-2.jpeg", "/meuble-3.png"]
 
-const productPrototype = {
-  name: "Samsung TV OLED 4K",
-  description:
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce consectetur ipsum eu fermentum pulvinar. Donec vitae egestas elit. Pellentesque et elementum nunc. Fusce a ligula nunc. Nunc interdum enim odio, id placerat ex convallis nec. Nam tempus sagittis libero, a cursus ipsum ullamcorper non. Duis quam lectus, volutpat non nisi.",
-  price: 2499,
-  stockAvailaible: 25,
-};
+const AllProducts = [
+  {
+    id: 1,
+    name: "Chaise moderne en bois de hêtre",
+    type: "bois",
+    description:
+      "Chaises noir en bois de hêtre centenaire d'Himalayad,zkdanaldza nzdn lkdn jlkdznland kzalzdnalkd nkldzndzlaknalkn",
+    price: 200,
+    stock: 25,
+    picture: "/meuble-2.jpeg",
+    materials: ["métal", "acier", "fer"],
+  },
+  {
+    id: 2,
+    name: "chaise",
+    type: "bois",
+    price: 29,
+    stock: 25,
+    picture: "/meuble-2.jpeg",
+    materials: ["métal", "acier", "fer"],
+  },
+  {
+    id: 3,
+    name: "chaise",
+    type: "bois",
+    description: "Chaises noir en bois de hêtre centenaire d'Himalaya",
+    price: 87,
+    stock: 25,
+    picture: "/meuble-2.jpeg",
+    materials: ["métal", "acier", "fer"],
+  },
+  {
+    id: 4,
+    name: "chaise",
+    type: "bois",
+    price: 129,
+    stock: 25,
+    picture: "/meuble-2.jpeg",
+    materials: ["métal", "acier", "fer"],
+  },
+  {
+    id: 5,
+    name: "chaise",
+    type: "bois",
+    description: "Chaises noir en bois de hêtre centenaire d'Himalaya",
+    price: 987,
+    stock: 25,
+    picture: "/meuble-2.jpeg",
+    materials: ["métal", "acier", "fer"],
+  },
+  {
+    id: 6,
+    name: "chaise",
+    type: "bois",
+    price: 100,
+    stock: 25,
+    picture: "/meuble-2.jpeg",
+    materials: ["métal", "acier", "fer"],
+  },
+]
 
 const similarProducts = [
   {
@@ -64,12 +121,31 @@ const similarProducts = [
     price: "$45",
     imageSrc: "/meuble-2.jpeg",
   },
-];
+]
 
 const ProductPage = () => {
+  const [bubbleAnimation, setBubbleAnimation] = useState(null)
+  const router = useRouter()
+  const { productId } = router.query
+  const {
+    actions: { addToCart },
+  } = useAppContext()
+  const currentProduct = AllProducts.filter(
+    (product) => product.id === Number.parseInt(productId)
+  )[0]
+
+  const handleAddToCart = () => {
+    !bubbleAnimation && setBubbleAnimation(true)
+    addToCart(currentProduct)
+
+    setTimeout(() => {
+      setBubbleAnimation(false)
+    }, 1900)
+  }
+
   return (
     <>
-      <Banner title={productPrototype.name} />
+      <Banner title={currentProduct.name} />
 
       <main>
         <section className={styles.mainContent}>
@@ -83,17 +159,15 @@ const ProductPage = () => {
 
           <div className={styles.productInfos}>
             <div className={styles.productInfosTopBlock}>
-              <h1>{productPrototype.name}</h1>
-              <p>{productPrototype.description}</p>
+              <h1>{currentProduct.name}</h1>
+              <p>{currentProduct.description}</p>
             </div>
 
             <div className={styles.productInfosBottomBlock}>
-              <p>{productPrototype.price}€</p>
+              <p>{currentProduct.price}€</p>
               <p>
-                {productPrototype.stockAvailaible > 0
-                  ? "Stocks : " +
-                    productPrototype.stockAvailaible +
-                    " available"
+                {currentProduct.stock > 0
+                  ? "Stocks : " + currentProduct.stock + " available"
                   : "Out of stock"}
               </p>
             </div>
@@ -101,7 +175,10 @@ const ProductPage = () => {
         </section>
 
         <div className={styles.addToCartBtnWrapper}>
-          <Button onClick={() => console.log("haha")}>Add to cart</Button>
+          <Button bgWhite={bubbleAnimation} onClick={handleAddToCart}>
+            Add to cart
+            {bubbleAnimation && <CircleAnimation />}
+          </Button>
         </div>
 
         <section className={styles.similarProductsWrapper}>
@@ -109,13 +186,13 @@ const ProductPage = () => {
 
           <div className={styles.similarProductsContainer}>
             {similarProducts.map((product, index) => {
-              return <ProductCard key={index} product={product} />;
+              return <ProductCard key={index} product={product} />
             })}
           </div>
         </section>
       </main>
     </>
-  );
-};
-ProductPage.isPublic = true;
-export default ProductPage;
+  )
+}
+ProductPage.isPublic = true
+export default ProductPage

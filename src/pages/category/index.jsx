@@ -1,6 +1,6 @@
-import Banner from "@/web/components/Banner";
+import Banner from "@/web/components/Banner"
 // import { useRouter } from "next/router";
-import CategoriesBlocks from "@/web/components/CategoriesBlocks";
+import CategoriesBlocks from "@/web/components/CategoriesBlocks"
 
 const categories = [
   { name: "Modern" },
@@ -16,7 +16,7 @@ const categories = [
   { name: "Living room" },
   { name: "Shower" },
   { name: "Bed" },
-];
+]
 
 const Categories = () => {
   // const router = useRouter();
@@ -29,7 +29,7 @@ const Categories = () => {
         <CategoriesBlocks categories={categories} />
       </main>
     </>
-  );
-};
-Categories.isPublic = true;
-export default Categories;
+  )
+}
+Categories.isPublic = true
+export default Categories

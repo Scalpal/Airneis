@@ -1,8 +1,8 @@
-import BaseModel from "@/api/db/models/BaseModel.js";
-import ProductModel from "./ProductModel";
+import BaseModel from "@/api/db/models/BaseModel.js"
+import ProductModel from "./ProductModel"
 
 class MaterialModel extends BaseModel {
-  static tableName = "materials";
+  static tableName = "materials"
 
   static relationMappings() {
     return {
@@ -13,13 +13,13 @@ class MaterialModel extends BaseModel {
           from: "materials.id",
           through: {
             from: "products_materials_relation.materialId",
-            to: "products_materials_relation.productId"
+            to: "products_materials_relation.productId",
           },
-          to: "products.id"
-        }
+          to: "products.id",
+        },
       },
-    };
+    }
   }
 }
 
-export default MaterialModel;
+export default MaterialModel
