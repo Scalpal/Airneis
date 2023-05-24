@@ -1,5 +1,6 @@
 import createAPIClient from "@/web/createAPIClient.js"
 import parseSession from "@/web/parseSession.js"
+import prepareService from "@/web/prepareService"
 import signUpService from "@/web/services/signUp.js"
 import signInService from "@/web/services/signIn.js"
 import mailResetPasswordService from "@/web/services/mailResetPassword.js"
@@ -30,6 +31,7 @@ export const AppContextProvider = (props) => {
 
   const signUp = signUpService({ api })
   const signIn = signInService({ api, setSession, setJWT })
+  const services = prepareService({ api, setSession, setJWT, session })
   const loggedUser = loggedUserService({ api, session })
   const mailResetPassword = mailResetPasswordService({ api })
   const productsViewer = productsViewerService({ api })
@@ -166,6 +168,7 @@ export const AppContextProvider = (props) => {
         materialsViewer,
         categoriesViewer,
         confirmAccount,
+        services,
       },
       state: {
         session,
@@ -190,6 +193,7 @@ export const AppContextProvider = (props) => {
     confirmAccount,
     session,
     cart,
+    services,
   ])
 
   if (!isPublicPage && session === null) {

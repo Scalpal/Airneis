@@ -12,11 +12,14 @@ const MailConfirmation = () => {
   const router = useRouter()
   const { id } = router.query
   const {
-    actions: { confirmAccount, crypt },
+    actions: { confirmAccount, crypt, services },
   } = useAppContext()
 
   useEffect(() => {
     const fetchData = async () => {
+      console.log(await services.test({ email: "myMail@" }))
+      // console.log(await services({ mail: "myMail@" }))
+
       if (id) {
         const [{ getId }] = await crypt([{ id }])
 
