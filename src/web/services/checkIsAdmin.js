@@ -1,8 +1,10 @@
+import { AxiosError } from "axios"
 import getApiClient from "./getApiClient"
 import routes from "../routes"
 
-const checkIsAdmin = async (context) => {
-  const reqInstance = getApiClient(context)
+const checkIsAdmin = async(context) => {
+
+  const reqInstance = getApiClient(context);
 
   try {
     const {
@@ -20,10 +22,8 @@ const checkIsAdmin = async (context) => {
       }
     }
   } catch (error) {
-    // if (error instanceof AxiosError) {
-    //   console.log(error.response)
-    // }
+    if (error instanceof AxiosError) {
+      console.log(error.response);
+    }
   }
-}
-
-export default checkIsAdmin
+};
