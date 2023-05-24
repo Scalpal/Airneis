@@ -1,5 +1,4 @@
 import routes from "@/web/routes"
-import { AxiosError } from "axios"
 
 const signUp =
   ({ api }) =>
@@ -8,10 +7,8 @@ const signUp =
       const { data } = await api.post(routes.api.signUp(), values)
 
       return [null, data]
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        return [Array.isArray(error) ? error : [error]]
-      }
+    } catch (err) {
+      const error = err.response?.data?.error || "Oops. Something went wrong"
 
       return [Array.isArray(error) ? error : [error]]
     }

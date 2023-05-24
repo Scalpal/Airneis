@@ -3,8 +3,16 @@ import routes from "../routes"
 
 const checkIsAdmin = async (context) => {
   const reqInstance = getApiClient(context)
+const checkIsAdmin = async (context) => {
+  const reqInstance = getApiClient(context)
 
   try {
+    const {
+      data: { user },
+    } = await reqInstance.get(
+      `http://localhost:3000/${routes.api.users.self()}`
+    )
+
     const {
       data: { user },
     } = await reqInstance.get(
@@ -15,6 +23,9 @@ const checkIsAdmin = async (context) => {
       return {
         redirect: {
           destination: "/home",
+          permanent: false,
+        },
+      }
           permanent: false,
         },
       }
