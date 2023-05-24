@@ -1,26 +1,26 @@
-import jsonwebtoken from "jsonwebtoken";
+import jsonwebtoken from "jsonwebtoken"
 
 const checkToken = async (token) => {
   if (!token) {
     return {
       redirect: {
         destination: "/home",
-        permanent: false
-      }
-    };
+        permanent: false,
+      },
+    }
   }
 
-  const decodedToken = jsonwebtoken.decode(token);
-  const isTokenExpired = Date.now() >= decodedToken.expires * 1000;
+  const decodedToken = jsonwebtoken.decode(token)
+  const isTokenExpired = Date.now() >= decodedToken.expires * 1000
 
   if (isTokenExpired) {
     return {
       redirect: {
         destination: "/home",
-        permanent: false
-      }
-    };
+        permanent: false,
+      },
+    }
   }
-};
+}
 
-export default checkToken;
+export default checkToken

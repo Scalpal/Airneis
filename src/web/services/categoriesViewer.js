@@ -7,7 +7,7 @@ const productsViewer =
     try {
       const { data: result } = await api.get(routes.api.allcategories())
 
-      return result
+      return [null, result]
     } catch (err) {
       if (error instanceof AxiosError) {
         return [Array.isArray(error) ? error : [error]]
