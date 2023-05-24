@@ -1,5 +1,4 @@
 import routes from "@/web/routes.js"
-import { AxiosError } from "axios"
 
 const mailResetPassword =
   ({ api }) =>

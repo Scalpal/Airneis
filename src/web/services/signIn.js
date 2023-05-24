@@ -1,6 +1,5 @@
 import parseSession from "@/web/parseSession.js"
 import routes from "@/web/routes.js"
-import { AxiosError } from "axios"
 import { setCookie } from "nookies"
 
 const signIn =
@@ -21,10 +20,8 @@ const signIn =
       })
 
       return [null, true]
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        return [Array.isArray(error) ? error : [error]]
-      }
+    } catch (err) {
+      const error = err.response?.data?.error || "Oops. Something went wrong"
 
       return [Array.isArray(error) ? error : [error]]
     }

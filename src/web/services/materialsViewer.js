@@ -6,7 +6,7 @@ const productsViewer =
     try {
       const { data: result } = await api.get(routes.api.allmaterials())
 
-      return [result]
+      return [null, result]
     } catch (err) {
       const error = err.response?.data?.error || "Oops. Something went wrong"
 
