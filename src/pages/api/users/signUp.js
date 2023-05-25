@@ -105,7 +105,7 @@ const handler = mw({
         dynamic_template_data: {
           firstname: firstName,
           lastname: lastName,
-          url: `http://localhost:3000/mails/confirmation?id=${encryptId(
+          url: `${config.baseURL}/mails/confirmation?id=${encryptId(
             addedUser.id
           )}`,
         },

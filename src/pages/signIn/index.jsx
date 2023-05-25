@@ -23,7 +23,7 @@ const initialValues = {
 const Login = () => {
   const router = useRouter()
   const {
-    actions: { signIn },
+    services: { signIn },
   } = useAppContext()
   const [error, setError] = useState(null)
 
@@ -32,12 +32,12 @@ const Login = () => {
       const [err] = await signIn(values)
 
       if (err) {
-        setError(err[0].response.data.error)
+        setError(err)
 
         return
       }
 
-      router.push(routes.home())
+      router.push(routes.pages.home())
     },
     [signIn, router]
   )
@@ -79,17 +79,17 @@ const Login = () => {
               Login
             </Button>
 
-            <div className={styles.noAccountText}>
+            <div className={styles.moreTextCompartiment}>
               <p>
                 Forgot your password ?{" "}
-                <span onClick={() => router.push(routes.resetPassword())}>
+                <span onClick={() => router.push(routes.pages.resetPassword())}>
                   {" "}
                   Click here{" "}
                 </span>
               </p>
               <p>
                 Don&apos;t have an account ?{" "}
-                <span onClick={() => router.push(routes.register())}>
+                <span onClick={() => router.push(routes.pages.signUp())}>
                   {" "}
                   Register here{" "}
                 </span>

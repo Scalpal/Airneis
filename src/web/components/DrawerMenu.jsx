@@ -14,7 +14,7 @@ const DrawerMenu = (props) => {
   const router = useRouter()
   const logout = () => {
     signOut()
-    router.push(routes.home())
+    router.push(routes.pages.home())
   }
 
   return (
@@ -37,14 +37,14 @@ const DrawerMenu = (props) => {
           onClick={() => setIsDrawerToggled(!isDrawerToggled)}
         />
         {session ? (
-          <Link href={routes.profil()}>My profil</Link>
+          <Link href={routes.pages.profil()}>My profil</Link>
         ) : (
-          <Link href={routes.login()}>Login</Link>
+          <Link href={routes.pages.signIn()}>Login</Link>
         )}
         {session ? (
           <a onClick={logout}>Logout</a>
         ) : (
-          <Link href={routes.register()}>Register</Link>
+          <Link href={routes.pages.signUp()}>Register</Link>
         )}
         <Link href="">CGU</Link>
         <Link href="">Legal mentions</Link>

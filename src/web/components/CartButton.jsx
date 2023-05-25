@@ -23,7 +23,7 @@ const CartButton = (props) => {
   }, [cart, setCart])
 
   const handleCart = () => {
-    router.push(routes.cart())
+    router.push(routes.pages.cart())
   }
 
   return (

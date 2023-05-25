@@ -9,7 +9,7 @@ const LoginLayout = ({ children }) => {
     <div className={classnames(styles.container, nunito.className)}>
       <div className={styles.left}>
         <div className={styles.leftBackground}></div>
-        <Link href={routes.home()}>Airneis </Link>
+        <Link href={routes.pages.home()}>Airneis </Link>
         <p>A reference in the world of furniture.</p>
       </div>
 

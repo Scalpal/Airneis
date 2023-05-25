@@ -38,7 +38,7 @@ const Navbar = (props) => {
       id="navbar"
     >
       <Link
-        href={routes.home()}
+        href={routes.pages.home()}
         className={classnames("navbarLogo", styles.navbarLogo)}
       >
         Airneis
@@ -46,19 +46,19 @@ const Navbar = (props) => {
 
       <ul className={classnames(styles.navbarList, styles.midLinks)}>
         <li>
-          <Link href={routes.home()} className={styles.navbarLink}>
+          <Link href={routes.pages.home()} className={styles.navbarLink}>
             Home
           </Link>
         </li>
 
         <li>
-          <Link href={routes.products()} className={styles.navbarLink}>
+          <Link href={routes.pages.products()} className={styles.navbarLink}>
             Products
           </Link>
         </li>
 
         <li>
-          <Link href={routes.categories()} className={styles.navbarLink}>
+          <Link href={routes.pages.categories()} className={styles.navbarLink}>
             Categories
           </Link>
         </li>

@@ -1,8 +1,8 @@
-import { faker } from "@faker-js/faker";
-import hashPassword from "../hashPassword.js";
+import { faker } from "@faker-js/faker"
+import hashPassword from "../hashPassword.js"
 
 export const seed = async (knex) => {
-  const [passwordHash, passwordSalt] = await hashPassword("1oremIpsum_!");
+  const [passwordHash, passwordSalt] = await hashPassword("1oremIpsum_!")
   await knex("users").insert({
     firstName: faker.person.firstName(),
     lastName: faker.person.lastName(),
@@ -11,9 +11,9 @@ export const seed = async (knex) => {
     passwordHash,
     passwordSalt,
     isAdmin: true,
-  });
+  })
 
-  const [userId] = await knex("users").select("id").where({ isAdmin: true });
+  const [userId] = await knex("users").select("id").where({ isAdmin: true })
   await knex("addresses").insert({
     address: faker.location.streetAddress(),
     city: faker.location.city(),
@@ -22,5 +22,5 @@ export const seed = async (knex) => {
     country: faker.location.country(),
     mainAddress: true,
     userId: userId.id,
-  });
-};
+  })
+}

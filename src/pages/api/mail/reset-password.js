@@ -27,7 +27,7 @@ const handler = mw({
         return
       }
 
-      await user.query().update({ resetPassword: true })
+      await UserModel.query().findOne({ email }).update({ resetPassword: true })
 
       const encryptId = (props) => {
         const encryptedId = AES.encrypt(
@@ -37,6 +37,7 @@ const handler = mw({
 
         return encryptedId
       }
+      const idCypted = encryptId(user.id)
 
       sgMail.setApiKey(config.security.sendgrid)
       const msg = {
@@ -47,15 +48,18 @@ const handler = mw({
         dynamic_template_data: {
           firstname: user.firstName,
           lastname: user.lastName,
-          url: `${config.baseURL}/mails/reset-password?id=${encodeURIComponent(
-            encryptId(user.id)
-          )}&timer=${encodeURIComponent(encryptId(new Date().toISOString()))}`,
+          url: `${
+            config.baseURL
+          }/mails/reset-password?id=${idCypted}&timer=${encryptId(
+            new Date().toISOString()
+          )}`,
         },
+        hideWarnings: true,
       }
 
       try {
         sgMail.send(msg)
-        res.send({ success: true })
+        res.send({ result: idCypted })
       } catch (error) {
         res.status(404).send({ success: error })
       }

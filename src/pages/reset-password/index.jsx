@@ -21,21 +21,15 @@ const ResetPassword = () => {
   const router = useRouter()
 
   const {
-    actions: { mailResetPassword },
+    services: {
+      sendMail: { resetPassword },
+    },
   } = useAppContext()
   const [error, setError] = useState(null)
 
   const handleSubmit = useCallback(
     async (values) => {
-      const [err] = await mailResetPassword(values)
-
-      if (err && error) {
-        document
-          .getElementById("errormsg")
-          .animate([{ opacity: "100" }, { opacity: "0" }, { opacity: "100" }], {
-            duration: 1000,
-          })
-      }
+      const [err, id] = await resetPassword(values)
 
       if (err) {
         setError(err)
@@ -43,9 +37,9 @@ const ResetPassword = () => {
         return
       }
 
-      router.push(routes.login())
+      router.push(routes.paramsPage.mailSent(`id=${encodeURIComponent(id)}`))
     },
-    [mailResetPassword, error, router]
+    [resetPassword, router]
   )
 
   return (
@@ -77,10 +71,10 @@ const ResetPassword = () => {
               Reset Password
             </Button>
 
-            <div className={styles.noAccountText}>
+            <div className={styles.moreTextCompartiment}>
               <p>
                 Already have an account ?{" "}
-                <span onClick={() => router.push(routes.login())}>
+                <span onClick={() => router.push(routes.pages.signIn())}>
                   {" "}
                   Sign here{" "}
                 </span>

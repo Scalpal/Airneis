@@ -50,7 +50,7 @@ const initialValues = {
 const Register = () => {
   const router = useRouter()
   const {
-    actions: { signUp },
+    services: { signUp },
   } = useAppContext()
   const [error, setError] = useState(null)
 
@@ -59,18 +59,14 @@ const Register = () => {
       const [error] = await signUp(values)
 
       if (error) {
-        if (error[0].response.status === 409) {
+        if (error) {
           setError("E-mail already used.")
-
-          return
-        } else {
-          setError("Oops, something went wrong.")
 
           return
         }
       }
 
-      router.push(routes.login())
+      router.push(routes.pages.login())
     },
     [router, signUp]
   )
@@ -183,6 +179,16 @@ const Register = () => {
             >
               Register
             </Button>
+
+            <div className={styles.moreTextCompartiment}>
+              <p>
+                already have an account ?
+                <span onClick={() => router.push(routes.pages.signIn())}>
+                  {" "}
+                  Login here{" "}
+                </span>
+              </p>
+            </div>
           </Form>
         )}
       </Formik>

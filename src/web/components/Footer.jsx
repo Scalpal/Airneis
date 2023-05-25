@@ -10,7 +10,7 @@ const Footer = (props) => {
 
   const logout = () => {
     signOut()
-    router.push(routes.home())
+    router.push(routes.pages.home())
   }
 
   return (
@@ -31,11 +31,11 @@ const Footer = (props) => {
         <div>
           <h2>My Account </h2>
           {session ? (
-            <Link href={routes.profil()}>
+            <Link href={routes.pages.profil()}>
               <p>My profil</p>
             </Link>
           ) : (
-            <Link href={routes.login()}>
+            <Link href={routes.pages.signIn()}>
               <p>Sign in</p>
             </Link>
           )}
@@ -44,12 +44,12 @@ const Footer = (props) => {
               <p>Logout</p>
             </a>
           ) : (
-            <Link href={routes.register()}>
+            <Link href={routes.pages.signUp()}>
               <p>Register</p>
             </Link>
           )}
           {session && (
-            <Link href={routes.order()}>
+            <Link href={routes.pages.order()}>
               <p>Orders</p>
             </Link>
           )}
@@ -57,10 +57,10 @@ const Footer = (props) => {
 
         <div>
           <h2>Shop</h2>
-          <Link href={routes.products()}>
+          <Link href={routes.pages.products()}>
             <p>All products</p>
           </Link>
-          <Link href={routes.categories()}>
+          <Link href={routes.pages.categories()}>
             <p>All categories</p>
           </Link>
         </div>

@@ -1,16 +1,6 @@
 import createAPIClient from "@/web/createAPIClient.js"
 import parseSession from "@/web/parseSession.js"
 import prepareService from "@/web/prepareService"
-import signUpService from "@/web/services/signUp.js"
-import signInService from "@/web/services/signIn.js"
-import mailResetPasswordService from "@/web/services/mailResetPassword.js"
-import confirmAccountService from "@/web/services/confirmAccount.js"
-import productsViewerService from "@/web/services/productsViewer.js"
-import materialsViewerService from "@/web/services/materialsViewer.js"
-import categoriesViewerService from "@/web/services/categoriesViewer.js"
-import resetPasswordService from "@/web/services/resetPassword.js"
-import cryptService from "@/web/services/crypt.js"
-import loggedUserService from "@/web/services/loggedUser.js"
 import {
   createContext,
   useCallback,
@@ -29,17 +19,7 @@ export const AppContextProvider = (props) => {
   const [jwt, setJWT] = useState(null)
   const api = createAPIClient({ jwt })
 
-  const signUp = signUpService({ api })
-  const signIn = signInService({ api, setSession, setJWT })
   const services = prepareService({ api, setSession, setJWT, session })
-  const loggedUser = loggedUserService({ api, session })
-  const mailResetPassword = mailResetPasswordService({ api })
-  const productsViewer = productsViewerService({ api })
-  const confirmAccount = confirmAccountService({ api })
-  const materialsViewer = materialsViewerService({ api })
-  const categoriesViewer = categoriesViewerService({ api })
-  const resetPassword = resetPasswordService({ api })
-  const crypt = cryptService({ api }, session)
   const signOut = useCallback(() => {
     document.cookie = "token" + "=;expires=Thu, 01 Jan 1970 00:00:01 GMT;"
     setSession(false)
@@ -152,61 +132,39 @@ export const AppContextProvider = (props) => {
   const contextValues = useMemo(() => {
     return {
       actions: {
-        api,
-        signUp,
-        signIn,
         signOut,
-        loggedUser,
-        mailResetPassword,
-        resetPassword,
-        crypt,
         setCart,
         addToCart,
         changeValuesProductFromCart,
         deleteProductFromCart,
-        productsViewer,
-        materialsViewer,
-        categoriesViewer,
-        confirmAccount,
-        services,
       },
+      services,
       state: {
         session,
         cart,
       },
     }
   }, [
-    api,
-    signUp,
-    signIn,
     signOut,
-    loggedUser,
-    mailResetPassword,
-    resetPassword,
-    crypt,
     addToCart,
     changeValuesProductFromCart,
     deleteProductFromCart,
-    productsViewer,
-    materialsViewer,
-    categoriesViewer,
-    confirmAccount,
     session,
     cart,
     services,
   ])
 
-  if (!isPublicPage && session === null) {
-    return <span>Not connected</span>
-  }
+  // if (!isPublicPage && session === null) {
+  //   return <span>Not connected</span>
+  // }
 
   return <AppContext.Provider {...otherProps} value={contextValues} />
 }
 
 const useAppContext = () => {
-  const { state, actions } = useContext(AppContext)
+  const { state, actions, services } = useContext(AppContext)
 
-  return { state, actions }
+  return { state, actions, services }
 }
 
 export default useAppContext
