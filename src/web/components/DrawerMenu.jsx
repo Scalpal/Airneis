@@ -44,7 +44,9 @@ const DrawerMenu = (props) => {
           <Link href={routes.login()}>Login</Link>
         )}
         {session ? (
-          <a onClick={logout}>Logout</a>
+          <Link href="" onClick={logout}>
+            Logout
+          </Link>
         ) : (
           <Link href={routes.register()}>Register</Link>
         )}
