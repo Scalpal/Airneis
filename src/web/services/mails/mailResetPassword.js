@@ -4,11 +4,13 @@ const mailResetPassword =
   ({ api }) =>
   async ({ email }) => {
     try {
-      const { data } = await api.get(routes.api.mailResetPassword(), {
+      const {
+        data: { result },
+      } = await api.get(routes.api.mails.resetPassword(), {
         params: { email },
       })
 
-      return [null, data]
+      return [null, result]
     } catch (err) {
       const error = err.response?.data?.error || "Oops. Something went wrong"
 

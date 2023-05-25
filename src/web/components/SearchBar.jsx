@@ -1,6 +1,5 @@
 import styles from "@/styles/components/SearchBar.module.css"
 import { useEffect, useState } from "react"
-import { classnames } from "@/pages/_app"
 
 const SearchBar = (props) => {
   const { searchStateAction } = props

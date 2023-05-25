@@ -1,4 +1,4 @@
-import knexfile from "@@/knexfile.js"
+import knexfile from "../../knexfile.js"
 import dotenv from "dotenv"
 import { resolve } from "path"
 

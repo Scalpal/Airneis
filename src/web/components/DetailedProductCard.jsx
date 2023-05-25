@@ -27,7 +27,7 @@ const DetailedProductCard = (props) => {
     <div className={styles.productCard}>
       <div
         className={styles.productCardImageContainer}
-        onClick={() => router.push(routes.query.products(product.id))}
+        onClick={() => router.push(routes.queryPage.products(product.id))}
       >
         <Image
           className={styles.productCardImage}
@@ -48,7 +48,7 @@ const DetailedProductCard = (props) => {
 
         <div
           className={styles.showMoreButton}
-          onClick={() => router.push(routes.query.products(product.id))}
+          onClick={() => router.push(routes.queryPage.products(product.id))}
         >
           <p>Voir plus</p>
           <ArrowRightIcon className={styles.showMoreIcon} />
