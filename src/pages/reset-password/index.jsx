@@ -37,7 +37,7 @@ const ResetPassword = () => {
         return
       }
 
-      router.push(routes.paramsPage.mailSent(`id=${encodeURIComponent(id)}`))
+      router.push(router.push(routes.paramsPage.mailSent(`codedId=${id}`)))
     },
     [resetPassword, router]
   )

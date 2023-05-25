@@ -4,9 +4,11 @@ const signUp =
   ({ api }) =>
   async (values) => {
     try {
-      const { data } = await api.post(routes.api.signUp(), values)
+      const {
+        data: { result },
+      } = await api.post(routes.api.signUp(), values)
 
-      return [null, data]
+      return [null, result]
     } catch (err) {
       const error = err.response?.data?.error || "Oops. Something went wrong"
 

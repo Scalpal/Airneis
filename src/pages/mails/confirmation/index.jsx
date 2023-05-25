@@ -10,17 +10,18 @@ const MailConfirmation = () => {
   const [err, setErr] = useState(false)
   const [answer, setAnswer] = useState(null)
   const router = useRouter()
-  const { id } = router.query
+  const { codedId } = router.query
+  const id = decodeURIComponent(codedId)
   const {
     services: {
-      confirmAccount,
+      sendMail: { confirmAccount },
       security: { crypt },
     },
   } = useAppContext()
 
   useEffect(() => {
     const fetchData = async () => {
-      if (id) {
+      if (codedId) {
         const [{ getId }] = await crypt([{ id }])
 
         if (!getId) {
@@ -35,13 +36,15 @@ const MailConfirmation = () => {
         if (error) {
           setAnswer(error)
           setErr(true)
-        } else {
-          setAnswer(results)
+
+          return
         }
+
+        setAnswer(results)
       }
     }
     fetchData()
-  }, [confirmAccount, crypt, id])
+  }, [codedId, confirmAccount, crypt, err, id])
 
   const handleclick = () => {
     router.push(routes.pages.home())

@@ -9,7 +9,8 @@ const MailSent = () => {
   const router = useRouter()
   const [answer, setAnswer] = useState(null)
   const [err, setErr] = useState(null)
-  const { id } = router.query
+  const { codedId } = router.query
+  const id = decodeURIComponent(codedId)
   const {
     services: {
       security: { crypt },
@@ -18,7 +19,7 @@ const MailSent = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (id) {
+      if (codedId) {
         const [{ getId }] = await crypt([{ id }])
 
         if (!getId) {
@@ -32,7 +33,7 @@ const MailSent = () => {
       }
     }
     fetchData()
-  }, [crypt, id])
+  }, [codedId, crypt, id])
 
   return (
     <div className={styles.div}>

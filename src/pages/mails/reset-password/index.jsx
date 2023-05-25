@@ -26,21 +26,26 @@ const initialValues = {
 
 const MailResetPassword = () => {
   const router = useRouter()
-  const { id, timer } = router.query
-  const {
-    actions: { resetPassword, crypt },
-  } = useAppContext()
+  const { codedId, codedTimer } = router.query
+  const id = decodeURIComponent(codedId)
+  const timer = decodeURIComponent(codedTimer)
   const [errorURL, setErrorURL] = useState(null)
   const [error, setError] = useState(null)
   const [cryptoId, setCryptoId] = useState(null)
   const [cryptoTimer, setCryptoTimer] = useState(null)
+  const {
+    services: {
+      resetPassword,
+      security: { crypt },
+    },
+  } = useAppContext()
 
   useEffect(() => {
     const fetchData = async () => {
-      if (id && timer) {
+      if (codedId && codedTimer) {
         const [{ getId }, { getTimer }] = await crypt([{ id }, { timer }])
 
-        if (!getId || !getTimer) {
+        if (!getId && !getTimer) {
           setErrorURL(true)
           setError("Invalid page")
 
@@ -53,7 +58,7 @@ const MailResetPassword = () => {
     }
 
     fetchData()
-  }, [crypt, id, timer])
+  }, [codedId, codedTimer, crypt, id, timer])
 
   const handleSubmit = useCallback(
     async (values) => {
@@ -75,7 +80,7 @@ const MailResetPassword = () => {
         return
       }
 
-      router.push(routes.login())
+      router.push(routes.pages.signIn())
     },
     [cryptoId, cryptoTimer, errorURL, resetPassword, router]
   )
@@ -112,10 +117,10 @@ const MailResetPassword = () => {
               Reset Password
             </Button>
 
-            <div className={styles.noAccountText}>
+            <div className={styles.moreTextCompartiment}>
               <p>
                 Don&apos;t want to reset your password ?{" "}
-                <span onClick={() => router.push(routes.home())}>
+                <span onClick={() => router.push(routes.pages.home())}>
                   {" "}
                   Return home{" "}
                 </span>

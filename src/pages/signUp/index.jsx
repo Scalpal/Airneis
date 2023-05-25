@@ -56,17 +56,17 @@ const Register = () => {
 
   const handleSubmit = useCallback(
     async (values) => {
-      const [error] = await signUp(values)
+      const [error, id] = await signUp(values)
 
       if (error) {
         if (error) {
-          setError("E-mail already used.")
+          setError(error)
 
           return
         }
       }
 
-      router.push(routes.pages.login())
+      router.push(routes.paramsPage.mailSent(`codedId=${id}`))
     },
     [router, signUp]
   )

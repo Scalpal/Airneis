@@ -1,6 +1,7 @@
 import hashPassword from "@/api/db/hashPassword"
 import AddressModel from "@/api/db/models/AddressModel"
 import UserModel from "@/api/db/models/UserModel.js"
+const { transaction } = require("objection")
 import validate from "@/api/middlewares/validate.js"
 import mw from "@/api/mw.js"
 import { AES } from "crypto-js"
@@ -56,35 +57,29 @@ const handler = mw({
 
       const [passwordHash, passwordSalt] = await hashPassword(password)
 
-      const addedUser = await UserModel.query()
-        .insert({
-          email,
-          firstName,
-          lastName,
-          passwordHash,
-          passwordSalt,
-          phoneNumber,
-        })
-        .returning("*")
+      const result = await transaction(
+        UserModel,
+        AddressModel,
+        async (UserModel, AddressModel) => {
+          const newUser = await UserModel.query().insert({
+            email,
+            firstName,
+            lastName,
+            passwordHash,
+            passwordSalt,
+            phoneNumber,
+          })
 
-      if (
-        address !== "" &&
-        city !== "" &&
-        region !== "" &&
-        postalCode !== "" &&
-        country !== ""
-      ) {
-        await AddressModel.query()
-          .insert({
+          return AddressModel.query().insert({
             address,
             city,
             region,
             postalCode,
             country,
-            userId: addedUser.id,
+            userId: newUser.id,
           })
-          .returning("*")
-      }
+        }
+      )
 
       const encryptId = (id) => {
         const encryptedId = AES.encrypt(
@@ -97,6 +92,8 @@ const handler = mw({
 
       sgMail.setApiKey(config.security.sendgrid)
 
+      const idCypted = encodeURIComponent(encryptId(result.userId))
+
       const msg = {
         to: email,
         from: "airneis.supdevinci@gmail.com",
@@ -105,15 +102,13 @@ const handler = mw({
         dynamic_template_data: {
           firstname: firstName,
           lastname: lastName,
-          url: `${config.baseURL}/mails/confirmation?id=${encryptId(
-            addedUser.id
-          )}`,
+          url: `${config.baseURL}/mails/confirmation?codedId=${idCypted}`,
         },
       }
 
       try {
         sgMail.send(msg)
-        res.send({ success: true })
+        res.send({ result: idCypted })
       } catch (error) {
         res.status(404).send({ error: error })
       }

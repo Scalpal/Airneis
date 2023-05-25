@@ -37,7 +37,10 @@ const handler = mw({
 
         return encryptedId
       }
-      const idCypted = encryptId(user.id)
+      const idCypted = encodeURIComponent(encryptId(user.id))
+      const timerCrypted = encodeURIComponent(
+        encryptId(new Date().toISOString())
+      )
 
       sgMail.setApiKey(config.security.sendgrid)
       const msg = {
@@ -48,11 +51,7 @@ const handler = mw({
         dynamic_template_data: {
           firstname: user.firstName,
           lastname: user.lastName,
-          url: `${
-            config.baseURL
-          }/mails/reset-password?id=${idCypted}&timer=${encryptId(
-            new Date().toISOString()
-          )}`,
+          url: `${config.baseURL}/mails/reset-password?codedId=${idCypted}&codedTimer=${timerCrypted}`,
         },
         hideWarnings: true,
       }
