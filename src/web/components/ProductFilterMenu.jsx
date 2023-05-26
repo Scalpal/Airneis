@@ -62,7 +62,7 @@ const ProductFilterMenu = (props) => {
               type="number"
               name="priceMin"
               value={
-                appliquedQueryParams.priceMin === 0
+                !appliquedQueryParams.priceMin
                   ? ""
                   : appliquedQueryParams.priceMin
               }
@@ -82,7 +82,7 @@ const ProductFilterMenu = (props) => {
               type="number"
               name="priceMax"
               value={
-                appliquedQueryParams.priceMax === 0
+                !appliquedQueryParams.priceMax
                   ? ""
                   : appliquedQueryParams.priceMax
               }
@@ -111,7 +111,7 @@ const ProductFilterMenu = (props) => {
           ))}
         </CollapseMenu>
 
-        {/* <CollapseMenu title="Materials" key={"materials"}>
+        <CollapseMenu title="materials" key={"materials"}>
           {materials.map(({ name, id }, index) => (
             <CheckboxItem
               key={index}
@@ -123,7 +123,7 @@ const ProductFilterMenu = (props) => {
               onChangeEvent={handleChangeQueryParamsFilters}
             />
           ))}
-        </CollapseMenu> */}
+        </CollapseMenu>
 
         <div>
           <p className={styles.categoryTitle}>Stocks</p>

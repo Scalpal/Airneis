@@ -25,7 +25,7 @@ const products = mw({
       const products = await query.modify("paginate", { limit, page })
 
       res.send({
-        products,
+        result: products,
         meta: {
           totalCount,
         },
