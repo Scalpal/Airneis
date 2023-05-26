@@ -4,7 +4,9 @@ const productsViewer =
   ({ api }) =>
   async () => {
     try {
-      const { data: result } = await api.get(routes.api.allmaterials())
+      const {
+        data: { result },
+      } = await api.get(routes.api.materials())
 
       return [null, result]
     } catch (err) {

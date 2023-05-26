@@ -1,6 +1,4 @@
 const createRouteWithParams = (route, params) => {
-  console.log(params)
-
   if (!params) {
     return route
   }
@@ -50,9 +48,9 @@ const routes = {
     crypt: () => "/security/crypt",
     mailResetPassword: () => "/mail/reset-password",
     resetPassword: () => "/users/reset-password",
-    allcategories: () => "/categories/getCategories",
-    allmaterials: () => "/materials/getMaterials",
-    allProducts: () => "/products/getProducts",
+    categories: () => "/categories",
+    materials: () => "/materials",
+    products: () => "/products",
     mails: {
       resetPassword: () => "/mail/reset-password",
     },

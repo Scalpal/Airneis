@@ -1,19 +1,17 @@
 import ProductMaterialRelationModel from "@/api/db/models/ProductMaterialRelationModel"
 import ProductModel from "@/api/db/models/ProductModel"
+
 import validate from "@/api/middlewares/validate"
 import mw from "@/api/mw"
 import {
   arrayOrStringValidator,
-  boolValidator,
-  categoriesValidator,
+  booleanValidator,
   limitValidator,
-  materialsValidator,
   numberValidator,
   orderFieldValidator,
   orderValidator,
   pageValidator,
   searchValidator,
-  testValidator,
 } from "@/validator"
 
 const handler = mw({
@@ -23,10 +21,10 @@ const handler = mw({
         priceMin: numberValidator,
         priceMax: numberValidator,
         materials: arrayOrStringValidator,
-        onlyInStock: boolValidator.default(false),
+        onlyInStock: booleanValidator.required(),
         categories: arrayOrStringValidator,
-        limit: limitValidator,
-        page: pageValidator,
+        limit: limitValidator.required(),
+        page: pageValidator.required(),
         orderField: orderFieldValidator([
           "id",
           "name",
@@ -71,28 +69,23 @@ const handler = mw({
       }
 
       if (priceMin) {
-        query.where("price", ">", priceMin)
+        query.where("price", ">=", priceMin)
       }
 
       if (priceMax) {
-        query.where("price", "<", priceMax)
+        query.where("price", "<=", priceMax)
       }
 
-      if (categories) {
+      if (categories?.length) {
         query.whereIn("categoryId", categoriesArray)
       }
 
-      if (materials) {
-        const materialsProducts = await ProductMaterialRelationModel.query()
-          .select("productId")
-          .whereIn("materialId", materialsArray)
-
-        const productIds = materialsProducts.reduce(
-          (acc, { productId }) => [...acc, productId],
-          []
-        )
-
-        query.whereIn("id", productIds)
+      if (materials?.length) {
+        query.whereIn("id", function () {
+          this.select("productId")
+            .from(ProductMaterialRelationModel.tableName)
+            .whereIn("materialId", materialsArray)
+        })
       }
 
       if (onlyInStock === true) {
@@ -100,22 +93,22 @@ const handler = mw({
       }
 
       const [countResult] = await query
+        .clone()
         .clearSelect()
         .clearOrder()
         .limit(1)
         .offset(0)
         .count()
 
-      const count = Number.parseInt(countResult.count, 10)
-
       const products = await query
         .modify("paginate", limit, page)
         .select("id", "name", "description", "price", "stock")
-        .withGraphFetched("category")
-        .withGraphFetched("materials")
+        .withGraphFetched("[category, images, materials]")
+
+      const count = Number.parseInt(countResult.count, 10)
 
       res.send({
-        products,
+        result: products,
         meta: {
           count,
         },

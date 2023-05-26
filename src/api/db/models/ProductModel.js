@@ -19,7 +19,29 @@ class ProductModel extends BaseModel {
         modelClass: CategoryModel,
         join: {
           from: "products.categoryId",
-          to: "category.id",
+          to: "categories.id",
+        },
+      },
+      images: {
+        relation: BaseModel.HasManyRelation,
+        modelClass: ImageModel,
+        filter: (query) => query.select("id", "imageSrc"),
+        join: {
+          from: "products.id",
+          to: "products_images.productId",
+        },
+      },
+      materials: {
+        relation: BaseModel.ManyToManyRelation,
+        modelClass: MaterialModel,
+        join: {
+          from: "products.id",
+          through: {
+            modelClass: ProductMaterialRelation,
+            from: "products_materials_relation.productId",
+            to: "products_materials_relation.materialId",
+          },
+          to: "materials.id",
         },
       },
     }

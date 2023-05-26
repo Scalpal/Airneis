@@ -25,7 +25,7 @@ const materials = mw({
       const materials = await query.modify("paginate", { limit, page })
 
       res.send({
-        materials,
+        result: materials,
         meta: {
           totalCount,
         },

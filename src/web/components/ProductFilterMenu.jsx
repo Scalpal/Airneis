@@ -9,13 +9,13 @@ import useAppContext from "@/web/hooks/useAppContext"
 const ProductFilterMenu = (props) => {
   const {
     appliquedQueryParams,
-    setIndex,
+    setPage,
     setQueryParams,
     setAppliquedQueryParams,
   } = props
 
   const {
-    actions: { categoriesViewer, materialsViewer },
+    services: { getCategories, getMaterials },
   } = useAppContext()
   const [error, setError] = useState(null)
   const [categories, setCategories] = useState([])
@@ -24,22 +24,24 @@ const ProductFilterMenu = (props) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const categoriesResult = await categoriesViewer()
-        const materialsResult = await materialsViewer()
+      const [categoriesError, categoriesResult] = await getCategories()
+      const [materialsError, materialsResult] = await getMaterials()
 
-        setCategories(categoriesResult.result)
-        setMaterials(materialsResult.result)
-      } catch (err) {
-        setError(err)
+      if (categoriesError || materialsError) {
+        setError(true)
+
+        return
       }
+
+      setCategories(categoriesResult)
+      setMaterials(materialsResult)
     }
     // console.error(error);
 
     fetchData()
 
     document.body.style.position = isOpen ? "fixed" : "initial"
-  }, [categoriesViewer, isOpen, materialsViewer])
+  }, [getCategories, getMaterials, isOpen])
 
   const handleChangeQueryParamsFilters = useCallback(
     (values) => {
@@ -72,14 +74,14 @@ const ProductFilterMenu = (props) => {
   )
 
   const handleQueryParamsFilters = useCallback(() => {
-    setIndex(1)
+    setPage(1)
     setQueryParams(appliquedQueryParams)
-  }, [appliquedQueryParams, setIndex, setQueryParams])
+  }, [appliquedQueryParams, setPage, setQueryParams])
 
   const handleResetQueryParamsFilters = useCallback(() => {
     const defaultQueryParams = {
-      priceMin: 0,
-      priceMax: 0,
+      priceMin: null,
+      priceMax: null,
       materials: [],
       onlyInStock: false,
       categories: [],
@@ -122,7 +124,7 @@ const ProductFilterMenu = (props) => {
               type="number"
               name="priceMin"
               value={
-                appliquedQueryParams.priceMin === 0
+                !appliquedQueryParams.priceMin
                   ? ""
                   : appliquedQueryParams.priceMin
               }
@@ -142,7 +144,7 @@ const ProductFilterMenu = (props) => {
               type="number"
               name="priceMax"
               value={
-                appliquedQueryParams.priceMax === 0
+                !appliquedQueryParams.priceMax
                   ? ""
                   : appliquedQueryParams.priceMax
               }
@@ -171,7 +173,7 @@ const ProductFilterMenu = (props) => {
           ))}
         </CollapseMenu>
 
-        {/* <CollapseMenu title="Materials" key={"materials"}>
+        <CollapseMenu title="materials" key={"materials"}>
           {materials.map(({ name, id }, index) => (
             <CheckboxItem
               key={index}
@@ -183,7 +185,7 @@ const ProductFilterMenu = (props) => {
               onChangeEvent={handleChangeQueryParamsFilters}
             />
           ))}
-        </CollapseMenu> */}
+        </CollapseMenu>
 
         <div>
           <p className={styles.categoryTitle}>Stocks</p>

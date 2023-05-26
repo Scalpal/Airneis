@@ -23,11 +23,11 @@
 - service & front & back de reset password
 - service & front & back de mail confirmation
 - service & front & back de crypt
+- login
+- signout
 
 * materials
 * products
-* login
-* signout
 * logged user
 * checkToken
 * checkRole

@@ -4,79 +4,64 @@ import DetailedProductCard from "@/web/components/DetailedProductCard"
 import SearchBar from "@/web/components/SearchBar"
 import { useEffect, useState } from "react"
 import ProductFilterMenu from "@/web/components/ProductFilterMenu"
-import IndexPages from "@/web/components/pagination"
 import useAppContext from "@/web/hooks/useAppContext"
 import { useRouter } from "next/router"
-import routes from "@/web/routes"
 import deepmerge from "deepmerge"
 
 const Products = () => {
   const {
-    actions: { productsViewer },
+    services: { getProducts },
   } = useAppContext()
   const router = useRouter()
   const [error, setError] = useState(null)
   const [products, setProducts] = useState([])
-  const [index, setIndex] = useState(1)
+  const [page, setPage] = useState(1)
+  const [limit, setLimit] = useState(20)
   const [count, setCount] = useState(0)
   const [startIndex, setStartIndex] = useState(0)
   const [endIndex, setEndIndex] = useState(0)
   const [queryParams, setQueryParams] = useState({
-    priceMin: 0,
-    priceMax: 0,
+    priceMin: null,
+    priceMax: null,
     materials: [],
     onlyInStock: false,
     categories: [],
-    searchProduct: null,
+    search: null,
   })
   const [appliquedQueryParams, setAppliquedQueryParams] = useState(queryParams)
-  const { page } = router.query
-  const productsPerPage = 5
+  const { index } = router.query
   useEffect(() => {
     const fetchData = async () => {
-      const values = deepmerge({ index, range: productsPerPage }, queryParams)
+      const values = deepmerge({ page, limit }, queryParams)
 
-      try {
-        const data = await productsViewer(values)
-        const { result, meta } = data
-        setProducts(result)
-        setCount(meta.count.toLocaleString())
-      } catch (err) {
+      const [err, data] = await getProducts(values)
+
+      if (err) {
         setError(err)
+
+        return
       }
+
+      const { result, meta } = data
+      setProducts(result)
+      setCount(meta.count.toLocaleString())
     }
     fetchData()
 
-    setIndex(page ? Number.parseInt(page) : 1)
+    setPage(index ? Number.parseInt(index) : 1)
 
-    setStartIndex((index - 1) * productsPerPage + 1)
+    setStartIndex((index - 1) * limit + 1)
     const indexEnd =
-      (index - 1) * productsPerPage + productsPerPage < count
-        ? (index - 1) * productsPerPage + productsPerPage
-        : count
+      (index - 1) * limit + limit < count ? (index - 1) * limit + limit : count
     setEndIndex(indexEnd)
-  }, [count, index, page, productsViewer, queryParams])
-
-      if (typeof value === "boolean") {
-        queryString += key + "=" + value + "&";
-      }
-    });
-
-    return queryString;
-
-  }, [appliedQueryParams]); 
-
-  useEffect(() => {
-    console.log(createQueryString()); 
-  }, [appliedQueryParams, createQueryString]); */
-  }
+  }, [count, getProducts, index, queryParams, limit, page])
 
   const searchStateAction = (value) => {
     setAppliquedQueryParams((prevValues) => {
-      return { ...prevValues, searchProduct: value }
+      return { ...prevValues, search: value }
     })
     setQueryParams((prevValues) => {
-      return { ...prevValues, searchProduct: value }
+      return { ...prevValues, search: value }
     })
   }
 
@@ -97,25 +82,18 @@ const Products = () => {
         <div className={styles.content}>
           <ProductFilterMenu
             appliquedQueryParams={appliquedQueryParams}
-            setIndex={setIndex}
+            setPage={setPage}
             setQueryParams={setQueryParams}
             setAppliquedQueryParams={setAppliquedQueryParams}
           />
 
           <section className={styles.productsContainer}>
-            {categoryProducts.map((product, index) => (
             {products.map((product, index) => (
               <DetailedProductCard key={index} product={product} />
             ))}
           </section>
         </div>
       </main>
-      <IndexPages
-        count={count}
-        page={index}
-        range={productsPerPage}
-        redirectLink={routes.params.products}
-      />
     </>
   )
 }
