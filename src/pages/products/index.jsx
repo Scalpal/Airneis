@@ -50,11 +50,11 @@ const Products = () => {
 
     setPage(index ? Number.parseInt(index) : 1)
 
-    setStartIndex((index - 1) * limit + 1)
-    const indexEnd =
-      (index - 1) * limit + limit < count ? (index - 1) * limit + limit : count
-    setEndIndex(indexEnd)
-  }, [count, index, page, productsViewer, queryParams])
+    setEndIndex(
+      (page - 1) * limit + limit < count ? (page - 1) * limit + limit : count
+    )
+    setStartIndex((page - 1) * limit + 1)
+  }, [count, getProducts, index, queryParams, limit, page])
 
   const searchStateAction = (value) => {
     setAppliquedQueryParams((prevValues) => {
@@ -76,7 +76,7 @@ const Products = () => {
 
         <div className={styles.indexProducts}>
           <span>
-            {startIndex} - {endIndex} on{" "}
+            {endIndex > 0 ? startIndex : 0} - {endIndex} on{" "}
             {count > 100000 ? `plus de ${count}` : count} products
           </span>
         </div>
