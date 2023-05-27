@@ -13,6 +13,8 @@ const Products = () => {
     services: { getProducts },
   } = useAppContext()
   const router = useRouter()
+
+  // eslint-disable-next-line no-unused-vars
   const [error, setError] = useState(null)
   const [products, setProducts] = useState([])
   const [page, setPage] = useState(1)
@@ -71,8 +73,6 @@ const Products = () => {
 
       <main className={styles.main}>
         <SearchBar searchStateAction={searchStateAction} />
-
-        {error ? <span>Eroor</span> : null}
 
         <div className={styles.indexProducts}>
           <span>
