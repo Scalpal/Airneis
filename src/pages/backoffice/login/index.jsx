@@ -99,3 +99,4 @@ Login.isPublic = true
 Login.getLayout = function (page) {
   return <BackofficeLoginLayout>{page}</BackofficeLoginLayout>
 }
+export default Login

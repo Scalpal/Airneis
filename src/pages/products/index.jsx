@@ -16,7 +16,6 @@ const Products = () => {
   const [error, setError] = useState(null)
   const [products, setProducts] = useState([])
   const [page, setPage] = useState(1)
-  const [limit, setLimit] = useState(20)
   const [count, setCount] = useState(0)
   const [startIndex, setStartIndex] = useState(0)
   const [endIndex, setEndIndex] = useState(0)
@@ -29,6 +28,7 @@ const Products = () => {
     search: null,
   })
   const [appliquedQueryParams, setAppliquedQueryParams] = useState(queryParams)
+  const limit = 20
   const { index } = router.query
   useEffect(() => {
     const fetchData = async () => {
@@ -71,6 +71,8 @@ const Products = () => {
 
       <main className={styles.main}>
         <SearchBar searchStateAction={searchStateAction} />
+
+        {error ? <span>Eroor</span> : null}
 
         <div className={styles.indexProducts}>
           <span>

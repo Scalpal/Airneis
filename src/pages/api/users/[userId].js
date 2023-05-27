@@ -5,7 +5,7 @@ import slowDown from "@/api/middlewares/slowDown"
 import validate from "@/api/middlewares/validate"
 import mw from "@/api/mw.js"
 import {
-  boolValidator,
+  booleanValidator,
   emailValidator,
   phoneValidator,
   stringValidator,
@@ -98,8 +98,8 @@ const handler = mw({
         lastName: stringValidator,
         email: emailValidator,
         phoneNumber: phoneValidator,
-        active: boolValidator,
-        isAdmin: boolValidator,
+        active: booleanValidator,
+        isAdmin: booleanValidator,
       },
     }),
     async ({

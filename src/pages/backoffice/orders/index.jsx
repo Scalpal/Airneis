@@ -1,13 +1,13 @@
-import Layout from "@/web/components/backoffice/Layout";
-import { useState } from "react";
-import Table from "@/web/components/backoffice/Table";
-import { classnames } from "@/pages/_app";
-import { nunito } from "@/pages/_app";
-import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import styles from "@/styles/backoffice/statsPages.module.css";
-import { parseCookies } from "nookies";
-import checkToken from "@/web/services/checkToken";
-import checkIsAdmin from "@/web/services/checkIsAdmin";
+import Layout from "@/web/components/backoffice/Layout"
+import { useEffect, useState } from "react"
+import Table from "@/web/components/backoffice/Table"
+import { classnames } from "@/pages/_app"
+import { nunito } from "@/pages/_app"
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline"
+import styles from "@/styles/backoffice/statsPages.module.css"
+import { parseCookies } from "nookies"
+import checkToken from "@/web/services/checkToken"
+import checkIsAdmin from "@/web/services/checkIsAdmin"
 
 // Prototype datas
 // Prototype datas
@@ -19,18 +19,15 @@ const ordersProto = [
     products: [
       {
         name: "Modern beechwood chair",
-        name: "Modern beechwood chair",
         price: 223,
         stock: 25,
       },
       {
         name: "Chair",
-        name: "Chair",
         price: 98,
         stock: 25,
       },
       {
-        name: "Chair",
         name: "Chair",
         price: 134,
         stock: 25,
@@ -44,31 +41,30 @@ const ordersProto = [
     products: [
       {
         name: "Modern beechwood chair",
-        name: "Modern beechwood chair",
         price: 223,
         stock: 25,
       },
       {
-        name: "Chair",
         name: "Chair",
         price: 98,
         stock: 25,
       },
       {
         name: "Chair",
-        name: "Chair",
         price: 134,
         stock: 25,
       },
     ],
   },
-];
+]
 
 const BackofficeOrders = () => {
-  const [orders, _] = useState(ordersProto);
+  const [orders, setOrder] = useState([])
+  useEffect(() => {
+    setOrder(ordersProto)
+  }, [])
 
   return (
-    <main className={classnames(styles.mainContainer, nunito.className)}>
     <main className={classnames(styles.mainContainer, nunito.className)}>
       <div className={styles.topStats}>
         <div>
@@ -99,29 +95,30 @@ const BackofficeOrders = () => {
     </main>
   )
 }
+
 BackofficeOrders.isPublic = false
 BackofficeOrders.getLayout = function (page) {
-  return <Layout>{page}</Layout>;
-};
+  return <Layout>{page}</Layout>
+}
 
 export const getServerSideProps = async (context) => {
-  const { token } = parseCookies(context);
-  const badTokenRedirect = await checkToken(token);
+  const { token } = parseCookies(context)
+  const badTokenRedirect = await checkToken(token)
 
   if (badTokenRedirect) {
-    return badTokenRedirect;
+    return badTokenRedirect
   }
 
-  const notAdminRedirect = await checkIsAdmin(context);
+  const notAdminRedirect = await checkIsAdmin(context)
 
   if (notAdminRedirect) {
-    return notAdminRedirect;
+    return notAdminRedirect
   }
 
   return {
     props: {
       prototype: "nothing",
     },
-  };
-};
-export default BackofficeOrders;
+  }
+}
+export default BackofficeOrders

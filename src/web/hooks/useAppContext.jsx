@@ -14,6 +14,7 @@ import { parseCookies } from "nookies"
 const AppContext = createContext()
 
 export const AppContextProvider = (props) => {
+  // eslint-disable-next-line no-unused-vars
   const { isPublicPage, ...otherProps } = props
   const [session, setSession] = useState(null)
   const [jwt, setJWT] = useState(null)

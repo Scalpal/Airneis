@@ -3,10 +3,9 @@ import ProductMaterialRelationModel from "@/api/db/models/ProductMaterialRelatio
 import ProductModel from "@/api/db/models/ProductModel"
 import auth from "@/api/middlewares/auth"
 import checkIsAdmin from "@/api/middlewares/checkIsAdmin"
-import slowDown from "@/api/middlewares/slowDown"
 import validate from "@/api/middlewares/validate"
 import mw from "@/api/mw"
-import { idValidator, numberValidator, stringValidator } from "@/validator"
+import { idValidator } from "@/validator"
 
 const handler = mw({
   GET: [
@@ -39,36 +38,34 @@ const handler = mw({
       res.send({ product: product })
     },
   ],
-  PATCH: [
-    slowDown(500),
-    auth(),
-    checkIsAdmin(),
-    validate({
-      query: {
-        productId: idValidator,
-      },
-      body: {
-        name: stringValidator,
-        description: stringValidator,
-        price: numberValidator,
-        stock: numberValidator,
-        categoryId: numberValidator,
-      },
-    }),
-    async ({
-      locals: {
-        query: { productId },
-        body: { name, description, price, stock, categoryId },
-      },
-      res,
-    }) => {
-      const id = productId
+  // PATCH: [
+  //   auth(),
+  //   checkIsAdmin(),
+  //   validate({
+  //     query: {
+  //       productId: idValidator,
+  //     },
+  //     body: {
+  //       name: stringValidator,
+  //       description: stringValidator,
+  //       price: numberValidator,
+  //       stock: numberValidator,
+  //       categoryId: numberValidator,
+  //     },
+  //   }),
+  //   async ({
+  //     locals: {
+  //       query: { productId },
+  //       body: { name, description, price, stock, categoryId },
+  //     },
+  //     res,
+  //   }) => {
+  //     const id = productId
 
-      res.send({ status: "success", message: "Product edited successfully." })
-    },
-  ],
+  //     res.send({ status: "success", message: "Product edited successfully." })
+  //   },
+  // ],
   DELETE: [
-    slowDown(500),
     auth(),
     checkIsAdmin(),
     validate({

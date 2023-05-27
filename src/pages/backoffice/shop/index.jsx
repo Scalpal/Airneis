@@ -17,6 +17,8 @@ BackofficeShop.getLayout = function (page) {
   return <Layout>{page}</Layout>
 }
 
+export default BackofficeShop
+
 export const getServerSideProps = async (context) => {
   const { token } = parseCookies(context)
   const badTokenRedirect = await checkToken(token)
