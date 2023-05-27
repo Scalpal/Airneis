@@ -1,9 +1,11 @@
 import ProductMaterialRelationModel from "@/api/db/models/ProductMaterialRelationModel";
 import ProductModel from "@/api/db/models/ProductModel";
+import auth from "@/api/middlewares/auth";
+import checkIsAdmin from "@/api/middlewares/checkIsAdmin";
 import slowDown from "@/api/middlewares/slowDown";
 import validate from "@/api/middlewares/validate";
 import mw from "@/api/mw";
-import { arrayOrStringValidator, boolValidator, categoriesValidator, limitValidator, materialsValidator, numberValidator, orderFieldValidator, orderValidator, pageValidator, searchValidator, testValidator } from "@/validator";
+import { arrayOrStringValidator, boolValidator, limitValidator, numberValidator, orderFieldValidator, orderValidator, pageValidator, searchValidator } from "@/validator";
 
 const handler = mw({
   GET: [
@@ -28,6 +30,8 @@ const handler = mw({
       },
       res
     }) => {
+      console.log("SEARCH : ", search); 
+      
       const materialsArray = Array.isArray(materials) ? materials : [materials];
       const categoriesArray = Array.isArray(categories) ? categories : [categories];
 
@@ -78,6 +82,24 @@ const handler = mw({
         .withGraphFetched("materials");
       
       res.send({ products: products, count: count });
+    }
+  ], 
+  POST: [
+    slowDown(500),
+    auth(),
+    checkIsAdmin(),
+    validate({
+      body: { 
+        
+      }
+    }),
+    async({
+      locals: {
+        body: {  }
+      }, 
+      res
+    }) => {
+
     }
   ]
 });
