@@ -18,7 +18,6 @@ const signIn = ({ api, setSession, setJWT }) =>
       });
       
       return [null, true];
-      
     } catch (error) {
       if (error instanceof AxiosError) {
         console.log(error.response);

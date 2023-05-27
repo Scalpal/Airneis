@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 
 const ProductCard = (props) => {
-
   const { product } = props; 
   const router = useRouter(); 
 

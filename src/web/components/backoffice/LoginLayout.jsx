@@ -3,8 +3,6 @@ import { classnames } from "@/pages/_app";
 import { nunito } from "@/pages/_app";
 
 const BackofficeLoginLayout = ({children}) => {
-
-
   return (
     <div className={classnames(
       styles.layout,

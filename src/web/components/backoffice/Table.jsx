@@ -32,7 +32,6 @@ const Table = (props) => {
       return value.map((valueItem, index) => (
         <p key={index}>
           {Object.entries(valueItem).map(([_, objValue]) => {
-
             return (
               objValue + " - "
             );

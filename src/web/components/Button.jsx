@@ -3,7 +3,6 @@ import { classnames } from "@/pages/_app";
 import { nunito } from "@/pages/_app";
 
 const Button = (props) => {
-  
   const { children, disabled, variant, ...otherProps } = props; 
 
   return (

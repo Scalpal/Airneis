@@ -27,6 +27,7 @@ const Pagination = (props) => {
       }
 
       acc[chunkIndex].push(curr);
+
       return acc;
     }, []);
 

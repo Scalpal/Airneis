@@ -16,7 +16,6 @@ const Navbar = (props) => {
     if (fixed) {
       const carouselObserver = new IntersectionObserver(
         (entries) => {
-
           if (entries[0].isIntersecting === true || isDrawerToggled === true) {
             navbar.classList.remove("navbarBackground");
           } else {

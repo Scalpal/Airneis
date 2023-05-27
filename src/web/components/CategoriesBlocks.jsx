@@ -3,7 +3,6 @@ import styles from "@/styles/components/CategoriesBlocks.module.css";
 import Image from "next/image";
 
 const CategoriesBlocks = (props) => {
-
   const { categories } = props; 
   const router = useRouter(); 
 

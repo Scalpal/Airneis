@@ -30,7 +30,6 @@ const validationSchema = createValidator({
 });
 
 const BackofficeUserPage = (props) => {
-
   const { user } = props; 
   const { actions: { api } } = useAppContext();
 
@@ -58,7 +57,6 @@ const BackofficeUserPage = (props) => {
       setCurrentUser(data.user);
       setShowAlert(true);
       setAlert({ status: data.status, message: data.message });
-
     } catch (error) {
       if (error instanceof AxiosError) {
         console.log(error.response);

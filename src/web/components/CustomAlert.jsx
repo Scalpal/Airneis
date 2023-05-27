@@ -4,7 +4,6 @@ import { CheckBadgeIcon, ExclamationTriangleIcon } from "@heroicons/react/24/sol
 import { useEffect } from "react";
 
 const CustomAlert = (props) => {
-
   const { alert, showAlert, setShowAlert } = props;
 
   let customStyle = "";
@@ -12,14 +11,17 @@ const CustomAlert = (props) => {
   switch (alert.status) {
     case "success": 
       customStyle = styles.success;
+
       break;
   
     case "error": 
       customStyle = styles.error;
+
       break;
     
     default:
       customStyle = styles.error;
+
       break;
   }
 

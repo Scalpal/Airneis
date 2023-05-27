@@ -6,7 +6,6 @@ import { useRouter } from "next/router";
 import routes from "../routes";
 
 const DrawerMenu = (props) => {
-
   const { isDrawerToggledState, actions } = props;
   const [isDrawerToggled, setIsDrawerToggled] = isDrawerToggledState;
 

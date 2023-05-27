@@ -3,7 +3,6 @@ import * as yup from "yup";
 
 
 const checkIsAdmin = () => {
-
   return async (ctx) => {
     const { res, next, logger, locals } = ctx;
     const id = locals.userId;

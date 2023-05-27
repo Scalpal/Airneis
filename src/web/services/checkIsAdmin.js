@@ -3,7 +3,6 @@ import getApiClient from "./getApiClient";
 import routes from "../routes";
 
 const checkIsAdmin = async(context) => {
-
   const reqInstance = getApiClient(context);
 
   try {

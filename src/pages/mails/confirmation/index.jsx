@@ -33,13 +33,14 @@ MailConfirmation.getLayout = function (page) {
 export default MailConfirmation;
 
 export async function getServerSideProps(context) {
-
   const { id } = context.query;
 
   try {
     await axios.put(`
     http://localhost:3000/api/mail/confirmation?id=${id}`);
-    return {
+
+    
+return {
       props: {
         error: null
       }
