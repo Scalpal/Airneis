@@ -28,7 +28,6 @@ const handler = mw({
           .withGraphFetched("address"); 
 
         res.send({ user: user });
-
       } catch (error) {
         console.log(error);
         res.json({ error: "Error." });

@@ -38,6 +38,7 @@ const handler = mw({
 
         return;
       }
+
       const [passwordHash, passwordSalt] = await hashPassword(password);
 
       const addedUser = await UserModel.query()

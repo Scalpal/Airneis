@@ -17,7 +17,6 @@ import { useRouter } from "next/router";
 
 
 const BackofficeProducts = (props) => {
-
   const { productsProps, count } = props; 
 
   const router = useRouter(); 
@@ -78,10 +77,9 @@ const BackofficeProducts = (props) => {
     const reqInstance = getApiClient();
 
     try {
-      const { data: { products, count } } = await reqInstance.get(`http://localhost:3000/${routes.api.products.collection(queryParams)}`)
+      const { data: { products, count } } = await reqInstance.get(`http://localhost:3000/${routes.api.products.collection(queryParams)}`);
     
-      setProducts({ products, count }); 
-
+      setProducts({ products, count });
     } catch (error) {
       if (error instanceof AxiosError) {
         console.log(error.response);
@@ -98,6 +96,7 @@ const BackofficeProducts = (props) => {
       (sum, value) => sum + value.stock,
       0
     );
+
     return sumTotalProducts;
   };
 
