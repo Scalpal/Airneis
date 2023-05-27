@@ -2,7 +2,6 @@
   border-radius: 10px;
   width: 100%;
   padding: 0.3rem 1rem;
-  /* font-size: 1rem; */
   font-size: inherit;
   font-weight: 300;
   transition-duration: 500ms;
@@ -35,7 +34,7 @@
   .contained:hover {
     background-color: var(--secondary);
     border: 2px solid black;
-    outline: 2px solid var(--secondary);
+    outline: 2px solid transparent;
     color: black;
     outline-offset: 0.5rem;
   }
@@ -43,7 +42,7 @@
   .outlined:hover {
     background-color: black;
     border: 2px solid black;
-    outline: 2px solid var(--secondary);
+    outline: 2px solid transparent;
     color: white;
     outline-offset: 0.5rem;
   }

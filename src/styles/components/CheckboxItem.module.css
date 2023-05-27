@@ -4,6 +4,7 @@
   align-items: center; 
   gap: 0.5rem;
   transition-duration: 1s;
+  font-size: 0.8rem;
 }
 
 .checkboxItem input {

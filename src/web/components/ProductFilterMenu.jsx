@@ -4,49 +4,14 @@ import CheckboxItem from "./CheckboxItem";
 import Button from "./Button";
 import { useCallback, useEffect, useState } from "react";
 import { classnames } from "@/pages/_app";
-
-const materials = [
-  {
-    name: "Wood",
-    id: 1
-  },
-  {
-    name: "Steel",
-    id: 2,
-  },
-  {
-    name: "Plastic",
-    id: 3,
-  },
-  {
-    name: "Glass",
-    id: 4,
-  },
-  {
-    name: "Copper",
-    id: 5,
-  }
-];
-
-const categories = [
-  {
-    name: "Bed",
-    id: 1
-  },
-  {
-    name: "Table",
-    id: 2,
-  }, {
-    name: "Chair",
-    id: 3
-  }
-
-];
-
+import { useGetMaterials } from "../hooks/useGetMaterials";
+import { useGetCategories } from "../hooks/useGetCategories";
+import InputRange from "./InputRange";
 
 const ProductFilterMenu = (props) => {
-
-  const { handleQueryParamsFilters,setQueryParams, queryParams, setAppliedQueryParams } = props; 
+  const { handleQueryParamsFilters, setQueryParams, queryParams, setAppliedQueryParams } = props; 
+  const { materialsData, materialsIsLoading } = useGetMaterials(); 
+  const { categoriesData, categoriesIsLoading } = useGetCategories(); 
 
   const [isOpen, setIsOpen] = useState(false); 
 
@@ -94,28 +59,21 @@ const ProductFilterMenu = (props) => {
         <p className={styles.menuTitle}>Filters</p>
 
         <div className={styles.priceRangeWrapper}>
-          <div className={styles.labelInputWrapper}>
-            <label>Min price $</label>
-            <input
-              type="number"
-              min={0}
-              onChange={(e) => handleQueryParamsFilters("priceMin", { name: "priceMin", value: e.target.value})}
-            />
-          </div>
+          <InputRange
+            label={"Price min"}
+            currentValue={queryParams.priceMin}
+            handler={(e) => handleQueryParamsFilters("priceMin", e.target.value)}
+          />
 
-          <div className={styles.labelInputWrapper}>
-            <label>Max price $</label>
-            <input
-              type="number"
-              min={0}
-              onChange={(e) => handleQueryParamsFilters("priceMax", { name: "priceMax", value: e.target.value})}
-            />
-          </div>
-
+          <InputRange
+            label={"Price max"}
+            currentValue={queryParams.priceMax}
+            handler={(e) => handleQueryParamsFilters("priceMax", e.target.value)}
+          />
         </div>
 
         <CollapseMenu title="Categories" key={"categories"}>
-          {categories.map(({ name, id }, index) => (
+          {!categoriesIsLoading && categoriesData.map(({ name, id }, index) => (
             <CheckboxItem
               key={index}
               name={name}
@@ -128,7 +86,7 @@ const ProductFilterMenu = (props) => {
         </CollapseMenu>
 
         <CollapseMenu title="Materials" key={"materials"}>
-          {materials.map(({ name, id }, index) => (
+          {!materialsIsLoading && materialsData.map(({ name, id }, index) => (
             <CheckboxItem
               key={index}
               name={name}

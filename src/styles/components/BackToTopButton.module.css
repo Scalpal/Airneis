@@ -1,0 +1,23 @@
+.button {
+  border: 0;
+  outline: 0;
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background-color: var(--primary);
+  padding: 0.5rem;
+  border-radius: 50%;
+  z-index: 9999;
+  height: 40px;
+  width: 40px;
+}
+
+.button:hover {
+  cursor: pointer;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+  color: white;
+}

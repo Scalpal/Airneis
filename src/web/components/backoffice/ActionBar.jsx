@@ -3,11 +3,11 @@ import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import Select from "../Select";
 import Pagination from "./Pagination";
 import { useEffect, useState } from "react";
+import Button from "../Button";
 
 
 const ActionBar = (props) => {
-
-  const { label, handleLimit, dataCount, queryParams, setQueryParams, handleQueryParams } = props;
+  const { label, handleLimit, dataCount, queryParams, setQueryParams, handleQueryParams, addRowFunction } = props;
 
   const [searchValue, setSearchValue] = useState("");
 
@@ -51,6 +51,13 @@ const ActionBar = (props) => {
           <option value={25}>25</option>
           <option value={50}>50</option>
         </Select>
+
+        {addRowFunction && (
+          <Button onClick={() => addRowFunction()}>
+            Add a product
+          </Button>
+        )}
+
       </div>
 
       {dataCount > 0 && (

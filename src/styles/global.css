@@ -18,7 +18,8 @@ body {
   width: 100%;
   font-size: calc(15px + 0.390625vw);
   font-weight: 300;
-  background-color: #F6F6F6;
+  scroll-behavior: smooth;
+  /* background-color: var(--secondary) */
   /* overflow-x: hidden; */
 }
 
@@ -70,6 +71,12 @@ input:focus {
 .navbarBackground .navbarLogo {
   filter: invert(1);
 }
+
+
+
+
+
+
 
 @media only screen and (max-width: 767px) {
   .fullWidthCarousel {

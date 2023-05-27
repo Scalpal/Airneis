@@ -10,15 +10,14 @@ const CheckboxItem = (props) => {
 
   const handleCheckbox = useCallback(() => { 
     if (typeof queryParams[queryKey] === "boolean") {
-      handleQueryParamsFilters(queryKey, { name: name, value: value });
+      handleQueryParamsFilters(queryKey, queryParams[queryKey]);
       setChecked(!checked);
 
       return;
     }
 
-    handleQueryParamsFilters(queryKey, { name: name, value: value });
+    handleQueryParamsFilters(queryKey, value, name);
     setChecked(!checked);
-
   }, [name, value, queryKey, queryParams, handleQueryParamsFilters, checked]);
 
   useEffect(() => {
@@ -27,7 +26,6 @@ const CheckboxItem = (props) => {
     
       setChecked(bool ? true : false);
     }
-
   }, [queryParams, queryKey, value]);
 
 
