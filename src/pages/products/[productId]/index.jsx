@@ -66,6 +66,24 @@ const similarProducts = [
 ]
 
 const ProductPage = () => {
+  const [bubbleAnimation, setBubbleAnimation] = useState(null)
+  const router = useRouter()
+  const { productId = 1 } = router.query
+  const {
+    actions: { addToCart },
+  } = useAppContext()
+  const currentProduct = AllProducts.filter(
+    (product) => product.id === Number.parseInt(productId)
+  )[0]
+
+  const handleAddToCart = () => {
+    !bubbleAnimation && setBubbleAnimation(true)
+    addToCart(currentProduct)
+
+    setTimeout(() => {
+      setBubbleAnimation(false)
+    }, 1900)
+  }
 
   return (
     <>

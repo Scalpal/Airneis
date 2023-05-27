@@ -72,8 +72,6 @@ const Products = () => {
       <main className={styles.main}>
         <SearchBar searchStateAction={searchStateAction} />
 
-        {error ? <span>Eroor</span> : null}
-
         <div className={styles.indexProducts}>
           <span>
             {endIndex > 0 ? startIndex : 0} - {endIndex} on{" "}

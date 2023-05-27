@@ -67,7 +67,7 @@ const Category = () => {
 
   return (
     <>
-      <Banner title={router.query.categoryName} />
+      <Banner title={categoryName} />
 
       <main>
         <p className={styles.descriptionText}>
