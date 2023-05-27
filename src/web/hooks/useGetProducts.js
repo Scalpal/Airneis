@@ -3,11 +3,39 @@ import routes from "../routes";
 import getApiClient from "../services/getApiClient";
 import { AxiosError } from "axios";
 
-const getKey = (pageIndex, previousPageData) => {
+const getKey = (pageIndex, previousPageData, appliedQueryParams) => {
+  const createQueryString = (appliedQueryParams) => {
+    let queryString = "?";
+
+    Object.entries(appliedQueryParams).map(([key, value]) => {
+      if (Array.isArray(value)) {
+        value.map((param) => (
+          queryString += key + "=" + param.value + "&"
+        ));
+      }
+
+      if (typeof value === "number" && value > 0) {
+        queryString += key + "=" + value + "&";
+      }
+
+      if (typeof value === "boolean") {
+        queryString += key + "=" + value + "&";
+      }
+
+      if (typeof value === "string") {
+        queryString += key + "=" + value + "&";
+      }
+    });
+
+    return queryString;
+  };
+
+  const queryString = createQueryString(appliedQueryParams);
+
   // Reached the end 
-  if (previousPageData && !previousPageData.products.length) return null;
+  if (previousPageData && !previousPageData.products.length) {return null;}
   
-  return `http://localhost:3000${routes.api.products.collection()}?page=${pageIndex + 1}`;
+  return `http://localhost:3000/${routes.api.products.collection(queryString, pageIndex + 1)}`;
 };
 
 const fetcher = async(url) => {
@@ -24,8 +52,9 @@ const fetcher = async(url) => {
   }
 };
 
-const useGetProducts = () => {
-  const { data, error, isLoading, isValidating, size, setSize } = useSWRInfinite(getKey, fetcher);
+const useGetProducts = (appliedQueryParams) => {
+  const { data, error, isLoading, isValidating, size, setSize } = useSWRInfinite((pageIndex, previousPageData) =>
+    getKey(pageIndex, previousPageData, appliedQueryParams), fetcher);
 
   return {
     data,
