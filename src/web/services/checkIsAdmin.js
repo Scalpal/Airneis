@@ -6,12 +6,12 @@ const checkIsAdmin = async(context) => {
 
   const reqInstance = getApiClient(context);
 
-  try {
-    const {
-      data: { user },
-    } = await reqInstance.get(
-      `http://localhost:3000/${routes.api.users.self()}`
-    )
+//   try {
+//     const {
+//       data: { user },
+//     } = await reqInstance.get(
+//       `http://localhost:3000/${routes.api.users.self()}`
+//     )
 
     if (!user.isAdmin) {
       return {
