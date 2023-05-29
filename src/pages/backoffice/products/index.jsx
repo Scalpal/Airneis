@@ -14,7 +14,46 @@ import routes from "@/web/routes";
 import { AxiosError } from "axios";
 import ActionBar from "@/web/components/backoffice/ActionBar";
 import { useRouter } from "next/router";
+import { createQueryString } from "@/web/services/createQueryString";
 
+export const getServerSideProps = async (context) => {
+  const { token } = parseCookies(context);
+  const badTokenRedirect = await checkToken(token);
+
+  if (badTokenRedirect) {
+    return badTokenRedirect;
+  }
+
+  const notAdminRedirect = await checkIsAdmin(context);
+
+  if (notAdminRedirect) {
+    return notAdminRedirect;
+  }
+
+  const reqInstance = getApiClient(context); 
+
+  try {
+    const { data: { products, count } } = await reqInstance.get(`http://localhost:3000${routes.api.products.collection()}`);
+
+    return {
+      props: {
+        productsProps: products,
+        count: count
+      },
+    };
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      console.log(error.response);
+    }
+
+    return {
+      props: {
+        productsProps: [],
+        count: 0
+      }
+    };
+  }
+};
 
 const BackofficeProducts = (props) => {
   const { productsProps, count } = props; 
@@ -76,8 +115,10 @@ const BackofficeProducts = (props) => {
   const updateProducts = useCallback(async() => {
     const reqInstance = getApiClient();
 
+    const queryString = createQueryString(queryParams);
+
     try {
-      const { data: { products, count } } = await reqInstance.get(`http://localhost:3000/${routes.api.products.collection(queryParams)}`);
+      const { data: { products, count } } = await reqInstance.get(`http://localhost:3000/${routes.api.products.collection(queryString)}`);
     
       setProducts({ products, count });
     } catch (error) {
@@ -130,14 +171,17 @@ const BackofficeProducts = (props) => {
           addRowFunction={redirectToAddPage}
         />
 
-        <Table
-          array={products.products}
-          safeArray={productsProps}
-          queryParams={queryParams}
-          sortColumn={sortColumn}
-          // showSpecificRowFunction={showSpecificUser}
-          // deleteRowFunction={desactivateUser}
-        />
+        {productsProps.length > 0 && (
+          <Table
+            array={products.products}
+            safeArray={productsProps}
+            queryParams={queryParams}
+            sortColumn={sortColumn}
+            // showSpecificRowFunction={showSpecificUser}
+            // deleteRowFunction={desactivateUser}
+          />
+        )}
+
       </div>
     </main>
   );
@@ -147,35 +191,4 @@ BackofficeProducts.getLayout = function (page) {
   return <Layout>{page}</Layout>;
 };
 
-export const getServerSideProps = async (context) => {
-  const { token } = parseCookies(context);
-  const badTokenRedirect = await checkToken(token);
-
-  if (badTokenRedirect) {
-    return badTokenRedirect;
-  }
-
-  const notAdminRedirect = await checkIsAdmin(context);
-
-  if (notAdminRedirect) {
-    return notAdminRedirect;
-  }
-
-  const reqInstance = getApiClient(context); 
-
-  try {
-    const { data: { products, count } } = await reqInstance.get(`http://localhost:3000/${routes.api.products.collection()}`);
-
-    return {
-      props: {
-        productsProps: products,
-        count: count
-      },
-    };
-  } catch (error) {
-    if (error instanceof AxiosError) {
-      console.log(error.response);
-    }
-  }
-};
 export default BackofficeProducts;

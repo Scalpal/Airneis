@@ -15,6 +15,43 @@ import checkToken from "@/web/services/checkToken";
 import getApiClient from "@/web/services/getApiClient";
 import checkIsAdmin from "@/web/services/checkIsAdmin";
 
+export const getServerSideProps = async (context) => {
+  const { token } = parseCookies(context);
+  const badTokenRedirect = await checkToken(token);
+
+  if (badTokenRedirect) {
+    return badTokenRedirect; 
+  }
+
+  const notAdminRedirect = await checkIsAdmin(context);
+
+  if (notAdminRedirect) {
+    return notAdminRedirect;
+  }
+
+  const reqInstance = getApiClient(context);
+
+  try {
+    const { data: { users, count } } = await reqInstance.get(`http://localhost:3000/${routes.api.users.collection()}`);
+
+    return {
+      props: {
+        usersProps: users,
+        count: count
+      }
+    };
+  } catch (error) {
+    console.log("Error in GetServerSideProps : ", error); 
+    
+    return {
+      redirect: {
+        destination: "/home",
+        permanent: false
+      }
+    };
+  }
+};
+
 const BackofficeUsers = (props) => {
   const { usersProps, count } = props; 
   const { actions: { api } } = useAppContext(); 
@@ -74,28 +111,22 @@ const BackofficeUsers = (props) => {
   }, [queryParams]); 
 
   const updateUsers = useCallback(async () => {
-    const { token } = parseCookies();
-
+    const reqInstance = getApiClient();
+  
     try {
-      const reqInstance = Axios.create({
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
-
       const { data: { users, count} } = await reqInstance.get(`http://localhost:3000${routes.api.users.collection(queryParams)}`);
 
       setUsers({users, count}); 
     } catch (error) {
       if (error instanceof AxiosError) {
-        console.log(error);
+        console.log(error.response);
       }
     }
   }, [queryParams]);
 
   // Table row functions
   const showSpecificUser = useCallback((userId) => {
-    router.push(`/backoffice/users/${userId}`);
+    router.push(routes.backoffice.users.single(userId));
   }, [router]); 
 
   const desactivateUser = useCallback(async (userId) => {
@@ -182,44 +213,6 @@ BackofficeUsers.getLayout = function (page) {
       {page}
     </Layout>
   );
-};
-
-export const getServerSideProps = async (context) => {
-  const { token } = parseCookies(context);
-  const badTokenRedirect = await checkToken(token);
-
-  if (badTokenRedirect) {
-    return badTokenRedirect; 
-  }
-
-  const notAdminRedirect = await checkIsAdmin(context);
-
-  if (notAdminRedirect) {
-    return notAdminRedirect;
-  }
-
-  const reqInstance = getApiClient(context);
-
-  try {
-    const { data: { users, count } } = await reqInstance.get(`http://localhost:3000/${routes.api.users.collection()}`);
-
-    return {
-      props: {
-        usersProps: users,
-        count: count
-      }
-    };
-  } catch (error) {
-    console.log("Error in GetServerSideProps : ", error); 
-    
-    return {
-      redirect: {
-        destination: "/home",
-        permanent: false
-      }
-    };
-  }
-
 };
 
 export default BackofficeUsers; 
