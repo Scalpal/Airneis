@@ -6,20 +6,22 @@ import ProductFilterMenu from "@/web/components/ProductFilterMenu";
 import ParamBadge from "@/web/components/ParamBadge";
 import useGetProducts from "@/web/hooks/useGetProducts";
 import Button from "@/web/components/Button";
+import Loader from "@/web/components/Loader";
+import BackToTopButton from "@/web/components/BackToTopButton";
+import { ShoppingBagIcon } from "@heroicons/react/24/outline";
 
-
+const limit = 10; 
 
 const Products = () => {
-  const { data, error, isLoading, isValidating, size, setSize } = useGetProducts(); 
-
-  const products = data && data.reduce((acc, { products }) => [...acc, ...products], []);
-
   const [queryParams, setQueryParams] = useState({
     priceMin: 0,
     priceMax: 0,
     materials: [],
     onlyInStock: false,
     categories: [],
+    search: "",
+    orderField: "",
+    order: ""
   });
 
   const [appliedQueryParams, setAppliedQueryParams] = useState({
@@ -28,120 +30,199 @@ const Products = () => {
     materials: [],
     stock: [],
     categories: [],
+    search: "",
+    orderField: "",
+    order: ""
   });
 
-  const handleQueryParamsFilters = useCallback(
-    (key, { name, value }) => {
-      if (typeof queryParams[key] === "boolean") {
-        setQueryParams({
-          ...queryParams,
-          [key]: !value,
-        });
+  const { data, error, isLoading, isValidating, size, setSize } = useGetProducts(appliedQueryParams); 
+  const products = data && data.reduce((acc, { products }) => [...acc, ...products], []);
+  const totalPages = data && data[0] ? Math.ceil(data[0].count / limit ) : 0;
+  const isEndReached = size === totalPages;
 
-        return;
-      }
-
-      if (typeof queryParams[key] === "number") {
-        setQueryParams({
-          ...queryParams,
-          [key]: Number.parseInt(value),
-        });
-
-        return;
-      }
-
+  const handleQueryParamsFilters = useCallback((key, value, name) => {
+     if (typeof queryParams[key] === "boolean") {
       setQueryParams({
         ...queryParams,
-        [key]:
-          queryParams[key].findIndex((elt) => elt.value === value) === -1
-            ? [...queryParams[key], { name, value }]
-            : [...queryParams[key].filter((elt) => elt.value !== value)],
-      });
-    },
-    [queryParams, setQueryParams]
-  );
+        [key]: !value,
+      });  
+      
+      return;
+    }
 
-  const handleAppliedQueryParams = useCallback(
-    (key, { name, value }) => {
+    if (typeof queryParams[key] === "number") {
       setQueryParams({
         ...queryParams,
-        [key]:
-          queryParams[key].findIndex((elt) => elt.value === value) === -1
-            ? [...queryParams[key], { name, value }]
-            : [...queryParams[key].filter((elt) => elt.value !== value)],
+        [key]: Number.parseInt(value),
       });
 
+    return;
+    }
+
+    if (typeof queryParams[key] === "string") {
+      setQueryParams({
+        ...queryParams,
+        [key]: value
+      });
+
+      return; 
+    }
+
+    // If the value at the specific key is an array
+    setQueryParams({
+      ...queryParams,
+      [key]:
+        queryParams[key].findIndex((elt) => elt.value === value) === -1 // If value not found
+          ? [...queryParams[key], { name, value }]
+          : [...queryParams[key].filter((elt) => elt.value !== value)],
+    });
+  }, [queryParams, setQueryParams]);
+
+  const handleAppliedQueryParams = useCallback((key, value, name) => {
+    if (typeof queryParams[key] === "boolean") {
+      setAppliedQueryParams({
+        ...queryParams,
+        [key]: !value,
+      });
+      
+      return;
+    }
+
+    if (typeof appliedQueryParams[key] === "string") {
       setAppliedQueryParams({
         ...appliedQueryParams,
-        [key]:
-          appliedQueryParams[key].findIndex((elt) => elt.value === value) === -1
-            ? [...appliedQueryParams[key], { name, value }]
-            : [...appliedQueryParams[key].filter((elt) => elt.value !== value)],
+        [key]: value
       });
-    },
-    [appliedQueryParams, setAppliedQueryParams, queryParams]
-  );
+      
+      return; 
+    }
 
-  const createQueryString = useCallback(() => {
-    let queryString = "?";
+    if (typeof queryParams[key] === "number") {
+      setAppliedQueryParams({
+        ...queryParams,
+        [key]: Number.parseInt(value),
+      });
+      
+      return;
+    }
 
-    Object.entries(appliedQueryParams).map(([key, value]) => {
-      if (Array.isArray(value)) {
-        value.map((param) => (
-          queryString += key + "=" + param.value + "&"
-        ));
-      }
-
-      if (typeof value === "number" && value > 0) {
-        queryString += key + "=" + value + "&";
-      }
-
-      if (typeof value === "boolean") {
-        queryString += key + "=" + value + "&";
-      }
+    // If the value at the specific key is an array
+    setAppliedQueryParams({
+      ...appliedQueryParams,
+      [key]:
+        appliedQueryParams[key].findIndex((elt) => elt.value === value) === -1
+          ? [...appliedQueryParams[key], { name, value }]
+          : [...appliedQueryParams[key].filter((elt) => elt.value !== value)],
     });
-
-    return queryString;
-
-  }, [appliedQueryParams]);
+  }, [appliedQueryParams, setAppliedQueryParams, queryParams]);
 
   const handleLoadMore = useCallback(() => { 
-    setSize(size + 1,);
-  }, [size, setSize]);
-  
-  useEffect(() => {
-    console.log(createQueryString()); 
-  }, [appliedQueryParams, createQueryString]); 
+    setSize((previousSize) => previousSize + 1);
+  }, [setSize]); 
+
+  const handleNoSort = useCallback(() => {
+    setAppliedQueryParams({
+      ...queryParams,
+      order: "",
+      orderField: ""
+    });
+  }, [queryParams, setAppliedQueryParams]);
 
   useEffect(() => {
-    if (data !== undefined && !isLoading) {
-      console.log("data: ", data);
-    }
-  }, [data, isLoading]);
+    const searchInput = document.getElementById("searchInput");
+
+    const handleKeyDown = (event) => {
+      if (event.key === "Enter") {
+        setAppliedQueryParams((prevState) => ({
+          ...prevState,
+          search: queryParams.search
+        }));
+      }
+    };
+    searchInput.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      searchInput.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [queryParams, setQueryParams, appliedQueryParams, handleAppliedQueryParams]);
+
+  useEffect(() => {
+    setSize(1); 
+  }, [appliedQueryParams, setSize]);
+
+  useEffect(() => {
+    setQueryParams(appliedQueryParams);
+  }, [appliedQueryParams]);
 
   return (
     <>
       <Banner title={"Products"} />
 
       <main className={styles.main}>
-        <input type="text" className={styles.input} />
+        <input
+          type="text"
+          id="searchInput"
+          onChange={(e) => handleQueryParamsFilters("search", e.target.value)}
+          className={styles.input}
+        />
 
         {/* It will show all the active filters with badges */}
         <div className={styles.filterBadgesContainer}>
+          {appliedQueryParams.orderField !== "" && (
+            <ParamBadge
+              label={"Sort by"}
+              appliedQueryParams={appliedQueryParams}
+              queryKey={"order"}
+              handleAppliedQueryParams={handleNoSort}
+            />
+          )}
+
+          {appliedQueryParams.priceMin !== 0 &&
+            <ParamBadge
+              label={"Price min"}
+              appliedQueryParams={appliedQueryParams}
+              queryKey={"priceMin"}
+              handleAppliedQueryParams={handleAppliedQueryParams}
+            />
+          }
+
+          {appliedQueryParams.priceMax !== 0 &&
+            <ParamBadge
+              label={"Price max"}
+              appliedQueryParams={appliedQueryParams}
+              queryKey={"priceMax"}
+              handleAppliedQueryParams={handleAppliedQueryParams}
+            />
+          }
+
           <ParamBadge
+            label={"Material"}
             appliedQueryParams={appliedQueryParams}
             queryKey={"materials"}
             handleAppliedQueryParams={handleAppliedQueryParams}
           />
 
           <ParamBadge
+            label={"Category"}
             appliedQueryParams={appliedQueryParams}
             queryKey={"categories"}
             handleAppliedQueryParams={handleAppliedQueryParams}
           />
+
+          {appliedQueryParams.onlyInStock && (
+            <ParamBadge
+              label={"In stock"}
+              appliedQueryParams={appliedQueryParams}
+              queryKey={"onlyInStock"}
+              handleAppliedQueryParams={handleAppliedQueryParams}
+            />
+          )}
         </div>
 
-        <div className={styles.content}>
+        <div
+          id="productContent"
+          className={styles.content}
+        >
           <ProductFilterMenu
             queryParams={queryParams}
             setQueryParams={setQueryParams}
@@ -149,18 +230,58 @@ const Products = () => {
             handleQueryParamsFilters={handleQueryParamsFilters}
           />
 
-          <section className={styles.productsContainer}>
-            
-            {data && products.map((product, index) => (
-              <DetailedProductCard key={index} product={product} />
-            ))}
+          <div className={styles.rightContent}>
+            {!isLoading ? ( 
+              (data && !error && products.length > 0) ? (
+                <section className={styles.productsContainer}>
+                  {!isLoading ? (
+                    products.map((product, index) => (
+                      <DetailedProductCard key={index} product={product} />
+                    ))
+                  ) : (
+                    <Loader />
+                  )}
+                </section>
+              ): (
+                <div className={styles.noProductsContainer}>
+                  <ShoppingBagIcon className={styles.productIcon} />
+                    <p>Sorry !</p>
+                    {appliedQueryParams.search.length > 0 ? (
+                      <p>
+                        There is no products found for the search <span className={styles.searchTerm}>&quot;{appliedQueryParams.search}&quot;</span>.
+                      </p>
+                    ) : (
+                      <p>No products found</p>
+                    )}
+                </div>
+              )
+            ) : (
+              <Loader />
+            )}
 
-            <Button
-              onClick={() => handleLoadMore()}
-            > 
-              See more
-            </Button>
-          </section>
+            <div className={styles.buttonWrapper}>
+              {(!isLoading && products.length > 0) && (
+                isEndReached ? (
+                  <p>No more products</p>
+                ) : (
+                  <>
+                    <span className={styles.emptySpace}></span>
+                    {isValidating ? (
+                      <Loader />
+                    ) : (
+                      <Button
+                        onClick={() => handleLoadMore()}
+                      > 
+                        See more
+                      </Button>
+                    )}
+                  </>
+                )
+              )}
+            </div>
+
+            <BackToTopButton anchor={"bannerTitle"} />
+          </div>
         </div>
       </main>
     </>

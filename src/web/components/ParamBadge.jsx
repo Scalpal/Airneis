@@ -38,6 +38,16 @@ const ParamBadge = (props) => {
           <XMarkIcon className={styles.filterBadgeIcon} />
         </p>
       )}
+
+      {typeof appliedQueryParams[queryKey] === "string" && (
+        <p
+          className={styles.filterBadge}
+          onClick={() => handleAppliedQueryParams()}
+        >
+          {label} price : {appliedQueryParams[queryKey] === "asc" ? "low to high" : "high to low"}
+          <XMarkIcon className={styles.filterBadgeIcon} />
+        </p>
+      )}
     </>
   );
 };

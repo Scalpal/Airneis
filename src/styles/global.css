@@ -11,6 +11,7 @@
   --grey: #bababa; 
   --error: rgb(183, 0, 0);
   --disabled: rgb(165, 165, 165); 
+  --light-grey: rgb(203, 203, 203); 
 }
 
 html,
@@ -19,8 +20,6 @@ body {
   font-size: calc(15px + 0.390625vw);
   font-weight: 300;
   scroll-behavior: smooth;
-  /* background-color: var(--secondary) */
-  /* overflow-x: hidden; */
 }
 
 a {
@@ -28,9 +27,9 @@ a {
   text-decoration: none;
 }
 
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
   display: none;
-}
+} */
 
 input,
 button,
@@ -71,12 +70,6 @@ input:focus {
 .navbarBackground .navbarLogo {
   filter: invert(1);
 }
-
-
-
-
-
-
 
 @media only screen and (max-width: 767px) {
   .fullWidthCarousel {

@@ -2,7 +2,6 @@ import BaseModel from "@/api/db/models/BaseModel.js";
 import CategoryModel from "@/api/db/models/CategoryModel.js";
 import MaterialModel from "./MaterialModel";
 import ReviewModel from "./ReviewModel";
-import knex from "knex";
 
 class ProductModel extends BaseModel {
   static tableName = "products";

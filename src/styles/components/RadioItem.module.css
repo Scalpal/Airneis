@@ -1,7 +1,7 @@
 .checkboxItem {
   display: flex;
   flex-direction: row;
-  align-items: center; 
+  align-items: center;
   gap: 0.5rem;
   transition-duration: 1s;
   font-size: 0.8rem;
@@ -15,7 +15,7 @@
 .checkboxItem label {
   height: 28px;
   width: 28px;
-  border: 2px solid black;  
+  border: 2px solid black;
   border-radius: 50%;
   color: black;
   transition-duration: 200ms;

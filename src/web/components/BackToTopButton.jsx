@@ -10,6 +10,7 @@ const BackToTopButton = (props) => {
       href={`#${anchor}`}
     >  
       <ArrowUpIcon className={styles.icon} />
+      <p>Back to top</p>
     </a>
   );
 };
