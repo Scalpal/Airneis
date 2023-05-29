@@ -77,15 +77,11 @@ module.exports.up = async (knex) => {
   // Related to reviews
   await knex.schema.createTable("reviews", (table) => {
     table.increments("id");
-    table
-      .integer("productId")
-      .references("id")
-      .inTable("products")
-      .notNullable();
+    table.integer("productId").references("id").inTable("products").notNullable();
     table.integer("userId").references("id").inTable("users").notNullable();
     table.text("title").notNullable();
     table.text("content").notNullable();
-    table.enum("stars", [1, 2, 3, 4, 5]).notNullable().defaultTo(1);
+    table.integer("rating").unsigned().notNullable().checkIn([1, 2, 3, 4, 5]);
     table.timestamps(true, true, true);
   });
 
