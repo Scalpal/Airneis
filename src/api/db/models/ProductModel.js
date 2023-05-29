@@ -1,6 +1,8 @@
 import BaseModel from "@/api/db/models/BaseModel.js";
 import CategoryModel from "@/api/db/models/CategoryModel.js";
 import MaterialModel from "./MaterialModel";
+import ReviewModel from "./ReviewModel";
+import knex from "knex";
 
 class ProductModel extends BaseModel {
   static tableName = "products";
@@ -31,6 +33,15 @@ class ProductModel extends BaseModel {
           },
           to: "materials.id"
         }
+      },
+      reviews: {
+        relation: BaseModel.HasManyRelation, 
+        modelClass: ReviewModel, 
+        join: {
+          from: "products.id",
+          to: "reviews.productId"
+        },
+        modify: (query) => query.select("userId", "title", "content","rating")
       },
       modify: (query) => query.select("*")
     };

@@ -1,11 +1,13 @@
 import ProductMaterialRelationModel from "@/api/db/models/ProductMaterialRelationModel";
 import ProductModel from "@/api/db/models/ProductModel";
+import ReviewModel from "@/api/db/models/ReviewModel";
 import auth from "@/api/middlewares/auth";
 import checkIsAdmin from "@/api/middlewares/checkIsAdmin";
 import slowDown from "@/api/middlewares/slowDown";
 import validate from "@/api/middlewares/validate";
 import mw from "@/api/mw";
 import { arrayOrStringValidator, boolValidator, limitValidator, numberValidator, orderFieldValidator, orderValidator, pageValidator, searchValidator } from "@/validator";
+import knex from "knex";
 
 const handler = mw({
   GET: [
@@ -29,9 +31,7 @@ const handler = mw({
         query: { priceMin, priceMax, materials, onlyInStock, categories, limit, page, orderField, order, search}
       },
       res
-    }) => {
-      console.log("SEARCH : ", search); 
-      
+    }) => {      
       const materialsArray = Array.isArray(materials) ? materials : [materials];
       const categoriesArray = Array.isArray(categories) ? categories : [categories];
 
@@ -79,9 +79,19 @@ const handler = mw({
       const products = await query.modify("paginate", limit, page)
         .select("id", "name", "description", "price", "stock")
         .withGraphFetched("category")
-        .withGraphFetched("materials");
+        .withGraphFetched("materials")
+        .withGraphFetched("reviews");
       
-      res.send({ products: products, count: count });
+      // Products with average rating
+      const finalProducts = products.map((product) => {
+        const avgRating = Math.round((product.reviews.reduce((acc, { rating }) => acc + rating , 0)) / product.reviews.length);
+
+        product.rating = avgRating;
+
+        return product;
+      });
+      
+      res.send({ products: finalProducts, count: count });
     }
   ], 
   POST: [
