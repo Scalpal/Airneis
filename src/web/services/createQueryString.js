@@ -1,4 +1,4 @@
-  export const createQueryString = (queryParams) => {
+export const createQueryString = (queryParams) => {
     let queryString = "?";
 
     Object.entries(queryParams).map(([key, value]) => {
