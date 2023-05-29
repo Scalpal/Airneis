@@ -12,6 +12,10 @@ const routes = {
   home: () => "/",
   register: () => "/register",
   login: () => "/login",
+  products: {
+    base: (queryParams) => `/products${queryParams}`,
+    single: (productId) => `/products/${productId}`,
+  },
   backoffice: {
     base: () => "/backoffice",
     users: {
@@ -26,10 +30,13 @@ const routes = {
     register: () => "/users/register",
     login: () => "/users/login",
     products: {
-      collection: (query) => createRouteWithQueryParams("/api/products", query),
+      collection: (queryString, page) => `/api/products${queryString ? queryString : ""}${page ? page : ""}`,
       single: (postId, query) =>
         createRouteWithQueryParams(`/api/products/${postId}`, query),
+      materials: () => "/api/products/materials",
+      categories: () => "/api/products/categories"
     },
+
     users: {
       collection: (query) => createRouteWithQueryParams("/api/users", query),
       single: (userId, query) =>
