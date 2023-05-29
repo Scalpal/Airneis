@@ -1,13 +1,9 @@
 import ProductMaterialRelationModel from "@/api/db/models/ProductMaterialRelationModel";
 import ProductModel from "@/api/db/models/ProductModel";
-import ReviewModel from "@/api/db/models/ReviewModel";
-import auth from "@/api/middlewares/auth";
-import checkIsAdmin from "@/api/middlewares/checkIsAdmin";
 import slowDown from "@/api/middlewares/slowDown";
 import validate from "@/api/middlewares/validate";
 import mw from "@/api/mw";
 import { arrayOrStringValidator, boolValidator, limitValidator, numberValidator, orderFieldValidator, orderValidator, pageValidator, searchValidator } from "@/validator";
-import knex from "knex";
 
 const handler = mw({
   GET: [
@@ -94,24 +90,24 @@ const handler = mw({
       res.send({ products: finalProducts, count: count });
     }
   ], 
-  POST: [
-    slowDown(500),
-    auth(),
-    checkIsAdmin(),
-    validate({
-      body: { 
+  // POST: [
+  //   slowDown(500),
+  //   auth(),
+  //   checkIsAdmin(),
+  //   validate({
+  //     body: { 
         
-      }
-    }),
-    async({
-      locals: {
-        body: {  }
-      }, 
-      res
-    }) => {
+  //     }
+  //   }),
+  //   async({
+  //     locals: {
+  //       body: {  }
+  //     }, 
+  //     res
+  //   }) => {
 
-    }
-  ]
+  //   }
+  // ]
 });
 
 export default handler;

@@ -4,7 +4,7 @@ import { classnames } from "@/pages/_app";
 import { nunito } from "@/pages/_app";
 import styles from "@/styles/backoffice/statsPages.module.css";
 import { parseCookies } from "nookies";
-import Axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
 import routes from "@/web/routes";
 import { useCallback, useEffect, useState } from "react";
 import ActionBar from "@/web/components/backoffice/ActionBar";
@@ -41,8 +41,6 @@ export const getServerSideProps = async (context) => {
       }
     };
   } catch (error) {
-    console.log("Error in GetServerSideProps : ", error); 
-    
     return {
       redirect: {
         destination: "/home",
@@ -119,7 +117,8 @@ const BackofficeUsers = (props) => {
       setUsers({users, count}); 
     } catch (error) {
       if (error instanceof AxiosError) {
-        console.log(error.response);
+        setShowAlert(true);
+        setAlert({ status: error.response.status, message: error.response.message });
       }
     }
   }, [queryParams]);
@@ -138,7 +137,8 @@ const BackofficeUsers = (props) => {
       setAlert({ status: data.status, message: data.message });
     } catch (error) {
       if (error instanceof AxiosError) {
-        console.log(error.response);
+        setShowAlert(true);
+        setAlert({ status: error.response.status, message: error.response.message });
       }
     }
   }, [api, updateUsers]);

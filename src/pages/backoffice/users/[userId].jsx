@@ -59,7 +59,8 @@ const BackofficeUserPage = (props) => {
       setAlert({ status: data.status, message: data.message });
     } catch (error) {
       if (error instanceof AxiosError) {
-        console.log(error.response);
+        setShowAlert(true);
+        setAlert({ status: error.response.status, message: error.response.message });
       }
     }
   }, [api, user.id]); 
@@ -245,7 +246,12 @@ export const getServerSideProps = async(context) => {
     };
   } catch (error) {
     if (error instanceof AxiosError) {
-      console.log(error.response); 
+      return {
+        redirect: {
+          destination: "/backoffice/users",
+          permanent: false
+        }
+      };
     }
   }
 };

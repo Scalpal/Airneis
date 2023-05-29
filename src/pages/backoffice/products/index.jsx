@@ -3,8 +3,6 @@ import { useCallback, useEffect, useState } from "react";
 import Table from "@/web/components/backoffice/Table";
 import { classnames } from "@/pages/_app";
 import { nunito } from "@/pages/_app";
-import Button from "@/web/components/Button";
-import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import styles from "@/styles/backoffice/statsPages.module.css";
 import { parseCookies } from "nookies";
 import checkToken from "@/web/services/checkToken";
@@ -15,6 +13,7 @@ import { AxiosError } from "axios";
 import ActionBar from "@/web/components/backoffice/ActionBar";
 import { useRouter } from "next/router";
 import { createQueryString } from "@/web/services/createQueryString";
+import CustomAlert from "@/web/components/CustomAlert.jsx";
 
 export const getServerSideProps = async (context) => {
   const { token } = parseCookies(context);
@@ -43,7 +42,12 @@ export const getServerSideProps = async (context) => {
     };
   } catch (error) {
     if (error instanceof AxiosError) {
-      console.log(error.response);
+      return {
+        props: {
+          productsProps: [],
+          count: 0
+        }
+      };
     }
 
     return {
@@ -123,7 +127,8 @@ const BackofficeProducts = (props) => {
       setProducts({ products, count });
     } catch (error) {
       if (error instanceof AxiosError) {
-        console.log(error.response);
+        setShowAlert(true); 
+        setAlert({ status: error.status, message: error.message });
       }
     }
   }, [queryParams]);
@@ -181,8 +186,9 @@ const BackofficeProducts = (props) => {
             // deleteRowFunction={desactivateUser}
           />
         )}
-
       </div>
+
+      <CustomAlert alert={alert} showAlert={showAlert} setShowAlert={setShowAlert} />
     </main>
   );
 };

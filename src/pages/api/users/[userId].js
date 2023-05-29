@@ -111,9 +111,6 @@ const handler = mw({
         return; 
       }
 
-      console.log("active : ", active);
-      console.log("isAdmin : ", isAdmin);
-
       const updatedUser = await UserModel.query()
         .patch({
           ...(firstName ? { firstName } : {}),
