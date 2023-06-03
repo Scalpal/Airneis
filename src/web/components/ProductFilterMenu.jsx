@@ -80,6 +80,12 @@ const ProductFilterMenu = (props) => {
     return;
   }, [handlePriceLowToHigh, handlePriceHighToLow, handleNoSort]); 
 
+  const isValueChecked = useCallback((queryKey, value) => {
+    const bool = queryParams[queryKey].findIndex((elt) => elt.value === value) === -1 ? false : true;
+
+    return bool;
+  }, [queryParams]);
+
   return (
     <>
       <button
@@ -124,9 +130,8 @@ const ProductFilterMenu = (props) => {
                 key={index}
                 name={name}
                 value={id}
-                queryParams={queryParams}
-                queryKey={"categories"}
-                handleQueryParamsFilters={handleQueryParamsFilters}
+                checked={isValueChecked("categories", id)}
+                onClick={() => handleQueryParamsFilters("categories", id, name)}
               />
             ))}
           </CollapseMenu>
@@ -137,9 +142,8 @@ const ProductFilterMenu = (props) => {
                 key={index}
                 name={name}
                 value={id}
-                queryParams={queryParams}
-                queryKey={"materials"}
-                handleQueryParamsFilters={handleQueryParamsFilters}
+                checked={isValueChecked("materials", id)}
+                onClick={() => handleQueryParamsFilters("materials", id, name)}
               />
             ))}
           </CollapseMenu>
