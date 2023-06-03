@@ -43,7 +43,7 @@ const LoginField = (props) => {
               )}
             />
 
-            {type === "password"&& (
+            {type === "password" && (
               isPasswordVisible ? (
                 <EyeSlashIcon
                   className={styles.inputIcon}
@@ -56,7 +56,6 @@ const LoginField = (props) => {
                 />
               )
             )}
-
 
             {showError && meta.touched && meta.error ? (
               <span className={styles.errorText}>

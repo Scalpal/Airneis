@@ -1,8 +1,9 @@
+import { classnames } from "@/pages/_app";
 import styles from "@/styles/components/CheckboxItem.module.css"; 
 import { CheckIcon } from "@heroicons/react/24/solid";
 
 const CheckboxItem = (props) => {
-  const { name, value, checked, ...otherProps } = props;
+  const { name, value, checked, disabled ,...otherProps } = props;
 
   return (
     <div
@@ -13,11 +14,16 @@ const CheckboxItem = (props) => {
         value={value}
         name={name}
         id={name}
+        checked={checked}
+        disabled={disabled}
         {...otherProps}
       />
       <label
         htmlFor={name}
-        className={checked ? styles.checked : ""}
+        className={classnames(
+          checked ? styles.checked : "",
+          disabled ? styles.disabled : ""
+        )}
       >
         {checked && <CheckIcon className={styles.icon} />}
       </label>

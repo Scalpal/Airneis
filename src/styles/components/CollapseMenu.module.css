@@ -52,6 +52,22 @@
   padding: 0rem;
 }
 
+/* Size styles */
+.collapsed.small {
+  max-height: 250px;
+}
+
+.collapsed.medium {
+  max-height: 350px;
+}
+
+.collapsed.large {
+  max-height: 500px;
+}
+
+.collapsed.fitToParent {
+  max-height: 100%;
+}
 
 
 
