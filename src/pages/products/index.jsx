@@ -36,7 +36,7 @@ const Products = () => {
   });
 
   const { data, error, isLoading, isValidating, size, setSize } = useGetProducts(appliedQueryParams); 
-  const products = data && data.reduce((acc, { products }) => [...acc, ...products], []);
+  const products = data ? data.reduce((acc, { products }) => [...acc, ...products], []) : [];
   const totalPages = data && data[0] ? Math.ceil(data[0].count / limit ) : 0;
   const isEndReached = size === totalPages;
 
@@ -260,12 +260,12 @@ const Products = () => {
             )}
 
             <div className={styles.buttonWrapper}>
+              <span className={styles.emptySpace}></span>
               {(!isLoading && products.length > 0) && (
                 isEndReached ? (
                   <p>No more products</p>
                 ) : (
                   <>
-                    <span className={styles.emptySpace}></span>
                     {isValidating ? (
                       <Loader />
                     ) : (
