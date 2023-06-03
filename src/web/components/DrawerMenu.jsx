@@ -4,6 +4,7 @@ import { classnames } from "@/pages/_app";
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/router";
 import routes from "../routes";
+import { useEffect } from "react";
 
 const DrawerMenu = (props) => {
   const { isDrawerToggledState, actions } = props;
@@ -12,6 +13,16 @@ const DrawerMenu = (props) => {
   const [signOut, session] = actions ? actions : [null, null];
 
   const router = useRouter();
+
+  useEffect(() => {
+    if (isDrawerToggled === true) {
+      document.body.style.overflow = "hidden";
+
+      return;
+    }
+
+    document.body.style.overflow = ""; 
+  }, [isDrawerToggled]);
 
   const logout = () => {
     signOut();
