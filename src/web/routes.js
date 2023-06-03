@@ -30,9 +30,9 @@ const routes = {
     register: () => "/users/register",
     login: () => "/users/login",
     products: {
-      collection: (queryString, page) => `/api/products${queryString ? queryString : ""}page=${page ? page : ""}`,
-      single: (postId, query) =>
-        createRouteWithQueryParams(`/api/products/${postId}`, query),
+      collection: (queryString, page) => `/api/products${queryString ? queryString : ""}${page ? `page=${page}` : ""}`,
+      single: (productId, query) =>
+        createRouteWithQueryParams(`/products/${productId}`, query),
       materials: () => "/api/products/materials",
       categories: () => "/api/products/categories"
     },

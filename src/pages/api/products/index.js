@@ -24,7 +24,7 @@ const handler = mw({
     }),
     async ({
       locals: {
-        query: { db, priceMin, priceMax, materials, onlyInStock, categories, limit, page, orderField, order, search}
+        query: { priceMin, priceMax, materials, onlyInStock, categories, limit, page, orderField, order, search}
       },
       res
     }) => {      
