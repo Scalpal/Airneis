@@ -1,21 +1,11 @@
-import UserModel from "../db/models/UserModel";
 import * as yup from "yup";
-
 
 const checkIsAdmin = () => {
   return async (ctx) => {
     const { res, next, logger, locals } = ctx;
-    const id = locals.userId;
+    const user = locals.user;
 
     try {
-      const user = await UserModel.query().findOne({ id });
-
-      if (!user) {
-        res.status(404).send({ error: "User not found" });
-
-        return;
-      }
-
       if (user.isAdmin === false) {
         res.status(403).send({ error: "Forbidden" });
 

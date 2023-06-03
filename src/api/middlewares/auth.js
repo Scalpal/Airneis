@@ -31,6 +31,8 @@ const auth = () => {
         return;
       }
 
+      locals.user = user;
+
       next();
     } catch (error) {
       if (error instanceof yup.ValidationError) {
