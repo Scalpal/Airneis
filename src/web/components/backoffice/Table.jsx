@@ -3,6 +3,8 @@ import { classnames } from "@/pages/_app";
 import { TrashIcon, InformationCircleIcon} from "@heroicons/react/24/outline";
 import { useCallback } from "react";
 import { ChevronUpIcon, ChevronDownIcon, CheckIcon, XMarkIcon } from "@heroicons/react/24/solid";
+import EditModal from "./EditModal";
+import { splitCamelCase } from "@/web/services/SplitCamelCase";
 
 const Table = (props) => {
   const {
@@ -10,21 +12,12 @@ const Table = (props) => {
     safeArray,
     queryParams,
     sortColumn,
+    visibleKeys,
     showSpecificRowFunction,
     deleteRowFunction,
   } = props;
   // safeArray is the array coming from getServerSideProps, it is always not empty so in case array is empty
   // we still have the table headers
-
-  const splitCamelCase = useCallback((str) => {
-    const words = str.match(/[a-z]+|[A-Z][a-z]*/g);
-    
-    if (!words) {
-      return str;
-    }
-    
-    return words.join(" ");
-  }, []);
 
   const showValue = useCallback((key, value, i) => {
     if (Array.isArray(value)) {
@@ -46,7 +39,7 @@ const Table = (props) => {
         <XMarkIcon className={styles.tableIcon} />;
     }
 
-    return <p key={i}>{value.toString()}</p>;
+    return <p key={i}>{value && value.toString()}</p>;
   }, []);
 
   const showActionsButtons = useCallback((itemId) => {
@@ -85,22 +78,42 @@ const Table = (props) => {
       <thead>     
         <tr>
           {Object.keys(safeArray[0]).map((key, index) => (
-            <th
-              key={index}
-              onClick={() => { sortColumn(key); }}
-            >
-              <p>
-                <span>{splitCamelCase(key)}</span>
+            visibleKeys ? (
+              visibleKeys.includes(key)) && (
+                <th
+                  key={index}
+                  onClick={() => { sortColumn(key); }}
+                >
+                  <p>
+                    <span>{splitCamelCase(key)}</span>
 
-                {queryParams["orderField"] === key && (
-                  queryParams["order"] === "asc" ? (
-                    <ChevronUpIcon className={styles.headerIcon} />
-                  ): (
-                    <ChevronDownIcon className={styles.headerIcon} />
-                  )
-                )}
-              </p>
-            </th>
+                    {queryParams["orderField"] === key && (
+                      queryParams["order"] === "asc" ? (
+                        <ChevronUpIcon className={styles.headerIcon} />
+                      ): (
+                        <ChevronDownIcon className={styles.headerIcon} />
+                      )
+                    )}
+                  </p>
+                </th>
+            ) : (
+              <th
+                key={index}
+                onClick={() => { sortColumn(key); }}
+              >
+                <p>
+                  <span>{splitCamelCase(key)}</span>
+
+                  {queryParams["orderField"] === key && (
+                    queryParams["order"] === "asc" ? (
+                      <ChevronUpIcon className={styles.headerIcon} />
+                    ): (
+                      <ChevronDownIcon className={styles.headerIcon} />
+                    )
+                  )}
+                </p>
+              </th>   
+            )
           ))}
           <th colSpan={2}>Actions</th>
         </tr>
@@ -114,9 +127,17 @@ const Table = (props) => {
                 {/* Loop on the objects keys */}
                 {Object.entries(item).map(([key, value], i) => {
                   return (
-                    <td key={i}>
-                      {showValue(key, value, i)}
-                    </td>
+                    visibleKeys ? (
+                      visibleKeys.includes(key) && (
+                        <td key={i}>
+                          {showValue(key, value, i)}
+                        </td>
+                      )
+                    ): (
+                      <td key={i}>
+                        {showValue(key, value, i)}
+                      </td>
+                    )
                   );
                 })}
 

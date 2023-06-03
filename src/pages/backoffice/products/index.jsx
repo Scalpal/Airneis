@@ -14,6 +14,8 @@ import ActionBar from "@/web/components/backoffice/ActionBar";
 import { useRouter } from "next/router";
 import { createQueryString } from "@/web/services/createQueryString";
 import CustomAlert from "@/web/components/CustomAlert.jsx";
+import Modal from "@/web/components/Modal";
+import SpecificProductPageContent from "@/web/components/backoffice/SpecificProductPageContent";
 
 export const getServerSideProps = async (context) => {
   const { token } = parseCookies(context);
@@ -65,6 +67,8 @@ const BackofficeProducts = (props) => {
   const router = useRouter(); 
   const [alert, setAlert] = useState({ status: "", message: ""}); 
   const [showAlert, setShowAlert] = useState(false); 
+  const [activeProduct, setActiveProduct] = useState(null); 
+  const [showModal, setShowModal] = useState(false); 
   const [products, setProducts] = useState({ products: productsProps, count: count });
   const [queryParams, setQueryParams] = useState({
     limit: 10,
@@ -146,6 +150,13 @@ const BackofficeProducts = (props) => {
     return sumTotalProducts;
   };
 
+  const showSpecificProduct = useCallback((id) => {
+    const product = products.products.find(elt => elt.id === id); 
+
+    setShowModal(true);
+    setActiveProduct(product);
+  }, [products]);
+
   useEffect(() => {
     updateProducts(); 
   }, [queryParams, updateProducts]);
@@ -180,15 +191,31 @@ const BackofficeProducts = (props) => {
           <Table
             array={products.products}
             safeArray={productsProps}
+            visibleKeys={["id", "name", "description", "price", "stock", "category", "materials"]}
             queryParams={queryParams}
             sortColumn={sortColumn}
-            // showSpecificRowFunction={showSpecificUser}
+            showSpecificRowFunction={showSpecificProduct}
             // deleteRowFunction={desactivateUser}
           />
         )}
       </div>
 
-      <CustomAlert alert={alert} showAlert={showAlert} setShowAlert={setShowAlert} />
+      <Modal showModal={showModal} setShowModal={setShowModal}>
+        {activeProduct && (
+          <SpecificProductPageContent
+            setShowModal={setShowModal}
+            product={activeProduct}
+            updateProducts={updateProducts}
+            key={activeProduct.id}
+          />
+        )}
+      </Modal> 
+
+      <CustomAlert
+        alert={alert}
+        showAlert={showAlert}
+        setShowAlert={setShowAlert}
+      />
     </main>
   );
 };
