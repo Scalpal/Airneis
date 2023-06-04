@@ -4,9 +4,9 @@ import { classnames } from "@/pages/_app";
 import { ChevronDownIcon } from "@heroicons/react/24/solid";
 
 const CollapseMenu = (props) => {
-  const { children, title, size } = props; 
+  const { children, title, defaultCollapsed ,size } = props; 
 
-  const [isMenuCollapsed, setIsMenuCollapsed] = useState(false); 
+  const [isMenuCollapsed, setIsMenuCollapsed] = useState(defaultCollapsed ? defaultCollapsed : false); 
 
   const sizeStyle = () => {
     switch (size) {

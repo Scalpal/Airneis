@@ -34,7 +34,8 @@ const routes = {
       single: (productId, query) =>
         createRouteWithQueryParams(`/products/${productId}`, query),
       materials: () => "/api/products/materials",
-      categories: () => "/api/products/categories"
+      categories: () => "/api/products/categories",
+      add: () => "/products"
     },
 
     users: {

@@ -3,7 +3,7 @@ import styles from "@/styles/backoffice/SpecificProductPageContent.module.css";
 import { PencilSquareIcon } from "@heroicons/react/24/outline";
 import { FieldArray, Form, Formik } from "formik";
 import LoginField from "../LoginField";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Button from "../Button";
 import CustomAlert from "../CustomAlert";
 import { createValidator, numberValidator, stringValidator } from "@/validator";
@@ -25,7 +25,7 @@ const validationSchema = createValidator({
 });
 
 const SpecificProductPageContent = (props) => {
-  const { product, updateProducts, setShowModal } = props;
+  const { product, setActiveProduct, updateProducts, showModal, setShowModal } = props;
   const { actions: { api } } = useAppContext();
   const { materialsData, materialsError, materialsIsLoading } = useGetMaterials(); 
 
@@ -65,6 +65,9 @@ const SpecificProductPageContent = (props) => {
   }, []);
 
   const handleSubmit = useCallback(async (values) => {
+    values.price = Number.parseInt(values.price);
+    values.stock = Number.parseInt(values.stock);
+  
     const materials = values.materials.reduce((acc, { id }) => [...acc, id], []);
     values.materials = materials;
     
@@ -88,7 +91,13 @@ const SpecificProductPageContent = (props) => {
     const productMaterialIds = values.reduce((acc, { id }) => [...acc, id], []); 
        
     return productMaterialIds.includes(id) ? true : false;
-  };
+    };
+  
+  useEffect(() => {
+    if (showModal === false) {
+      setActiveProduct(null);
+    }
+  }, [showModal, setActiveProduct]);
 
   return (
     <main
@@ -101,72 +110,72 @@ const SpecificProductPageContent = (props) => {
 
       <p className={styles.title}>Product {currentProduct.id} : {currentProduct.name}</p>
 
-        <Formik
-          onSubmit={handleSubmit}
-          validationSchema={validationSchema}
-          enableReinitialize={true}
-          initialValues={initialValues}
-        >
-        {({ values, isValid, dirty, isSubmitting, handleReset }) => {
-            return (
-              <Form className={styles.contentWrapper}>
-                <div className={styles.contentLeft}>
-                  <div className={styles.contentTitleWrapper}>
-                    <p className={styles.contentTitle}>Informations</p>
+      <Formik
+        onSubmit={handleSubmit}
+        validationSchema={validationSchema}
+        enableReinitialize={true}
+        initialValues={initialValues}
+      >
+      {({ values, isValid, dirty, isSubmitting, handleReset }) => {
+          return (
+            <Form className={styles.contentWrapper}>
+              <div className={styles.contentLeft}>
+                <div className={styles.contentTitleWrapper}>
+                  <p className={styles.contentTitle}>Informations</p>
 
-                    <PencilSquareIcon
-                      className={styles.titleIcon}
-                      onClick={() => handleEditMode("informations", handleReset)}
-                    />
-                  </div>
-
-                  {Object.entries(initialValues).map(([key, value], index) => (
-                    !Array.isArray(value) && (
-                      <LoginField
-                        key={index}
-                        name={key}
-                        type={getInputType(value)}
-                        label={splitCamelCase(key)}
-                        showError={true}
-                        disabled={!editMode}
-                      /> 
-                    )
-                  ))}
-
-                  {editMode && (
-                    <Button
-                      type={"submit"}
-                      disabled={!(dirty && isValid) || isSubmitting}
-                    >
-                      Save
-                    </Button>
-                  )}
+                  <PencilSquareIcon
+                    className={styles.titleIcon}
+                    onClick={() => handleEditMode("informations", handleReset)}
+                  />
                 </div>
 
-                <FieldArray name="materials">
-                  {({ push, remove }) => (
-                    <div className={styles.contentRight}>
-                      <CollapseMenu title="Materials" size="fit-to-parent">
-                        {(!materialsError && !materialsIsLoading) && (
-                          materialsData.map(({ id, name }, index) => (
-                            <CheckboxItem
-                              key={index}
-                              name={name}
-                              value={id}
-                              onClick={() => !isMaterialChecked(values.materials, id) ? push({ id: id, name: name }) : remove(values.materials.findIndex(elt => elt.id === id))}
-                              checked={isMaterialChecked(values.materials, id)}
-                              disabled={!editMode}
-                            />
-                          ))
-                        )}
-                      </CollapseMenu>
-                    </div>
-                  )}
-                </FieldArray>
-              </Form>
-            );
-          }}
-        </Formik>
+                {Object.entries(initialValues).map(([key, value], index) => (
+                  !Array.isArray(value) && (
+                    <LoginField
+                      key={index}
+                      name={key}
+                      type={getInputType(value)}
+                      label={splitCamelCase(key)}
+                      showError={true}
+                      disabled={!editMode}
+                    /> 
+                  )
+                ))}
+
+                {editMode && (
+                  <Button
+                    type={"submit"}
+                    disabled={!(dirty && isValid) || isSubmitting}
+                  >
+                    Save
+                  </Button>
+                )}
+              </div>
+
+              <FieldArray name="materials">
+                {({ push, remove }) => (
+                  <div className={styles.contentRight}>
+                    <CollapseMenu title="Materials" defaultCollapsed={true} size="large">
+                      {(!materialsError && !materialsIsLoading) && (
+                        materialsData.map(({ id, name }, index) => (
+                          <CheckboxItem
+                            key={index}
+                            name={name}
+                            value={id}
+                            onClick={() => !isMaterialChecked(values.materials, id) ? push({ id: id, name: name }) : remove(values.materials.findIndex(elt => elt.id === id))}
+                            checked={isMaterialChecked(values.materials, id)}
+                            disabled={!editMode}
+                          />
+                        ))
+                      )}
+                    </CollapseMenu>
+                  </div>
+                )}
+              </FieldArray>
+            </Form>
+          );
+        }}
+      </Formik>
 
       <CustomAlert
         alert={alert}

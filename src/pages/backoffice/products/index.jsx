@@ -11,11 +11,14 @@ import getApiClient from "@/web/services/getApiClient";
 import routes from "@/web/routes";
 import { AxiosError } from "axios";
 import ActionBar from "@/web/components/backoffice/ActionBar";
-import { useRouter } from "next/router";
 import { createQueryString } from "@/web/services/createQueryString";
 import CustomAlert from "@/web/components/CustomAlert.jsx";
 import Modal from "@/web/components/Modal";
 import SpecificProductPageContent from "@/web/components/backoffice/SpecificProductPageContent";
+import AddProductPageContent from "@/web/components/backoffice/AddProductPageContent";
+
+const addProductTab = "add-product";
+const productInfoTab = "product-info";
 
 export const getServerSideProps = async (context) => {
   const { token } = parseCookies(context);
@@ -64,11 +67,11 @@ export const getServerSideProps = async (context) => {
 const BackofficeProducts = (props) => {
   const { productsProps, count } = props; 
 
-  const router = useRouter(); 
   const [alert, setAlert] = useState({ status: "", message: ""}); 
   const [showAlert, setShowAlert] = useState(false); 
   const [activeProduct, setActiveProduct] = useState(null); 
   const [showModal, setShowModal] = useState(false); 
+  const [activeTab, setActiveTab] = useState("");
   const [products, setProducts] = useState({ products: productsProps, count: count });
   const [queryParams, setQueryParams] = useState({
     limit: 10,
@@ -137,10 +140,6 @@ const BackofficeProducts = (props) => {
     }
   }, [queryParams]);
 
-  const redirectToAddPage = useCallback(() => {
-    router.push(routes.backoffice.products.add());
-  }, [router]); 
-
   const sumTotalProducts = () => {
     const sumTotalProducts = productsProps.reduce(
       (sum, value) => sum + value.stock,
@@ -150,10 +149,16 @@ const BackofficeProducts = (props) => {
     return sumTotalProducts;
   };
 
+  const openAddProductModal = useCallback(() => {
+    setActiveTab(addProductTab);
+    setShowModal(true); 
+  }, []); 
+
   const showSpecificProduct = useCallback((id) => {
     const product = products.products.find(elt => elt.id === id); 
 
     setShowModal(true);
+    setActiveTab(productInfoTab);
     setActiveProduct(product);
   }, [products]);
 
@@ -184,7 +189,7 @@ const BackofficeProducts = (props) => {
           queryParams={queryParams}
           setQueryParams={setQueryParams}
           handleQueryParams={handleQueryParams}
-          addRowFunction={redirectToAddPage}
+          addRowFunction={openAddProductModal}
         />
 
         {productsProps.length > 0 && (
@@ -195,18 +200,26 @@ const BackofficeProducts = (props) => {
             queryParams={queryParams}
             sortColumn={sortColumn}
             showSpecificRowFunction={showSpecificProduct}
-            // deleteRowFunction={desactivateUser}
           />
         )}
       </div>
 
       <Modal showModal={showModal} setShowModal={setShowModal}>
-        {activeProduct && (
+        {(activeProduct && activeTab === productInfoTab) && (
           <SpecificProductPageContent
+            showModal={showModal}
             setShowModal={setShowModal}
+            setActiveProduct={setActiveProduct}
             product={activeProduct}
             updateProducts={updateProducts}
             key={activeProduct.id}
+          />
+        )}
+
+        {activeTab === addProductTab && (
+          <AddProductPageContent
+            setShowModal={setShowModal}
+            updateProducts={updateProducts}
           />
         )}
       </Modal> 

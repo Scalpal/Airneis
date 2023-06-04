@@ -1,9 +1,12 @@
+import CategoryModel from "@/api/db/models/CategoryModel";
 import ProductMaterialRelationModel from "@/api/db/models/ProductMaterialRelationModel";
 import ProductModel from "@/api/db/models/ProductModel";
+import auth from "@/api/middlewares/auth";
+import checkIsAdmin from "@/api/middlewares/checkIsAdmin";
 import slowDown from "@/api/middlewares/slowDown";
 import validate from "@/api/middlewares/validate";
 import mw from "@/api/mw";
-import { arrayOrStringValidator, boolValidator, limitValidator, numberValidator, orderFieldValidator, orderValidator, pageValidator, searchValidator } from "@/validator";
+import { arrayOrStringValidator, arrayValidator, boolValidator, limitValidator, numberValidator, orderFieldValidator, orderValidator, pageValidator, searchValidator, stringValidator } from "@/validator";
 
 const handler = mw({
   GET: [
@@ -88,30 +91,66 @@ const handler = mw({
           return product;
         });
         
-        res.send({ products: finalProducts, count: count });
+        res.status(200).send({ products: finalProducts, count: count });
       } catch (error) {
-        res.status(404).send({ error: error });
+        res.status(500).send({ error: error });
       }
     }
   ], 
-  // POST: [
-  //   slowDown(500),
-  //   auth(),
-  //   checkIsAdmin(),
-  //   validate({
-  //     body: { 
-        
-  //     }
-  //   }),
-  //   async({
-  //     locals: {
-  //       body: {  }
-  //     }, 
-  //     res
-  //   }) => {
+  POST: [
+    slowDown(500),
+    auth(),
+    checkIsAdmin(),
+    validate({
+      body: { 
+        name: stringValidator.required(),
+        description: stringValidator.required(),
+        price: numberValidator.required(),
+        stock: numberValidator.required(),
+        categoryId: numberValidator.required(),
+        materials: arrayValidator.required()
+      }
+    }),
+    async({
+      locals: {
+        body: { name, description, price, stock, categoryId, materials }
+      }, 
+      res
+    }) => {
+      try {
+        const category = await CategoryModel.query().findOne({ id: categoryId });
 
-  //   }
-  // ]
+        if (!category) {
+          res.status(404).send({ error: "Category not found" });
+
+          return;
+        }
+
+        const newProduct = await ProductModel.query()
+          .insert({
+            name: name,
+            description: description,
+            price: price,
+            stock: stock,
+            categoryId: categoryId
+          })
+          .returning("*");
+        
+        const materialsToAdd = materials.reduce((acc, materialId) =>
+          [...acc, { productId: newProduct.id, materialId: materialId }], []);
+        
+        if (materialsToAdd.length > 0) {
+          await ProductMaterialRelationModel.query()
+            .insert(materialsToAdd)
+            .returning("*"); 
+        }
+        
+        res.status(201).send({ product: newProduct, message: "Product successfully added" });
+      } catch (error) {
+        res.status(500).send({ error: error }); 
+      }
+    }
+  ]
 });
 
 export default handler;
