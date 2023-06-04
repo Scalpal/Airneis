@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "name": "airneis",
   "version": "0.1.0",
   "private": true,
@@ -7,7 +8,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "fix": "next lint --fix"
+    "fix": "next lint --fix",
+    "a11y": "node ./src/api/a11y/reporter.js"
   },
   "dependencies": {
     "@heroicons/react": "^2.0.14",
@@ -39,6 +41,7 @@
     "@faker-js/faker": "^8.0.0",
     "eslint-config-prettier": "^8.5.0",
     "formik": "^2.2.9",
+    "pa11y": "^6.2.3",
     "yup": "^0.32.11"
   }
 }

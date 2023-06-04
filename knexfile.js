@@ -1,5 +1,5 @@
-const { resolve } = require("path");
-const { config } = require("dotenv");
+import { resolve } from "path";
+import { config } from "dotenv";
 
 config();
 
@@ -21,4 +21,4 @@ const knexfile = {
   },
 };
 
-module.exports = knexfile;
+export default knexfile;
