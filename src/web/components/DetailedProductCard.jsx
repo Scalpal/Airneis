@@ -6,15 +6,14 @@ import Button from "./Button";
 import useAppContext from "../hooks/useAppContext";
 
 const DetailedProductCard = (props) => {
-
-  const { product } = props;  
+  const { product } = props;
   const router = useRouter();
-  const { actions: { addToCart }} = useAppContext();
+  const {
+    actions: { addToCart },
+  } = useAppContext();
 
   return (
-    <div
-      className={styles.productCard}
-    >
+    <div className={styles.productCard}>
       <div
         className={styles.productCardImageContainer}
         onClick={() => router.push("/products/" + product.id)}
@@ -27,14 +26,13 @@ const DetailedProductCard = (props) => {
         />
       </div>
 
-      <div
-        className={styles.productCardInfos}
-      >
-
+      <div className={styles.productCardInfos}>
         <p className={styles.productCardInfoName}> {product.name} </p>
 
         <div className={styles.descriptionWrapper}>
-          <p className={styles.productCardInfoDescription}>{product.description}</p>
+          <p className={styles.productCardInfoDescription}>
+            {product.description}
+          </p>
         </div>
 
         <div
@@ -46,24 +44,25 @@ const DetailedProductCard = (props) => {
         </div>
 
         <div className={styles.productMaterialWrapper}>
-          <p>Matériaux : {product.materials.map((material, index) => {
-            const comma = index === product.materials.length - 1 ? " " : ", ";
+          <p>
+            Matériaux :{" "}
+            {product.materials.map((material, index) => {
+              const comma = index === product.materials.length - 1 ? " " : ", ";
 
-            return material + comma;
-          })}</p>
+              return material + comma;
+            })}
+          </p>
         </div>
 
         <div className={styles.priceStockWrapper}>
           <p className={styles.productCardInfoPrice}> {product.price} </p>
-          <span className={styles.productCardInfoStock}>{product.stock} available</span>
+          <span className={styles.productCardInfoStock}>
+            {product.stock} available
+          </span>
         </div>
 
         <div className={styles.productCardInfoBtnWrapper}>
-          <Button
-            onClick={() => addToCart(product)}
-          >
-            Add to cart
-          </Button>
+          <Button onClick={() => addToCart(product)}>Add to cart</Button>
         </div>
       </div>
     </div>

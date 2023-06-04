@@ -1,13 +1,20 @@
 import Button from "@/web/components/Button";
 import LoginField from "@/web/components/LoginField";
 import LoginLayout from "@/web/components/LoginLayout";
-import { Form,Formik } from "formik";
+import { Form, Formik } from "formik";
 import routes from "@/web/routes.js";
 import styles from "@/styles/login.module.css";
 import { useRouter } from "next/router";
 import useAppContext from "@/web/hooks/useAppContext";
-import { useCallback,useState } from "react";
-import { createValidator,passwordValidator,confirmPasswordValidator } from "@/validator";
+import { useCallback, useState } from "react";
+import {
+  createValidator,
+  passwordValidator,
+  confirmPasswordValidator,
+} from "@/validator";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "next-i18next";
+
 const merge = require("deepmerge");
 
 const validationSchema = createValidator({
@@ -20,34 +27,36 @@ const initialValues = {
   passwordConfirmation: "",
 };
 
-
 const MailResetPassword = () => {
-
+  const { t: translate } = useTranslation("resetPasswordMail");
   const router = useRouter();
-  const { actions: { passwordReset,crypt } } = useAppContext();
-  const [error,setError] = useState(null);
+  const {
+    actions: { passwordReset, crypt },
+  } = useAppContext();
+  const [error, setError] = useState(null);
 
   const handleSubmit = useCallback(
     async (values) => {
       const cryptoId = decodeURIComponent(router.query.keyA);
       const cryptoTimer = decodeURIComponent(router.query.keyB);
 
-      const [{ getCryptoId },{ getCryptoTimer }] = await crypt([{ cryptoId },{ cryptoTimer }]);
+      const [{ getCryptoId }, { getCryptoTimer }] = await crypt([
+        { cryptoId },
+        { cryptoTimer },
+      ]);
 
-      const newValues = merge(values,{ id: getCryptoId,timer: getCryptoTimer });
+      const newValues = merge(values, {
+        id: getCryptoId,
+        timer: getCryptoTimer,
+      });
       const [err] = await passwordReset(newValues);
 
       if (err && error) {
-        document.getElementById("errormsg").animate(
-          [
-            { opacity: "100" },
-            { opacity: "0" },
-            { opacity: "100" },
-          ],
-          {
+        document
+          .getElementById("errormsg")
+          .animate([{ opacity: "100" }, { opacity: "0" }, { opacity: "100" }], {
             duration: 1000,
-          }
-        );
+          });
       }
 
       if (err) {
@@ -55,9 +64,10 @@ const MailResetPassword = () => {
 
         return;
       }
+
       router.push(routes.login());
     },
-    [router,crypt,passwordReset,error]
+    [router, crypt, passwordReset, error]
   );
 
   return (
@@ -68,36 +78,44 @@ const MailResetPassword = () => {
         initialValues={initialValues}
         error={error}
       >
-        {({ isValid,dirty,isSubmitting }) => (
+        {({ isValid, dirty, isSubmitting }) => (
           <Form className={styles.formContainer}>
-            <p className={styles.formTitle}>Reset your password</p>
+            <p className={styles.formTitle}>
+              {translate("resetPasswordTitle")}
+            </p>
 
-            {error ? <p id="errormsg" className={styles.error}>Error, please try later</p> : null}
+            {error ? (
+              <p id="errormsg" className={styles.error}>
+                {translate("messageErrorResetPassword")}
+              </p>
+            ) : null}
 
             <LoginField
               name="password"
               type="password"
-              label="New Password"
+              label={translate("newPassword")}
               showError={false}
             />
 
             <LoginField
               name="passwordConfirmation"
               type="password"
-              label="Confirm New Password"
+              label={translate("confirmPassword")}
               showError={false}
             />
 
-            <Button
-              disabled={!(dirty && isValid) || isSubmitting}
-            >
-              Reset Password
+            <Button disabled={!(dirty && isValid) || isSubmitting}>
+              {translate("resetPasswordButton")}
             </Button>
 
             <div className={styles.noAccountText}>
-              <p>Don&apos;t want to reset your password ? <span onClick={() => router.push(routes.home())}> Return home </span></p>
+              <p>
+                {translate("noResetPassword")}
+                <span onClick={() => router.push(routes.home())}>
+                  {translate("returnHomeButton")}
+                </span>
+              </p>
             </div>
-
           </Form>
         )}
       </Formik>
@@ -105,13 +123,17 @@ const MailResetPassword = () => {
   );
 };
 
+export const getStaticProps = async ({ locale }) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["resetPasswordMail"])),
+    },
+  };
+};
+
 MailResetPassword.isPublic = true;
 MailResetPassword.getLayout = function (page) {
-  return (
-    <LoginLayout>
-      {page}
-    </LoginLayout>
-  );
+  return <LoginLayout>{page}</LoginLayout>;
 };
 
 export default MailResetPassword;

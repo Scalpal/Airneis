@@ -19,6 +19,7 @@ const handler = mw({
     }) => {
       const decrypt = (props) => {
         const bytes = AES.decrypt(props, config.security.encrypt);
+
         return bytes.toString(enc.Utf8);
       };
 
@@ -28,6 +29,7 @@ const handler = mw({
           const newKey = `get${key.charAt(0).toUpperCase() + key.slice(1)}`;
           decryptedObj[newKey] = decrypt(value);
         }
+
         return decryptedObj;
       });
 

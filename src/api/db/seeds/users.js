@@ -46,6 +46,7 @@ export const seed = async (knex) => {
   addressIds = addressIds.map((address) => address.id);
 
   const productIds = await knex("products").pluck("id");
+
   if (productIds.length !== 0) {
     const reviews = [];
     for (let i = 0; i < loop; i++) {

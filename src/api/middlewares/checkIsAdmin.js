@@ -1,9 +1,7 @@
 import UserModel from "../db/models/UserModel";
 import * as yup from "yup";
 
-
 const checkIsAdmin = () => {
-
   return async (ctx) => {
     const { res, next, logger, locals } = ctx;
     const id = locals.userId;
@@ -38,4 +36,4 @@ const checkIsAdmin = () => {
   };
 };
 
-export default checkIsAdmin; 
+export default checkIsAdmin;

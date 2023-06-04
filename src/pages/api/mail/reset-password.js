@@ -33,6 +33,7 @@ const handler = mw({
           props.toString(),
           config.security.encrypt
         ).toString();
+
         return encryptedId;
       };
 

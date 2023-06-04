@@ -18,6 +18,7 @@ export const seed = async (knex) => {
   uniqueMaterials = uniqueMaterials.filter(
     (material) => !existingMaterialsNames.includes(material.name)
   );
+
   if (uniqueMaterials.length !== 0) {
     await knex("materials").insert(uniqueMaterials);
   }
