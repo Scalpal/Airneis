@@ -3,7 +3,7 @@ import Link from "next/link";
 import { classnames } from "@/pages/_app";
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/router";
-import routes from "@/web/routes.js"; 
+import routes from "@/web/routes.js";
 
 const DrawerMenu = (props) => {
   const { isDrawerToggledState, actions } = props;

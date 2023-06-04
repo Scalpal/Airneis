@@ -107,6 +107,7 @@ const BackofficeProducts = () => {
       (sum, value) => sum + value.stock,
       0
     );
+
     return sumTotalProducts;
   };
 

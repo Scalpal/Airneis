@@ -7,10 +7,7 @@ const handler = mw({
   GET: [
     slowDown(500),
     auth(),
-    async ({
-      res,
-      locals
-    }) => {
+    async ({ res, locals }) => {
       const id = locals.userId;
 
       try {
@@ -25,16 +22,15 @@ const handler = mw({
             "isAdmin"
           )
           .findOne({ id })
-          .withGraphFetched("address"); 
+          .withGraphFetched("address");
 
         res.send({ user: user });
-
       } catch (error) {
         console.log(error);
         res.json({ error: "Error." });
       }
-    }
+    },
   ],
 });
 
-export default handler; 
+export default handler;

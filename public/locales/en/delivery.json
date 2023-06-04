@@ -1,0 +1,11 @@
+{
+  "cartTitle": "Delivery",
+  "firstName": "First name*",
+  "lastName": "Last name*",
+  "address": "Address 1*",
+  "complementaryAddress": "Address 2",
+  "postCode": "Post code*",
+  "city": "City*",
+  "phoneNumber": "Phone number*",
+  "cartButtonPayment": "Place the payment"
+}

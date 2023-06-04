@@ -3,6 +3,8 @@ import ProductCard from "@/web/components/ProductCard";
 import Banner from "@/web/components/Banner";
 import Button from "@/web/components/Button";
 import styles from "@/styles/productPage.module.css";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "next-i18next";
 
 const placeholderImages = ["/meuble-1.jpeg", "/meuble-2.jpeg", "/meuble-3.png"];
 
@@ -67,6 +69,8 @@ const similarProducts = [
 ];
 
 const ProductPage = () => {
+  const { t: translate } = useTranslation("productPage");
+
   return (
     <>
       <Banner title={productPrototype.name} />
@@ -101,11 +105,13 @@ const ProductPage = () => {
         </section>
 
         <div className={styles.addToCartBtnWrapper}>
-          <Button onClick={() => console.log("haha")}>Add to cart</Button>
+          <Button onClick={() => console.log("haha")}>
+            {translate("addToCartButton")}
+          </Button>
         </div>
 
         <section className={styles.similarProductsWrapper}>
-          <h1> Similar products </h1>
+          <h1> {translate("similiarProductTitle")}</h1>
 
           <div className={styles.similarProductsContainer}>
             {similarProducts.map((product, index) => {
@@ -116,6 +122,14 @@ const ProductPage = () => {
       </main>
     </>
   );
+};
+
+export const getStaticProps = async ({ locale }) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["productPage"])),
+    },
+  };
 };
 ProductPage.isPublic = true;
 export default ProductPage;

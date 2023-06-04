@@ -1,14 +1,19 @@
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "next-i18next";
+
 const Payment = () => {
+  const { t: translate } = useTranslation("payment");
+
   return (
     <>
-      <h1 className="cartTitle">Payment</h1>
+      <h1 className="cartTitle">{translate("paymentTitle")}</h1>
       <form>
         <div className="cartContainer">
           <section className="cartPaymentSummary">
             <div className="cartDeliveryForm">
               <div className="cartDeliveryRow">
                 <label htmlFor="cardNumber">
-                  <span className="">Card number*</span>
+                  <span className="">{translate("cartNumber")}</span>
                   <input
                     name="cardNumber"
                     type="text"
@@ -19,17 +24,17 @@ const Payment = () => {
               </div>
               <div className="cartDeliveryRow">
                 <label htmlFor="cardName">
-                  <span>Card name*</span>
+                  <span>{translate("cardName")}</span>
                   <input name="cardName" type="text" required />
                 </label>
               </div>
               <div className="cartDeliveryRow">
                 <label htmlFor="expDate">
-                  <span>Expiration date*</span>
+                  <span>{translate("expirationDate")}</span>
                   <input name="expDate" type="date" required />
                 </label>
                 <label htmlFor="cvv">
-                  <span>CVV*</span>
+                  <span>{translate("cvv")}</span>
                   <input name="cvv" type="text" maxLength="3" required />
                 </label>
               </div>
@@ -37,13 +42,21 @@ const Payment = () => {
           </section>
           <section className="cartTotal">
             <button type="submit" className="cartButtonSubmit">
-              Proceed to payment
+              {translate("paymentButton")}
             </button>
           </section>
         </div>
       </form>
     </>
   );
+};
+
+export const getStaticProps = async ({ locale }) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["payment"])),
+    },
+  };
 };
 Payment.isPublic = false;
 export default Payment;

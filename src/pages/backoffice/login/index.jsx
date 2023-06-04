@@ -44,10 +44,12 @@ const Login = () => {
 
         return;
       }
+
       router.push(routes.home());
     },
     [signIn, error, router]
   );
+
   return (
     <main className={styles.mainContent}>
       <Formik

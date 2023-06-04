@@ -55,6 +55,7 @@ const handler = mw({
 
         return;
       }
+
       const [passwordHash, passwordSalt] = await hashPassword(password);
 
       const addedUser = await UserModel.query()
@@ -92,6 +93,7 @@ const handler = mw({
           id.toString(),
           config.security.encrypt
         ).toString();
+
         return encryptedId;
       };
 

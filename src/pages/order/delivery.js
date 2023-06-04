@@ -1,62 +1,73 @@
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "next-i18next";
+
 const Delivery = () => {
+  const { t: translate } = useTranslation("delivery");
+
   return (
     <>
-      <h1 className="cartTitle">Delivery</h1>
+      <h1 className="cartTitle">{translate("cartTitle")}</h1>
       <form>
         <div className="cartContainer">
           <section className="cartDeliverySummary">
             <div className="cartDeliveryForm">
               <div className="cartDeliveryRow">
-                <label htmlFor="gender">
-                  <span className="">Gender*</span>
-                  <input name="gender" type="text" required />
-                </label>
                 <label htmlFor="firstName">
-                  <span className="">First name*</span>
+                  <span className="">{translate("firstName")}</span>
                   <input name="firstName" type="text" required />
                 </label>
                 <label htmlFor="lastName">
-                  <span className="">Last name*</span>
+                  <span className="">{translate("lastName")}</span>
                   <input name="lastName" type="text" required />
                 </label>
               </div>
               <div className="cartDeliveryRow">
                 <label htmlFor="addressOne">
-                  <span>Address 1*</span>
+                  <span>{translate("address")}</span>
                   <input name="addressOne" type="text" required />
                 </label>
               </div>
               <div className="cartDeliveryRow">
                 <label htmlFor="addressTwo">
-                  <span>Address 2</span>
+                  <span>{translate("complementaryAddress")}</span>
                   <input name="addressTwo" type="text" />
                 </label>
               </div>
               <div className="cartDeliveryRow">
                 <label htmlFor="postCode">
-                  <span>Post code*</span>
+                  <span>{translate("postCode")}</span>
                   <input name="postCode" type="text" required />
                 </label>
                 <label htmlFor="city">
-                  <span>City*</span>
+                  <span>{translate("city")}</span>
                   <input name="city" type="text" required />
                 </label>
               </div>
               <div className="cartDeliveryRow">
                 <label htmlFor="phoneNumber">
-                  <span>Phone number*</span>
+                  <span>{translate("phoneNumber")}</span>
                   +33 <input name="phoneNumber" type="text" required />
                 </label>
               </div>
             </div>
           </section>
           <section className="cartTotal">
-            <button className="cartButtonSubmit">Place the payment</button>
+            <button className="cartButtonSubmit">
+              {translate("cartButtonPayment")}
+            </button>
           </section>
         </div>
       </form>
     </>
   );
+};
+
+export const getStaticProps = async ({ locale }) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["delivery"])),
+    },
+  };
 };
 Delivery.isPublic = false;
 export default Delivery;

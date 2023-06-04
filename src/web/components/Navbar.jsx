@@ -6,10 +6,10 @@ import { classnames } from "@/pages/_app";
 import CartButton from "./CartButton";
 
 const Navbar = (props) => {
-  const { fixed, isDrawerToggledState } = props; 
+  const { fixed, isDrawerToggledState } = props;
 
-  const [isDrawerToggled, setIsDrawerToggled] = isDrawerToggledState; 
-  
+  const [isDrawerToggled, setIsDrawerToggled] = isDrawerToggledState;
+
   useEffect(() => {
     const navbar = document.querySelector("#navbar");
 
@@ -34,9 +34,7 @@ const Navbar = (props) => {
 
   return (
     <nav
-      className={
-        classnames(fixed ? styles.navbar : styles.navbarNotFixed)
-      }
+      className={classnames(fixed ? styles.navbar : styles.navbarNotFixed)}
       id="navbar"
     >
       <Link
@@ -49,10 +47,7 @@ const Navbar = (props) => {
         Airneis
       </Link>
 
-      <ul className={classnames(
-        styles.navbarList,
-        styles.midLinks
-      )}>
+      <ul className={classnames(styles.navbarList, styles.midLinks)}>
         <li>
           <Link href="/home" className={styles.navbarLink}>
             Home
