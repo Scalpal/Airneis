@@ -3,7 +3,6 @@ import { classnames } from "@/pages/_app";
 import { TrashIcon, InformationCircleIcon} from "@heroicons/react/24/outline";
 import { useCallback } from "react";
 import { ChevronUpIcon, ChevronDownIcon, CheckIcon, XMarkIcon } from "@heroicons/react/24/solid";
-import EditModal from "./EditModal";
 import { splitCamelCase } from "@/web/services/SplitCamelCase";
 
 const Table = (props) => {
@@ -21,16 +20,27 @@ const Table = (props) => {
 
   const showValue = useCallback((key, value, i) => {
     if (Array.isArray(value)) {
-      // Loop on the value that IS an array
-      return value.map((valueItem, index) => (
-        <p key={index}>
-          {Object.entries(valueItem).map(([_, objValue]) => {
-            return (
-              objValue + " - "
-            );
-          })}
+      return (
+        value.map((obj, index) => (
+          <p key={index}>
+            {Object.entries(obj).map(([objKey, objValue]) => {   
+              // This is adapted for object with this structure : { id: 1, name: "XXXX" }
+              // Not fully adapted to all use cases
+              if (objKey === "name") {
+                return objValue;
+              }
+            }).join("- ").replaceAll(",", "")}
+          </p>
+        ))
+      );
+    }
+
+    if (typeof value === "object") {
+      return (
+        <p>
+          {value.name}
         </p>
-      ));
+      );
     }
 
     if (typeof value === "boolean") {
