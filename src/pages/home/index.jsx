@@ -1,12 +1,10 @@
-import Carousel from "@/web/components/Carousel";
-import CustomerReview from "@/web/components/CustomerReview";
-import CategoriesBlocks from "@/web/components/CategoriesBlocks";
-import styles from "@/styles/home.module.css";
-import ProductCard from "@/web/components/ProductCard";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { useTranslation } from "next-i18next";
+import Carousel from "@/web/components/Carousel"
+import CustomerReview from "@/web/components/CustomerReview"
+import CategoriesBlocks from "@/web/components/CategoriesBlocks"
+import styles from "@/styles/home.module.css"
+import ProductCard from "@/web/components/ProductCard"
 
-const placeholderImages = ["/meuble-4.jpeg", "/meuble-2.jpeg", "/meuble-3.png"];
+const placeholderImages = ["/meuble-4.jpeg", "/meuble-2.jpeg", "/meuble-3.png"]
 
 const products = [
   {
@@ -57,7 +55,7 @@ const products = [
     stock: 25,
     imageSrc: "/meuble-2.jpeg",
   },
-];
+]
 
 const reviews = [
   {
@@ -65,7 +63,7 @@ const reviews = [
       "My experience with Mark is a complete sucess, from customer service, wide range of products, clean store, purchasing experience, the newsletter. Thank you.",
     customerName: "Leona Paul",
   },
-];
+]
 
 const categories = [
   { name: "Modern" },
@@ -74,7 +72,7 @@ const categories = [
   { name: "Contemporary" },
   { name: "Artisanal" },
   { name: "Wood" },
-];
+]
 
 const Home = () => {
   const { t: translate } = useTranslation("common");
@@ -93,7 +91,7 @@ const Home = () => {
 
         <div className={styles.popularProductsList}>
           {products.map((product, index) => {
-            return <ProductCard key={index} product={product} />;
+            return <ProductCard key={index} product={product} />
           })}
         </div>
 
@@ -119,20 +117,12 @@ const Home = () => {
 
         <div>
           {reviews.map((review, index) => {
-            return <CustomerReview key={index} review={review} />;
+            return <CustomerReview key={index} review={review} />
           })}
         </div>
       </section>
     </>
-  );
-};
-
-export const getStaticProps = async ({ locale }) => {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ["common"])),
-    },
-  };
-};
-Home.isPublic = true;
-export default Home;
+  )
+}
+Home.isPublic = true
+export default Home

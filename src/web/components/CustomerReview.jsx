@@ -1,7 +1,7 @@
-import styles from "@/styles/components/CustomerReview.module.css";
+import styles from "@/styles/components/CustomerReview.module.css"
 
 const CustomerReview = (props) => {
-  const { review } = props;
+  const { review } = props
 
   return (
     <div className={styles.customerReview}>
@@ -15,7 +15,7 @@ const CustomerReview = (props) => {
         </p>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default CustomerReview;
+export default CustomerReview

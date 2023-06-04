@@ -13,6 +13,7 @@
   font-weight: 500;
   font-size: 0.9rem;
   width: fit-content;
+  min-width: 80px;
   text-align: left;
 }
 

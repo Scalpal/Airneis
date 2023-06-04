@@ -1,122 +1,127 @@
-import Layout from "@/web/components/backoffice/Layout";
-import { useState } from "react";
-import Table from "@/web/components/backoffice/Table";
-import { classnames } from "@/pages/_app";
-import { nunito } from "@/pages/_app";
-import Button from "@/web/components/Button";
-import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import styles from "@/styles/backoffice/statsPages.module.css";
-import { parseCookies } from "nookies";
-import checkToken from "@/web/services/checkToken";
-import checkIsAdmin from "@/web/services/checkIsAdmin";
+import Layout from "@/web/components/backoffice/Layout"
+import { useCallback, useState } from "react"
+import Table from "@/web/components/backoffice/Table"
+import { classnames } from "@/pages/_app"
+import { nunito } from "@/pages/_app"
+// import Button from "@/web/components/Button"
+// import { MagnifyingGlassIcon } from "@heroicons/react/24/outline"
+import styles from "@/styles/backoffice/statsPages.module.css"
+import { parseCookies } from "nookies"
+import checkToken from "@/web/services/checkToken"
+import checkIsAdmin from "@/web/services/checkIsAdmin"
+// import getApiClient from "@/web/services/getApiClient"
+import routes from "@/web/routes"
+import ActionBar from "@/web/components/backoffice/ActionBar"
+import { useRouter } from "next/router"
 
-// Prototype datas
-const productsProto = [
-  {
-    id: 1,
-    name: "Modern beechwood chair",
-    type: "Wood",
-    price: 223,
-    stock: 25,
-    imageSrc: "/meuble-2.jpeg",
-  },
-  {
-    id: 2,
-    name: "Chair",
-    type: "Wood",
-    price: 98,
-    stock: 25,
-    imageSrc: "/meuble-2.jpeg",
-  },
-  {
-    id: 3,
-    name: "Chair",
-    type: "Wood",
-    price: 134,
-    stock: 25,
-    imageSrc: "/meuble-2.jpeg",
-  },
-  {
-    id: 4,
-    name: "Chair",
-    type: "Wood",
-    price: 19,
-    stock: 25,
-    imageSrc: "/meuble-2.jpeg",
-  },
-  {
-    id: 5,
-    name: "Chair",
-    type: "Wood",
-    price: 86,
-    stock: 25,
-    imageSrc: "/meuble-2.jpeg",
-  },
-  {
-    id: 6,
-    name: "Chair",
-    type: "Wood",
-    price: 109,
-    stock: 25,
-    imageSrc: "/meuble-2.jpeg",
-  },
-  {
-    id: 6,
-    name: "Chair",
-    type: "Wood",
-    price: 109,
-    stock: 25,
-    imageSrc: "/meuble-2.jpeg",
-  },
-  {
-    id: 6,
-    name: "Chair",
-    type: "Wood",
-    price: 109,
-    stock: 25,
-    imageSrc: "/meuble-2.jpeg",
-  },
-  {
-    id: 6,
-    name: "Chair",
-    type: "Wood",
-    price: 109,
-    stock: 25,
-    imageSrc: "/meuble-2.jpeg",
-  },
-  {
-    id: 6,
-    name: "Chair",
-    type: "Wood",
-    price: 109,
-    stock: 25,
-    imageSrc: "/meuble-2.jpeg",
-  },
-];
+const BackofficeProducts = (props) => {
+  const { productsProps, count } = props
 
-const BackofficeProducts = () => {
-  const [products, _] = useState(productsProto);
+  const router = useRouter()
+  // const [alert, setAlert] = useState({ status: "", message: "" })
+  // const [showAlert, setShowAlert] = useState(false)
+  const [products, setProducts] = useState({})
+  setProducts({ products: productsProps, count: count })
+  const [queryParams, setQueryParams] = useState({
+    limit: 10,
+    page: 1,
+    order: "asc",
+    orderField: "id",
+    search: "",
+  })
 
-  // const sortByPrice = useCallback(() => {
-  //   setProducts(
-  //     [...products].sort((a, b) => (a.price - b.price )));
-  // }, [products]);
+  const handleQueryParams = useCallback(
+    (key, value) => {
+      setQueryParams({
+        ...queryParams,
+        [key]: value,
+      })
+    },
+    [queryParams]
+  )
+
+  const handleLimit = useCallback(
+    (value) => {
+      setQueryParams({
+        ...queryParams,
+        page: 1,
+        limit: value,
+      })
+    },
+    [queryParams]
+  )
+
+  const sortColumn = useCallback(
+    (column) => {
+      const notSortableKeys = ["description", "category", "materials"]
+
+      if (notSortableKeys.includes(column)) {
+        return false
+      }
+
+      // By default, when we sort a column, we set it to ASC
+      if (column !== queryParams["orderField"]) {
+        setQueryParams({
+          ...queryParams,
+          page: 1,
+          orderField: column,
+          order: "asc",
+        })
+
+        return
+      }
+
+      setQueryParams({
+        ...queryParams,
+        page: 1,
+        orderField: column,
+        order: queryParams["order"] === "asc" ? "desc" : "asc",
+      })
+    },
+    [queryParams]
+  )
+
+  // const updateProducts = useCallback(async () => {
+  //   const reqInstance = getApiClient()
+
+  //   try {
+  //     const {
+  //       data: { products, count },
+  //     } = await reqInstance.get(
+  //       `http://localhost:3000/${routes.api.products.collection(queryParams)}`
+  //     )
+
+  //     setProducts({ products, count })
+  //   } catch (error) {
+  //     if (error instanceof AxiosError) {
+  //       console.log(error.response)
+  //     }
+  //   }
+  // }, [queryParams])
+
+  const redirectToAddPage = useCallback(() => {
+    router.push(routes.backoffice.products.add())
+  }, [router])
 
   const sumTotalProducts = () => {
-    const sumTotalProducts = products.reduce(
+    const sumTotalProducts = productsProps.reduce(
       (sum, value) => sum + value.stock,
       0
-    );
+    )
 
-    return sumTotalProducts;
-  };
+    return sumTotalProducts
+  }
+
+  // useEffect(() => {
+  //   updateProducts()
+  // }, [queryParams, updateProducts])
 
   return (
     <main className={classnames(styles.mainContainer, nunito.className)}>
       <div className={styles.topStats}>
         <div>
           <p>Total of unique products</p>
-          <p> {products.length}</p>
+          <p> {count}</p>
         </div>
 
         <div>
@@ -126,51 +131,66 @@ const BackofficeProducts = () => {
       </div>
 
       <div className={styles.mainContent}>
-        <div className={styles.actionBar}>
-          <div>
-            <p>Products</p>
+        <ActionBar
+          label={"All products"}
+          handleLimit={handleLimit}
+          dataCount={products.count}
+          queryParams={queryParams}
+          setQueryParams={setQueryParams}
+          handleQueryParams={handleQueryParams}
+          addRowFunction={redirectToAddPage}
+        />
 
-            <div className={styles.customSearchInput}>
-              <input type="text" placeholder="Search a product" />
-              <MagnifyingGlassIcon className={styles.actionBarIcon} />
-            </div>
-          </div>
-
-          <div>
-            <Button onClick={() => console.log("Product added ! ")}>
-              Add a product
-            </Button>
-          </div>
-        </div>
-
-        <Table array={products} />
+        <Table
+          array={products.products}
+          safeArray={productsProps}
+          queryParams={queryParams}
+          sortColumn={sortColumn}
+          // showSpecificRowFunction={showSpecificUser}
+          // deleteRowFunction={desactivateUser}
+        />
       </div>
     </main>
-  );
-};
-BackofficeProducts.isPublic = true;
+  )
+}
+BackofficeProducts.isPublic = true
 BackofficeProducts.getLayout = function (page) {
-  return <Layout>{page}</Layout>;
-};
+  return <Layout>{page}</Layout>
+}
 
 export const getServerSideProps = async (context) => {
-  const { token } = parseCookies(context);
-  const badTokenRedirect = await checkToken(token);
+  const { token } = parseCookies(context)
+  const badTokenRedirect = await checkToken(token)
 
   if (badTokenRedirect) {
-    return badTokenRedirect;
+    return badTokenRedirect
   }
 
-  const notAdminRedirect = await checkIsAdmin(context);
+  const notAdminRedirect = await checkIsAdmin(context)
 
   if (notAdminRedirect) {
-    return notAdminRedirect;
+    return notAdminRedirect
   }
 
-  return {
-    props: {
-      prototype: "nothing",
-    },
-  };
-};
-export default BackofficeProducts;
+  // const reqInstance = getApiClient(context)
+
+  // try {
+  //   const {
+  //     data: { products, count },
+  //   } = await reqInstance.get(
+  //     `http://localhost:3000/${routes.api.products.collection()}`
+  //   )
+
+  //   return {
+  //     props: {
+  //       productsProps: products,
+  //       count: count,
+  //     },
+  //   }
+  // } catch (error) {
+  //   if (error instanceof AxiosError) {
+  //     console.log(error.response)
+  //   }
+  // }
+}
+export default BackofficeProducts

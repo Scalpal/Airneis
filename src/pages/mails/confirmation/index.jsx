@@ -1,97 +1,69 @@
-import { useRouter } from "next/router";
-import BackofficeLoginLayout from "@/web/components/backoffice/LoginLayout";
-import routes from "@/web/routes";
-import config from "@/api/config.js";
-import axios from "axios";
-import styles from "@/styles/mails/confirmation.module.css";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { useTranslation } from "next-i18next";
+import { useRouter } from "next/router"
+import BackofficeLoginLayout from "@/web/components/backoffice/LoginLayout"
+import routes from "@/web/routes"
+import styles from "@/styles/mails/confirmation.module.css"
+import { useEffect, useState } from "react"
+import useAppContext from "@/web/hooks/useAppContext"
+import classNames from "classnames"
 
-const MailConfirmation = ({ error, answer }) => {
-  if (error) {
-    console.log(answer);
-  }
+const MailConfirmation = () => {
+  const [err, setErr] = useState(false)
+  const [answer, setAnswer] = useState(null)
+  const router = useRouter()
+  const { codedId } = router.query
+  const id = decodeURIComponent(codedId)
+  const {
+    services: {
+      sendMail: { confirmAccount },
+      security: { crypt },
+    },
+  } = useAppContext()
 
-  const router = useRouter();
+  useEffect(() => {
+    const fetchData = async () => {
+      if (codedId) {
+        const [{ getId }] = await crypt([{ id }])
+
+        if (!getId) {
+          setAnswer("Invalid page")
+          setErr(true)
+
+          return
+        }
+
+        const [error, results] = await confirmAccount(getId)
+
+        if (error) {
+          setAnswer(error)
+          setErr(true)
+
+          return
+        }
+
+        setAnswer(results)
+      }
+    }
+    fetchData()
+  }, [codedId, confirmAccount, crypt, err, id])
+
   const handleclick = () => {
-    router.push(routes.home());
-  };
-  const { t: translate } = useTranslation("confirmationMail");
+    router.push(routes.pages.home())
+  }
 
   return (
     <div className={styles.div}>
-      {error ? (
-        <span className={styles.error}>{translate("accountErrorText")}</span>
-      ) : (
-        <span className={styles.success}>
-          {translate("accountValidateText")}
-        </span>
-      )}
+      <span className={classNames(styles.answer, { [styles.error]: err })}>
+        {answer}
+      </span>
       <button className={styles.button} onClick={handleclick}>
-        {translate("returnHomeButton")}
+        Return to Home
       </button>
     </div>
-  );
-};
-
-export const getStaticProps = async ({ locale }) => {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ["confirmationMail"])),
-    },
-  };
-};
-
-MailConfirmation.isPublic = true;
-MailConfirmation.getLayout = function (page) {
-  return <BackofficeLoginLayout>{page}</BackofficeLoginLayout>;
-};
-
-export default MailConfirmation;
-
-export async function getServerSideProps(context) {
-  const cryptoId = decodeURIComponent(context.query.key);
-
-  const crypt = async (CryptoValues) => {
-    try {
-      const {
-        data: { CryptoKey },
-      } = await axios.post(`${config.baseURL}/api/${routes.api.crypt()}`, {
-        CryptoValues,
-      });
-
-      return CryptoKey;
-    } catch (err) {
-      const error = err.response?.data?.error || "Oops. Something went wrong";
-
-      return {
-        props: {
-          error: true,
-          answer: [Array.isArray(error) ? error : [error]],
-        },
-      };
-    }
-  };
-  const [{ getCryptoId }] = await crypt([{ cryptoId }]);
-
-  try {
-    await axios.patch(`${config.baseURL}/api/${routes.api.activate()}`, {
-      id: getCryptoId,
-    });
-
-    return {
-      props: {
-        error: false,
-      },
-    };
-  } catch (err) {
-    const error = err.response?.data?.error || "Oops. Something went wrong";
-
-    return {
-      props: {
-        error: true,
-        answer: [Array.isArray(error) ? error : [error]],
-      },
-    };
-  }
+  )
 }
+MailConfirmation.isPublic = true
+MailConfirmation.getLayout = function (page) {
+  return <BackofficeLoginLayout>{page}</BackofficeLoginLayout>
+}
+
+export default MailConfirmation

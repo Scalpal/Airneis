@@ -1,6 +1,18 @@
-import styles from "@/styles/components/Footer.module.css";
+import styles from "@/styles/components/Footer.module.css"
+import Link from "next/link"
+import routes from "@/web/routes"
+import { useRouter } from "next/router"
 
-const Footer = () => {
+const Footer = (props) => {
+  const { actions } = props
+  const [signOut, session] = actions ? actions : [null, null]
+  const router = useRouter()
+
+  const logout = () => {
+    signOut()
+    router.push(routes.pages.home())
+  }
+
   return (
     <footer className={styles.footer}>
       <div className={styles.footerInfos}>
@@ -18,15 +30,39 @@ const Footer = () => {
 
         <div>
           <h2>My Account </h2>
-          <p>Sign in</p>
-          <p>Register </p>
-          <p>Order status</p>
+          {session ? (
+            <Link href={routes.pages.profil()}>
+              <p>My profil</p>
+            </Link>
+          ) : (
+            <Link href={routes.pages.signIn()}>
+              <p>Sign in</p>
+            </Link>
+          )}
+          {session ? (
+            <a onClick={logout}>
+              <p>Logout</p>
+            </a>
+          ) : (
+            <Link href={routes.pages.signUp()}>
+              <p>Register</p>
+            </Link>
+          )}
+          {session && (
+            <Link href={routes.pages.order()}>
+              <p>Orders</p>
+            </Link>
+          )}
         </div>
 
         <div>
           <h2>Shop</h2>
-          <p>All products</p>
-          <p>All categories </p>
+          <Link href={routes.pages.products()}>
+            <p>All products</p>
+          </Link>
+          <Link href={routes.pages.categories()}>
+            <p>All categories</p>
+          </Link>
         </div>
 
         <div>
@@ -42,7 +78,7 @@ const Footer = () => {
         Copyright ©2022 Airneis. All Rights Reserved{" "}
       </p>
     </footer>
-  );
-};
+  )
+}
 
-export default Footer;
+export default Footer

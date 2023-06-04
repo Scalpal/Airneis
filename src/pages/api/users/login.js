@@ -1,10 +1,10 @@
-import config from "@/api/config.js";
-import UserModel from "@/api/db/models/UserModel.js";
-import slowDown from "@/api/middlewares/slowDown.js";
-import validate from "@/api/middlewares/validate.js";
-import mw from "@/api/mw.js";
-import { emailValidator, stringValidator } from "@/validator";
-import jsonwebtoken from "jsonwebtoken";
+import config from "@/api/config.js"
+import UserModel from "@/api/db/models/UserModel.js"
+import slowDown from "@/api/middlewares/slowDown.js"
+import validate from "@/api/middlewares/validate.js"
+import mw from "@/api/mw.js"
+import { emailValidator, stringValidator } from "@/validator"
+import jsonwebtoken from "jsonwebtoken"
 
 const handler = mw({
   POST: [
@@ -21,24 +21,30 @@ const handler = mw({
       },
       res,
     }) => {
-      const user = await UserModel.query().findOne({ email });
+      const user = await UserModel.query().findOne({ email })
 
       if (!user) {
-        res.status(401).send({ error: "Wrong email or password." });
+        res.status(401).send({ error: "Wrong email or password." })
 
-        return;
+        return
       }
 
       if (!(await user.checkPassword(password))) {
-        res.status(401).send({ error: "Wrong email or password." });
+        res.status(401).send({ error: "Wrong email or password." })
 
-        return;
+        return
       }
 
       if (!user.active) {
-        res.status(401).send({ error: "Wrong email or password." });
+        res.status(401).send({ error: "Wrong email or password." })
 
-        return;
+        return
+      }
+
+      if (user.resetPassword) {
+        await UserModel.query()
+          .findOne({ email })
+          .update({ resetPassword: false })
       }
 
       const jwt = jsonwebtoken.sign(
@@ -51,11 +57,11 @@ const handler = mw({
         },
         config.security.jwt.secret,
         { expiresIn: config.security.jwt.expiresIn }
-      );
+      )
 
-      res.send({ result: jwt });
+      res.send({ result: jwt })
     },
   ],
-});
+})
 
-export default handler;
+export default handler

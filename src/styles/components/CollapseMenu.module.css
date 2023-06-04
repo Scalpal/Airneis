@@ -34,8 +34,9 @@
   flex-direction: column;
   gap: 0.5rem; 
   font-size: 0.9rem;
-  overflow-y: hidden;
-  max-height: 100vh;
+  overflow-y: scroll;
+  width: 90%;
+  max-height: 31vh;
   transition-duration: 500ms;
   opacity: 0;
 }

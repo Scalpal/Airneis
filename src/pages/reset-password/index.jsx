@@ -1,54 +1,46 @@
-import Button from "@/web/components/Button";
-import LoginField from "@/web/components/LoginField";
-import LoginLayout from "@/web/components/LoginLayout";
-import { Form,Formik } from "formik";
-import routes from "@/web/routes.js";
-import styles from "@/styles/login.module.css";
-import { useRouter } from "next/router";
-import useAppContext from "@/web/hooks/useAppContext";
-import { useCallback, useState } from "react";
-import { createValidator, emailValidator } from "@/validator";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { useTranslation } from "next-i18next";
+import Button from "@/web/components/Button"
+import LoginField from "@/web/components/LoginField"
+import LoginLayout from "@/web/components/LoginLayout"
+import { Form, Formik } from "formik"
+import routes from "@/web/routes.js"
+import styles from "@/styles/login.module.css"
+import { useRouter } from "next/router"
+import useAppContext from "@/web/hooks/useAppContext"
+import { useCallback, useState } from "react"
+import { createValidator, emailValidator } from "@/validator"
 
 const validationSchema = createValidator({
   email: emailValidator.required(),
-});
+})
 
 const initialValues = {
   email: "",
-};
-
+}
 
 const ResetPassword = () => {
-  const { t: translate } = useTranslation("resetPasswordPage");
-  const router = useRouter();
+  const router = useRouter()
 
-  const { actions: { mailResetPassword } } = useAppContext();
-  const [error,setError] = useState(null);
+  const {
+    services: {
+      sendMail: { resetPassword },
+    },
+  } = useAppContext()
+  const [error, setError] = useState(null)
 
   const handleSubmit = useCallback(
     async (values) => {
-      const [err] = await mailResetPassword(values);
-
-      if (err && error) {
-        document
-          .getElementById("errormsg")
-          .animate([{ opacity: "100" }, { opacity: "0" }, { opacity: "100" }], {
-            duration: 1000,
-          });
-      }
+      const [err, id] = await resetPassword(values)
 
       if (err) {
-        setError(err);
+        setError(err)
 
-        return;
+        return
       }
-      router.push(routes.login());
-    },
-    [mailResetPassword,error,router]
-  );
 
+      router.push(router.push(routes.paramsPage.mailSent(`codedId=${id}`)))
+    },
+    [resetPassword, router]
+  )
 
   return (
     <main className={styles.container}>
@@ -58,7 +50,7 @@ const ResetPassword = () => {
         initialValues={initialValues}
         error={error}
       >
-        {({ isValid,dirty,isSubmitting }) => (
+        {({ isValid, dirty, isSubmitting }) => (
           <Form className={styles.formContainer}>
             <p className={styles.formTitle}>
               {translate("forgotPassword")}
@@ -66,7 +58,7 @@ const ResetPassword = () => {
 
             {error ? (
               <p id="errormsg" className={styles.error}>
-                {translate("emailNotFoundMessage")}
+                Email not found
               </p>
             ) : null}
 
@@ -78,15 +70,15 @@ const ResetPassword = () => {
             />
 
             <Button disabled={!(dirty && isValid) || isSubmitting}>
-              {translate("resetPasswordButton")}
+              Reset Password
             </Button>
 
-            <div className={styles.noAccountText}>
+            <div className={styles.moreTextCompartiment}>
               <p>
-                {translate("alreadyAccountText")}{" "}
-                <span onClick={() => router.push(routes.login())}>
+                Already have an account ?{" "}
+                <span onClick={() => router.push(routes.pages.signIn())}>
                   {" "}
-                  {translate("alreadyAccountLink")}{" "}
+                  Sign here{" "}
                 </span>
               </p>
             </div>
@@ -94,20 +86,12 @@ const ResetPassword = () => {
         )}
       </Formik>
     </main>
-  );
-};
+  )
+}
 
-export const getStaticProps = async ({ locale }) => {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ["resetPasswordPage"])),
-    },
-  };
-};
-
-ResetPassword.isPublic = true;
+ResetPassword.isPublic = true
 ResetPassword.getLayout = function (page) {
-  return <LoginLayout>{page}</LoginLayout>;
-};
+  return <LoginLayout>{page}</LoginLayout>
+}
 
-export default ResetPassword;
+export default ResetPassword

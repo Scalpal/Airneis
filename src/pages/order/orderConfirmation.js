@@ -26,15 +26,7 @@ const OrderConfirmation = () => {
         </section>
       </div>
     </>
-  );
-};
-
-export const getStaticProps = async ({ locale }) => {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ["orderConfirmation"])),
-    },
-  };
-};
-OrderConfirmation.isPublic = false;
-export default OrderConfirmation;
+  )
+}
+OrderConfirmation.isPublic = false
+export default OrderConfirmation

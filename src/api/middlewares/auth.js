@@ -1,51 +1,51 @@
-import jsonwebtoken from "jsonwebtoken";
-import config from "@/api/config.js";
-import UserModel from "../db/models/UserModel";
-import * as yup from "yup";
+import jsonwebtoken from "jsonwebtoken"
+import config from "@/api/config.js"
+import UserModel from "../db/models/UserModel"
+import * as yup from "yup"
 
 const auth = () => {
   return async (ctx) => {
-    const { req, res, next, logger, locals } = ctx;
+    const { req, res, next, logger, locals } = ctx
 
     if (!req.headers.authorization) {
-      res.status(401).json({ message: "No token provided" });
+      res.status(401).json({ message: "No token provided" })
 
-      return;
+      return
     }
 
-    const jwt = req.headers.authorization.slice(7);
+    const jwt = req.headers.authorization.slice(7)
 
     if (!jwt) {
-      return res.status(401).json({ message: "No token provided" });
+      return res.status(401).json({ message: "No token provided" })
     }
 
     const {
       payload: {
         user: { id },
       },
-    } = jsonwebtoken.verify(jwt, config.security.jwt.secret);
-    locals.userId = id;
+    } = jsonwebtoken.verify(jwt, config.security.jwt.secret)
+    locals.userId = id
 
     try {
-      const user = await UserModel.query().findOne({ id });
+      const user = await UserModel.query().findOne({ id })
 
       if (!user) {
-        res.status(401).json({ error: "Unauthorized" });
+        res.status(401).json({ error: "Unauthorized" })
 
-        return;
+        return
       }
 
-      next();
+      next()
     } catch (error) {
       if (error instanceof yup.ValidationError) {
-        res.status(422).send({ error: error.errors });
+        res.status(422).send({ error: error.errors })
 
-        return;
+        return
       }
 
-      logger.error(error);
+      logger.error(error)
     }
-  };
-};
+  }
+}
 
-export default auth;
+export default auth

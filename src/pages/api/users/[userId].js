@@ -1,20 +1,19 @@
-import UserModel from "@/api/db/models/UserModel";
-import auth from "@/api/middlewares/auth";
-import checkIsAdmin from "@/api/middlewares/checkIsAdmin";
-import slowDown from "@/api/middlewares/slowDown";
-import validate from "@/api/middlewares/validate";
-import mw from "@/api/mw.js";
+import UserModel from "@/api/db/models/UserModel"
+import auth from "@/api/middlewares/auth"
+import checkIsAdmin from "@/api/middlewares/checkIsAdmin"
+import slowDown from "@/api/middlewares/slowDown"
+import validate from "@/api/middlewares/validate"
+import mw from "@/api/mw.js"
 import {
-  boolValidator,
+  booleanValidator,
   emailValidator,
   phoneValidator,
   stringValidator,
-} from "@/validator";
-import { idValidator } from "@/validator";
+} from "@/validator"
+import { idValidator } from "@/validator"
 
 const handler = mw({
   GET: [
-    slowDown(500),
     auth(),
     checkIsAdmin(),
     validate({
@@ -28,7 +27,7 @@ const handler = mw({
       },
       res,
     }) => {
-      const id = Number.parseInt(userId);
+      const id = Number.parseInt(userId)
 
       const user = await UserModel.query()
         .select(
@@ -41,15 +40,15 @@ const handler = mw({
           "isAdmin"
         )
         .findOne({ id })
-        .withGraphFetched("address");
+        .withGraphFetched("address")
 
       if (!user) {
-        res.status(404).send({ error: "User not found" });
+        res.status(404).send({ error: "User not found" })
 
-        return;
+        return
       }
 
-      res.send({ user: user });
+      res.send({ user: user })
     },
   ],
   DELETE: [
@@ -67,23 +66,23 @@ const handler = mw({
       },
       res,
     }) => {
-      const user = await UserModel.query().findById(userId);
+      const user = await UserModel.query().findById(userId)
 
       if (!user) {
-        res.status(404).send({ error: "User not found" });
+        res.status(404).send({ error: "User not found" })
 
-        return;
+        return
       }
 
       const desactivatedUser = await UserModel.query()
         .patch({ active: false })
         .where({ id: userId })
-        .returning("*");
+        .returning("*")
 
       res.send({
         status: "success",
         message: `User ${desactivatedUser[0].id} successfully desactivated`,
-      });
+      })
     },
   ],
   PATCH: [
@@ -99,8 +98,8 @@ const handler = mw({
         lastName: stringValidator,
         email: emailValidator,
         phoneNumber: phoneValidator,
-        active: boolValidator,
-        isAdmin: boolValidator,
+        active: booleanValidator,
+        isAdmin: booleanValidator,
       },
     }),
     async ({
@@ -110,16 +109,13 @@ const handler = mw({
       },
       res,
     }) => {
-      const user = await UserModel.query().findById(userId);
+      const user = await UserModel.query().findById(userId)
 
       if (!user) {
-        res.status(404).send({ error: "User not found" });
+        res.status(404).send({ error: "User not found" })
 
-        return;
+        return
       }
-
-      console.log("active : ", active);
-      console.log("isAdmin : ", isAdmin);
 
       const updatedUser = await UserModel.query()
         .patch({
@@ -131,15 +127,15 @@ const handler = mw({
           ...(isAdmin !== undefined ? { isAdmin } : {}),
         })
         .where({ id: userId })
-        .returning("*");
+        .returning("*")
 
       res.send({
         status: "success",
         message: `User ${updatedUser[0].id} updated successfully`,
         user: updatedUser[0],
-      });
+      })
     },
   ],
-});
+})
 
-export default handler;
+export default handler

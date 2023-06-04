@@ -1,38 +1,38 @@
-import { classnames } from "@/pages/_app";
-import styles from "@/styles/components/CustomAlert.module.css";
+import { classnames } from "@/pages/_app"
+import styles from "@/styles/components/CustomAlert.module.css"
 import {
   CheckBadgeIcon,
   ExclamationTriangleIcon,
-} from "@heroicons/react/24/solid";
-import { useEffect } from "react";
+} from "@heroicons/react/24/solid"
+import { useEffect } from "react"
 
 const CustomAlert = (props) => {
-  const { alert, showAlert, setShowAlert } = props;
+  const { alert, showAlert, setShowAlert } = props
 
-  let customStyle = "";
+  let customStyle = ""
 
   switch (alert.status) {
     case "success":
-      customStyle = styles.success;
+      customStyle = styles.success
 
-      break;
+      break
 
     case "error":
-      customStyle = styles.error;
+      customStyle = styles.error
 
-      break;
+      break
 
     default:
-      customStyle = styles.error;
+      customStyle = styles.error
 
-      break;
+      break
   }
 
   useEffect(() => {
     setTimeout(() => {
-      setShowAlert(false);
-    }, [5000]);
-  }, [showAlert, setShowAlert]);
+      setShowAlert(false)
+    }, [5000])
+  }, [showAlert, setShowAlert])
 
   return (
     <div
@@ -48,7 +48,7 @@ const CustomAlert = (props) => {
       )}
       <p>{alert.message}</p>
     </div>
-  );
-};
+  )
+}
 
-export default CustomAlert;
+export default CustomAlert

@@ -1,14 +1,12 @@
-import Button from "@/web/components/Button";
-import CartProduct from "@/web/components/CartProduct";
-import { useRouter } from "next/router";
-import routes from "@/web/routes.js";
-import { useCallback, useEffect, useState } from "react";
-import { ShoppingCartIcon } from "@heroicons/react/24/outline";
-import LayoutStickyNavbar from "@/web/components/LayoutStickyNavbar";
-import styles from "@/styles/cart.module.css";
-import useAppContext from "@/web/hooks/useAppContext";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { useTranslation } from "next-i18next";
+import Button from "@/web/components/Button"
+import CartProduct from "@/web/components/CartProduct"
+import { useRouter } from "next/router"
+import routes from "@/web/routes.js"
+import { useCallback, useEffect, useState } from "react"
+import { ShoppingCartIcon } from "@heroicons/react/24/outline"
+import LayoutStickyNavbar from "@/web/components/LayoutStickyNavbar"
+import styles from "@/styles/cart.module.css"
+import useAppContext from "@/web/hooks/useAppContext"
 
 // const products = [
 //   {
@@ -41,19 +39,17 @@ import { useTranslation } from "next-i18next";
 // ];
 
 const Cart = () => {
-  const router = useRouter();
-  const { t: translate } = useTranslation("cart");
-
+  const router = useRouter()
   const {
     state: { cart },
-  } = useAppContext();
+  } = useAppContext()
 
-  const [productsList, setProductsList] = useState([]);
-  const [totalSum, setTotalSum] = useState(0);
+  const [productsList, setProductsList] = useState([])
+  const [totalSum, setTotalSum] = useState(0)
 
   useEffect(() => {
-    setProductsList(cart);
-  }, [cart]);
+    setProductsList(cart)
+  }, [cart])
 
   useEffect(() => {
     setTotalSum(
@@ -61,16 +57,16 @@ const Cart = () => {
         (sum, product) => sum + product.price * product.quantity,
         0.0
       )
-    );
-  }, [productsList]);
+    )
+  }, [productsList])
 
   const handleSubmit = useCallback(() => {
-    router.push(routes.delivery());
-  }, [router]);
+    router.push(routes.delivery())
+  }, [router])
 
   const redirectToHomePage = useCallback(() => {
-    router.push(routes.home());
-  }, [router]);
+    router.push(routes.home())
+  }, [router])
 
   // console.log("Products list : ",productsList);
 
@@ -83,17 +79,20 @@ const Cart = () => {
               <ShoppingCartIcon className={styles.emptyCartIcon} />
 
               <p className={styles.emptyCartTitle}>
-                {translate("emptyCartTitle")}
+                Your cart is currently empty{" "}
               </p>
 
               <div className={styles.emptyCartText}>
-                <p>{translate("emptyCartText")}</p>
-                <p>{translate("emptyCartTextSeconde")}</p>
+                <p>
+                  Before proceed to checkout, you must add some products to your
+                  cart.
+                </p>
+                <p>Won&apos;t you come here without buying anything...</p>
               </div>
 
               <div>
                 <Button onClick={() => redirectToHomePage()}>
-                  {translate("cartReturnButton")}
+                  Return to shop
                 </Button>
               </div>
             </section>
@@ -103,58 +102,39 @@ const Cart = () => {
             <section className={styles.productListContainer}>
               <p className={styles.productListTitle}>Panier</p>
               {productsList.map((product, index) => {
-                return (
-                  <CartProduct
-                    key={index}
-                    index={index}
-                    product={product}
-                    productState={[productsList, setProductsList]}
-                    totalSumState={[totalSum, setTotalSum]}
-                  />
-                );
+                return <CartProduct key={index} product={product} />
               })}
             </section>
 
             <section className={styles.recapContainer}>
               <div className={styles.recapTopRows}>
                 <div className={styles.recapRow}>
-                  <p>{translate("subtotal")}</p>
-                  <p>{totalSum.toFixed(2)}€</p>
+                  <p>Subtotal</p>
+                  <p>{totalSum.toFixed(2)}$</p>
                 </div>
 
                 <div className={styles.recapRow}>
-                  <p>{translate("tax")}</p>
-                  <p>{(totalSum * 0.2).toFixed(2)}€</p>
+                  <p>TAX (20%)</p>
+                  <p>{(totalSum * 0.2).toFixed(2)}$</p>
                 </div>
               </div>
 
               <div className={styles.recapTotalRow}>
-                <p>{translate("total")}</p>
-                <p>{(totalSum * 1.2).toFixed(2)}€</p>
+                <p>TOTAL</p>
+                <p>{(totalSum * 1.2).toFixed(2)}$</p>
               </div>
 
-              <Button onClick={() => handleSubmit()}>
-                {translate("order")}
-              </Button>
+              <Button onClick={() => handleSubmit()}>Order</Button>
             </section>
           </>
         )}
       </div>
     </>
-  );
-};
-
-export const getStaticProps = async ({ locale }) => {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ["cart"])),
-    },
-  };
-};
-
-Cart.isPublic = true;
+  )
+}
+Cart.isPublic = true
 Cart.getLayout = function (page) {
-  return <LayoutStickyNavbar>{page}</LayoutStickyNavbar>;
-};
+  return <LayoutStickyNavbar>{page}</LayoutStickyNavbar>
+}
 
-export default Cart;
+export default Cart

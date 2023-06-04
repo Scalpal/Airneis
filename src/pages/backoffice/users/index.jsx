@@ -1,54 +1,55 @@
-import Layout from "@/web/components/backoffice/Layout";
-import Table from "@/web/components/backoffice/Table";
-import { classnames } from "@/pages/_app";
-import { nunito } from "@/pages/_app";
-import styles from "@/styles/backoffice/statsPages.module.css";
-import { parseCookies } from "nookies";
-import Axios, { AxiosError } from "axios";
-import routes from "@/web/routes";
-import { useCallback, useEffect, useState } from "react";
-import ActionBar from "@/web/components/backoffice/ActionBar";
-import useAppContext from "@/web/hooks/useAppContext";
-import CustomAlert from "@/web/components/CustomAlert";
-import { useRouter } from "next/router";
-import checkToken from "@/web/services/checkToken";
-import getApiClient from "@/web/services/getApiClient";
-import checkIsAdmin from "@/web/services/checkIsAdmin";
+import Layout from "@/web/components/backoffice/Layout"
+import Table from "@/web/components/backoffice/Table"
+import { classnames } from "@/pages/_app"
+import { nunito } from "@/pages/_app"
+import styles from "@/styles/backoffice/statsPages.module.css"
+import { parseCookies } from "nookies"
+// import routes from "@/web/routes"
+import { useCallback, useState } from "react"
+import ActionBar from "@/web/components/backoffice/ActionBar"
+// import useAppContext from "@/web/hooks/useAppContext"
+import CustomAlert from "@/web/components/CustomAlert"
+import { useRouter } from "next/router"
+import checkToken from "@/web/services/checkToken"
+// import getApiClient from "@/web/services/getApiClient"
+import checkIsAdmin from "@/web/services/checkIsAdmin"
 
 const BackofficeUsers = (props) => {
-  const { usersProps, count } = props;
-  const {
-    actions: { api },
-  } = useAppContext();
-  const router = useRouter();
+  const { usersProps, count } = props
+  // const {
+  //   actions: { api },
+  // } = useAppContext()
+  const router = useRouter()
 
-  const [alert, setAlert] = useState({ status: "", message: "" });
-  const [showAlert, setShowAlert] = useState(false);
-  const [users, setUsers] = useState({ users: usersProps, count: count });
+  const [alert, setAlert] = useState({})
+  setAlert({ status: "", message: "" })
+  const [showAlert, setShowAlert] = useState(false)
+  const [users, setUsers] = useState({})
+  setUsers({ users: usersProps, count: count })
   const [queryParams, setQueryParams] = useState({
     limit: 10,
     page: 1,
     order: "asc",
     orderField: "id",
-    search: "",
-  });
+    search: null,
+  })
 
   const handleQueryParams = useCallback(
     (key, value) => {
       setQueryParams({
         ...queryParams,
         [key]: value,
-      });
+      })
     },
     [queryParams]
-  );
+  )
 
   const sortColumn = useCallback(
     (column) => {
-      const notSortableKeys = ["email", "phoneNumber", "active", "isAdmin"];
+      const notSortableKeys = ["email", "phoneNumber", "active", "isAdmin"]
 
       if (notSortableKeys.includes(column)) {
-        return false;
+        return false
       }
 
       // By default, when we sort a column, we set it to ASC
@@ -58,9 +59,9 @@ const BackofficeUsers = (props) => {
           page: 1,
           orderField: column,
           order: "asc",
-        });
+        })
 
-        return;
+        return
       }
 
       setQueryParams({
@@ -68,10 +69,10 @@ const BackofficeUsers = (props) => {
         page: 1,
         orderField: column,
         order: queryParams["order"] === "asc" ? "desc" : "asc",
-      });
+      })
     },
     [queryParams]
-  );
+  )
 
   const handleLimit = useCallback(
     (value) => {
@@ -79,70 +80,70 @@ const BackofficeUsers = (props) => {
         ...queryParams,
         page: 1,
         limit: value,
-      });
+      })
     },
     [queryParams]
-  );
+  )
 
-  const updateUsers = useCallback(async () => {
-    const { token } = parseCookies();
+  // const updateUsers = useCallback(async () => {
+  //   const { token } = parseCookies()
 
-    try {
-      const reqInstance = Axios.create({
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+  //   try {
+  //     const reqInstance = Axios.create({
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     })
 
-      const {
-        data: { users, count },
-      } = await reqInstance.get(
-        `http://localhost:3000${routes.api.users.collection(queryParams)}`
-      );
+  //     const {
+  //       data: { users, count },
+  //     } = await reqInstance.get(
+  //       `http://localhost:3000${routes.api.users.collection(queryParams)}`
+  //     )
 
-      setUsers({ users, count });
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        console.log(error);
-      }
-    }
-  }, [queryParams]);
+  //     setUsers({ users, count })
+  //   } catch (error) {
+  //     if (error instanceof AxiosError) {
+  //       console.log(error)
+  //     }
+  //   }
+  // }, [queryParams])
 
   // Table row functions
   const showSpecificUser = useCallback(
     (userId) => {
-      router.push(`/backoffice/users/${userId}`);
+      router.push(`/backoffice/users/${userId}`)
     },
     [router]
-  );
+  )
 
-  const desactivateUser = useCallback(
-    async (userId) => {
-      try {
-        const { data } = await api.delete(routes.api.users.delete(userId));
+  // const desactivateUser = useCallback(
+  //   async (userId) => {
+  //     try {
+  //       const { data } = await api.delete(routes.api.users.delete(userId))
 
-        updateUsers();
-        setShowAlert(true);
-        setAlert({ status: data.status, message: data.message });
-      } catch (error) {
-        if (error instanceof AxiosError) {
-          console.log(error.response);
-        }
-      }
-    },
-    [api, updateUsers]
-  );
+  //       updateUsers()
+  //       setShowAlert(true)
+  //       setAlert({ status: data.status, message: data.message })
+  //     } catch (error) {
+  //       if (error instanceof AxiosError) {
+  //         console.log(error.response)
+  //       }
+  //     }
+  //   },
+  //   [api, updateUsers]
+  // )
 
-  useEffect(() => {
-    updateUsers();
-  }, [queryParams, updateUsers]);
+  // useEffect(() => {
+  //   updateUsers()
+  // }, [queryParams, updateUsers])
 
   return (
     <main className={classnames(styles.mainContainer, nunito.className)}>
       <div className={styles.topStats}>
         <div>
           <p>Total of users</p>
-          <p>{usersProps.length}</p>
+          <p>{count}</p>
         </div>
 
         {/* This will be a sum of users that has an order in the last 6 months */}
@@ -178,7 +179,7 @@ const BackofficeUsers = (props) => {
           queryParams={queryParams}
           sortColumn={sortColumn}
           showSpecificRowFunction={showSpecificUser}
-          deleteRowFunction={desactivateUser}
+          // deleteRowFunction={desactivateUser}
         />
       </div>
 
@@ -188,53 +189,52 @@ const BackofficeUsers = (props) => {
         setShowAlert={setShowAlert}
       />
     </main>
-  );
-};
+  )
+}
 
-BackofficeUsers.isPublic = false;
+BackofficeUsers.isPublic = false
 BackofficeUsers.getLayout = function (page) {
-  return <Layout>{page}</Layout>;
-};
+  return <Layout>{page}</Layout>
+}
+export default BackofficeUsers
 
 export const getServerSideProps = async (context) => {
-  const { token } = parseCookies(context);
-  const badTokenRedirect = await checkToken(token);
+  const { token } = parseCookies(context)
+  const badTokenRedirect = await checkToken(token)
 
   if (badTokenRedirect) {
-    return badTokenRedirect;
+    return badTokenRedirect
   }
 
-  const notAdminRedirect = await checkIsAdmin(context);
+  const notAdminRedirect = await checkIsAdmin(context)
 
   if (notAdminRedirect) {
-    return notAdminRedirect;
+    return notAdminRedirect
   }
 
-  const reqInstance = getApiClient(context);
+  // const reqInstance = getApiClient(context)
 
-  try {
-    const {
-      data: { users, count },
-    } = await reqInstance.get(
-      `http://localhost:3000/${routes.api.users.collection()}`
-    );
+  // try {
+  //   const {
+  //     data: { users, count },
+  //   } = await reqInstance.get(
+  //     `http://localhost:3000/${routes.api.users.collection()}`
+  //   )
 
-    return {
-      props: {
-        usersProps: users,
-        count: count,
-      },
-    };
-  } catch (error) {
-    console.log("Error in GetServerSideProps : ", error);
+  //   return {
+  //     props: {
+  //       usersProps: users,
+  //       count: count,
+  //     },
+  //   }
+  // } catch (error) {
+  //   console.log("Error in GetServerSideProps : ", error)
 
-    return {
-      redirect: {
-        destination: "/home",
-        permanent: false,
-      },
-    };
-  }
-};
-
-export default BackofficeUsers;
+  //   return {
+  //     redirect: {
+  //       destination: "/home",
+  //       permanent: false,
+  //     },
+  //   }
+  // }
+}

@@ -1,23 +1,21 @@
-import Button from "@/web/components/Button";
-import LoginField from "@/web/components/LoginField";
-import LoginLayout from "@/web/components/LoginLayout";
-import routes from "@/web/routes.js";
-import { Form,Formik } from "formik";
-import styles from "@/styles/register.module.css";
-import { useCallback, useState } from "react";
+import Button from "@/web/components/Button"
+import LoginField from "@/web/components/LoginField"
+import LoginLayout from "@/web/components/LoginLayout"
+import { Form, Formik } from "formik"
+import styles from "@/styles/register.module.css"
+import { useCallback, useState } from "react"
 import {
   createValidator,
   emailValidator,
   passwordValidator,
   phoneValidator,
   stringValidator,
-} from "@/validator";
-import { useRouter } from "next/router";
-import { ExclamationTriangleIcon } from "@heroicons/react/24/solid";
-import CollapseMenu from "@/web/components/CollapseMenu";
-import useAppContext from "@/web/hooks/useAppContext";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { useTranslation } from "next-i18next";
+} from "@/validator"
+import { useRouter } from "next/router"
+import { ExclamationTriangleIcon } from "@heroicons/react/24/solid"
+import CollapseMenu from "@/web/components/CollapseMenu"
+import useAppContext from "@/web/hooks/useAppContext"
+import routes from "@/web/routes"
 
 const validationSchema = createValidator({
   firstName: stringValidator
@@ -34,7 +32,7 @@ const validationSchema = createValidator({
   region: stringValidator,
   postalCode: stringValidator,
   country: stringValidator,
-});
+})
 
 const initialValues = {
   firstName: "",
@@ -47,36 +45,31 @@ const initialValues = {
   region: "",
   postalCode: "",
   country: "",
-};
+}
 
 const Register = () => {
-  const { t: translate } = useTranslation("register");
-  const router = useRouter();
+  const router = useRouter()
   const {
-    actions: { signUp },
-  } = useAppContext();
-  const [error, setError] = useState(null);
+    services: { signUp },
+  } = useAppContext()
+  const [error, setError] = useState(null)
 
   const handleSubmit = useCallback(
     async (values) => {
-      const [error] = await signUp(values);
+      const [error, id] = await signUp(values)
 
       if (error) {
-        if (error[0].response.status === 409) {
-          setError("E-mail already used.");
+        if (error) {
+          setError(error)
 
-          return;
-        } else {
-          setError("Oops, something went wrong.");
-
-          return;
+          return
         }
       }
 
-      router.push(routes.login());
+      router.push(routes.paramsPage.mailSent(`codedId=${id}`))
     },
     [router, signUp]
-  );
+  )
 
   return (
     <main className={styles.container}>
@@ -88,7 +81,7 @@ const Register = () => {
       >
         {({ isValid, dirty, isSubmitting }) => (
           <Form className={styles.formContainer}>
-            <p className={styles.formTitle}>{translate("register")}</p>
+            <p className={styles.formTitle}>Register</p>
 
             {error && (
               <p className={styles.error}>
@@ -100,7 +93,7 @@ const Register = () => {
             <LoginField
               name="firstName"
               type="text"
-              label={translate("firstNameRegister")}
+              label="First name"
               showError={true}
               required={true}
             />
@@ -108,7 +101,7 @@ const Register = () => {
             <LoginField
               name="lastName"
               type="text"
-              label={translate("lastNameRegister")}
+              label="Last name"
               showError={true}
               required={true}
             />
@@ -116,7 +109,7 @@ const Register = () => {
             <LoginField
               name="phoneNumber"
               type="text"
-              label={translate("phoneNumberRegister")}
+              label="Phone number"
               showError={true}
               required={true}
             />
@@ -124,7 +117,7 @@ const Register = () => {
             <LoginField
               name="email"
               type="text"
-              label={translate("emailRegister")}
+              label="E-mail"
               showError={true}
               required={true}
             />
@@ -132,70 +125,67 @@ const Register = () => {
             <LoginField
               name="password"
               type="password"
-              label={translate("passwordRegister")}
+              label="Password"
               showError={true}
               required={true}
             />
 
-            <CollapseMenu
-              title={translate("addressRegisterTitle")}
-              key={"address"}
-            >
+            <CollapseMenu title="Address" key={"address"}>
               <LoginField
                 name="address"
                 type="text"
-                label={translate("addressRegister")}
+                label="Address"
                 showError={true}
               />
 
               <LoginField
                 name="city"
                 type="text"
-                label={translate("cityRegister")}
+                label="City"
                 showError={true}
               />
 
               <LoginField
                 name="region"
                 type="text"
-                label={translate("regionRegister")}
+                label="Region"
                 showError={true}
               />
 
               <LoginField
                 name="postalCode"
                 type="text"
-                label={translate("postalCodeRegister")}
+                label="Postal code"
                 showError={true}
               />
 
               <LoginField
                 name="country"
                 type="text"
-                label={translate("countryRegister")}
+                label="Country"
                 showError={true}
               />
             </CollapseMenu>
 
             <p className={styles.requiredText}>
               {" "}
-              <span className={styles.requiredStar}>*</span>{" "}
-              {translate("requiredStarText")}
+              <span className={styles.requiredStar}>*</span> : This field is
+              required
             </p>
 
             <Button
               disabled={!(dirty && isValid) || isSubmitting}
               type={"submit"}
             >
-              {translate("registerButton")}
+              Register
             </Button>
 
-            <div className={styles.haveAccountText}>
+            <div className={styles.moreTextCompartiment}>
               <p>
-                {translate("alreadyAccountText")}{" "}
-                <span onClick={() => router.push(routes.login())}>
+                already have an account ?
+                <span onClick={() => router.push(routes.pages.signIn())}>
                   {" "}
-                  {translate("alreadyAccountTLink")}{" "}
+                  Login here{" "}
                 </span>
               </p>
             </div>
@@ -203,20 +193,12 @@ const Register = () => {
         )}
       </Formik>
     </main>
-  );
-};
+  )
+}
 
-export const getStaticProps = async ({ locale }) => {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ["register"])),
-    },
-  };
-};
-
-Register.isPublic = true;
+Register.isPublic = true
 Register.getLayout = function (page) {
-  return <LoginLayout>{page}</LoginLayout>;
-};
+  return <LoginLayout>{page}</LoginLayout>
+}
 
-export default Register;
+export default Register
