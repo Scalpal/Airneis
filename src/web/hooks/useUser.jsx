@@ -17,7 +17,10 @@ const fetcher = async (url) => {
 };
 
 export const useUser = () => {
-  const { data, error, isLoading } = useSWR(routes.api.users.self(),fetcher);
+  const config = {
+    revalidateOnFocus: false,
+  };
+  const { data, error, isLoading } = useSWR(routes.api.users.self(),fetcher, config);
 
   return {
     data: data,
