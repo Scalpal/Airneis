@@ -31,59 +31,59 @@ const handler = mw({
       },
       res,
     }) => {
-      const user = await UserModel.query().findOne({ email }); 
-      
-      if (user) {
-        res.status(409).send({ error: "Email already used." });
+      try {
+        const user = await UserModel.query().findOne({ email }); 
+        
+        if (user) {
+          res.status(409).send({ error: "Email already used." });
 
-        return;
-      }
+          return;
+        }
 
-      const [passwordHash, passwordSalt] = await hashPassword(password);
+        const [passwordHash, passwordSalt] = await hashPassword(password);
 
-      const addedUser = await UserModel.query()
-        .insert({
-          email,
-          firstName,
-          lastName,
-          passwordHash,
-          passwordSalt,
-          phoneNumber,
-        })
-        .returning("*");
-
-      if (address !== "" && city !== "" && region !== "" && postalCode !== "" && country !== "") {
-        await AddressModel.query()
+        const addedUser = await UserModel.query()
           .insert({
-            address,
-            city,
-            region,
-            postalCode,
-            country,
-            userId : addedUser.id,
+            email,
+            firstName,
+            lastName,
+            passwordHash,
+            passwordSalt,
+            phoneNumber,
           })
           .returning("*");
-      }
 
-      sgMail.setApiKey(config.security.sendgrid);
+        if (address !== "" && city !== "" && region !== "" && postalCode !== "" && country !== "") {
+          await AddressModel.query()
+            .insert({
+              address,
+              city,
+              region,
+              postalCode,
+              country,
+              userId : addedUser.id,
+            })
+            .returning("*");
+        }
 
-      const msg = {
-        to: email,
-        from: "Airneis.service@gmail.com",
-        templateId: "d-97f9566d2ae94701a8172e07cc82de28",
-        // eslint-disable-next-line camelcase
-        dynamic_template_data: {
-          firstname: firstName,
-          lastname: lastName,
-          url: `http://localhost:3000/mails/confirmation?id=${addedUser.id}`,
-        },
-      };
+        sgMail.setApiKey(config.security.sendgrid);
 
-      try {
+        const msg = {
+          to: email,
+          from: "Airneis.service@gmail.com",
+          templateId: "d-97f9566d2ae94701a8172e07cc82de28",
+          // eslint-disable-next-line camelcase
+          dynamic_template_data: {
+            firstname: firstName,
+            lastname: lastName,
+            url: `http://localhost:3000/mails/confirmation?id=${addedUser.id}`,
+          },
+        };
+
         sgMail.send(msg);
         res.send({ success: true });
       } catch (error) {
-        res.status(404).send({ error: error });
+        res.status(500).send({ error: error });
       }
     },
   ],

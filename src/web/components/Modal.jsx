@@ -3,7 +3,7 @@ import styles from "@/styles/components/Modal.module.css";
 import { useEffect } from "react";
 
 const Modal = (props) => {
-  const { showModal, children } = props;
+  const { showModal, setShowModal, children } = props;
 
   useEffect(() => {
     if (showModal === true) {
@@ -14,6 +14,19 @@ const Modal = (props) => {
 
     document.body.style.overflow = ""; 
   }, [showModal]);
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        setShowModal(false); 
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [setShowModal]);
 
   return (
     <div className={classnames(

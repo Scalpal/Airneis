@@ -9,9 +9,13 @@ const handler = mw({
     async ({
       res
     }) => {
-      const categories = await CategoryModel.query().select("*");
+      try {
+        const categories = await CategoryModel.query().select("*");
 
-      res.send({ categories: categories });
+        res.send({ categories: categories });
+      } catch (error) {
+        res.status(500).send({ error: error });
+      }
     }
   ]
 });

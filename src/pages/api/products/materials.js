@@ -9,9 +9,13 @@ const handler = mw({
     async ({
       res
     }) => {
-      const materials = await MaterialModel.query().select("*");
+      try {
+        const materials = await MaterialModel.query().select("*");
 
-      res.send({ materials: materials });
+        res.send({ materials: materials });
+      } catch (error) {
+        res.status(500).send({ error: error });
+      }
     }
   ]
 });
