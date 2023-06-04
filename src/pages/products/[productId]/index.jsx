@@ -1,8 +1,14 @@
-import Carousel from "@/web/components/Carousel";
-import ProductCard from "@/web/components/ProductCard";
-import Banner from "@/web/components/Banner";
-import Button from "@/web/components/Button";
-import styles from "@/styles/productPage.module.css";
+import Carousel from "@/web/components/Carousel"
+import ProductCard from "@/web/components/ProductCard"
+import Banner from "@/web/components/Banner"
+import Button from "@/web/components/Button"
+import styles from "@/styles/productPage.module.css"
+import useAppContext from "@/web/hooks/useAppContext"
+import CircleAnimation from "@/web/components/circleAnimation"
+import { useState } from "react"
+import { useRouter } from "next/router"
+import { serverSideTranslations } from "next-i18next/serverSideTranslations"
+import { useTranslation } from "next-i18next"
 
 const placeholderImages = ["/meuble-1.jpeg", "/meuble-2.jpeg", "/meuble-3.png"]
 
@@ -66,6 +72,7 @@ const similarProducts = [
 ]
 
 const ProductPage = () => {
+  const { t: translate } = useTranslation("productPage")
   const [bubbleAnimation, setBubbleAnimation] = useState(null)
   const router = useRouter()
   const { productId = 1 } = router.query
@@ -115,10 +122,9 @@ const ProductPage = () => {
         </section>
 
         <div className={styles.addToCartBtnWrapper}>
-          <Button
-            onClick={() => console.log("haha")}
-          >
-            Add to cart
+          <Button bgWhite={bubbleAnimation} onClick={handleAddToCart}>
+            {translate("addToCartButton")}
+            {bubbleAnimation && <CircleAnimation />}
           </Button>
         </div>
 
@@ -133,15 +139,15 @@ const ProductPage = () => {
         </section>
       </main>
     </>
-  );
-};
+  )
+}
 
 export const getStaticProps = async ({ locale }) => {
   return {
     props: {
       ...(await serverSideTranslations(locale, ["productPage"])),
     },
-  };
-};
-ProductPage.isPublic = true;
-export default ProductPage;
+  }
+}
+ProductPage.isPublic = true
+export default ProductPage

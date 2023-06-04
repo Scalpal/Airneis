@@ -105,7 +105,7 @@ const Home = () => {
       {/* Categories block */}
       <section className={styles.categoriesContainer}>
         <h1 className={styles.categoriesTitle}>
-          {translate("exploreCategory")}{" "}
+          {translate("exploreCategory")}
         </h1>
 
         <CategoriesBlocks categories={categories} />
