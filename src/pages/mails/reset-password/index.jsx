@@ -12,6 +12,8 @@ import {
   passwordValidator,
   confirmPasswordValidator,
 } from "@/validator"
+import { serverSideTranslations } from "next-i18next/serverSideTranslations"
+import { useTranslation } from "next-i18next"
 const merge = require("deepmerge")
 
 const validationSchema = createValidator({
@@ -25,6 +27,7 @@ const initialValues = {
 }
 
 const MailResetPassword = () => {
+  const { t: translate } = useTranslation("resetPasswordMail")
   const router = useRouter()
   const { codedId, codedTimer } = router.query
   const id = decodeURIComponent(codedId)
@@ -116,15 +119,14 @@ const MailResetPassword = () => {
             />
 
             <Button disabled={!(dirty && isValid) || isSubmitting}>
-              Reset Password
+              {translate("resetPasswordButton")}
             </Button>
 
             <div className={styles.moreTextCompartiment}>
               <p>
-                Don&apos;t want to reset your password ?{" "}
+                {translate("noResetPassword")}
                 <span onClick={() => router.push(routes.pages.home())}>
-                  {" "}
-                  Return home{" "}
+                  {translate("returnHomeLink")}
                 </span>
               </p>
             </div>
@@ -133,6 +135,14 @@ const MailResetPassword = () => {
       </Formik>
     </main>
   )
+}
+
+export const getStaticProps = async ({ locale }) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["resetPasswordMail"])),
+    },
+  }
 }
 
 MailResetPassword.isPublic = true

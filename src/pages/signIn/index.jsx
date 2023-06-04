@@ -9,6 +9,8 @@ import useAppContext from "@/web/hooks/useAppContext"
 import LoginLayout from "@/web/components/LoginLayout"
 import LoginField from "@/web/components/LoginField"
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline"
+import { serverSideTranslations } from "next-i18next/serverSideTranslations"
+import { useTranslation } from "next-i18next"
 
 const validationSchema = createValidator({
   email: emailValidator.required(),
@@ -21,6 +23,7 @@ const initialValues = {
 }
 
 const Login = () => {
+  const { t: translate } = useTranslation("login")
   const router = useRouter()
   const {
     services: { signIn },
@@ -52,7 +55,7 @@ const Login = () => {
       >
         {({ isValid, dirty, isSubmitting }) => (
           <Form className={styles.formContainer}>
-            <p className={styles.formTitle}>Log into your account</p>
+            <p className={styles.formTitle}>{translate("formTitle")}</p>
 
             {error && (
               <p className={styles.error}>
@@ -64,34 +67,32 @@ const Login = () => {
             <LoginField
               name="email"
               type="text"
-              label="E-mail"
+              label={translate("email")}
               showError={false}
             />
 
             <LoginField
               name="password"
               type="password"
-              label="Password"
+              label={translate("password")}
               showError={false}
             />
 
             <Button disabled={!(dirty && isValid) || isSubmitting}>
-              Login
+              {translate("loginButton")}
             </Button>
 
             <div className={styles.moreTextCompartiment}>
               <p>
-                Forgot your password ?{" "}
+                {translate("forgotPassword")}
                 <span onClick={() => router.push(routes.pages.resetPassword())}>
-                  {" "}
-                  Click here{" "}
+                  {translate("forgotPasswordLink")}
                 </span>
               </p>
               <p>
-                Don&apos;t have an account ?{" "}
+                {translate("noAccount")}
                 <span onClick={() => router.push(routes.pages.signUp())}>
-                  {" "}
-                  Register here{" "}
+                  {translate("noAccountLink")}
                 </span>
               </p>
             </div>
@@ -100,6 +101,14 @@ const Login = () => {
       </Formik>
     </main>
   )
+}
+
+export const getStaticProps = async ({ locale }) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["login"])),
+    },
+  }
 }
 Login.isPublic = true
 Login.getLayout = function (page) {

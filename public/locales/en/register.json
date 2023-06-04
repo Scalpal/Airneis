@@ -1,0 +1,17 @@
+{
+  "registerTitle": "Register",
+  "firstName": "First name",
+  "lastName": "Last name",
+  "phoneNumber": "Phone number",
+  "email": "E-mail",
+  "password": "Password",
+  "address": "Address",
+  "city": "City",
+  "region": "Region",
+  "postalCode": "Postal code",
+  "country": "Country",
+  "fieldRequired": ": This field is required",
+  "registerButton": "Register",
+  "alreadyAccount": "already have an account ?",
+  "loginButton": "Login here"
+}

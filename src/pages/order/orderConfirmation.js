@@ -1,8 +1,8 @@
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations"
+import { useTranslation } from "next-i18next"
 
 const OrderConfirmation = () => {
-  const { t: translate } = useTranslation("orderConfirmation");
+  const { t: translate } = useTranslation("orderConfirmation")
 
   return (
     <>
@@ -13,10 +13,7 @@ const OrderConfirmation = () => {
             <h2 className="cartSuccessHead">
               {translate("succedCommandHead")}
             </h2>
-            <p>
-              {translate("succedCommandText")}
-              
-            </p>
+            <p>{translate("succedCommandText")}</p>
           </div>
         </section>
         <section className="cartSuccessRight">
@@ -27,6 +24,14 @@ const OrderConfirmation = () => {
       </div>
     </>
   )
+}
+
+export const getStaticProps = async ({ locale }) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["orderConfirmation"])),
+    },
+  }
 }
 OrderConfirmation.isPublic = false
 export default OrderConfirmation

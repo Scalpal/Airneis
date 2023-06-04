@@ -2,8 +2,11 @@ import Banner from "@/web/components/Banner"
 import DetailedProductCard from "@/web/components/DetailedProductCard"
 import { useRouter } from "next/router"
 import styles from "@/styles/categoryPage.module.css"
+import { serverSideTranslations } from "next-i18next/serverSideTranslations"
+import { useTranslation } from "next-i18next"
 
 const Category = () => {
+  const { t: translate } = useTranslation("category")
   const router = useRouter()
   // eslint-disable-next-line no-unused-vars
   const { categoryName = "test" } = router.query
@@ -72,10 +75,7 @@ const Category = () => {
       <Banner title={categoryName} />
 
       <main>
-        <p className={styles.descriptionText}>
-          Nos chaises, fabriquée en bois de chêne sont d’une qualité premium,
-          idéale pour une maison moderne.
-        </p>
+        <p className={styles.descriptionText}>{translate("categoryText")}</p>
 
         <div className={styles.productsList}>
           {categoryProducts.map((product, index) => {
@@ -85,6 +85,14 @@ const Category = () => {
       </main>
     </>
   )
+}
+
+export const getStaticProps = async ({ locale }) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["category"])),
+    },
+  }
 }
 Category.isPublic = true
 export default Category

@@ -1,8 +1,8 @@
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations"
+import { useTranslation } from "next-i18next"
 
 const Delivery = () => {
-  const { t: translate } = useTranslation("delivery");
+  const { t: translate } = useTranslation("delivery")
 
   return (
     <>
@@ -60,6 +60,14 @@ const Delivery = () => {
       </form>
     </>
   )
+}
+
+export const getStaticProps = async ({ locale }) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["delivery"])),
+    },
+  }
 }
 Delivery.isPublic = false
 export default Delivery

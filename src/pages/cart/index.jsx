@@ -7,6 +7,8 @@ import { ShoppingCartIcon } from "@heroicons/react/24/outline"
 import LayoutStickyNavbar from "@/web/components/LayoutStickyNavbar"
 import styles from "@/styles/cart.module.css"
 import useAppContext from "@/web/hooks/useAppContext"
+import { serverSideTranslations } from "next-i18next/serverSideTranslations"
+import { useTranslation } from "next-i18next"
 
 // const products = [
 //   {
@@ -39,6 +41,7 @@ import useAppContext from "@/web/hooks/useAppContext"
 // ];
 
 const Cart = () => {
+  const { t: translate } = useTranslation("cart")
   const router = useRouter()
   const {
     state: { cart },
@@ -79,20 +82,17 @@ const Cart = () => {
               <ShoppingCartIcon className={styles.emptyCartIcon} />
 
               <p className={styles.emptyCartTitle}>
-                Your cart is currently empty{" "}
+                {translate("emptyCartTitle")}
               </p>
 
               <div className={styles.emptyCartText}>
-                <p>
-                  Before proceed to checkout, you must add some products to your
-                  cart.
-                </p>
-                <p>Won&apos;t you come here without buying anything...</p>
+                <p>{translate("emptyCartText")}</p>
+                <p>{translate("emptyCartTextSeconde")}</p>
               </div>
 
               <div>
                 <Button onClick={() => redirectToHomePage()}>
-                  Return to shop
+                  {translate("cartReturnButton")}
                 </Button>
               </div>
             </section>
@@ -109,28 +109,38 @@ const Cart = () => {
             <section className={styles.recapContainer}>
               <div className={styles.recapTopRows}>
                 <div className={styles.recapRow}>
-                  <p>Subtotal</p>
+                  <p>{translate("subtotal")}</p>
                   <p>{totalSum.toFixed(2)}$</p>
                 </div>
 
                 <div className={styles.recapRow}>
-                  <p>TAX (20%)</p>
+                  <p>{translate("tax")}</p>
                   <p>{(totalSum * 0.2).toFixed(2)}$</p>
                 </div>
               </div>
 
               <div className={styles.recapTotalRow}>
-                <p>TOTAL</p>
+                <p>{translate("total")}</p>
                 <p>{(totalSum * 1.2).toFixed(2)}$</p>
               </div>
 
-              <Button onClick={() => handleSubmit()}>Order</Button>
+              <Button onClick={() => handleSubmit()}>
+                {translate("order")}
+              </Button>
             </section>
           </>
         )}
       </div>
     </>
   )
+}
+
+export const getStaticProps = async ({ locale }) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["cart"])),
+    },
+  }
 }
 Cart.isPublic = true
 Cart.getLayout = function (page) {

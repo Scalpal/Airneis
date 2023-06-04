@@ -7,6 +7,8 @@ import useAppContext from "@/web/hooks/useAppContext"
 import CircleAnimation from "@/web/components/circleAnimation"
 import { useState } from "react"
 import { useRouter } from "next/router"
+import { serverSideTranslations } from "next-i18next/serverSideTranslations"
+import { useTranslation } from "next-i18next"
 
 const placeholderImages = ["/meuble-1.jpeg", "/meuble-2.jpeg", "/meuble-3.png"]
 
@@ -124,6 +126,7 @@ const similarProducts = [
 ]
 
 const ProductPage = () => {
+  const { t: translate } = useTranslation("productPage")
   const [bubbleAnimation, setBubbleAnimation] = useState(null)
   const router = useRouter()
   const { productId = 1 } = router.query
@@ -176,7 +179,7 @@ const ProductPage = () => {
 
         <div className={styles.addToCartBtnWrapper}>
           <Button bgWhite={bubbleAnimation} onClick={handleAddToCart}>
-            Add to cart
+            {translate("addToCartButton")}
             {bubbleAnimation && <CircleAnimation />}
           </Button>
         </div>
@@ -193,6 +196,14 @@ const ProductPage = () => {
       </main>
     </>
   )
+}
+
+export const getStaticProps = async ({ locale }) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["productPage"])),
+    },
+  }
 }
 ProductPage.isPublic = true
 export default ProductPage

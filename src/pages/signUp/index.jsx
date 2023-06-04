@@ -16,6 +16,8 @@ import { ExclamationTriangleIcon } from "@heroicons/react/24/solid"
 import CollapseMenu from "@/web/components/CollapseMenu"
 import useAppContext from "@/web/hooks/useAppContext"
 import routes from "@/web/routes"
+import { serverSideTranslations } from "next-i18next/serverSideTranslations"
+import { useTranslation } from "next-i18next"
 
 const validationSchema = createValidator({
   firstName: stringValidator
@@ -48,6 +50,7 @@ const initialValues = {
 }
 
 const Register = () => {
+  const { t: translate } = useTranslation("register")
   const router = useRouter()
   const {
     services: { signUp },
@@ -81,7 +84,7 @@ const Register = () => {
       >
         {({ isValid, dirty, isSubmitting }) => (
           <Form className={styles.formContainer}>
-            <p className={styles.formTitle}>Register</p>
+            <p className={styles.formTitle}>{translate("registerTitle")}</p>
 
             {error && (
               <p className={styles.error}>
@@ -93,7 +96,7 @@ const Register = () => {
             <LoginField
               name="firstName"
               type="text"
-              label="First name"
+              label={translate("firstName")}
               showError={true}
               required={true}
             />
@@ -101,7 +104,7 @@ const Register = () => {
             <LoginField
               name="lastName"
               type="text"
-              label="Last name"
+              label={translate("lastName")}
               showError={true}
               required={true}
             />
@@ -109,7 +112,7 @@ const Register = () => {
             <LoginField
               name="phoneNumber"
               type="text"
-              label="Phone number"
+              label={translate("phoneNumber")}
               showError={true}
               required={true}
             />
@@ -117,7 +120,7 @@ const Register = () => {
             <LoginField
               name="email"
               type="text"
-              label="E-mail"
+              label={translate("email")}
               showError={true}
               required={true}
             />
@@ -125,7 +128,7 @@ const Register = () => {
             <LoginField
               name="password"
               type="password"
-              label="Password"
+              label={translate("password")}
               showError={true}
               required={true}
             />
@@ -134,58 +137,56 @@ const Register = () => {
               <LoginField
                 name="address"
                 type="text"
-                label="Address"
+                label={translate("address")}
                 showError={true}
               />
 
               <LoginField
                 name="city"
                 type="text"
-                label="City"
+                label={translate("city")}
                 showError={true}
               />
 
               <LoginField
                 name="region"
                 type="text"
-                label="Region"
+                label={translate("region")}
                 showError={true}
               />
 
               <LoginField
                 name="postalCode"
                 type="text"
-                label="Postal code"
+                label={translate("postalCode")}
                 showError={true}
               />
 
               <LoginField
                 name="country"
                 type="text"
-                label="Country"
+                label={translate("country")}
                 showError={true}
               />
             </CollapseMenu>
 
             <p className={styles.requiredText}>
-              {" "}
-              <span className={styles.requiredStar}>*</span> : This field is
-              required
+              <span className={styles.requiredStar}>*</span>
+              {translate("fieldRequired")}
             </p>
 
             <Button
               disabled={!(dirty && isValid) || isSubmitting}
               type={"submit"}
             >
-              Register
+              {translate("registerButton")}
             </Button>
 
             <div className={styles.moreTextCompartiment}>
               <p>
-                already have an account ?
+                {translate("alreadyAccount")}
                 <span onClick={() => router.push(routes.pages.signIn())}>
-                  {" "}
-                  Login here{" "}
+                  {translate("loginButton")}
                 </span>
               </p>
             </div>
@@ -194,6 +195,14 @@ const Register = () => {
       </Formik>
     </main>
   )
+}
+
+export const getStaticProps = async ({ locale }) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["register"])),
+    },
+  }
 }
 
 Register.isPublic = true

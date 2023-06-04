@@ -8,6 +8,8 @@ import { useRouter } from "next/router"
 import useAppContext from "@/web/hooks/useAppContext"
 import { useCallback, useState } from "react"
 import { createValidator, emailValidator } from "@/validator"
+import { serverSideTranslations } from "next-i18next/serverSideTranslations"
+import { useTranslation } from "next-i18next"
 
 const validationSchema = createValidator({
   email: emailValidator.required(),
@@ -18,6 +20,7 @@ const initialValues = {
 }
 
 const ResetPassword = () => {
+  const { t: translate } = useTranslation("resetPasswordPage")
   const router = useRouter()
 
   const {
@@ -52,13 +55,11 @@ const ResetPassword = () => {
       >
         {({ isValid, dirty, isSubmitting }) => (
           <Form className={styles.formContainer}>
-            <p className={styles.formTitle}>
-              {translate("forgotPassword")}
-            </p>
+            <p className={styles.formTitle}>{translate("forgotPassword")}</p>
 
             {error ? (
               <p id="errormsg" className={styles.error}>
-                Email not found
+                {translate("emailNotFoundMessage")}
               </p>
             ) : null}
 
@@ -70,15 +71,14 @@ const ResetPassword = () => {
             />
 
             <Button disabled={!(dirty && isValid) || isSubmitting}>
-              Reset Password
+              {translate("resetPasswordButton")}
             </Button>
 
             <div className={styles.moreTextCompartiment}>
               <p>
-                Already have an account ?{" "}
+                {translate("alreadyAccountText")}
                 <span onClick={() => router.push(routes.pages.signIn())}>
-                  {" "}
-                  Sign here{" "}
+                  {translate("alreadyAccountLink")}
                 </span>
               </p>
             </div>
@@ -87,6 +87,14 @@ const ResetPassword = () => {
       </Formik>
     </main>
   )
+}
+
+export const getStaticProps = async ({ locale }) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["resetPasswordPage"])),
+    },
+  }
 }
 
 ResetPassword.isPublic = true

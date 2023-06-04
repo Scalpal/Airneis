@@ -4,6 +4,7 @@ import Head from "next/head"
 import { Montserrat } from "@next/font/google"
 import { Nunito } from "@next/font/google"
 import { AppContextProvider } from "@/web/hooks/useAppContext.jsx"
+import { appWithTranslation } from "next-i18next"
 
 export const classnames = require("classnames")
 
@@ -19,7 +20,7 @@ export const nunito = Nunito({
   subsets: ["latin"],
 })
 
-export default function App({ Component, pageProps }) {
+function App({ Component, pageProps }) {
   const renderWithLayout =
     Component.getLayout ||
     ((page) => {
@@ -39,4 +40,4 @@ export default function App({ Component, pageProps }) {
   )
 }
 
-export default appWithTranslation(App);
+export default appWithTranslation(App)

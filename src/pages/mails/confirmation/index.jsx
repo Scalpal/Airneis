@@ -5,8 +5,11 @@ import styles from "@/styles/mails/confirmation.module.css"
 import { useEffect, useState } from "react"
 import useAppContext from "@/web/hooks/useAppContext"
 import classNames from "classnames"
+import { serverSideTranslations } from "next-i18next/serverSideTranslations"
+import { useTranslation } from "next-i18next"
 
 const MailConfirmation = () => {
+  const { t: translate } = useTranslation("confirmationMail")
   const [err, setErr] = useState(false)
   const [answer, setAnswer] = useState(null)
   const router = useRouter()
@@ -56,10 +59,18 @@ const MailConfirmation = () => {
         {answer}
       </span>
       <button className={styles.button} onClick={handleclick}>
-        Return to Home
+        {translate("returnHomeButton")}
       </button>
     </div>
   )
+}
+
+export const getStaticProps = async ({ locale }) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["confirmationMail"])),
+    },
+  }
 }
 MailConfirmation.isPublic = true
 MailConfirmation.getLayout = function (page) {

@@ -1,8 +1,8 @@
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations"
+import { useTranslation } from "next-i18next"
 
 const Payment = () => {
-  const { t: translate } = useTranslation("payment");
+  const { t: translate } = useTranslation("payment")
 
   return (
     <>
@@ -49,6 +49,14 @@ const Payment = () => {
       </form>
     </>
   )
+}
+
+export const getStaticProps = async ({ locale }) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["payment"])),
+    },
+  }
 }
 Payment.isPublic = false
 export default Payment

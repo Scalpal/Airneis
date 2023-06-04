@@ -3,6 +3,8 @@ import CustomerReview from "@/web/components/CustomerReview"
 import CategoriesBlocks from "@/web/components/CategoriesBlocks"
 import styles from "@/styles/home.module.css"
 import ProductCard from "@/web/components/ProductCard"
+import { serverSideTranslations } from "next-i18next/serverSideTranslations"
+import { useTranslation } from "next-i18next"
 
 const placeholderImages = ["/meuble-4.jpeg", "/meuble-2.jpeg", "/meuble-3.png"]
 
@@ -75,7 +77,7 @@ const categories = [
 ]
 
 const Home = () => {
-  const { t: translate } = useTranslation("common");
+  const { t: translate } = useTranslation("common")
 
   return (
     <>
@@ -103,7 +105,7 @@ const Home = () => {
       {/* Categories block */}
       <section className={styles.categoriesContainer}>
         <h1 className={styles.categoriesTitle}>
-          {translate("exploreCategory")}{" "}
+          {translate("exploreCategory")}
         </h1>
 
         <CategoriesBlocks categories={categories} />
@@ -123,6 +125,14 @@ const Home = () => {
       </section>
     </>
   )
+}
+
+export const getStaticProps = async ({ locale }) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["common"])),
+    },
+  }
 }
 Home.isPublic = true
 export default Home

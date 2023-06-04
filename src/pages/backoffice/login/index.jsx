@@ -8,6 +8,7 @@ import styles from "@/styles/backoffice/loginPage.module.css"
 import { useRouter } from "next/router"
 import { useCallback, useState } from "react"
 import useAppContext from "@/web/hooks/useAppContext"
+
 const merge = require("deepmerge")
 
 const validationSchema = createValidator({
@@ -95,6 +96,7 @@ const Login = () => {
     </main>
   )
 }
+
 Login.isPublic = true
 Login.getLayout = function (page) {
   return <BackofficeLoginLayout>{page}</BackofficeLoginLayout>
