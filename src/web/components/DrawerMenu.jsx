@@ -1,21 +1,21 @@
-import styles from "@/styles/components/DrawerMenu.module.css";
-import Link from "next/link";
-import { classnames } from "@/pages/_app";
-import { ArrowRightIcon } from "@heroicons/react/24/outline";
-import { useRouter } from "next/router";
+import styles from "@/styles/components/DrawerMenu.module.css"
+import Link from "next/link"
+import routes from "@/web/routes"
+import { classnames } from "@/pages/_app"
+import { ArrowRightIcon } from "@heroicons/react/24/outline"
+import { useRouter } from "next/router"
 
 const DrawerMenu = (props) => {
+  const { isDrawerToggledState, actions } = props
+  const [isDrawerToggled, setIsDrawerToggled] = isDrawerToggledState
 
-  const { isDrawerToggledState, actions } = props;
-  const [isDrawerToggled, setIsDrawerToggled] = isDrawerToggledState;
+  const [signOut, session] = actions ? actions : [null, null]
 
-  const [signOut, session] = actions ? actions : [null, null];
-
-  const router = useRouter();
+  const router = useRouter()
   const logout = () => {
-    signOut();
-    router.push("/home");
-  };
+    signOut()
+    router.push(routes.pages.home())
+  }
 
   return (
     <>
@@ -24,8 +24,7 @@ const DrawerMenu = (props) => {
           styles.overlay,
           isDrawerToggled ? styles.overlayActive : styles.overlayInactive
         )}
-      >
-      </div>
+      ></div>
 
       <div
         className={classnames(
@@ -37,15 +36,25 @@ const DrawerMenu = (props) => {
           className={styles.drawerMenuIcon}
           onClick={() => setIsDrawerToggled(!isDrawerToggled)}
         />
-        {session ? <Link href="/profil">My profil</Link> : <Link href="/login">Login</Link>}
-        {session ? <a onClick={logout}>Logout</a> : <Link href="/register">Register</Link>}
+        {session ? (
+          <Link href={routes.pages.profil()}>My profil</Link>
+        ) : (
+          <Link href={routes.pages.signIn()}>Login</Link>
+        )}
+        {session ? (
+          <Link href="" onClick={logout}>
+            Logout
+          </Link>
+        ) : (
+          <Link href={routes.pages.signUp()}>Register</Link>
+        )}
         <Link href="">CGU</Link>
         <Link href="">Legal mentions</Link>
         <Link href="">Contact</Link>
         <Link href="">About us</Link>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default DrawerMenu; 
+export default DrawerMenu

@@ -62,7 +62,11 @@
   font-size: 0.7rem;
   text-align: justify;
 }
-
+.unityPrice{
+  font-size: 0.7rem;
+  margin-top: -1rem;
+  color: #6d6d6d;
+}
 
 /* -------------- Cart product right part --------------- */
 .cartProductControls {
@@ -74,23 +78,85 @@
   width: 10%;
 }
 
-.cartProductControlsQuantity {
+.cartProductSelectQuantity {
+  position: relative;
+  font-size: 0.65rem;
+  color: #0F1111;
+  font-weight: bolder;
+}
+
+.cartProductContentSelect{
+  gap: 0.25rem;
+  padding: 0.25vw 0.25vw 0.25vw 0.4vw;
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 0.5rem; 
+  border: #919191 solid 0.01em;
+  border-radius: 0.25vw;
+  background: #F0F2F2;
+  box-shadow: 0 2px 5px rgba(15,17,17,.15);
 }
 
-.cartProductControlsQuantity button {
-  border: 0;
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  transition-duration: 300ms;
+.cartProductQuantityValues{
+   font-size: 0.7rem;
+   margin-left: 0.2rem;
 }
 
-.cartProductControlsQuantity button:hover {
-  transform: scale(1.4);
+.cartProductSelectQuantity svg{
+  width: 0.65vw; height: 0.65vw;
+  transform: scale(1.2);
+  stroke: rgb(145, 145, 145);
+}
+.cartProductSelect{
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.cartProductSelect option{
+  color: #0F1111;
+  margin-left: 1%;
+  font-size: 0.7rem;
+}
+.cartProductInputContent{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.cartProductInputValues{
+  outline: none;
+  color: #0F1111;
+  width: 4vw;
+  border: none;
+  padding: 0.3em 0.5em;
+  border-radius: 0.25vw;
+  letter-spacing: 0.07em;
+  font-weight: bolder;
+  font-size: 0.65rem;
+  border: #919191 solid 0.01em;
+  background: #F0F2F2;
+  box-shadow: 0 2px 5px rgba(15,17,17,.15);
+  -moz-appearance: textfield;
+}
+.cartProductInputValues::-webkit-inner-spin-button,
+.cartProductInputValues::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+.cartProductInputContent button{
+  margin-top: 0.5rem;
+  border: none;
+  background: none;
+  font-size: 0.65rem;
+  padding: 0;
+  color: #5c5c5c;
+}
+.cartProductInputContent button:hover{
+  cursor: pointer;
+  color: black;
 }
 
 .cartProductControlIcon {
@@ -103,6 +169,7 @@
 
 .cartProductControlIcon:hover {
   filter: invert(1);
+  cursor: pointer;
 }
 
 @media only screen and (max-width: 767px) {

@@ -1,34 +1,65 @@
-const createRouteWithQueryParams = (route, query) => {
-  if (!query) {
-    return route;
+const createRouteWithParams = (route, params) => {
+  if (!params) {
+    return route
   }
 
-  const qs = new URLSearchParams(query).toString();
+  const qs = new URLSearchParams(params).toString()
 
-  return `${route}?${qs}`;
-};
+  return `${route}?${qs}`
+}
 
 const routes = {
-  home: () => "/",
-  register: () => "/register",
-  login: () => "/login",
-  api: {
-    register: () => "/users/register",
-    login: () => "/users/login",
-    products: {
-      collection: (query) => createRouteWithQueryParams("/api/products", query),
-      single: (postId, query) =>
-        createRouteWithQueryParams(`/api/products/${postId}`, query),
-    },
-    users: {
-      collection: (query) => createRouteWithQueryParams("/api/users", query),
-      single: (userId, query) =>
-        createRouteWithQueryParams(`/api/users/${userId}`, query),
-      self: () => "/api/users/self",
-      patch: (userId) => createRouteWithQueryParams(`/users/${userId}`),
-      delete: (userId) => createRouteWithQueryParams(`/users/${userId}`)
-    }
+  pages: {
+    home: () => "/",
+    signUp: () => "/signUp",
+    signIn: () => "/signIn",
+    cart: () => "/cart",
+    profil: () => "/profil",
+    order: () => "/order",
+    products: () => "/products",
+    categories: () => "/category",
+    delivery: () => "/order/delivery",
+    resetPassword: () => "/reset-password",
+    // backoffice: {
+    //   base: () => "/backoffice",
+    //   users: {
+    //     single: (userId) =>
+    //       createRouteWithQueryParams(`/backoffice/users/${userId}`),
+    //   },
+    //   products: {
+    //     add: () => "/backoffice/products/add",
+    //     single: (productId) =>
+    //       createRouteWithQueryParams(`/backoffice/products/${productId}`),
+    //   },
+    // },
   },
-};
+  paramsPage: {
+    products: (params) => createRouteWithParams("/products", params),
+    mailSent: (params) => createRouteWithParams("/mails/sent", params),
+  },
+  queryPage: {
+    category: (query) => "/category/" + query,
+    products: (query) => "/products/" + query,
+  },
+  api: {
+    signUp: () => "/users/signUp",
+    login: () => "/users/login",
+    confirmAccount: () => "/users/activate",
+    crypt: () => "/security/crypt",
+    mailResetPassword: () => "/mail/reset-password",
+    resetPassword: () => "/users/reset-password",
+    categories: () => "/categories",
+    materials: () => "/materials",
+    products: () => "/products",
+    mails: {
+      resetPassword: () => "/mail/reset-password",
+    },
+    // posts: {
+    //   collection: (query) => createRouteWithQueryParams("/posts", query),
+    //   single: (postId, query) =>
+    //     createRouteWithQueryParams(`/posts/${postId}`, query),
+    // },
+  },
+}
 
-export default routes;
+export default routes

@@ -56,7 +56,7 @@ const Delivery = () => {
         </div>
       </form>
     </>
-  );
-};
-Delivery.isPublic = false;
-export default Delivery;
+  )
+}
+Delivery.isPublic = false
+export default Delivery

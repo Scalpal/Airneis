@@ -19,7 +19,7 @@ const OrderConfirmation = () => {
         </section>
       </div>
     </>
-  );
-};
-OrderConfirmation.isPublic = false;
-export default OrderConfirmation;
+  )
+}
+OrderConfirmation.isPublic = false
+export default OrderConfirmation

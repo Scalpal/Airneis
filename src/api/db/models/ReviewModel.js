@@ -1,4 +1,4 @@
-import BaseModel from "@/api/db/models/BaseModel.js";
+import BaseModel from "@/api/db/models/BaseModel.js"
 
 class ReviewModel extends BaseModel {
   static tableName = "reviews";
@@ -17,4 +17,4 @@ class ReviewModel extends BaseModel {
   // }
 }
 
-export default ReviewModel;
+export default ReviewModel

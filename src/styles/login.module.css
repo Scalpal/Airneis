@@ -38,7 +38,7 @@
   height: 20px;
 }
 
-.noAccountText {
+.moreTextCompartiment {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -47,17 +47,25 @@
   font-size: 0.7rem;
 }
 
-.noAccountText p {
+.moreTextCompartiment p {
   color: grey;
   white-space: nowrap;
 }
 
-.noAccountText p > span {
+.moreTextCompartiment p:hover {
+  cursor: default;
+}
+
+.moreTextCompartiment p > span {
   font-weight: 600;
   color: black;
 }
 
-.noAccountText a:hover {
+.moreTextCompartiment p > span:hover {
+  cursor: pointer;
+}
+
+.moreTextCompartiment a:hover {
   text-decoration: underline;
 }
 
@@ -70,15 +78,15 @@
     font-size: 1.4rem;
   }
 
-  .noAccountText {
+  .moreTextCompartiment {
     font-size: 0.9rem;
   }
 
-  .noAccountText p {
+  .moreTextCompartiment p {
     color: rgb(79, 79, 79);
   }
 
-  .noAccountText p > span {
+  .moreTextCompartiment p > span {
     font-size: 1rem;
   }
 }

@@ -20,6 +20,7 @@
 }
 
 .button {
+  background-color: var(--secondary);
   font-family: inherit;
   padding: 0.3rem 0.4rem;
   border: 0;

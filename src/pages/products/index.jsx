@@ -1,165 +1,70 @@
-import Banner from "@/web/components/Banner";
-import styles from "@/styles/products.module.css";
-import DetailedProductCard from "@/web/components/DetailedProductCard";
-import { useCallback, useState } from "react";
-import ProductFilterMenu from "@/web/components/ProductFilterMenu";
-import ParamBadge from "@/web/components/ParamBadge";
-
-const categoryProducts = [
-  {
-    id: 1,
-    name: "Modern beechwood chair",
-    type: "Wood",
-    description: "Black chairs made of 100 year old Himalayan beech wood",
-    price: 200,
-    stock: 25,
-    picture: "/meuble-2.jpeg",
-    materials: ["metal", "steel", "iron"],
-  },
-  {
-    id: 2,
-    name: "Chair",
-    type: "Wood",
-    price: 29,
-    stock: 25,
-    picture: "/meuble-2.jpeg",
-    materials: ["metal", "steel", "iron"],
-  },
-  {
-    id: 3,
-    name: "Chair",
-    type: "Wood",
-    description: "Black chairs made of 100 year old Himalayan beech wood",
-    price: 87,
-    stock: 25,
-    picture: "/meuble-2.jpeg",
-    materials: ["metal", "steel", "iron"],
-  },
-  {
-    id: 4,
-    name: "Chair",
-    type: "Wood",
-    price: 129,
-    stock: 25,
-    picture: "/meuble-2.jpeg",
-    materials: ["metal", "steel", "iron"],
-  },
-  {
-    id: 5,
-    name: "Chair",
-    type: "Wood",
-    description: "Black chairs made of 100 year old Himalayan beech wood",
-    price: 987,
-    stock: 25,
-    picture: "/meuble-2.jpeg",
-    materials: ["metal", "steel", "iron"],
-  },
-  {
-    id: 6,
-    name: "Chair",
-    type: "Wood",
-    price: 100,
-    stock: 25,
-    picture: "/meuble-2.jpeg",
-    materials: ["metal", "steel", "iron"],
-  },
-];
+import Banner from "@/web/components/Banner"
+import styles from "@/styles/products.module.css"
+import DetailedProductCard from "@/web/components/DetailedProductCard"
+import SearchBar from "@/web/components/SearchBar"
+import { useEffect, useState } from "react"
+import ProductFilterMenu from "@/web/components/ProductFilterMenu"
+import useAppContext from "@/web/hooks/useAppContext"
+import { useRouter } from "next/router"
+import deepmerge from "deepmerge"
 
 const Products = () => {
+  const {
+    services: { getProducts },
+  } = useAppContext()
+  const router = useRouter()
+
+  // eslint-disable-next-line no-unused-vars
+  const [error, setError] = useState(null)
+  const [products, setProducts] = useState([])
+  const [page, setPage] = useState(1)
+  const [count, setCount] = useState(0)
+  const [startIndex, setStartIndex] = useState(0)
+  const [endIndex, setEndIndex] = useState(0)
   const [queryParams, setQueryParams] = useState({
-    priceMin: 0,
-    priceMax: 0,
+    priceMin: null,
+    priceMax: null,
     materials: [],
     onlyInStock: false,
     categories: [],
-  });
-  const [appliedQueryParams, setAppliedQueryParams] = useState({
-    priceMin: 0,
-    priceMax: 0,
-    materials: [],
-    stock: [],
-    categories: [],
-  });
-
-  const handleQueryParamsFilters = useCallback(
-    (key, { name, value }) => {
-      if (typeof queryParams[key] === "boolean") {
-        setQueryParams({
-          ...queryParams,
-          [key]: !value,
-        });
-
-        return;
-      }
-
-      if (typeof queryParams[key] === "number") {
-        setQueryParams({
-          ...queryParams,
-          [key]: Number.parseInt(value),
-        });
-
-        return;
-      }
-
-      setQueryParams({
-        ...queryParams,
-        [key]:
-          queryParams[key].findIndex((elt) => elt.value === value) === -1
-            ? [...queryParams[key], { name, value }]
-            : [...queryParams[key].filter((elt) => elt.value !== value)],
-      });
-    },
-    [queryParams, setQueryParams]
-  );
-
-  const handleAppliedQueryParams = useCallback(
-    (key, { name, value }) => {
-      setQueryParams({
-        ...queryParams,
-        [key]:
-          queryParams[key].findIndex((elt) => elt.value === value) === -1
-            ? [...queryParams[key], { name, value }]
-            : [...queryParams[key].filter((elt) => elt.value !== value)],
-      });
-
-      setAppliedQueryParams({
-        ...appliedQueryParams,
-        [key]:
-          appliedQueryParams[key].findIndex((elt) => elt.value === value) === -1
-            ? [...appliedQueryParams[key], { name, value }]
-            : [...appliedQueryParams[key].filter((elt) => elt.value !== value)],
-      });
-    },
-    [appliedQueryParams, setAppliedQueryParams, queryParams]
-  );
-
-  {
-    /* const createQueryString = useCallback(() => {
-    let queryString = "?";
-
-    Object.entries(appliedQueryParams).map(([key, value]) => {
-      if (Array.isArray(value)) {
-        value.map((param) => (
-          queryString += key + "=" + param.value + "&"
-        ));
-      }
-
-      if (typeof value === "number" && value > 0) {
-        queryString += key + "=" + value + "&";
-      }
-
-      if (typeof value === "boolean") {
-        queryString += key + "=" + value + "&";
-      }
-    });
-
-    return queryString;
-
-  }, [appliedQueryParams]); 
-
+    search: null,
+  })
+  const [appliquedQueryParams, setAppliquedQueryParams] = useState(queryParams)
+  const limit = 20
+  const { index } = router.query
   useEffect(() => {
-    console.log(createQueryString()); 
-  }, [appliedQueryParams, createQueryString]); */
+    const fetchData = async () => {
+      const values = deepmerge({ page, limit }, queryParams)
+
+      const [err, data] = await getProducts(values)
+
+      if (err) {
+        setError(err)
+
+        return
+      }
+
+      const { result, meta } = data
+      setProducts(result)
+      setCount(meta.count.toLocaleString())
+    }
+    fetchData()
+
+    setPage(index ? Number.parseInt(index) : 1)
+
+    setEndIndex(
+      (page - 1) * limit + limit < count ? (page - 1) * limit + limit : count
+    )
+    setStartIndex((page - 1) * limit + 1)
+  }, [count, getProducts, index, queryParams, limit, page])
+
+  const searchStateAction = (value) => {
+    setAppliquedQueryParams((prevValues) => {
+      return { ...prevValues, search: value }
+    })
+    setQueryParams((prevValues) => {
+      return { ...prevValues, search: value }
+    })
   }
 
   return (
@@ -167,41 +72,33 @@ const Products = () => {
       <Banner title={"Products"} />
 
       <main className={styles.main}>
-        <input type="text" className={styles.input} />
+        <SearchBar searchStateAction={searchStateAction} />
 
-        {/* It will show all the active filters with badges */}
-        <div className={styles.filterBadgesContainer}>
-          <ParamBadge
-            appliedQueryParams={appliedQueryParams}
-            queryKey={"materials"}
-            handleAppliedQueryParams={handleAppliedQueryParams}
-          />
-
-          <ParamBadge
-            appliedQueryParams={appliedQueryParams}
-            queryKey={"categories"}
-            handleAppliedQueryParams={handleAppliedQueryParams}
-          />
+        <div className={styles.indexProducts}>
+          <span>
+            {endIndex > 0 ? startIndex : 0} - {endIndex} on{" "}
+            {count > 100000 ? `plus de ${count}` : count} products
+          </span>
         </div>
 
         <div className={styles.content}>
           <ProductFilterMenu
-            queryParams={queryParams}
+            appliquedQueryParams={appliquedQueryParams}
+            setPage={setPage}
             setQueryParams={setQueryParams}
-            setAppliedQueryParams={setAppliedQueryParams}
-            handleQueryParamsFilters={handleQueryParamsFilters}
+            setAppliquedQueryParams={setAppliquedQueryParams}
           />
 
           <section className={styles.productsContainer}>
-            {categoryProducts.map((product, index) => (
+            {products.map((product, index) => (
               <DetailedProductCard key={index} product={product} />
             ))}
           </section>
         </div>
       </main>
     </>
-  );
-};
+  )
+}
 
-Products.isPublic = true;
-export default Products;
+Products.isPublic = true
+export default Products
