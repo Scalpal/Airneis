@@ -19,6 +19,15 @@ const auth = () => {
       return res.status(401).json({ message: "No token provided" });
     }
 
+    const decodedToken = jsonwebtoken.decode(jwt);
+    const isTokenExpired = Date.now() >= decodedToken.exp * 1000;
+
+    if (isTokenExpired) {
+      res.status(500).send({ error: "Token expired" }); 
+
+      return;
+    }
+
     const { payload: { user: { id } } } = jsonwebtoken.verify(jwt, config.security.jwt.secret);
     locals.userId = id; 
 
