@@ -45,7 +45,8 @@ const handler = mw({
         const [{ count }] = await countQuery.clearSelect().clearOrder().count();
 
         const users = await query.modify("paginate", limit, page)
-          .select("id", "email", "firstName", "lastName", "phoneNumber", "active", "isAdmin");
+          .select("id", "email", "firstName", "lastName", "phoneNumber", "active", "isAdmin")
+          .withGraphFetched("address");
         
         res.send({ users: users, count: count });
       } catch (error) {

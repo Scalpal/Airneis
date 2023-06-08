@@ -196,7 +196,7 @@ const BackofficeProducts = (props) => {
           <Table
             array={products.products}
             safeArray={productsProps}
-            visibleKeys={["id", "name", "description", "price", "stock", "category", "materials"]}
+            visibleColumns={["id", "name", "description", "price", "stock", "category", "materials"]}
             queryParams={queryParams}
             sortColumn={sortColumn}
             showSpecificRowFunction={showSpecificProduct}

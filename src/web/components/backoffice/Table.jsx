@@ -11,7 +11,7 @@ const Table = (props) => {
     safeArray,
     queryParams,
     sortColumn,
-    visibleKeys,
+    visibleColumns,
     showSpecificRowFunction,
     deleteRowFunction,
   } = props;
@@ -88,8 +88,8 @@ const Table = (props) => {
       <thead>     
         <tr>
           {Object.keys(safeArray[0]).map((key, index) => (
-            visibleKeys ? (
-              visibleKeys.includes(key)) && (
+            visibleColumns ? (
+              visibleColumns.includes(key)) && (
                 <th
                   key={index}
                   onClick={() => { sortColumn(key); }}
@@ -137,8 +137,8 @@ const Table = (props) => {
                 {/* Loop on the objects keys */}
                 {Object.entries(item).map(([key, value], i) => {
                   return (
-                    visibleKeys ? (
-                      visibleKeys.includes(key) && (
+                    visibleColumns ? (
+                      visibleColumns.includes(key) && (
                         <td key={i}>
                           {showValue(key, value, i)}
                         </td>
