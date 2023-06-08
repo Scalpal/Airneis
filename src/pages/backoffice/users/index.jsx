@@ -10,10 +10,11 @@ import { useCallback, useEffect, useState } from "react";
 import ActionBar from "@/web/components/backoffice/ActionBar";
 import useAppContext from "@/web/hooks/useAppContext";
 import CustomAlert from "@/web/components/CustomAlert";
-import { useRouter } from "next/router";
 import checkToken from "@/web/services/checkToken";
 import getApiClient from "@/web/services/getApiClient";
 import checkIsAdmin from "@/web/services/checkIsAdmin";
+import Modal from "@/web/components/Modal";
+import SpecificUserPageContent from "@/web/components/backoffice/SpecificUserPageContent";
 
 export const getServerSideProps = async (context) => {
   const { token } = parseCookies(context);
@@ -50,14 +51,18 @@ export const getServerSideProps = async (context) => {
   }
 };
 
+const userInfoTab = "user-info";
+
 const BackofficeUsers = (props) => {
   const { usersProps, count } = props; 
   const { actions: { api } } = useAppContext(); 
-  const router = useRouter(); 
 
   const [alert, setAlert] = useState({ status: "", message: ""}); 
   const [showAlert, setShowAlert] = useState(false); 
   const [users, setUsers] = useState({ users: usersProps, count: count });
+  const [activeUser, setActiveUser] = useState(null); 
+  const [showModal, setShowModal] = useState(false);
+  const [activeTab, setActiveTab] = useState(""); 
   const [queryParams, setQueryParams] = useState({
     limit: 10,
     page: 1,
@@ -123,10 +128,13 @@ const BackofficeUsers = (props) => {
     }
   }, [queryParams]);
 
-  // Table row functions
-  const showSpecificUser = useCallback((userId) => {
-    router.push(routes.backoffice.users.single(userId));
-  }, [router]); 
+  const showSpecificUser = useCallback((id) => {
+    const user = users.users.find(elt => elt.id === id); 
+
+    setShowModal(true);
+    setActiveTab(userInfoTab);
+    setActiveUser(user);
+  }, [users]);
 
   const desactivateUser = useCallback(async (userId) => {
     try {
@@ -192,10 +200,22 @@ const BackofficeUsers = (props) => {
           safeArray={usersProps}
           queryParams={queryParams}
           sortColumn={sortColumn}
+          visibleColumns={["id", "email", "firstName", "lastName", "phoneNumber", "active", "isAdmin"]}
           showSpecificRowFunction={showSpecificUser}
           deleteRowFunction={desactivateUser}
         />
       </div>
+
+      <Modal showModal={showModal} setShowModal={setShowModal}>
+        {activeTab === userInfoTab && (
+          <SpecificUserPageContent
+            key={activeUser.id}
+            user={activeUser}
+            setShowModal={setShowModal}
+            updateUsers={updateUsers}
+          />
+        )}
+      </Modal>
 
       <CustomAlert
         alert={alert}
