@@ -11,10 +11,9 @@ import { arrayValidator, idValidator, numberValidator, stringValidator } from "@
 const handler = mw({
   GET: [
     slowDown(500),
-    auth(),
     validate({
       query: {
-        productId: idValidator.required()
+        productId: idValidator.required(),
       }
     }),
     async({

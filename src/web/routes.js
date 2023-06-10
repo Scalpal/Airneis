@@ -36,7 +36,8 @@ const routes = {
       update: (productId) => `/products/${productId}`,
       materials: () => "/api/products/materials",
       categories: () => "/api/products/categories",
-      add: () => "/products"
+      add: () => "/products",
+      reviews: (productId) => `/api/products/${productId}/reviews`
     },
 
     users: {
