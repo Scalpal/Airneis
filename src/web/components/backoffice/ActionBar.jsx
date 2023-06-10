@@ -2,7 +2,7 @@ import styles from "@/styles/backoffice/ActionBar.module.css";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import Select from "../Select";
 import Pagination from "./Pagination";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Button from "../Button";
 
 
@@ -10,6 +10,31 @@ const ActionBar = (props) => {
   const { label, handleLimit, dataCount, queryParams, setQueryParams, handleQueryParams, addRowFunction } = props;
 
   const [searchValue, setSearchValue] = useState("");
+
+  // Handle pagination
+  const setPage = useCallback((value) => {
+    handleQueryParams("page", value);
+  }, [handleQueryParams]);
+
+  const firstPage = useCallback(() => {
+    handleQueryParams("page", 1);
+  }, [handleQueryParams]);
+
+  const lastPage = useCallback(() => {
+    handleQueryParams("page", Math.ceil(dataCount / queryParams.limit));
+  }, [handleQueryParams, dataCount, queryParams.limit]);
+
+  const nextPage = useCallback(() => {
+    if (queryParams.page !== Math.ceil(dataCount / queryParams.limit)) {
+      handleQueryParams("page", queryParams.page + 1);
+    }
+  }, [handleQueryParams, dataCount, queryParams.limit, queryParams.page]);
+
+  const previousPage = useCallback(() => {
+    if (queryParams.page !== 1) {
+      handleQueryParams("page", queryParams.page - 1);
+    }
+  }, [handleQueryParams, queryParams.page]); 
 
   useEffect(() => {
     const searchInput = document.getElementById("searchInput");
@@ -63,8 +88,13 @@ const ActionBar = (props) => {
       {dataCount > 0 && (
         <Pagination
           dataCount={dataCount}
-          queryParams={queryParams}
-          handleQueryParams={handleQueryParams}
+          page={queryParams.page}
+          limit={queryParams.limit}
+          setPage={setPage}
+          firstPage={firstPage}
+          lastPage={lastPage}
+          nextPage={nextPage}
+          previousPage={previousPage}
         />
       )}
 
