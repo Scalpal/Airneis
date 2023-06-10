@@ -72,7 +72,7 @@ const SpecificProductPageContent = (props) => {
     values.materials = materials;
     
     try {
-      const { data } = await api.patch(routes.api.products.single(currentProduct.id), values);
+      const { data } = await api.patch(routes.api.products.update(currentProduct.id), values);
 
       setEditMode(false);
       setCurrentProduct(data.product[0]);

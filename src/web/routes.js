@@ -32,7 +32,8 @@ const routes = {
     products: {
       collection: (queryString, page) => `/api/products${queryString ? queryString : ""}${page ? `page=${page}` : ""}`,
       single: (productId, query) =>
-        createRouteWithQueryParams(`/products/${productId}`, query),
+        createRouteWithQueryParams(`/api/products/${productId}`, query),
+      update: (productId) => `/products/${productId}`,
       materials: () => "/api/products/materials",
       categories: () => "/api/products/categories",
       add: () => "/products"
