@@ -10,7 +10,7 @@ const handler = mw({
     validate({
       query: {
         productId: idValidator.required(),
-        limit: limitValidator.default(10),
+        limit: limitValidator.default(1),
         page: pageValidator,
       }
     }),
@@ -23,11 +23,15 @@ const handler = mw({
       const query = ReviewModel.query();
 
       try {
+        const countQuery = query.clone();
+        const [{ count }] = await countQuery.clearSelect().clearOrder().count();
+
         const reviews = await query.modify("paginate", limit, page)
           .select("*")
-          .where("productId", productId);
+          .where("productId", productId)
+          .withGraphFetched("user");
 
-        res.send({ reviews: reviews });
+        res.send({ reviews: reviews, count: Number.parseInt(count) });
       } catch (error) {
         res.status(500).send({ error: error });
       }
