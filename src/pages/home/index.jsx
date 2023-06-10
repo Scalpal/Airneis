@@ -3,6 +3,8 @@ import CustomerReview from "@/web/components/CustomerReview";
 import CategoriesBlocks from "@/web/components/CategoriesBlocks";
 import styles from "@/styles/home.module.css";
 import ProductCard from "@/web/components/ProductCard";
+import routes from "@/web/routes";
+import SeeMoreButton from "@/web/components/SeeMoreButton";
 
 const placeholderImages = ["/meuble-4.jpeg", "/meuble-2.jpeg", "/meuble-3.png"];
 
@@ -91,10 +93,9 @@ const Home = () => {
           })}
         </div>
 
-        <button className={styles.popularProductsButton}>
-          {" "}
-          See more products{" "}
-        </button>
+        <SeeMoreButton route={routes.products.base()}>
+          See more products
+        </SeeMoreButton>
       </section>
 
       {/* Categories block */}

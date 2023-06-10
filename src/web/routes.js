@@ -13,7 +13,7 @@ const routes = {
   register: () => "/register",
   login: () => "/login",
   products: {
-    base: (queryParams) => `/products${queryParams}`,
+    base: () => `/products`,
     single: (productId) => `/products/${productId}`,
   },
   backoffice: {
