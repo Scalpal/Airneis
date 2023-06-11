@@ -7,7 +7,6 @@
 :root {
   --primary: black;
   --secondary: #F6F6F6;
-  --primaryHovered: rgb(237, 186, 119);
   --grey: #bababa; 
   --error: rgb(183, 0, 0);
   --disabled: rgb(165, 165, 165); 
@@ -20,6 +19,7 @@ body {
   font-size: calc(15px + 0.390625vw);
   font-weight: 300;
   scroll-behavior: smooth;
+  background-color: var(--secondary);
 }
 
 a {
