@@ -23,20 +23,23 @@ const ReviewList = (props) => {
               key={index}
               className={styles.review}
             >
-              <div className={styles.starsTitleWrapper}>
-                <Stars rating={review.rating} />
+              <div className={styles.topBlock}>
+                <div className={styles.starsTitleWrapper}>
+                  <Stars rating={review.rating} />
 
-                <p className={styles.title}> {review.title} </p>
+                  <p className={styles.title}> {review.title} </p>
+                </div>
+
+                <p className={styles.userInfo}>
+                  By {review.user.firstName} {review.user.lastName}, {formatDate(review.createdAt)}
+                </p>
               </div>
 
-              <p className={styles.userInfo}>
-                By {review.user.firstName} {review.user.lastName}, {formatDate(review.createdAt)}
-              </p>
               <p className={styles.content}>{review.content}</p>
             </div>
           ))
         ) : (
-          <p>This product has not been reviewed yet.</p>
+          <p className={styles.noReviewsText}>This product has not been reviewed yet.</p>
         )
       ) : (
         <Loader />

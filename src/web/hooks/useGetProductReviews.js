@@ -1,19 +1,25 @@
 import useSWR from "swr"; 
-import routes from "../routes";
 import Axios from "axios";
 
 const fetcher = async (url) => {
   try {
-    const { data } = await Axios.get(url); 
+    const { data: { reviews, count } } = await Axios.get(url); 
 
-    return data.reviews; 
+    return {
+      reviews: reviews,
+      count: count
+    }; 
   } catch (error) {
     return [];
   }
 };
 
-const useGetProductReviews = (productId) => {
-  const { data, error, isLoading } = useSWR(routes.api.products.reviews(productId), fetcher);
+const useGetProductReviews = (url) => {
+  const config = {
+    revalidatonOnFocus: false
+  };
+
+  const { data, error, isLoading } = useSWR(url, fetcher, config);
 
   return {
     productReviewsData: data,
