@@ -8,7 +8,7 @@ import useGetProducts from "@/web/hooks/useGetProducts";
 import Button from "@/web/components/Button";
 import Loader from "@/web/components/Loader";
 import BackToTopButton from "@/web/components/BackToTopButton";
-import { ShoppingBagIcon } from "@heroicons/react/24/outline";
+import { MagnifyingGlassIcon, ShoppingBagIcon, XMarkIcon } from "@heroicons/react/24/outline";
 
 const limit = 10; 
 
@@ -159,13 +159,29 @@ const Products = () => {
       <Banner title={"Products"} />
 
       <main className={styles.main}>
-        <input
-          type="text"
-          id="searchInput"
-          onChange={(e) => handleQueryParamsFilters("search", e.target.value)}
-          className={styles.input}
-        />
+        
+        <div className={styles.customInputWrapper}>
+          <button className={styles.button}>
+            <MagnifyingGlassIcon className={styles.icons} />
+          </button>
+          
+          <input
+            id={"searchInput"}
+            type="text"
+            value={queryParams.search}
+            className={styles.input}
+            placeholder={"Red chair made with oak wood"}
+            onChange={(e) => handleQueryParamsFilters("search", e.target.value)}
+          />
 
+          <button
+            className={styles.button}
+            onClick={() => handleQueryParamsFilters("search", "")}
+          >
+            <XMarkIcon className={styles.icons} />
+          </button>
+        </div>
+        
         {/* It will show all the active filters with badges */}
         <div className={styles.filterBadgesContainer}>
           {appliedQueryParams.orderField !== "" && (
