@@ -1,0 +1,107 @@
+/* Opening button */
+.button {
+  background: none;
+  border: none;
+  color: inherit;
+  transition-duration: 400ms;
+}
+
+.icon {
+  height: 1.4rem;
+  width: 1.4rem;
+  background: none;
+  cursor: pointer;
+}
+
+/* ------------ Overlay ---------- */
+.overlay {
+  display: flex;
+  flex-direction: column;
+  justify-content:flex-start; 
+  align-items: center;
+  padding: 4rem 0 0 0;
+  gap: 5rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 9998;
+  overflow: scroll;
+  overscroll-behavior: contain;
+  animation-name: fadeIn;
+  animation-duration: 400ms;
+}
+
+.overlayInactive {
+  opacity: 0;
+  visibility: hidden;
+  width: 100%;
+  transition-duration: 400ms;
+  z-index: -1;
+}
+
+.overlayActive {
+  opacity: 1;
+  visibility: visible;
+  width: 100%;
+  transition-delay: 300ms;
+}
+
+.closeBtn {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  background: none;
+  border: 2px solid white;
+  color: white;
+  border-radius: 50%;
+  transition-duration: 300ms;
+}
+
+.closeBtnIcon {
+  width: 20px;
+  height: 20px;
+}
+
+.closeBtn:hover {
+  cursor: pointer;
+  background-color: white;
+  color: black;
+}
+
+.contentWrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}

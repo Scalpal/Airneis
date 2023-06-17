@@ -27,9 +27,9 @@ a {
   text-decoration: none;
 }
 
-/* ::-webkit-scrollbar {
+::-webkit-scrollbar {
   display: none;
-} */
+}
 
 input,
 button,
@@ -63,12 +63,12 @@ input:focus {
   border-bottom: 1px solid rgba(255, 255, 255, 0.3) !important;
 }
 
-.navbarBackground ul {
-  filter: invert(1);
+.navbarBackground > ul {
+  color: black;
 }
 
-.navbarBackground .navbarLogo {
-  filter: invert(1);
+.navbarBackground > .navbarLogo {
+  color: black;
 }
 
 @media only screen and (max-width: 767px) {
