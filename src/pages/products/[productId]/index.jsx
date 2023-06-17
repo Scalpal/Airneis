@@ -51,12 +51,10 @@ const ProductPage = (props) => {
 
           <div className={styles.productInfos}>
             <div className={styles.productInfosTopBlock}>
-              <h1 className={styles.productsInfosName}>{product.name}</h1>
-              <p className={styles.productsInfosDescription}>{product.description}</p>
+              <h1 className={styles.productInfosName}>{product.name}</h1>
+              <p className={styles.productInfosDescription}>{product.description}</p>
             </div>
 
-            <div className={styles.productInfosMiddleBlock}>
-            </div>
 
             <div className={styles.productInfosBottomBlock}>
               <p className={styles.productInfosMaterials}>
