@@ -8,8 +8,8 @@ const Carousel = (props) => {
   const { images, Autoplay, controls } = props; 
 
   const [currentSlide, setCurrentSlide] = useState(0); 
-  const [slides, _] = useState(images); 
-  const [autoplay, __] = useState(Autoplay); 
+  const [slides] = useState(images); 
+  const [autoplay] = useState(Autoplay); 
 
   const nextSlide = useCallback(() => {
     setCurrentSlide(currentSlide === slides.length - 1 ? 0 : currentSlide + 1); 

@@ -156,7 +156,7 @@ const Products = () => {
 
   return (
     <>
-      <Banner title={"Products"} />
+      <Banner />
 
       <main className={styles.main}>
         

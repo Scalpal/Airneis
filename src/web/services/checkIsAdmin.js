@@ -18,7 +18,12 @@ const checkIsAdmin = async(context) => {
     }
   } catch (error) {
     if (error instanceof AxiosError) {
-      console.log(error.response);
+      return {
+        redirect: {
+          destination: "/home",
+          permanent: false
+        }
+      };
     }
   }
 };

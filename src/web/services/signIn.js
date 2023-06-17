@@ -1,6 +1,5 @@
 import parseSession from "@/web/parseSession.js";
 import routes from "@/web/routes.js";
-import { AxiosError } from "axios";
 import { setCookie } from "nookies";
 
 const signIn = ({ api, setSession, setJWT }) =>
@@ -19,10 +18,6 @@ const signIn = ({ api, setSession, setJWT }) =>
       
       return [null, true];
     } catch (error) {
-      if (error instanceof AxiosError) {
-        console.log(error.response);
-      }
-
       return [Array.isArray(error) ? error : [error]];
     }
   };
