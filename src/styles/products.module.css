@@ -7,18 +7,45 @@
   justify-content: center; 
 }
 
-.input {
-  margin: 0 auto 5vh auto; 
-  padding: 0.5rem 1.5rem;
-  width: 50%; 
-  border: 1px solid black;
+/* Custom input */
+.customInputWrapper {
+  display: flex;
+  flex-direction: row;
+  width: 40%;
+  gap: 0.3rem;
+  border: 1px solid var(--primary);
   border-radius: 1rem;
+  overflow: hidden;
+  background-color: var(--secondary);
+  font-size: inherit;
+  z-index: 2;
+  transition-duration: 300ms;
+  margin: 0 auto;
+
+  .button {
+    border: 0;
+    outline: 0;
+    padding: 0.3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--secondary);
+  }
+
+  .icons {
+    width: 25px;
+    height: 25px;
+  }
+
+  .input {
+    flex: 1;
+    border: 0;
+    outline: 0;
+    background-color: var(--secondary);
+  }
 }
 
-.input:focus {
-  outline: 0;
-  border: 2px solid black;
-}
+
 
 .filterBadgesContainer {
   display: flex;
@@ -27,7 +54,7 @@
   flex-wrap: wrap;
   gap: 0.5rem;
   width: 80%;
-  margin: 0 auto 3rem auto;
+  margin: 3rem auto 3rem auto;
   transition-duration: 500ms;
 }
 
