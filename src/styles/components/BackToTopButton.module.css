@@ -11,7 +11,7 @@
   background-color: var(--primary);
   padding: 0.5rem;
   border-radius: 1rem;
-  z-index: 9999;
+  z-index: 8999;
   height: 40px;
   width: 40px;
   transition-duration: 400ms;

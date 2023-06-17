@@ -27,7 +27,7 @@
   height: 100vh;
   width: 100vw;
   background-color: rgba(0, 0, 0, 0.9);
-  z-index: 9998;
+  z-index: 9999;
   overflow: scroll;
   overscroll-behavior: contain;
   animation-name: fadeIn;
@@ -104,5 +104,11 @@
 
   to {
     opacity: 0;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .overlay {
+    gap: 2rem;
   }
 }
