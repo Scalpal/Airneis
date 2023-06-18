@@ -131,7 +131,7 @@ const ProductFilterMenu = (props) => {
                 name={name}
                 value={id}
                 checked={isValueChecked("categories", id)}
-                onClick={() => handleQueryParamsFilters("categories", id, name)}
+                onChange={() => handleQueryParamsFilters("categories", id, name)}
               />
             ))}
           </CollapseMenu>
@@ -143,7 +143,7 @@ const ProductFilterMenu = (props) => {
                 name={name}
                 value={id}
                 checked={isValueChecked("materials", id)}
-                onClick={() => handleQueryParamsFilters("materials", id, name)}
+                onChange={() => handleQueryParamsFilters("materials", id, name)}
               />
             ))}
           </CollapseMenu>
@@ -154,7 +154,7 @@ const ProductFilterMenu = (props) => {
               name="sortOption"
               inputId="noSort"
               value={1}
-              onClick={(e) => handleSort(e.target.value)}
+              onChange={(e) => handleSort(e.target.value)}
               checked={queryParams.orderField === ""}
             />
 

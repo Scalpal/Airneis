@@ -3,7 +3,7 @@ import styles from "@/styles/components/CheckboxItem.module.css";
 import { CheckIcon } from "@heroicons/react/24/solid";
 
 const CheckboxItem = (props) => {
-  const { name, value, checked, disabled ,...otherProps } = props;
+  const { name, value, checked, disabled, onChange } = props;
 
   return (
     <div
@@ -16,7 +16,7 @@ const CheckboxItem = (props) => {
         id={name}
         checked={checked}
         disabled={disabled}
-        {...otherProps}
+        onChange={onChange}
       />
       <label
         htmlFor={name}
