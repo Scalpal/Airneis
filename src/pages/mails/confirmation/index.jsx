@@ -6,7 +6,7 @@ import styles from "@/styles/mails/confirmation.module.css";
 
 const MailConfirmation = ({ error }) => {
   const router = useRouter();
-  console.log(error);
+  
   const handleclick = () => {
     router.push(routes.home());
   };
