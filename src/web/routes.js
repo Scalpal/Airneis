@@ -16,6 +16,10 @@ const routes = {
     base: () => `/products`,
     single: (productId) => `/products/${productId}`,
   },
+  categories: {
+    base: () => "/category",
+    single: (categoryId) => `/category/${categoryId}`
+  },
   backoffice: {
     base: () => "/backoffice",
     users: {
@@ -35,11 +39,13 @@ const routes = {
       search: (searchValue) => `/api/products?limit=30&${searchValue.length > 0 ? `search=${searchValue}` : ""}`,
       update: (productId) => `/products/${productId}`,
       materials: () => "/api/products/materials",
-      categories: () => "/api/products/categories",
       add: () => "/products",
       reviews: (productId, limit, page) => `/api/products/${productId}/reviews?limit=${limit}&page=${page}`
     },
-
+    categories: {
+      base: () => "/api/products/categories",
+      products: (categoryId) => `/api/products?categories=${categoryId}`
+    },
     users: {
       collection: (query) => createRouteWithQueryParams("/api/users", query),
       single: (userId, query) =>

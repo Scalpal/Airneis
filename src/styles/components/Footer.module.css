@@ -8,6 +8,7 @@
   background-color: var(--primary);
   font-size: 1rem;
   font-weight: 300;
+  margin: 20vh 0 0 0;
 }
 
 .footerInfos {

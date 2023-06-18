@@ -11,7 +11,7 @@ const fetcher = async (url) => {
 };
 
 export const useGetCategories = () => {
-  const { data, error, isLoading } = useSWR(routes.api.products.categories(), fetcher, { revalidateOnFocus: false });
+  const { data, error, isLoading } = useSWR(routes.api.categories.base(), fetcher, { revalidateOnFocus: false });
 
   return {
     categoriesData: data,
