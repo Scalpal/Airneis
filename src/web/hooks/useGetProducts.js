@@ -8,9 +8,9 @@ const getKey = (pageIndex, previousPageData, queryParams) => {
   const queryString = createQueryString(queryParams);
 
   // Reached the end 
-  if (previousPageData && !previousPageData.products.length) {return null;}
-  
-  return `${process.env.API_URL}/${routes.api.products.collection(queryString, pageIndex + 1)}`;
+  if (previousPageData && !previousPageData.products.length) { return null; }
+    
+  return `${process.env.API_URL}${routes.api.products.collection(queryString, pageIndex + 1)}`;
 };
 
 const fetcher = async(url) => {
