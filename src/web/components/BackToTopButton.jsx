@@ -2,16 +2,16 @@ import { ArrowUpIcon } from "@heroicons/react/24/solid";
 import styles from "@/styles/components/BackToTopButton.module.css"; 
 
 const BackToTopButton = (props) => {
-  const { anchor } = props;
+  const { onPress } = props;
 
   return (
-    <a
+    <button
       className={styles.button}
-      href={`#${anchor}`}
+      onClick={() => onPress()}
     >  
       <ArrowUpIcon className={styles.icon} />
       <p>Back to top</p>
-    </a>
+    </button>
   );
 };
 

@@ -2,6 +2,7 @@ import Image from "next/image";
 import styles from "@/styles/components/Banner.module.css";
 import { ArrowSmallDownIcon } from "@heroicons/react/24/solid";
 import { useRef } from "react";
+import BackToTopButton from "./BackToTopButton";
 
 const Banner = (props) => {
   const { title } = props;
@@ -37,7 +38,10 @@ const Banner = (props) => {
         <ArrowSmallDownIcon className={styles.icon} />
       </button>
 
-      <div ref={anchorRef} className={styles.belowBanner}></div>
+      <div ref={anchorRef} id="" className={styles.belowBanner}></div>
+
+      <BackToTopButton onPress={handleClick} />
+
     </header>
   );
 };

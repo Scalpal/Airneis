@@ -28,6 +28,7 @@
 .button > p {
   display: none;
   white-space: nowrap;
+  font-size: 0.8rem;
 }
 
 .button:hover {

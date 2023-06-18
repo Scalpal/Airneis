@@ -7,7 +7,6 @@ import ParamBadge from "@/web/components/ParamBadge";
 import useGetProducts from "@/web/hooks/useGetProducts";
 import Button from "@/web/components/Button";
 import Loader from "@/web/components/Loader";
-import BackToTopButton from "@/web/components/BackToTopButton";
 import { MagnifyingGlassIcon, ShoppingBagIcon, XMarkIcon } from "@heroicons/react/24/outline";
 
 const limit = 10; 
@@ -295,8 +294,6 @@ const Products = () => {
                 )
               )}
             </div>
-
-            <BackToTopButton anchor={"bannerTitle"} />
           </div>
         </div>
       </main>
