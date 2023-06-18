@@ -76,7 +76,7 @@ const handler = mw({
           dynamic_template_data: {
             firstname: firstName,
             lastname: lastName,
-            url: `http://localhost:3000/mails/confirmation?id=${addedUser.id}`,
+            url: `${process.env.API_URL}/mails/confirmation?id=${addedUser.id}`,
           },
         };
 

@@ -37,7 +37,7 @@ export async function getServerSideProps(context) {
 
   try {
     await axios.put(`
-    http://localhost:3000/api/mail/confirmation?id=${id}`);
+    ${process.env.API_URL}/api/mail/confirmation?id=${id}`);
 
     
 return {

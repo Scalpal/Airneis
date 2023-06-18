@@ -228,7 +228,7 @@ export const getServerSideProps = async(context) => {
   const reqInstance = getApiClient(context);
 
   try {
-    const result = await reqInstance.get(`http://localhost:3000/${routes.api.users.single(id)}`);
+    const result = await reqInstance.get(`${process.env.API_URL}/${routes.api.users.single(id)}`);
 
     if (!result.data.user) {
       return {

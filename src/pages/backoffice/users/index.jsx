@@ -33,7 +33,7 @@ export const getServerSideProps = async (context) => {
   const reqInstance = getApiClient(context);
 
   try {
-    const { data: { users, count } } = await reqInstance.get(`http://localhost:3000/${routes.api.users.collection()}`);
+    const { data: { users, count } } = await reqInstance.get(`${process.env.API_URL}/${routes.api.users.collection()}`);
 
     return {
       props: {
@@ -117,7 +117,7 @@ const BackofficeUsers = (props) => {
     const reqInstance = getApiClient();
   
     try {
-      const { data: { users, count} } = await reqInstance.get(`http://localhost:3000${routes.api.users.collection(queryParams)}`);
+      const { data: { users, count} } = await reqInstance.get(`${process.env.API_URL}${routes.api.users.collection(queryParams)}`);
 
       setUsers({users, count}); 
     } catch (error) {

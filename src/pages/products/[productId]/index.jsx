@@ -15,10 +15,10 @@ const placeholderImages = ["/meuble-1.jpeg", "/meuble-2.jpeg", "/meuble-3.png"];
 export const getServerSideProps = async (context) => {
   const { productId } = context.query;  
 
-  const { data: { product } } = await Axios.get(`http://localhost:3000${routes.api.products.single(productId)}`); 
+  const { data: { product } } = await Axios.get(`${process.env.API_URL}${routes.api.products.single(productId)}`); 
 
   const specificCategory = `?categories=${Number.parseInt(product.category.id)}&`;
-  const { data: { products } } = await Axios.get(`http://localhost:3000${routes.api.products.collection(specificCategory, 1)}`);
+  const { data: { products } } = await Axios.get(`${process.env.API_URL}${routes.api.products.collection(specificCategory, 1)}`);
 
   return ({
     props: {
@@ -34,6 +34,7 @@ const ProductPage = (props) => {
   const { actions: { addToCart } } = useAppContext(); 
   const [limit] = useState(4);
   const [page, setPage] = useState(1); 
+
 
   return (
     <>

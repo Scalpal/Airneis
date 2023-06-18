@@ -37,7 +37,7 @@ export const getServerSideProps = async (context) => {
   const reqInstance = getApiClient(context); 
 
   try {
-    const { data: { products, count } } = await reqInstance.get(`http://localhost:3000${routes.api.products.collection()}`);
+    const { data: { products, count } } = await reqInstance.get(`${process.env.API_URL}${routes.api.products.collection()}`);
 
     return {
       props: {
@@ -129,7 +129,7 @@ const BackofficeProducts = (props) => {
     const queryString = createQueryString(queryParams);
 
     try {
-      const { data: { products, count } } = await reqInstance.get(`http://localhost:3000/${routes.api.products.collection(queryString)}`);
+      const { data: { products, count } } = await reqInstance.get(`${process.env.API_URL}/${routes.api.products.collection(queryString)}`);
     
       setProducts({ products, count });
     } catch (error) {
