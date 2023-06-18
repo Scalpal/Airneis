@@ -32,7 +32,7 @@ export default function App({ Component, pageProps }) {
     });
 
   return (
-    <AppContextProvider isPublicPage={Component.isPublic}>
+    <AppContextProvider>
       <Head>
         <title> Airneis </title>
         <meta name="description" content="Airneis" />

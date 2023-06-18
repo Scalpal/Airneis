@@ -120,5 +120,5 @@ const Home = () => {
     </>
   );
 };
-Home.isPublic = true;
+
 export default Home;

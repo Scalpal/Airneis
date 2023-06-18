@@ -232,7 +232,7 @@ const BackofficeProducts = (props) => {
     </main>
   );
 };
-BackofficeProducts.isPublic = true;
+
 BackofficeProducts.getLayout = function (page) {
   return <Layout>{page}</Layout>;
 };

@@ -34,5 +34,5 @@ const Categories = (props) => {
     </>
   );
 };
-Categories.isPublic = true;
+
 export default Categories;

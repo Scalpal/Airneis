@@ -70,5 +70,5 @@ const Category = (props) => {
     </>
   );
 };
-Category.isPublic = true;
+
 export default Category;

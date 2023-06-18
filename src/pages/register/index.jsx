@@ -171,7 +171,7 @@ const Register = () => {
   );
 };
 
-Register.isPublic = true;
+
 Register.getLayout = function (page) {
   return (
     <LoginLayout>

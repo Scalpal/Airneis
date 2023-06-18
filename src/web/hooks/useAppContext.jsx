@@ -17,7 +17,7 @@ import routes from "../routes";
 const AppContext = createContext();
 
 export const AppContextProvider = (props) => {
-  const { isPublicPage, ...otherProps } = props;
+  const { ...otherProps } = props;
   const [session, setSession] = useState(null);
   const [jwt, setJWT] = useState(null);
   const api = createAPIClient({ jwt });
@@ -147,10 +147,6 @@ return;
       },
     };
   }, [api, cart, session, signUp, signIn, signOut, getLoggedUser, setCart, addToCart, removeProductFromCart, deleteProductFromCart]);
-
-  if (!isPublicPage && session === null) {
-    return (<span>Not Connected</span>);
-  }
 
   return (
     <AppContext.Provider

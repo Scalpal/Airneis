@@ -256,7 +256,7 @@ export const getServerSideProps = async(context) => {
   }
 };
 
-BackofficeUserPage.isPublic = false;
+
 BackofficeUserPage.getLayout = function (page) {
   return (
     <Layout>

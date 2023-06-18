@@ -116,5 +116,5 @@ const ProductPage = (props) => {
   );
 };
 
-ProductPage.isPublic = true;
+
 export default ProductPage;

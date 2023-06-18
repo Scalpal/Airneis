@@ -226,7 +226,6 @@ const BackofficeUsers = (props) => {
   );
 };
 
-BackofficeUsers.isPublic = false;
 BackofficeUsers.getLayout = function (page) {
   return (
     <Layout>

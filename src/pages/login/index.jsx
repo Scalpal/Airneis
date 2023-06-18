@@ -86,7 +86,7 @@ const Login = () => {
     </main>
   );
 };
-Login.isPublic = true;
+
 Login.getLayout = function (page) {
   return (
     <LoginLayout>

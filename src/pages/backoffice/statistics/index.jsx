@@ -8,7 +8,7 @@ const BackofficeStats = () => {
     <h2>Page index statistiques</h2>
   );
 };
-BackofficeStats.isPublic = true;
+
 BackofficeStats.getLayout = function (page) {
   return (
     <Layout>

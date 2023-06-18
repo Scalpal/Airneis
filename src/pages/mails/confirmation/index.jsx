@@ -21,7 +21,7 @@ const MailConfirmation = ({ error }) => {
     </div>
   );
 };
-MailConfirmation.isPublic = true;
+
 MailConfirmation.getLayout = function (page) {
   return (
     <BackofficeLoginLayout>

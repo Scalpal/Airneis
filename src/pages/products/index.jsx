@@ -304,5 +304,5 @@ const Products = () => {
   );
 };
 
-Products.isPublic = true;
+
 export default Products;

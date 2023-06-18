@@ -38,5 +38,5 @@ export const getServerSideProps = async (context) => {
   };
 };
 
-BackofficeDashboard.isPublic = false;
+
 export default BackofficeDashboard; 
