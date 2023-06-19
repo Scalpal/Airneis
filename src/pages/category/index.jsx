@@ -1,25 +1,30 @@
 import Banner from "@/web/components/Banner"
-// import { useRouter } from "next/router";
 import CategoriesBlocks from "@/web/components/CategoriesBlocks"
+import Axios from "axios"
+import routes from "@/web/routes"
 
-const categories = [
-  { name: "Modern" },
-  { name: "Vintage" },
-  { name: "Chair" },
-  { name: "Contemporary" },
-  { name: "Artisanal" },
-  { name: "Wood" },
-  { name: "Table" },
-  { name: "Bedding" },
-  { name: "Swedish special" },
-  { name: "Marble" },
-  { name: "Living room" },
-  { name: "Shower" },
-  { name: "Bed" },
-]
+export const getServerSideProps = async () => {
+  try {
+    const {
+      data: { categories },
+    } = await Axios.get(`${process.env.API_URL}${routes.api.categories.base()}`)
 
-const Categories = () => {
-  // const router = useRouter();
+    return {
+      props: {
+        categories: categories,
+      },
+    }
+  } catch (error) {
+    return {
+      props: {
+        categories: [],
+      },
+    }
+  }
+}
+
+const Categories = (props) => {
+  const { categories } = props
 
   return (
     <>
@@ -31,5 +36,5 @@ const Categories = () => {
     </>
   )
 }
-Categories.isPublic = true
+
 export default Categories

@@ -1,42 +1,13 @@
-import Image from "next/image"
-import styles from "@/styles/components/CartProduct.module.css"
-import { TrashIcon, ChevronDownIcon } from "@heroicons/react/24/solid"
-import useAppContext from "../hooks/useAppContext"
-import { useState } from "react"
+import Image from "next/image";
+import styles from "@/styles/components/CartProduct.module.css";
+import { TrashIcon } from "@heroicons/react/24/solid";
+import useAppContext from "../hooks/useAppContext";
 
 const CartProduct = (props) => {
-  const { product } = props
-  const {
-    actions: { changeValuesProductFromCart, deleteProductFromCart },
-  } = useAppContext()
-  const [inputValue, setInputValue] = useState(product.quantity)
+  const { product, index, productState } = props;
+  const { actions: { addToCart, removeProductFromCart, deleteProductFromCart } } = useAppContext(); 
 
-  const handleValueChange = (event) => {
-    if (parseInt(event.target.value) >= 0) {
-      const updatedQuantity = parseInt(event.target.value)
-      changeValuesProductFromCart({ product, values: updatedQuantity })
-    }
-  }
-
-  const getDisplayValue = (value) => {
-    if (value === 0) {
-      return `${value} (supprimer)`
-    } else if (value === 10) {
-      return `${value}+`
-    } else {
-      return value.toString()
-    }
-  }
-
-  const handleInputChange = (event) => {
-    if (parseInt(event.target.value) >= 0) {
-      setInputValue(parseInt(event.target.value))
-    }
-  }
-
-  const handleButtonClick = () => {
-    changeValuesProductFromCart({ product, values: inputValue })
-  }
+  const [productsList] = productState;
 
   return (
     <div className={styles.cartProduct}>

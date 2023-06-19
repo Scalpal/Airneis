@@ -2,23 +2,25 @@ import * as yup from "yup";
 import "yup-phone";
 
 // Base
-export const stringValidator = yup.string();
+export const stringValidator = yup.string(); 
 export const numberValidator = yup.number();
 export const idValidator = yup.string().min(1);
+export const arrayValidator = yup.array().of(stringValidator);
+export const arrayOrStringValidator = yup.mixed().test("isArrayOfStrings", "Invalid values", (value) => {
+  if (typeof value === "string") {
+    return true; // Accepts a single string
+  }
+  
+  if (Array.isArray(value) && value.every(item => typeof item === "string")) {
+    return true; // Accepts an array of strings
+  }
 
-export const numberValidator = yup.string().min(0);
+  if (typeof value === "undefined") {
+    return true;
+  }
 
-export const dateValidator = yup.date();
-
-export const arrayValidator = yup.array();
-
-export const booleanValidator = yup.boolean();
-
-export const stringArrayValidator = yup.array().of(
-  yup.object().shape({
-    value: yup.string(),
-  })
-);
+  return false;
+});
 
 // users
 export const displayNameValidator = yup.string().min(1).max(255);
@@ -39,13 +41,12 @@ export const passwordValidator = yup
   )
   .required("This field cannot be empty");
 
-// products
-export const materialsValidator = yup
-  .mixed()
-  .oneOf([arrayValidator, stringValidator]);
-export const categoriesValidator = yup
-  .mixed()
-  .oneOf([arrayValidator, stringValidator]);
+// products 
+export const materialsValidator = yup.mixed().oneOf([arrayValidator, stringValidator]);
+export const categoriesValidator = yup.mixed().oneOf([arrayValidator, stringValidator]);
+
+
+
 
 export const createValidator = (object) => yup.object().shape(object);
 

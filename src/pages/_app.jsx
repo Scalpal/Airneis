@@ -1,4 +1,5 @@
 import "@/styles/global.css";
+import "@/styles/inputRange.css";
 import Layout from "@/web/components/Layout";
 import Head from "next/head";
 import { Montserrat } from "@next/font/google";
@@ -20,7 +21,7 @@ export const nunito = Nunito({
   subsets: ["latin"],
 })
 
-function App({ Component, pageProps }) {
+export default function App({ Component, pageProps }) {
   const renderWithLayout =
     Component.getLayout ||
     ((page) => {
@@ -28,7 +29,7 @@ function App({ Component, pageProps }) {
     });
 
   return (
-    <AppContextProvider isPublicPage={Component.isPublic}>
+    <AppContextProvider>
       <Head>
         <title> Airneis </title>
         <meta name="description" content="Airneis" />

@@ -1,10 +1,15 @@
 import BaseModel from "@/api/db/models/BaseModel.js";
 import CategoryModel from "@/api/db/models/CategoryModel.js";
-import ProductMaterialRelation from "@/api/db/models/ProductMaterialRelation.js";
-import MaterialModel from "@/api/db/models/MaterialModel.js";
+import MaterialModel from "./MaterialModel";
+import ReviewModel from "./ReviewModel";
 
 class ProductModel extends BaseModel {
   static tableName = "products";
+
+  static modifiers = {
+    paginate: (query, limit, page) =>
+      query.limit(limit).offset((page - 1) * limit),
+  };
 
   static modifiers = {
     paginate: (query, limit, page) =>
@@ -27,26 +32,22 @@ class ProductModel extends BaseModel {
         join: {
           from: "products.id",
           through: {
-            modelClass: ProductMaterialRelation,
             from: "products_materials_relation.productId",
-            to: "products_materials_relation.materialId",
+            to: "products_materials_relation.materialId"
           },
-          to: "materials.id",
-        },
+          to: "materials.id"
+        }
       },
-      materials: {
-        relation: BaseModel.ManyToManyRelation,
-        modelClass: MaterialModel,
+      reviews: {
+        relation: BaseModel.HasManyRelation, 
+        modelClass: ReviewModel, 
         join: {
           from: "products.id",
-          through: {
-            from: "products_materials_relation.productId",
-            to: "products_materials_relation.materialId",
-          },
-          to: "materials.id",
+          to: "reviews.productId"
         },
+        modify: (query) => query.select("userId", "title", "content","rating")
       },
-      modify: (query) => query.select("*"),
+      modify: (query) => query.select("*")
     };
   }
 }

@@ -1,30 +1,46 @@
 import styles from "@/styles/backoffice/Table.module.css";
 import { classnames } from "@/pages/_app";
-import { PencilSquareIcon , TrashIcon} from "@heroicons/react/24/outline";
+import { TrashIcon, InformationCircleIcon} from "@heroicons/react/24/outline";
+import { useCallback } from "react";
+import { ChevronUpIcon, ChevronDownIcon, CheckIcon, XMarkIcon } from "@heroicons/react/24/solid";
+import { splitCamelCase } from "@/web/services/SplitCamelCase";
 
 const Table = (props) => {
+  const {
+    array,
+    safeArray,
+    queryParams,
+    sortColumn,
+    visibleColumns,
+    showSpecificRowFunction,
+    deleteRowFunction,
+  } = props;
+  // safeArray is the array coming from getServerSideProps, it is always not empty so in case array is empty
+  // we still have the table headers
 
-  const splitCamelCase = useCallback((str) => {
-    const words = str.match(/[a-z]+|[A-Z][a-z]*/g)
-
-    if (!words) {
-      return str
+  const showValue = useCallback((key,value,i) => {
+    if (Array.isArray(value)) {
+      return (
+        value.map((obj,index) => (
+          <p key={index}>
+            {Object.entries(obj).map(([objKey,objValue]) => {
+              // This is adapted for object with this structure : { id: 1, name: "XXXX" }
+              // Not fully adapted to all use cases
+              if (objKey === "name") {
+                return objValue;
+              }
+            }).join("- ").replaceAll(",","")}
+          </p>
+        ))
+      );
     }
 
-    return words.join(" ")
-  }, [])
-
-  const showValue = useCallback((key, value, i) => {
-    if (Array.isArray(value)) {
-      // Loop on the value that IS an array
-      return value.map((valueItem, index) => (
-        <p key={index}>
-          {/* eslint-disable-next-line no-unused-vars */}
-          {Object.entries(valueItem).map(([_, objValue]) => {
-            return objValue + " - "
-          })}
+    if (typeof value === "object") {
+      return (
+        <p>
+          {value.name}
         </p>
-      ))
+      );
     }
 
     if (typeof value === "boolean") {
@@ -35,8 +51,8 @@ const Table = (props) => {
       )
     }
 
-    return <p key={i}>{value.toString()}</p>
-  }, [])
+    return <p key={i}>{value && value.toString()}</p>
+  },[]);
 
   const showActionsButtons = useCallback(
     (itemId) => {
@@ -62,74 +78,92 @@ const Table = (props) => {
         </>
       )
     },
-    [deleteRowFunction, showSpecificRowFunction]
-  )
+    [deleteRowFunction,showSpecificRowFunction]
+  );
 
   return (
     <table className={classnames(styles.table)}>
       <thead>
         <tr>
           {Object.keys(safeArray[0]).map((key, index) => (
-            <th
-              key={index}
-              onClick={() => { sortColumn(key); }}
-            >
-              <p>
-                <span>{splitCamelCase(key)}</span>
+            visibleColumns ? (
+              visibleColumns.includes(key)) && (
+                <th
+                  key={index}
+                  onClick={() => { sortColumn(key); }}
+                >
+                  <p>
+                    <span>{splitCamelCase(key)}</span>
 
-                {queryParams["orderField"] === key && (
-                  queryParams["order"] === "asc" ? (
-                    <ChevronUpIcon className={styles.headerIcon} />
-                  ): (
-                    <ChevronDownIcon className={styles.headerIcon} />
-                  )
-                )}
-              </p>
-            </th>
+                    {queryParams["orderField"] === key && (
+                      queryParams["order"] === "asc" ? (
+                        <ChevronUpIcon className={styles.headerIcon} />
+                      ): (
+                        <ChevronDownIcon className={styles.headerIcon} />
+                      )
+                    )}
+                  </p>
+                </th>
+            ) : (
+              <th
+                key={index}
+                onClick={() => { sortColumn(key); }}
+              >
+                <p>
+                  <span>{splitCamelCase(key)}</span>
+
+                  {queryParams["orderField"] === key && (
+                    queryParams["order"] === "asc" ? (
+                      <ChevronUpIcon className={styles.headerIcon} />
+                    ): (
+                      <ChevronDownIcon className={styles.headerIcon} />
+                    )
+                  )}
+                </p>
+              </th>   
+            )
           ))}
           <th colSpan={2}>Actions</th>
         </tr>
       </thead>
       
-      <tbody>
-        {array.map((item, index) => {
-          return (
-            <tr key={index}>
-              {/* Loop on the objects keys */}
-              {Object.entries(item).map(([_, value], i) => {
+      {array.length > 0 ? (
+        <tbody>
+          {array.map((item, rowIndex) => {
+            return (
+              <tr key={rowIndex}>
+                {/* Loop on the objects keys */}
+                {Object.entries(item).map(([key, value], i) => {
+                  return (
+                    visibleColumns ? (
+                      visibleColumns.includes(key) && (
+                        <td key={i}>
+                          {showValue(key, value, i)}
+                        </td>
+                      )
+                    ): (
+                      <td key={i}>
+                        {showValue(key, value, i)}
+                      </td>
+                    )
+                  );
+                })}
 
-                return (
-                  <td key={i}>
-
-                    {/* We check if it's an array for the case if one of the item has an array inside it */}
-                    {Array.isArray(value) ? (
-
-                      // Loop on the value that IS an array
-                      value.map((valueItem, index) => (
-
-                        <p key={index}>
-                          {Object.entries(valueItem).map(([_, objValue]) => {
-
-                            return (
-                              objValue + " - "
-                            );
-                          })}
-                        </p>
-                      ))
-                    ) : (
-                      <p key={i}>{value}</p>
-                    )}
-                  </td>
-                );
-              })}
-              <td><PencilSquareIcon className={styles.tableIcon} /></td>
-              <td><TrashIcon className={styles.tableIcon} /></td>
-            </tr>
-          );
-        })}
-      </tbody>
+                {showActionsButtons(item.id)}
+              </tr>
+            );
+          })}
+        </tbody>
+      ) : (
+        <tr
+          className={styles.emptyTextRow}
+          colSpan={10}
+        >
+          <td colSpan={10}>No entries found</td>
+        </tr>
+      )}
     </table>
-  )
-}
+  );
+};
 
-export default Table
+export default Table; 

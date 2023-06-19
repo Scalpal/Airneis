@@ -42,7 +42,6 @@ const initialValues = {
 }; 
 
 const Register = () => {
-
   const router = useRouter();
   const { actions: { signUp } } = useAppContext();
   const [error, setError] = useState(null);
@@ -53,12 +52,12 @@ const Register = () => {
     if (error) {
       if (error[0].response.status === 409) {
         setError("E-mail already used.");
-        return;
 
+        return;
       } else {
-        setError("Oops, something went wrong."); 
-        return; 
-        
+        setError("Oops, something went wrong.");
+ 
+        return;
       }
 
     router.push(routes.login()); 
@@ -188,7 +187,7 @@ const Register = () => {
   )
 }
 
-Register.isPublic = true;
+
 Register.getLayout = function (page) {
   return (
     <LoginLayout>

@@ -1,100 +1,44 @@
-import Carousel from "@/web/components/Carousel"
-import ProductCard from "@/web/components/ProductCard"
-import Banner from "@/web/components/Banner"
-import Button from "@/web/components/Button"
-import styles from "@/styles/productPage.module.css"
-import useAppContext from "@/web/hooks/useAppContext"
-import CircleAnimation from "@/web/components/circleAnimation"
-import { useState } from "react"
-import { useRouter } from "next/router"
-import { serverSideTranslations } from "next-i18next/serverSideTranslations"
-import { useTranslation } from "next-i18next"
+import Carousel from "@/web/components/Carousel";
+import ProductCard from "@/web/components/ProductCard";
+import Banner from "@/web/components/Banner";
+import Button from "@/web/components/Button";
+import styles from "@/styles/productPage.module.css";
+import Axios from "axios";
+import routes from "@/web/routes";
+import useAppContext from "@/web/hooks/useAppContext";
+import SeeMoreButton from "@/web/components/SeeMoreButton";
+import ProductReviews from "@/web/components/ProductReviews";
+import { useState } from "react"; 
 
 const placeholderImages = ["/meuble-1.jpeg", "/meuble-2.jpeg", "/meuble-3.png"]
 
-const productPrototype = {
-  name: "Samsung TV OLED 4K",
-  description: "Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500, quand un imprimeur anonyme assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte. Il n'a pas fait que survivre cinq siècles, mais s'est aussi adapté à la bureautique informatique, sans que son contenu n'en soit modifié.",
-  price: 2499,
-  stockAvailaible: 25
+export const getServerSideProps = async (context) => {
+  const { productId } = context.query;  
+
+  const { data: { product } } = await Axios.get(`${process.env.API_URL}${routes.api.products.single(productId)}`); 
+
+  const specificCategory = `?categories=${Number.parseInt(product.category.id)}&`;
+  const { data: { products } } = await Axios.get(`${process.env.API_URL}${routes.api.products.collection(specificCategory, 1)}`);
+
+  return ({
+    props: {
+      product: product,
+      categoryProducts: products
+    }
+  }); 
 };
 
-const similarProducts = [
-  {
-    id: 1,
-    name: "Chair",
-    type: "Wood",
-    price: "$145",
-    imageSrc: "/meuble-2.jpeg",
-  },
-  {
-    name: "Table",
-    type: "Oak",
-    price: "$105",
-    imageSrc: "/meuble-2.jpeg",
-  },
-  {
-    name: "Curtain",
-    type: "Wool",
-    price: "$45",
-    imageSrc: "/meuble-2.jpeg",
-  },
-  {
-    name: "Curtain",
-    type: "Wool",
-    price: "$45",
-    imageSrc: "/meuble-2.jpeg",
-  },
-  {
-    name: "Curtain",
-    type: "Wool",
-    price: "$45",
-    imageSrc: "/meuble-2.jpeg",
-  },
-  {
-    name: "Curtain",
-    type: "Wool",
-    price: "$45",
-    imageSrc: "/meuble-2.jpeg",
-  },
-  {
-    name: "Curtain",
-    type: "Wool",
-    price: "$45",
-    imageSrc: "/meuble-2.jpeg",
-  },
-  {
-    name: "Curtain",
-    type: "Wool",
-    price: "$45",
-    imageSrc: "/meuble-2.jpeg",
-  },
-]
+const ProductPage = (props) => {
+  const { product, categoryProducts } = props;
 
-const ProductPage = () => {
-  const { t: translate } = useTranslation("productPage")
-  const [bubbleAnimation, setBubbleAnimation] = useState(null)
-  const router = useRouter()
-  const { productId = 1 } = router.query
-  const {
-    actions: { addToCart },
-  } = useAppContext()
-  const currentProduct = AllProducts.filter(
-    (product) => product.id === Number.parseInt(productId)
-  )[0]
+  const { actions: { addToCart } } = useAppContext(); 
+  const [limit] = useState(4);
+  const [page, setPage] = useState(1); 
 
-  const handleAddToCart = () => {
-    !bubbleAnimation && setBubbleAnimation(true)
-    addToCart(currentProduct)
-
-    setTimeout(() => {
-      setBubbleAnimation(false)
-    }, 1900)
-  }
 
   return (
     <>
-      <Banner title={currentProduct.name} />
+      <Banner title={product.name} />
 
       <main>
         <section className={styles.mainContent}>
@@ -108,46 +52,70 @@ const ProductPage = () => {
 
           <div className={styles.productInfos}>
             <div className={styles.productInfosTopBlock}>
-              <h1>{currentProduct.name}</h1>
-              <p>{currentProduct.description}</p>
+              <h1 className={styles.productInfosName}>{product.name}</h1>
+              <p className={styles.productInfosDescription}>{product.description}</p>
             </div>
 
+
             <div className={styles.productInfosBottomBlock}>
-              <p>{currentProduct.price}€</p>
-              <p>
-                {productPrototype.stockAvailaible > 0 ? "Stocks : " + productPrototype.stockAvailaible + " available" : "Out of stock"}
+              <p className={styles.productInfosMaterials}>
+                Materials : {product.materials.map(({ name }, index) => {
+                  const dash = index < product.materials.length - 1 ? "-" : "";
+                  
+                  return name + " " + dash + " ";
+                })}
               </p>
+
+              <div className={styles.productInfosStockPrice}>
+                <p className={styles.productInfosPrice}>{product.price}€</p>
+                <p>
+                  {product.stock > 0 ? ("Stocks : " + product.stock + " available") : ("Out of stock")}
+                </p>
+              </div>
             </div>
+
           </div>
         </section>
 
-        <div className={styles.addToCartBtnWrapper}>
-          <Button bgWhite={bubbleAnimation} onClick={handleAddToCart}>
-            {translate("addToCartButton")}
-            {bubbleAnimation && <CircleAnimation />}
+        <div className={styles.addToCartBtnWrapper} id="productReviewAnchor">
+          <Button
+            onClick={() => addToCart(product)}
+          >
+            Add to cart
           </Button>
         </div>
 
+        <ProductReviews
+          productId={product.id}
+          page={page}
+          setPage={setPage}
+          limit={limit}
+        />
+
+        <div className={styles.titleWrapper}>
+          <div className={styles.line}></div>
+          <p className={styles.title}>Similar products</p>
+          <div className={styles.line}></div>
+        </div>
+
         <section className={styles.similarProductsWrapper}>
-          <h1> {translate("similiarProductTitle")}</h1>
 
           <div className={styles.similarProductsContainer}>
-            {similarProducts.map((product, index) => {
-              return <ProductCard key={index} product={product} />
+            {categoryProducts.map((product, index) => {
+              return <ProductCard key={index} product={product} />;
             })}
           </div>
+
+          <SeeMoreButton route={routes.products.base()}>
+            View all products
+          </SeeMoreButton>
+
         </section>
+
       </main>
     </>
-  )
-}
+  );
+};
 
-export const getStaticProps = async ({ locale }) => {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ["productPage"])),
-    },
-  }
-}
-ProductPage.isPublic = true
-export default ProductPage
+
+export default ProductPage;

@@ -1,7 +1,6 @@
 import styles from "@/styles/components/Select.module.css"; 
 
 const Select = (props) => {
-
   const { children, ...otherProps } = props; 
   
   return (

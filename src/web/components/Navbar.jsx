@@ -1,10 +1,11 @@
 import Link from "next/link";
-import { MagnifyingGlassIcon, Bars3Icon} from "@heroicons/react/24/solid";
+import { Bars3Icon} from "@heroicons/react/24/solid";
 import styles from "@/styles/components/Navbar.module.css";
 import { useEffect } from "react";
 import { classnames } from "@/pages/_app";
 import routes from "@/web/routes";
 import CartButton from "./CartButton";
+import SearchProductOverlay from "./SearchProductOverlay";
 
 const Navbar = (props) => {
   const { fixed, isDrawerToggledState } = props
@@ -15,17 +16,13 @@ const Navbar = (props) => {
     const navbar = document.querySelector("#navbar")
 
     if (fixed) {
-      const carouselObserver = new IntersectionObserver(
-        (entries) => {
-
-          if (entries[0].isIntersecting === true || isDrawerToggled === true) {
-            navbar.classList.remove("navbarBackground")
-          } else {
-            navbar.classList.add("navbarBackground")
-          }
-        },
-        { threshold: [0.1] }
-      )
+      const carouselObserver = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting === true || isDrawerToggled === true) {
+          navbar.classList.remove("navbarBackground");
+        } else {
+          navbar.classList.add("navbarBackground");
+        }
+      }, { threshold: [0.1] });
 
       carouselObserver.observe(document.querySelector("#carousel"))
     } else {
@@ -35,7 +32,9 @@ const Navbar = (props) => {
 
   return (
     <nav
-      className={classnames(fixed ? styles.navbar : styles.navbarNotFixed)}
+      className={classnames(
+        fixed ? styles.navbar : styles.navbarNotFixed)
+      }
       id="navbar"
     >
       <Link
@@ -66,13 +65,8 @@ const Navbar = (props) => {
       </ul>
 
       <ul className={styles.navbarList}>
-        <button className={styles.navbarButton}>
-          <MagnifyingGlassIcon className={styles.navbarButtonIcon} />
-        </button>
-        {/* <button className={styles.navbarButton} onClick={handleCart}>
-          <ShoppingCartIcon className={styles.navbarButtonIcon} />
-          <span className={styles.navbarButtonCartCount}>2</span>
-        </button> */}
+        <SearchProductOverlay />
+
         <CartButton />
 
         <button className={styles.navbarButton}>

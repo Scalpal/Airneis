@@ -4,11 +4,11 @@ import { useCallback, useEffect, useState } from "react"
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/solid"
 
 const Carousel = (props) => {
-  const { images, Autoplay, controls } = props
+  const { images, Autoplay, controls } = props; 
 
-  const [currentSlide, setCurrentSlide] = useState(0)
-  const [slides, _] = useState(images)
-  const [autoplay, __] = useState(Autoplay)
+  const [currentSlide, setCurrentSlide] = useState(0); 
+  const [slides] = useState(images); 
+  const [autoplay] = useState(Autoplay); 
 
   const nextSlide = useCallback(() => {
     setCurrentSlide(currentSlide === slides.length - 1 ? 0 : currentSlide + 1)
@@ -57,11 +57,10 @@ const Carousel = (props) => {
                   : styles.controlButton
               }
               key={index}
-              onClick={() => {
-                setCurrentSlide(index)
-              }}
-            ></span>
-          )
+              onClick={() => { setCurrentSlide(index); }}
+            >
+            </span>
+          );
         })}
       </div>
 

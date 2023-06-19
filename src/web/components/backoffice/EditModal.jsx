@@ -4,7 +4,6 @@ import { useState } from "react";
 import { classnames } from "@/pages/_app";
 
 const EditModal = () => {
-
   const [showEditModal, setShowEditModal] = useState(false); 
 
   return (

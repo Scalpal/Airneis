@@ -2,7 +2,7 @@ import { Field } from "formik"
 import styles from "@/styles/backoffice/CustomField.module.css"
 
 const CustomField = (props) => {
-  const { name, label, options, showError, ...otherProps } = props
+  const { name, label, options, showError, ...otherProps } = props;
 
   return (
     <Field name={name}>
@@ -13,8 +13,7 @@ const CustomField = (props) => {
               className={styles.select}
               {...field}
               {...otherProps}
-              id={label}
-            >
+              id={label}>
               <option value="" selected hidden></option>
               {options.map((states, index) => (
                 <option key={index} value={states}>

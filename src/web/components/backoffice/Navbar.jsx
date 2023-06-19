@@ -8,9 +8,9 @@ import {
   ChartBarIcon,
   ArrowRightOnRectangleIcon,
   ReceiptPercentIcon,
-} from "@heroicons/react/24/outline";
-import { nunito } from "@/pages/_app";
-import { classnames } from "@/pages/_app";
+} from "@heroicons/react/24/outline"
+import { nunito } from "@/pages/_app"
+import { classnames } from "@/pages/_app"
 
 const navLinks = [
   {
@@ -46,17 +46,11 @@ const navLinks = [
 ]
 
 const Navbar = () => {
+  const { data } = useUser()
 
   return (
-    <nav
-      className={classnames(
-        styles.navbar,
-        nunito.className
-      )}
-    > 
-      <div className={styles.adminInfosBlock}>
-
-      </div>
+    <nav className={classnames(styles.navbar, nunito.className)}>
+      <div className={styles.adminInfosBlock}></div>
 
       <div className={styles.midBlock}>
         {navLinks.map((link, index) => {
@@ -77,5 +71,3 @@ const Navbar = () => {
     </nav>
   )
 }
-
-export default Navbar

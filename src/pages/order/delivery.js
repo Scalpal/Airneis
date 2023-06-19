@@ -62,12 +62,4 @@ const Delivery = () => {
   );
 };
 
-export const getStaticProps = async ({ locale }) => {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ["delivery"])),
-    },
-  };
-};
-Delivery.isPublic = false;
 export default Delivery;

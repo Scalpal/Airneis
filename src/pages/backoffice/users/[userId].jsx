@@ -30,10 +30,8 @@ const validationSchema = createValidator({
 });
 
 const BackofficeUserPage = (props) => {
-  const { user } = props;
-  const {
-    actions: { api },
-  } = useAppContext();
+  const { user } = props; 
+  const { actions: { api } } = useAppContext();
 
   const [currentUser, setCurrentUser] = useState(user);
   const [editMode, setEditMode] = useState({ type: "", editing: false });
@@ -47,12 +45,10 @@ const BackofficeUserPage = (props) => {
         editing: !editMode.editing,
       });
 
-      if (editMode.type === type) {
-        handleReset();
-      }
-    },
-    [editMode]
-  );
+    if (editMode.type === type) {
+      handleReset(); 
+    }
+  }, [editMode]);
 
   const handleSubmit = useCallback(
     async (values) => {
@@ -62,18 +58,17 @@ const BackofficeUserPage = (props) => {
           values
         );
 
-        setEditMode({ type: "", editing: false });
-        setCurrentUser(data.user);
+      setEditMode({ type: "", editing: false });
+      setCurrentUser(data.user);
+      setShowAlert(true);
+      setAlert({ status: data.status, message: data.message });
+    } catch (error) {
+      if (error instanceof AxiosError) {
         setShowAlert(true);
-        setAlert({ status: data.status, message: data.message });
-      } catch (error) {
-        if (error instanceof AxiosError) {
-          console.log(error.response);
-        }
+        setAlert({ status: error.response.status, message: error.response.message });
       }
-    },
-    [api, user.id]
-  );
+    }
+  }, [api, user.id]); 
 
   return (
     <main className={classnames(styles.mainContainer, nunito.className)}>
@@ -269,9 +264,7 @@ export const getServerSideProps = async (context) => {
   const reqInstance = getApiClient(context);
 
   try {
-    const result = await reqInstance.get(
-      `http://localhost:3000/${routes.api.users.single(id)}`
-    );
+    const result = await reqInstance.get(`${process.env.API_URL}/${routes.api.users.single(id)}`);
 
     if (!result.data.user) {
       return {
@@ -289,12 +282,12 @@ export const getServerSideProps = async (context) => {
     };
   } catch (error) {
     if (error instanceof AxiosError) {
-      console.log(error.response);
+      console.log(error.response); 
     }
   }
 };
 
-BackofficeUserPage.isPublic = false;
+
 BackofficeUserPage.getLayout = function (page) {
   return <Layout>{page}</Layout>;
 };
