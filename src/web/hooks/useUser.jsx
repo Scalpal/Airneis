@@ -20,6 +20,7 @@ export const useUser = () => {
   const config = {
     revalidateOnFocus: false,
   };
+
   const { data, error, isLoading } = useSWR(`${process.env.API_URL}${routes.api.users.self()}`,fetcher, config);
 
   return {
