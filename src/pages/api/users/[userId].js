@@ -5,7 +5,7 @@ import slowDown from "@/api/middlewares/slowDown"
 import validate from "@/api/middlewares/validate"
 import mw from "@/api/mw.js"
 import {
-  booleanValidator,
+  boolValidator,
   emailValidator,
   phoneValidator,
   stringValidator,
@@ -14,6 +14,7 @@ import { idValidator } from "@/validator"
 
 const handler = mw({
   GET: [
+    slowDown(500),
     auth(),
     checkIsAdmin(),
     validate({
@@ -29,26 +30,30 @@ const handler = mw({
     }) => {
       const id = Number.parseInt(userId)
 
-      const user = await UserModel.query()
-        .select(
-          "id",
-          "email",
-          "firstName",
-          "lastName",
-          "phoneNumber",
-          "active",
-          "isAdmin"
-        )
-        .findOne({ id })
-        .withGraphFetched("address")
+      try {
+        const user = await UserModel.query()
+          .select(
+            "id",
+            "email",
+            "firstName",
+            "lastName",
+            "phoneNumber",
+            "active",
+            "isAdmin"
+          )
+          .findOne({ id })
+          .withGraphFetched("address")
 
-      if (!user) {
-        res.status(404).send({ error: "User not found" })
+        if (!user) {
+          res.status(404).send({ error: "User not found" })
 
-        return
+          return
+        }
+
+        res.send({ user: user })
+      } catch (error) {
+        res.status(500).send({ error: error })
       }
-
-      res.send({ user: user })
     },
   ],
   DELETE: [
@@ -66,23 +71,27 @@ const handler = mw({
       },
       res,
     }) => {
-      const user = await UserModel.query().findById(userId)
+      try {
+        const user = await UserModel.query().findById(userId)
 
-      if (!user) {
-        res.status(404).send({ error: "User not found" })
+        if (!user) {
+          res.status(404).send({ error: "User not found" })
 
-        return
+          return
+        }
+
+        const desactivatedUser = await UserModel.query()
+          .patch({ active: false })
+          .where({ id: userId })
+          .returning("*")
+
+        res.send({
+          status: "success",
+          message: `User ${desactivatedUser[0].id} successfully desactivated`,
+        })
+      } catch (error) {
+        res.status(500).send({ error: error })
       }
-
-      const desactivatedUser = await UserModel.query()
-        .patch({ active: false })
-        .where({ id: userId })
-        .returning("*")
-
-      res.send({
-        status: "success",
-        message: `User ${desactivatedUser[0].id} successfully desactivated`,
-      })
     },
   ],
   PATCH: [
@@ -98,8 +107,8 @@ const handler = mw({
         lastName: stringValidator,
         email: emailValidator,
         phoneNumber: phoneValidator,
-        active: booleanValidator,
-        isAdmin: booleanValidator,
+        active: boolValidator,
+        isAdmin: boolValidator,
       },
     }),
     async ({
@@ -109,31 +118,35 @@ const handler = mw({
       },
       res,
     }) => {
-      const user = await UserModel.query().findById(userId)
+      try {
+        const user = await UserModel.query().findById(userId)
 
-      if (!user) {
-        res.status(404).send({ error: "User not found" })
+        if (!user) {
+          res.status(404).send({ error: "User not found" })
 
-        return
-      }
+          return
+        }
 
-      const updatedUser = await UserModel.query()
-        .patch({
-          ...(firstName ? { firstName } : {}),
-          ...(lastName ? { lastName } : {}),
-          ...(email ? { email } : {}),
-          ...(phoneNumber ? { phoneNumber } : {}),
-          ...(active !== undefined ? { active } : {}),
-          ...(isAdmin !== undefined ? { isAdmin } : {}),
+        const updatedUser = await UserModel.query()
+          .patch({
+            ...(firstName ? { firstName } : {}),
+            ...(lastName ? { lastName } : {}),
+            ...(email ? { email } : {}),
+            ...(phoneNumber ? { phoneNumber } : {}),
+            ...(active !== undefined ? { active } : {}),
+            ...(isAdmin !== undefined ? { isAdmin } : {}),
+          })
+          .where({ id: userId })
+          .returning("*")
+
+        res.send({
+          status: "success",
+          message: `User ${updatedUser[0].id} updated successfully`,
+          user: updatedUser[0],
         })
-        .where({ id: userId })
-        .returning("*")
-
-      res.send({
-        status: "success",
-        message: `User ${updatedUser[0].id} updated successfully`,
-        user: updatedUser[0],
-      })
+      } catch (error) {
+        res.status(500).send({ error: error })
+      }
     },
   ],
 })

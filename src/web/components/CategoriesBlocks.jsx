@@ -1,7 +1,6 @@
 import { useRouter } from "next/router"
 import styles from "@/styles/components/CategoriesBlocks.module.css"
 import Image from "next/image"
-import routes from "@/web/routes"
 
 const CategoriesBlocks = (props) => {
   const { categories } = props
@@ -14,7 +13,7 @@ const CategoriesBlocks = (props) => {
           <div
             key={index}
             onClick={() => {
-              router.push(routes.queryPage.category(category.name))
+              router.push("/category/" + category.name)
             }}
           >
             <p>{category.name}</p>

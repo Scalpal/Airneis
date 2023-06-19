@@ -1,6 +1,7 @@
 import createAPIClient from "@/web/createAPIClient.js"
 import parseSession from "@/web/parseSession.js"
-import prepareService from "@/web/prepareService"
+import signInService from "@/web/services/signIn.js"
+import signUpService from "@/web/services/signUp.js"
 import {
   createContext,
   useCallback,
@@ -10,21 +11,39 @@ import {
   useState,
 } from "react"
 import { parseCookies } from "nookies"
+import Axios from "axios"
+import routes from "../routes"
 
 const AppContext = createContext()
 
 export const AppContextProvider = (props) => {
-  // eslint-disable-next-line no-unused-vars
-  const { isPublicPage, ...otherProps } = props
+  const { ...otherProps } = props
   const [session, setSession] = useState(null)
   const [jwt, setJWT] = useState(null)
   const api = createAPIClient({ jwt })
 
-  const services = prepareService({ api, setSession, setJWT, session })
+  const signUp = signUpService({ api })
+  const signIn = signInService({ api, setSession, setJWT })
   const signOut = useCallback(() => {
     document.cookie = "token" + "=;expires=Thu, 01 Jan 1970 00:00:01 GMT;"
     setSession(false)
   }, [])
+
+  const getLoggedUser = useCallback(async () => {
+    if (session === null) {
+      return
+    }
+
+    try {
+      const {
+        data: { user },
+      } = await Axios.get(routes.api.users.single(session.user.id))
+
+      return user
+    } catch (error) {
+      return error
+    }
+  }, [session])
 
   const [cart, setCart] = useState(() => {
     if (typeof window !== "undefined" && window.localStorage) {
@@ -92,21 +111,22 @@ export const AppContextProvider = (props) => {
     [setCart]
   )
 
-  const changeValuesProductFromCart = useCallback(
-    (values) => {
-      if (values.values === 0) {
-        deleteProductFromCart(values.product)
+  const removeProductFromCart = useCallback(
+    (product) => {
+      const localStorageProducts = JSON.parse(localStorage.getItem("products"))
+
+      const productIndex = localStorageProducts.findIndex(
+        (elt) => elt.id === product.id
+      )
+      const currentProduct = localStorageProducts[productIndex]
+
+      if (currentProduct.quantity - 1 === 0) {
+        deleteProductFromCart(product)
 
         return
       }
 
-      const localStorageProducts = JSON.parse(localStorage.getItem("products"))
-
-      const productIndex = localStorageProducts.findIndex(
-        (elt) => elt.id === values.product.id
-      )
-
-      localStorageProducts[productIndex].quantity = values.values
+      localStorageProducts[productIndex].quantity--
       localStorage.setItem("products", localStorageProducts)
       setCart(localStorageProducts)
     },
@@ -133,39 +153,42 @@ export const AppContextProvider = (props) => {
   const contextValues = useMemo(() => {
     return {
       actions: {
+        api,
+        signUp,
+        signIn,
         signOut,
+        getLoggedUser,
         setCart,
         addToCart,
-        changeValuesProductFromCart,
+        removeProductFromCart,
         deleteProductFromCart,
       },
-      services,
       state: {
         session,
         cart,
       },
     }
   }, [
-    signOut,
-    addToCart,
-    changeValuesProductFromCart,
-    deleteProductFromCart,
-    session,
+    api,
     cart,
-    services,
+    session,
+    signUp,
+    signIn,
+    signOut,
+    getLoggedUser,
+    setCart,
+    addToCart,
+    removeProductFromCart,
+    deleteProductFromCart,
   ])
-
-  // if (!isPublicPage && session === null) {
-  //   return <span>Not connected</span>
-  // }
 
   return <AppContext.Provider {...otherProps} value={contextValues} />
 }
 
 const useAppContext = () => {
-  const { state, actions, services } = useContext(AppContext)
+  const { state, actions } = useContext(AppContext)
 
-  return { state, actions, services }
+  return { state, actions }
 }
 
 export default useAppContext

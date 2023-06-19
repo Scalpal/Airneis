@@ -21,45 +21,43 @@ const handler = mw({
       },
       res,
     }) => {
-      const user = await UserModel.query().findOne({ email })
+      try {
+        const user = await UserModel.query().findOne({ email })
 
-      if (!user) {
-        res.status(401).send({ error: "Wrong email or password." })
+        if (!user) {
+          res.status(401).send({ error: "Wrong email or password." })
 
-        return
-      }
+          return
+        }
 
-      if (!(await user.checkPassword(password))) {
-        res.status(401).send({ error: "Wrong email or password." })
+        if (!(await user.checkPassword(password))) {
+          res.status(401).send({ error: "Wrong email or password." })
 
-        return
-      }
+          return
+        }
 
-      if (!user.active) {
-        res.status(401).send({ error: "Wrong email or password." })
+        if (!user.active) {
+          res.status(401).send({ error: "Wrong email or password." })
 
-        return
-      }
+          return
+        }
 
-      if (user.resetPassword) {
-        await UserModel.query()
-          .findOne({ email })
-          .update({ resetPassword: false })
-      }
-
-      const jwt = jsonwebtoken.sign(
-        {
-          payload: {
-            user: {
-              id: user.id,
+        const jwt = jsonwebtoken.sign(
+          {
+            payload: {
+              user: {
+                id: user.id,
+              },
             },
           },
-        },
-        config.security.jwt.secret,
-        { expiresIn: config.security.jwt.expiresIn }
-      )
+          config.security.jwt.secret,
+          { expiresIn: config.security.jwt.expiresIn }
+        )
 
-      res.send({ result: jwt })
+        res.send({ result: jwt })
+      } catch (error) {
+        res.status(500).send({ error: error })
+      }
     },
   ],
 })

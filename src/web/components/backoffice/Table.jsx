@@ -8,6 +8,7 @@ import {
   CheckIcon,
   XMarkIcon,
 } from "@heroicons/react/24/solid"
+import { splitCamelCase } from "@/web/services/SplitCamelCase"
 
 const Table = (props) => {
   const {
@@ -15,33 +16,33 @@ const Table = (props) => {
     safeArray,
     queryParams,
     sortColumn,
+    visibleColumns,
     showSpecificRowFunction,
     deleteRowFunction,
   } = props
   // safeArray is the array coming from getServerSideProps, it is always not empty so in case array is empty
   // we still have the table headers
 
-  const splitCamelCase = useCallback((str) => {
-    const words = str.match(/[a-z]+|[A-Z][a-z]*/g)
-
-    if (!words) {
-      return str
-    }
-
-    return words.join(" ")
-  }, [])
-
   const showValue = useCallback((key, value, i) => {
     if (Array.isArray(value)) {
-      // Loop on the value that IS an array
-      return value.map((valueItem, index) => (
+      return value.map((obj, index) => (
         <p key={index}>
-          {/* eslint-disable-next-line no-unused-vars */}
-          {Object.entries(valueItem).map(([_, objValue]) => {
-            return objValue + " - "
-          })}
+          {Object.entries(obj)
+            .map(([objKey, objValue]) => {
+              // This is adapted for object with this structure : { id: 1, name: "XXXX" }
+              // Not fully adapted to all use cases
+              if (objKey === "name") {
+                return objValue
+              }
+            })
+            .join("- ")
+            .replaceAll(",", "")}
         </p>
       ))
+    }
+
+    if (typeof value === "object") {
+      return <p>{value.name}</p>
     }
 
     if (typeof value === "boolean") {
@@ -52,7 +53,7 @@ const Table = (props) => {
       )
     }
 
-    return <p key={i}>{value.toString()}</p>
+    return <p key={i}>{value && value.toString()}</p>
   }, [])
 
   const showActionsButtons = useCallback(
@@ -86,25 +87,47 @@ const Table = (props) => {
     <table className={classnames(styles.table)}>
       <thead>
         <tr>
-          {Object.keys(safeArray[0]).map((key, index) => (
-            <th
-              key={index}
-              onClick={() => {
-                sortColumn(key)
-              }}
-            >
-              <p>
-                <span>{splitCamelCase(key)}</span>
+          {Object.keys(safeArray[0]).map((key, index) =>
+            visibleColumns ? (
+              visibleColumns.includes(key) && (
+                <th
+                  key={index}
+                  onClick={() => {
+                    sortColumn(key)
+                  }}
+                >
+                  <p>
+                    <span>{splitCamelCase(key)}</span>
 
-                {queryParams["orderField"] === key &&
-                  (queryParams["order"] === "asc" ? (
-                    <ChevronUpIcon className={styles.headerIcon} />
-                  ) : (
-                    <ChevronDownIcon className={styles.headerIcon} />
-                  ))}
-              </p>
-            </th>
-          ))}
+                    {queryParams["orderField"] === key &&
+                      (queryParams["order"] === "asc" ? (
+                        <ChevronUpIcon className={styles.headerIcon} />
+                      ) : (
+                        <ChevronDownIcon className={styles.headerIcon} />
+                      ))}
+                  </p>
+                </th>
+              )
+            ) : (
+              <th
+                key={index}
+                onClick={() => {
+                  sortColumn(key)
+                }}
+              >
+                <p>
+                  <span>{splitCamelCase(key)}</span>
+
+                  {queryParams["orderField"] === key &&
+                    (queryParams["order"] === "asc" ? (
+                      <ChevronUpIcon className={styles.headerIcon} />
+                    ) : (
+                      <ChevronDownIcon className={styles.headerIcon} />
+                    ))}
+                </p>
+              </th>
+            )
+          )}
           <th colSpan={2}>Actions</th>
         </tr>
       </thead>
@@ -116,7 +139,13 @@ const Table = (props) => {
               <tr key={rowIndex}>
                 {/* Loop on the objects keys */}
                 {Object.entries(item).map(([key, value], i) => {
-                  return <td key={i}>{showValue(key, value, i)}</td>
+                  return visibleColumns ? (
+                    visibleColumns.includes(key) && (
+                      <td key={i}>{showValue(key, value, i)}</td>
+                    )
+                  ) : (
+                    <td key={i}>{showValue(key, value, i)}</td>
+                  )
                 })}
 
                 {showActionsButtons(item.id)}

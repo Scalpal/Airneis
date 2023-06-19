@@ -2,7 +2,8 @@
   background: none;
   border: none;
   position: relative;
-  color: white;
+  color: inherit;
+  transition-duration: 400ms;
 }
 
 .navbarButtonIcon {

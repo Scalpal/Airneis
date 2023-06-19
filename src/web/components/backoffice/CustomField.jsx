@@ -27,7 +27,8 @@ const CustomField = (props) => {
       )
     }
 
-    return (
+    
+return (
       <EyeIcon
         className={classnames(styles.inputIcon, styles.eyeIcon)}
         onClick={() => setPasswordVisibility(true)}

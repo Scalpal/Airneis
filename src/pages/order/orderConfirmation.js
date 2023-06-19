@@ -21,5 +21,5 @@ const OrderConfirmation = () => {
     </>
   )
 }
-OrderConfirmation.isPublic = false
+
 export default OrderConfirmation

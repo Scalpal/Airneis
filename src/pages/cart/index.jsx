@@ -1,7 +1,6 @@
 import Button from "@/web/components/Button"
 import CartProduct from "@/web/components/CartProduct"
 import { useRouter } from "next/router"
-import routes from "@/web/routes.js"
 import { useCallback, useEffect, useState } from "react"
 import { ShoppingCartIcon } from "@heroicons/react/24/outline"
 import LayoutStickyNavbar from "@/web/components/LayoutStickyNavbar"
@@ -61,11 +60,11 @@ const Cart = () => {
   }, [productsList])
 
   const handleSubmit = useCallback(() => {
-    router.push(routes.delivery())
+    router.push("/order/delivery")
   }, [router])
 
   const redirectToHomePage = useCallback(() => {
-    router.push(routes.home())
+    router.push("/home")
   }, [router])
 
   // console.log("Products list : ",productsList);
@@ -102,7 +101,15 @@ const Cart = () => {
             <section className={styles.productListContainer}>
               <p className={styles.productListTitle}>Panier</p>
               {productsList.map((product, index) => {
-                return <CartProduct key={index} product={product} />
+                return (
+                  <CartProduct
+                    key={index}
+                    index={index}
+                    product={product}
+                    productState={[productsList, setProductsList]}
+                    totalSumState={[totalSum, setTotalSum]}
+                  />
+                )
               })}
             </section>
 
@@ -110,18 +117,18 @@ const Cart = () => {
               <div className={styles.recapTopRows}>
                 <div className={styles.recapRow}>
                   <p>Subtotal</p>
-                  <p>{totalSum.toFixed(2)}$</p>
+                  <p>{totalSum.toFixed(2)}€</p>
                 </div>
 
                 <div className={styles.recapRow}>
                   <p>TAX (20%)</p>
-                  <p>{(totalSum * 0.2).toFixed(2)}$</p>
+                  <p>{(totalSum * 0.2).toFixed(2)}€</p>
                 </div>
               </div>
 
               <div className={styles.recapTotalRow}>
                 <p>TOTAL</p>
-                <p>{(totalSum * 1.2).toFixed(2)}$</p>
+                <p>{(totalSum * 1.2).toFixed(2)}€</p>
               </div>
 
               <Button onClick={() => handleSubmit()}>Order</Button>
@@ -132,7 +139,7 @@ const Cart = () => {
     </>
   )
 }
-Cart.isPublic = true
+
 Cart.getLayout = function (page) {
   return <LayoutStickyNavbar>{page}</LayoutStickyNavbar>
 }

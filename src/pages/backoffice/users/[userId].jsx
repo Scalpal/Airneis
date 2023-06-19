@@ -1,6 +1,7 @@
 import Layout from "@/web/components/backoffice/Layout"
+import { AxiosError } from "axios"
 import { parseCookies } from "nookies"
-// import routes from "@/web/routes"
+import routes from "@/web/routes"
 import { useCallback, useState } from "react"
 import styles from "@/styles/backoffice/userPage.module.css"
 import { classnames, nunito } from "@/pages/_app"
@@ -10,17 +11,13 @@ import { Field, Form, Formik } from "formik"
 import { PencilSquareIcon } from "@heroicons/react/24/solid"
 import Button from "@/web/components/Button"
 import AddressCard from "@/web/components/AddressCard"
-import {
-  booleanValidator,
-  createValidator,
-  phoneValidator,
-  stringValidator,
-  emailValidator,
-} from "@/validator"
-// import useAppContext from "@/web/hooks/useAppContext"
+import { boolValidator, createValidator, phoneValidator } from "@/validator"
+import { stringValidator } from "@/validator"
+import { emailValidator } from "@/validator"
+import useAppContext from "@/web/hooks/useAppContext"
 import CustomAlert from "@/web/components/CustomAlert"
 import checkToken from "@/web/services/checkToken"
-// import getApiClient from "@/web/services/getApiClient"
+import getApiClient from "@/web/services/getApiClient"
 import checkIsAdmin from "@/web/services/checkIsAdmin"
 
 const validationSchema = createValidator({
@@ -28,21 +25,19 @@ const validationSchema = createValidator({
   lastName: stringValidator.required(),
   email: emailValidator.required(),
   phoneNumber: phoneValidator.required(),
-  active: booleanValidator.required(),
-  isAdmin: booleanValidator.required(),
+  active: boolValidator.required(),
+  isAdmin: boolValidator.required(),
 })
 
 const BackofficeUserPage = (props) => {
   const { user } = props
-  // const {
-  //   actions: { api },
-  // } = useAppContext()
+  const {
+    actions: { api },
+  } = useAppContext()
 
-  const [currentUser, setCurrentUser] = useState(null)
-  setCurrentUser(user)
+  const [currentUser, setCurrentUser] = useState(user)
   const [editMode, setEditMode] = useState({ type: "", editing: false })
-  const [alert, setAlert] = useState({})
-  setAlert({ status: "", message: "" })
+  const [alert, setAlert] = useState({ status: "", message: "" })
   const [showAlert, setShowAlert] = useState(false)
 
   const handleEditMode = useCallback(
@@ -59,26 +54,30 @@ const BackofficeUserPage = (props) => {
     [editMode]
   )
 
-  // const handleSubmit = useCallback(
-  //   async (values) => {
-  //     try {
-  //       const { data } = await api.patch(
-  //         routes.api.users.patch(user.id),
-  //         values
-  //       )
+  const handleSubmit = useCallback(
+    async (values) => {
+      try {
+        const { data } = await api.patch(
+          routes.api.users.patch(user.id),
+          values
+        )
 
-  //       setEditMode({ type: "", editing: false })
-  //       setCurrentUser(data.user)
-  //       setShowAlert(true)
-  //       setAlert({ status: data.status, message: data.message })
-  //     } catch (error) {
-  //       if (error instanceof AxiosError) {
-  //         console.log(error.response)
-  //       }
-  //     }
-  //   },
-  //   [api, user.id]
-  // )
+        setEditMode({ type: "", editing: false })
+        setCurrentUser(data.user)
+        setShowAlert(true)
+        setAlert({ status: data.status, message: data.message })
+      } catch (error) {
+        if (error instanceof AxiosError) {
+          setShowAlert(true)
+          setAlert({
+            status: error.response.status,
+            message: error.response.message,
+          })
+        }
+      }
+    },
+    [api, user.id]
+  )
 
   return (
     <main className={classnames(styles.mainContainer, nunito.className)}>
@@ -88,7 +87,7 @@ const BackofficeUserPage = (props) => {
 
       <div className={styles.contentWrapper}>
         <Formik
-          // onSubmit={handleSubmit}
+          onSubmit={handleSubmit}
           validationSchema={validationSchema}
           enableReinitialize={true}
           initialValues={currentUser}
@@ -257,7 +256,7 @@ const BackofficeUserPage = (props) => {
 }
 
 export const getServerSideProps = async (context) => {
-  // const id = context.params.userId
+  const id = context.params.userId
   const { token } = parseCookies(context)
   const badTokenRedirect = await checkToken(token)
 
@@ -271,35 +270,39 @@ export const getServerSideProps = async (context) => {
     return notAdminRedirect
   }
 
-  // const reqInstance = getApiClient(context)
+  const reqInstance = getApiClient(context)
 
-  // try {
-  //   const result = await reqInstance.get(
-  //     `http://localhost:3000/${routes.api.users.single(id)}`
-  //   )
+  try {
+    const result = await reqInstance.get(
+      `${process.env.API_URL}/${routes.api.users.single(id)}`
+    )
 
-  //   if (!result.data.user) {
-  //     return {
-  //       redirect: {
-  //         destination: "/backoffice/users",
-  //         permanent: false,
-  //       },
-  //     }
-  //   }
+    if (!result.data.user) {
+      return {
+        redirect: {
+          destination: "/backoffice/users",
+          permanent: false,
+        },
+      }
+    }
 
-  //   return {
-  //     props: {
-  //       user: result.data.user,
-  //     },
-  //   }
-  // } catch (error) {
-  //   if (error instanceof AxiosError) {
-  //     console.log(error.response)
-  //   }
-  // }
+    return {
+      props: {
+        user: result.data.user,
+      },
+    }
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      return {
+        redirect: {
+          destination: "/backoffice/users",
+          permanent: false,
+        },
+      }
+    }
+  }
 }
 
-BackofficeUserPage.isPublic = false
 BackofficeUserPage.getLayout = function (page) {
   return <Layout>{page}</Layout>
 }

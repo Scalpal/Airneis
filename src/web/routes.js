@@ -1,64 +1,69 @@
-const createRouteWithParams = (route, params) => {
-  if (!params) {
+const createRouteWithQueryParams = (route, query) => {
+  if (!query) {
     return route
   }
 
-  const qs = new URLSearchParams(params).toString()
+  const qs = new URLSearchParams(query).toString()
 
   return `${route}?${qs}`
 }
 
 const routes = {
-  pages: {
-    home: () => "/",
-    signUp: () => "/signUp",
-    signIn: () => "/signIn",
-    cart: () => "/cart",
-    profil: () => "/profil",
-    order: () => "/order",
-    products: () => "/products",
-    categories: () => "/category",
-    delivery: () => "/order/delivery",
-    resetPassword: () => "/reset-password",
-    // backoffice: {
-    //   base: () => "/backoffice",
-    //   users: {
-    //     single: (userId) =>
-    //       createRouteWithQueryParams(`/backoffice/users/${userId}`),
-    //   },
-    //   products: {
-    //     add: () => "/backoffice/products/add",
-    //     single: (productId) =>
-    //       createRouteWithQueryParams(`/backoffice/products/${productId}`),
-    //   },
-    // },
+  home: () => "/",
+  register: () => "/register",
+  login: () => "/login",
+  products: {
+    base: () => `/products`,
+    single: (productId) => `/products/${productId}`,
   },
-  paramsPage: {
-    products: (params) => createRouteWithParams("/products", params),
-    mailSent: (params) => createRouteWithParams("/mails/sent", params),
+  categories: {
+    base: () => "/category",
+    single: (categoryId) => `/category/${categoryId}`,
   },
-  queryPage: {
-    category: (query) => "/category/" + query,
-    products: (query) => "/products/" + query,
+  backoffice: {
+    base: () => "/backoffice",
+    users: {
+      single: (userId) =>
+        createRouteWithQueryParams(`/backoffice/users/${userId}`),
+    },
+    products: {
+      add: () => "/backoffice/products/add",
+      single: (productId) =>
+        createRouteWithQueryParams(`/backoffice/products/${productId}`),
+    },
   },
   api: {
-    signUp: () => "/users/signUp",
+    register: () => "/users/register",
     login: () => "/users/login",
-    confirmAccount: () => "/users/activate",
-    crypt: () => "/security/crypt",
-    mailResetPassword: () => "/mail/reset-password",
-    resetPassword: () => "/users/reset-password",
-    categories: () => "/categories",
-    materials: () => "/materials",
-    products: () => "/products",
-    mails: {
-      resetPassword: () => "/mail/reset-password",
+    products: {
+      collection: (queryString, page) =>
+        `/api/products${queryString ? queryString : ""}${
+          page ? `page=${page}` : ""
+        }`,
+      single: (productId, query) =>
+        createRouteWithQueryParams(`/api/products/${productId}`, query),
+      search: (searchValue) =>
+        `/api/products?limit=30&${
+          searchValue.length > 0 ? `search=${searchValue}` : ""
+        }`,
+      update: (productId) => `/products/${productId}`,
+      materials: () => "/api/products/materials",
+      add: () => "/products",
+      reviews: (productId, limit, page) =>
+        `/api/products/${productId}/reviews?limit=${limit}&page=${page}`,
     },
-    // posts: {
-    //   collection: (query) => createRouteWithQueryParams("/posts", query),
-    //   single: (postId, query) =>
-    //     createRouteWithQueryParams(`/posts/${postId}`, query),
-    // },
+    categories: {
+      base: () => "/api/products/categories",
+      products: (categoryId) => `/api/products?categories=${categoryId}`,
+    },
+    users: {
+      collection: (query) => createRouteWithQueryParams("/api/users", query),
+      single: (userId, query) =>
+        createRouteWithQueryParams(`/api/users/${userId}`, query),
+      self: () => "/api/users/self",
+      patch: (userId) => createRouteWithQueryParams(`/users/${userId}`),
+      delete: (userId) => createRouteWithQueryParams(`/users/${userId}`),
+    },
   },
 }
 

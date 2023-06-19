@@ -7,10 +7,8 @@ const Carousel = (props) => {
   const { images, Autoplay, controls } = props
 
   const [currentSlide, setCurrentSlide] = useState(0)
-  // eslint-disable-next-line no-unused-vars
-  const [slides, _] = useState(images)
-  // eslint-disable-next-line no-unused-vars
-  const [autoplay, __] = useState(Autoplay)
+  const [slides] = useState(images)
+  const [autoplay] = useState(Autoplay)
 
   const nextSlide = useCallback(() => {
     setCurrentSlide(currentSlide === slides.length - 1 ? 0 : currentSlide + 1)

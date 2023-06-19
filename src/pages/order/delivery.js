@@ -58,5 +58,5 @@ const Delivery = () => {
     </>
   )
 }
-Delivery.isPublic = false
+
 export default Delivery

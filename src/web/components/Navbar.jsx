@@ -1,10 +1,10 @@
 import Link from "next/link"
-import { MagnifyingGlassIcon, Bars3Icon } from "@heroicons/react/24/solid"
+import { Bars3Icon } from "@heroicons/react/24/solid"
 import styles from "@/styles/components/Navbar.module.css"
 import { useEffect } from "react"
 import { classnames } from "@/pages/_app"
-import routes from "@/web/routes"
 import CartButton from "./CartButton"
+import SearchProductOverlay from "./SearchProductOverlay"
 
 const Navbar = (props) => {
   const { fixed, isDrawerToggledState } = props
@@ -38,7 +38,7 @@ const Navbar = (props) => {
       id="navbar"
     >
       <Link
-        href={routes.pages.home()}
+        href="/home"
         className={classnames("navbarLogo", styles.navbarLogo)}
       >
         Airneis
@@ -46,30 +46,28 @@ const Navbar = (props) => {
 
       <ul className={classnames(styles.navbarList, styles.midLinks)}>
         <li>
-          <Link href={routes.pages.home()} className={styles.navbarLink}>
+          <Link href="/home" className={styles.navbarLink}>
             Home
           </Link>
         </li>
 
         <li>
-          <Link href={routes.pages.products()} className={styles.navbarLink}>
+          <Link href="/products" className={styles.navbarLink}>
             Products
           </Link>
         </li>
 
         <li>
-          <Link href={routes.pages.categories()} className={styles.navbarLink}>
+          <Link href="/category" className={styles.navbarLink}>
             Categories
           </Link>
         </li>
       </ul>
 
       <ul className={styles.navbarList}>
-        <button className={styles.navbarButton}>
-          <MagnifyingGlassIcon className={styles.navbarButtonIcon} />
-        </button>
+        <SearchProductOverlay />
 
-        <CartButton fixed={fixed} />
+        <CartButton />
 
         <button className={styles.navbarButton}>
           <Bars3Icon
