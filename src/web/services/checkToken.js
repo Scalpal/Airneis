@@ -11,7 +11,7 @@ const checkToken = async (token) => {
   }
 
   const decodedToken = jsonwebtoken.decode(token);
-  const isTokenExpired = Date.now() >= decodedToken.expires * 1000;
+  const isTokenExpired = Date.now() >= decodedToken.exp * 1000;
 
   if (isTokenExpired) {
     return {

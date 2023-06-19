@@ -4,8 +4,6 @@ import checkToken from "@/web/services/checkToken";
 import checkIsAdmin from "@/web/services/checkIsAdmin";
 
 const BackofficeShop = () => {
-
-
   return (
     <>
       <h2>Gestion du carousel page daccueil </h2>
@@ -15,7 +13,7 @@ const BackofficeShop = () => {
 
   );
 };
-BackofficeShop.isPublic = true;
+
 BackofficeShop.getLayout = function (page) {
   return (
     <Layout>

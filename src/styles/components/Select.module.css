@@ -5,6 +5,7 @@
   font-family: inherit;
   background-color: var(--secondary);
   border: 1px solid grey;
+  padding-right: 2rem;
 }
 
 .select:focus {

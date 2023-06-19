@@ -1,0 +1,45 @@
+.button {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border: 0;
+  outline: 0;
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background-color: var(--primary);
+  padding: 0.5rem;
+  border-radius: 1rem;
+  z-index: 8999;
+  height: 40px;
+  width: 40px;
+  transition-duration: 400ms;
+  color: white;
+  overflow: hidden;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+  color: white;
+}
+
+.button > p {
+  display: none;
+  white-space: nowrap;
+  font-size: 0.8rem;
+}
+
+.button:hover {
+  cursor: pointer;
+  width: 130px;
+}
+
+.button:hover > svg {
+  display: none;
+}
+
+.button:hover > p {
+  display: block;
+}

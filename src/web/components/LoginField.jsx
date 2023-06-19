@@ -5,7 +5,6 @@ import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 
 const LoginField = (props) => {
-
   const { name, type, label, required, showError, disabled, ...otherProps } = props;
 
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -44,7 +43,7 @@ const LoginField = (props) => {
               )}
             />
 
-            {type === "password"&& (
+            {type === "password" && (
               isPasswordVisible ? (
                 <EyeSlashIcon
                   className={styles.inputIcon}
@@ -57,7 +56,6 @@ const LoginField = (props) => {
                 />
               )
             )}
-
 
             {showError && meta.touched && meta.error ? (
               <span className={styles.errorText}>

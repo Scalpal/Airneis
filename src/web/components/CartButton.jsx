@@ -5,7 +5,6 @@ import useAppContext from "../hooks/useAppContext";
 import { useEffect, useState } from "react";
 
 const CartButton = () => {
-
   const router = useRouter(); 
   const { state: { cart }, actions: { setCart } } = useAppContext(); 
 

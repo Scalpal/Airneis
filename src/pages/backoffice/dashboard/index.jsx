@@ -4,7 +4,6 @@ import checkToken from "@/web/services/checkToken";
 import checkIsAdmin from "@/web/services/checkIsAdmin";
 
 const BackofficeDashboard = () => {
-
   return (
     <h2>Dashboard</h2>
   );
@@ -39,5 +38,5 @@ export const getServerSideProps = async (context) => {
   };
 };
 
-BackofficeDashboard.isPublic = false;
+
 export default BackofficeDashboard; 

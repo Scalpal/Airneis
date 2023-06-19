@@ -5,7 +5,6 @@ import DrawerMenu from "./DrawerMenu";
 import { useState } from "react";
 
 const LayoutStickyNavbar = ({ children }) => {
-  
   const [isDrawerToggled, setIsDrawerToggled] = useState(false); 
 
 

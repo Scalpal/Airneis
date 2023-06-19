@@ -60,7 +60,7 @@
 .navbarLink {
   border-bottom: 2px solid transparent;
   padding: 0 0 0.25rem 0;
-  transition-duration: 2000ms;
+  transition-duration: 400ms;
 }
 
 .navbarLink:hover {
@@ -72,7 +72,8 @@
 .navbarButton{
   background: none;
   border: none;
-  position: relative;
+  color: inherit;
+  transition-duration: 400ms;
 }
 
 .navbarButtonIcon {
@@ -80,27 +81,7 @@
   width: 1.4rem;
   background: none;
   cursor: pointer;
-}
-
-.navbar .navbarButtonIcon {
-  color: white;
-}
-
-.navbarNotFixed .navbarButtonIcon {
-  color: black;
-}
-
-/* ------------ Cart product count notification --------------*/
-.navbarButtonCartCount {
-  position: absolute;
-  top: -8px;
-  right: -8px;
-  border-radius: 50%;
-  width: fit-content;
-  height: auto;
-  padding: 2px;
-  background-color: var(--grey);
-  color: black;
+  color: inherit;
 }
 
 @media only screen and (max-width: 767px) {
@@ -111,7 +92,6 @@
   .navbarList {
     gap: 1rem;
   }
-  
 }
 
 

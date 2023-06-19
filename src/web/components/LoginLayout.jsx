@@ -4,7 +4,6 @@ import { classnames } from "@/pages/_app";
 import Link from "next/link";
 
 const LoginLayout = ({children}) => {
-
   return (
     <div
       className={classnames(

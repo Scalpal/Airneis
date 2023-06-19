@@ -16,9 +16,10 @@
   gap: 1rem;
 }
 
-.actionBar > p {
+.actionBar > div > p:first-child {
   font-size: 1.2rem;
   font-weight: 500;
+  white-space: nowrap;
 }
 
 .customSearchInput {

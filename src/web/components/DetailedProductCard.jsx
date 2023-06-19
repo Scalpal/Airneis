@@ -4,9 +4,10 @@ import Image from "next/image";
 import { ArrowRightIcon } from "@heroicons/react/24/solid";
 import Button from "./Button";
 import useAppContext from "../hooks/useAppContext";
+import routes from "../routes";
+import ProductRating from "./ProductRating";
 
 const DetailedProductCard = (props) => {
-
   const { product } = props;  
   const router = useRouter();
   const { actions: { addToCart }} = useAppContext();
@@ -17,11 +18,11 @@ const DetailedProductCard = (props) => {
     >
       <div
         className={styles.productCardImageContainer}
-        onClick={() => router.push("/products/" + product.id)}
+        onClick={() => router.push(routes.products.single(product.id))}
       >
         <Image
           className={styles.productCardImage}
-          src={product.picture}
+          src={"/meuble-1.jpeg"}
           alt={"Image du produit"}
           fill
         />
@@ -29,8 +30,7 @@ const DetailedProductCard = (props) => {
 
       <div
         className={styles.productCardInfos}
-      >
-
+      >        
         <p className={styles.productCardInfoName}> {product.name} </p>
 
         <div className={styles.descriptionWrapper}>
@@ -39,28 +39,32 @@ const DetailedProductCard = (props) => {
 
         <div
           className={styles.showMoreButton}
-          onClick={() => router.push("/products/" + product.id)}
+          onClick={() => router.push(routes.products.single(product.id))}
         >
-          <p>Voir plus</p>
+          <p>See more</p>
           <ArrowRightIcon className={styles.showMoreIcon} />
         </div>
 
         <div className={styles.productMaterialWrapper}>
-          <p>Matériaux : {product.materials.map((material, index) => {
-            const comma = index === product.materials.length - 1 ? " " : ", ";
+          <p>Materials : {product.materials.map(({ name }, index) => {
+            const comma = (index === product.materials.length - 1) ? " " : ", ";
 
-            return material + comma;
+            return name + comma;
           })}</p>
         </div>
+    
+        <ProductRating rating={product.rating} totalReviews={product.reviews.length} />
 
         <div className={styles.priceStockWrapper}>
-          <p className={styles.productCardInfoPrice}> {product.price} </p>
+          <p className={styles.productCardInfoPrice}> {product.price}$ </p>
           <span className={styles.productCardInfoStock}>{product.stock} available</span>
         </div>
+
 
         <div className={styles.productCardInfoBtnWrapper}>
           <Button
             onClick={() => addToCart(product)}
+            disabled={product.stock === 0}
           >
             Add to cart
           </Button>

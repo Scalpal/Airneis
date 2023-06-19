@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 
 const ProductCard = (props) => {
-
   const { product } = props; 
   const router = useRouter(); 
 
@@ -16,7 +15,8 @@ const ProductCard = (props) => {
       <div className={styles.productCardImageContainer}>
         <Image
           className={styles.productCardImage}
-          src={product.imageSrc}
+          // src={product.imageSrc}
+          src="/meuble-2.jpeg"
           alt={"Image du produit"}
           fill
         />
@@ -24,7 +24,7 @@ const ProductCard = (props) => {
 
       <div className={styles.productCardInfos}>
         <p> {product.name} </p>
-        <p> {product.price} </p>
+        <p> {product.price}$ </p>
       </div>
     </div>
   );

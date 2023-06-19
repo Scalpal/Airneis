@@ -1,6 +1,7 @@
 import hashPassword from "@/api/db/hashPassword.js";
 import BaseModel from "@/api/db/models/BaseModel.js";
 import AddressModel from "./AddressModel";
+import OrderModel from "./OrderModel";
 
 class UserModel extends BaseModel {
   static tableName = "users";
@@ -17,8 +18,16 @@ class UserModel extends BaseModel {
         modelClass: AddressModel,
         join: {
           from: "users.id",
-          to: "address.userId"
+          to: "addresses.userId"
         },
+      },
+      orders: {
+        relation: BaseModel.ManyToManyRelation,
+        modelClass: OrderModel,
+        join: {
+          from: "users.id",
+          to: "orders.userId"
+        }
       },
       modify: (query) => query.select(
         "id",

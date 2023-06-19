@@ -4,49 +4,15 @@ import CheckboxItem from "./CheckboxItem";
 import Button from "./Button";
 import { useCallback, useEffect, useState } from "react";
 import { classnames } from "@/pages/_app";
-
-const materials = [
-  {
-    name: "Wood",
-    id: 1
-  },
-  {
-    name: "Steel",
-    id: 2,
-  },
-  {
-    name: "Plastic",
-    id: 3,
-  },
-  {
-    name: "Glass",
-    id: 4,
-  },
-  {
-    name: "Copper",
-    id: 5,
-  }
-];
-
-const categories = [
-  {
-    name: "Bed",
-    id: 1
-  },
-  {
-    name: "Table",
-    id: 2,
-  }, {
-    name: "Chair",
-    id: 3
-  }
-
-];
-
+import { useGetMaterials } from "../hooks/useGetMaterials";
+import { useGetCategories } from "../hooks/useGetCategories";
+import InputRange from "./InputRange";
+import RadioItem from "./RadioItem";
 
 const ProductFilterMenu = (props) => {
-
-  const { handleQueryParamsFilters,setQueryParams, queryParams, setAppliedQueryParams } = props; 
+  const { handleQueryParamsFilters, setQueryParams, queryParams, setAppliedQueryParams } = props; 
+  const { materialsData, materialsIsLoading, materialsError } = useGetMaterials(); 
+  const { categoriesData, categoriesIsLoading, categoriesError } = useGetCategories(); 
 
   const [isOpen, setIsOpen] = useState(false); 
 
@@ -72,6 +38,54 @@ const ProductFilterMenu = (props) => {
     });
   }, [setQueryParams, setAppliedQueryParams]);
 
+  const handlePriceLowToHigh = useCallback(() => {
+    setQueryParams({
+      ...queryParams,
+      order: "asc",
+      orderField: "price"
+    });
+  }, [queryParams, setQueryParams]);
+
+  const handlePriceHighToLow = useCallback(() => {
+    setQueryParams({
+      ...queryParams,
+      order: "desc",
+      orderField: "price"
+    });
+  }, [queryParams, setQueryParams]);
+
+  const handleNoSort = useCallback(() => {
+    setQueryParams({
+      ...queryParams,
+      order: "",
+      orderField: ""
+    });
+  }, [queryParams, setQueryParams]);
+
+  const handleSort = useCallback((value) => {
+    if (value === "1") {
+      handleNoSort();
+
+      return;
+    }
+
+    if (value === "2") {
+      handlePriceLowToHigh();
+      
+      return;
+    }
+
+    handlePriceHighToLow();
+    
+    return;
+  }, [handlePriceLowToHigh, handlePriceHighToLow, handleNoSort]); 
+
+  const isValueChecked = useCallback((queryKey, value) => {
+    const bool = queryParams[queryKey].findIndex((elt) => elt.value === value) === -1 ? false : true;
+
+    return bool;
+  }, [queryParams]);
+
   return (
     <>
       <button
@@ -91,64 +105,88 @@ const ProductFilterMenu = (props) => {
         styles.filterMenu,
         isOpen ? styles.open : styles.closed
       )}>
-        <p className={styles.menuTitle}>Filters</p>
+        <div
+          className={styles.contentWrapper}
+        >
+          <p className={styles.menuTitle}>Filters</p>
 
-        <div className={styles.priceRangeWrapper}>
-          <div className={styles.labelInputWrapper}>
-            <label>Min price $</label>
-            <input
-              type="number"
-              min={0}
-              onChange={(e) => handleQueryParamsFilters("priceMin", { name: "priceMin", value: e.target.value})}
+          <div className={styles.priceRangeWrapper}>
+            <InputRange
+              label={"Price min"}
+              currentValue={queryParams.priceMin}
+              handler={(e) => handleQueryParamsFilters("priceMin", e.target.value)}
+            />
+
+            <InputRange
+              label={"Price max"}
+              currentValue={queryParams.priceMax}
+              handler={(e) => handleQueryParamsFilters("priceMax", e.target.value)}
             />
           </div>
 
-          <div className={styles.labelInputWrapper}>
-            <label>Max price $</label>
-            <input
-              type="number"
-              min={0}
-              onChange={(e) => handleQueryParamsFilters("priceMax", { name: "priceMax", value: e.target.value})}
+          <CollapseMenu title="Categories">
+            {!categoriesIsLoading && !categoriesError && categoriesData.map(({ name, id }, index) => (
+              <CheckboxItem
+                key={index}
+                name={name}
+                value={id}
+                checked={isValueChecked("categories", id)}
+                onChange={() => handleQueryParamsFilters("categories", id, name)}
+              />
+            ))}
+          </CollapseMenu>
+
+          <CollapseMenu title="Materials">
+            {!materialsIsLoading && !materialsError && materialsData.map(({ name, id }, index) => (
+              <CheckboxItem
+                key={index}
+                name={name}
+                value={id}
+                checked={isValueChecked("materials", id)}
+                onChange={() => handleQueryParamsFilters("materials", id, name)}
+              />
+            ))}
+          </CollapseMenu>
+
+          <CollapseMenu title="Sort by">
+            <RadioItem
+              label="No sort"
+              name="sortOption"
+              inputId="noSort"
+              value={1}
+              onChange={(e) => handleSort(e.target.value)}
+              checked={queryParams.orderField === ""}
+            />
+
+            <RadioItem
+              label="Price : low to high"
+              name="sortOption"
+              inputId="priceAsc"
+              value={2}
+              onClick={(e) => handleSort(e.target.value)}
+              checked={queryParams.order === "asc" && queryParams.orderField === "price"}
+            />
+
+            <RadioItem
+              label="Price : high to low"
+              name="sortOption"
+              inputId="priceDesc"
+              value={3}
+              onClick={(e) => handleSort(e.target.value)}
+              checked={queryParams.order === "desc" && queryParams.orderField === "price"}
+            />
+          </CollapseMenu>
+
+          <div>
+            <p className={styles.categoryTitle}>Stocks</p>
+            <CheckboxItem
+              name={"In stock"}
+              value={queryParams.onlyInStock}
+              queryParams={queryParams}
+              queryKey={"onlyInStock"}
+              handleQueryParamsFilters={handleQueryParamsFilters}
             />
           </div>
-
-        </div>
-
-        <CollapseMenu title="Categories" key={"categories"}>
-          {categories.map(({ name, id }, index) => (
-            <CheckboxItem
-              key={index}
-              name={name}
-              value={id}
-              queryParams={queryParams}
-              queryKey={"categories"}
-              handleQueryParamsFilters={handleQueryParamsFilters}
-            />
-          ))}
-        </CollapseMenu>
-
-        <CollapseMenu title="Materials" key={"materials"}>
-          {materials.map(({ name, id }, index) => (
-            <CheckboxItem
-              key={index}
-              name={name}
-              value={id}
-              queryParams={queryParams}
-              queryKey={"materials"}
-              handleQueryParamsFilters={handleQueryParamsFilters}
-            />
-          ))}
-        </CollapseMenu>
-
-        <div>
-          <p className={styles.categoryTitle}>Stocks</p>
-          <CheckboxItem
-            name={"In stock"}
-            value={queryParams.onlyInStock}
-            queryParams={queryParams}
-            queryKey={"onlyInStock"}
-            handleQueryParamsFilters={handleQueryParamsFilters}
-          />
         </div>
 
         <div className={styles.buttonsWrapper}>

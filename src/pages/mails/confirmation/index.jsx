@@ -6,7 +6,7 @@ import styles from "@/styles/mails/confirmation.module.css";
 
 const MailConfirmation = ({ error }) => {
   const router = useRouter();
-  console.log(error);
+  
   const handleclick = () => {
     router.push(routes.home());
   };
@@ -21,7 +21,7 @@ const MailConfirmation = ({ error }) => {
     </div>
   );
 };
-MailConfirmation.isPublic = true;
+
 MailConfirmation.getLayout = function (page) {
   return (
     <BackofficeLoginLayout>
@@ -33,13 +33,14 @@ MailConfirmation.getLayout = function (page) {
 export default MailConfirmation;
 
 export async function getServerSideProps(context) {
-
   const { id } = context.query;
 
   try {
     await axios.put(`
-    http://localhost:3000/api/mail/confirmation?id=${id}`);
-    return {
+    ${process.env.API_URL}/api/mail/confirmation?id=${id}`);
+
+    
+return {
       props: {
         error: null
       }

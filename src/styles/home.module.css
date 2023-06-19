@@ -23,15 +23,6 @@
   overflow-x: scroll;
 }
 
-.popularProductsButton {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  margin: 20px auto; 
-  padding: 10px 15px; 
-  border: 0;
-}
-
 /* Categories */
 .categoriesContainer {
   margin: 5rem 0;

@@ -4,12 +4,10 @@ import { TrashIcon } from "@heroicons/react/24/solid";
 import useAppContext from "../hooks/useAppContext";
 
 const CartProduct = (props) => {
-
   const { product, index, productState } = props;
   const { actions: { addToCart, removeProductFromCart, deleteProductFromCart } } = useAppContext(); 
 
-  const [productsList, _] = productState;
-  // const [totalSum, setTotalSum] = totalSumState;
+  const [productsList] = productState;
 
   return (
     <div className={styles.cartProduct}>

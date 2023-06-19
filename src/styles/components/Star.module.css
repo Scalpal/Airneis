@@ -1,0 +1,9 @@
+.star {
+  width: 17px;
+  height: 17px;
+  color: grey;
+}
+
+.checked {
+  color: orange; 
+}
