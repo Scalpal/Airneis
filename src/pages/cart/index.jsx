@@ -132,17 +132,9 @@ const Cart = () => {
         )}
       </div>
     </>
-  )
-}
+  );
+};
 
-export const getStaticProps = async ({ locale }) => {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ["cart"])),
-    },
-  }
-}
-Cart.isPublic = true
 Cart.getLayout = function (page) {
   return <LayoutStickyNavbar>{page}</LayoutStickyNavbar>
 }

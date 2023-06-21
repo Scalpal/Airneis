@@ -8,8 +8,8 @@ import {
 import { MapPinIcon } from "@heroicons/react/24/solid"
 
 const AddressCard = (props) => {
-  const { address, index } = props
-
+  const { address, index } = props;
+ 
   return (
     <div
       className={classnames(

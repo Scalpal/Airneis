@@ -1,39 +1,28 @@
+import { classnames } from "@/pages/_app"
 import styles from "@/styles/components/CheckboxItem.module.css"
 import { CheckIcon } from "@heroicons/react/24/solid"
-import { useState, useCallback } from "react"
 
 const CheckboxItem = (props) => {
-  const {
-    value,
-    group,
-    id,
-    label,
-    defaultChecked,
-    onChangeEvent,
-    ...otherProps
-  } = props
-
-  const [checked, setChecked] = useState(defaultChecked)
-
-  const handleChange = useCallback(
-    (event) => {
-      const { checked, value } = event.target
-      setChecked(checked)
-      onChangeEvent({ name: group, value, checked })
-    },
-    [group, onChangeEvent]
-  )
+  const { name, value, checked, disabled, onChange } = props
 
   return (
     <div className={styles.checkboxItem}>
       <input
         type="checkbox"
         value={value}
-        id={id}
-        onChange={handleChange}
-        {...otherProps}
+        name={name}
+        id={name}
+        checked={checked}
+        disabled={disabled}
+        onChange={onChange}
       />
-      <label htmlFor={id} className={checked ? styles.checked : ""}>
+      <label
+        htmlFor={name}
+        className={classnames(
+          checked ? styles.checked : "",
+          disabled ? styles.disabled : ""
+        )}
+      >
         {checked && <CheckIcon className={styles.icon} />}
       </label>
       <p>{label}</p>

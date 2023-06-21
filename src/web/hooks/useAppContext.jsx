@@ -8,23 +8,38 @@ import {
   useEffect,
   useMemo,
   useState,
-} from "react"
-import { parseCookies } from "nookies"
+} from "react";
+import { parseCookies } from "nookies";
+import Axios from "axios";
+import routes from "../routes";
 
 const AppContext = createContext()
 
 export const AppContextProvider = (props) => {
-  // eslint-disable-next-line no-unused-vars
-  const { isPublicPage, ...otherProps } = props
-  const [session, setSession] = useState(null)
-  const [jwt, setJWT] = useState(null)
-  const api = createAPIClient({ jwt })
+  const { ...otherProps } = props;
+  const [session, setSession] = useState(null);
+  const [jwt, setJWT] = useState(null);
+  const api = createAPIClient({ jwt });
 
   const services = prepareService({ api, setSession, setJWT, session })
   const signOut = useCallback(() => {
-    document.cookie = "token" + "=;expires=Thu, 01 Jan 1970 00:00:01 GMT;"
-    setSession(false)
-  }, [])
+    document.cookie = "token" + "=;expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+    setSession(false);
+  }, []);
+
+  const getLoggedUser = useCallback(async () => {
+    if (session === null) {
+      return; 
+    }
+
+    try {
+      const { data: { user } } = await Axios.get(routes.api.users.single(session.user.id));
+
+      return user;
+    } catch (error) {
+      return error;
+    }
+  }, [session]);
 
   const [cart, setCart] = useState(() => {
     if (typeof window !== "undefined" && window.localStorage) {
@@ -97,21 +112,20 @@ export const AppContextProvider = (props) => {
       if (values.values === 0) {
         deleteProductFromCart(values.product)
 
-        return
-      }
+    const productIndex = localStorageProducts.findIndex((elt) => elt.id === product.id);
+    const currentProduct = localStorageProducts[productIndex];
 
-      const localStorageProducts = JSON.parse(localStorage.getItem("products"))
+    if (currentProduct.quantity - 1 === 0) {
+      deleteProductFromCart(product);
 
-      const productIndex = localStorageProducts.findIndex(
-        (elt) => elt.id === values.product.id
-      )
+      
+return;
+    }
 
-      localStorageProducts[productIndex].quantity = values.values
-      localStorage.setItem("products", localStorageProducts)
-      setCart(localStorageProducts)
-    },
-    [deleteProductFromCart, setCart]
-  )
+    localStorageProducts[productIndex].quantity--;
+    localStorage.setItem("products", localStorageProducts); 
+    setCart(localStorageProducts);
+  }, [deleteProductFromCart, setCart]);
 
   useEffect(() => {
     localStorage.setItem("products", JSON.stringify(cart))
@@ -159,13 +173,18 @@ export const AppContextProvider = (props) => {
   //   return <span>Not connected</span>
   // }
 
-  return <AppContext.Provider {...otherProps} value={contextValues} />
-}
+  return (
+    <AppContext.Provider
+      {...otherProps}
+      value={contextValues}
+    />
+  );
+};
 
 const useAppContext = () => {
-  const { state, actions, services } = useContext(AppContext)
+  const { state, actions } = useContext(AppContext);
 
-  return { state, actions, services }
-}
+  return { state, actions };
+};
 
 export default useAppContext

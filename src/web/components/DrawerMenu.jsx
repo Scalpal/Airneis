@@ -1,17 +1,29 @@
-import styles from "@/styles/components/DrawerMenu.module.css"
-import Link from "next/link"
-import routes from "@/web/routes"
-import { classnames } from "@/pages/_app"
-import { ArrowRightIcon } from "@heroicons/react/24/outline"
-import { useRouter } from "next/router"
+import styles from "@/styles/components/DrawerMenu.module.css";
+import Link from "next/link";
+import { classnames } from "@/pages/_app";
+import { ArrowRightIcon } from "@heroicons/react/24/outline";
+import { useRouter } from "next/router";
+import routes from "../routes";
+import { useEffect } from "react";
 
 const DrawerMenu = (props) => {
-  const { isDrawerToggledState, actions } = props
-  const [isDrawerToggled, setIsDrawerToggled] = isDrawerToggledState
+  const { isDrawerToggledState, actions } = props;
+  const [isDrawerToggled, setIsDrawerToggled] = isDrawerToggledState;
 
-  const [signOut, session] = actions ? actions : [null, null]
+  const [signOut, session] = actions ? actions : [null, null];
 
-  const router = useRouter()
+  const router = useRouter();
+
+  useEffect(() => {
+    if (isDrawerToggled === true) {
+      document.body.style.overflow = "hidden";
+
+      return;
+    }
+
+    document.body.style.overflow = ""; 
+  }, [isDrawerToggled]);
+
   const logout = () => {
     signOut()
     router.push(routes.pages.home())
@@ -36,18 +48,9 @@ const DrawerMenu = (props) => {
           className={styles.drawerMenuIcon}
           onClick={() => setIsDrawerToggled(!isDrawerToggled)}
         />
-        {session ? (
-          <Link href={routes.pages.profil()}>My profil</Link>
-        ) : (
-          <Link href={routes.pages.signIn()}>Login</Link>
-        )}
-        {session ? (
-          <Link href="" onClick={logout}>
-            Logout
-          </Link>
-        ) : (
-          <Link href={routes.pages.signUp()}>Register</Link>
-        )}
+        {session ? <Link href="/profil">My profil</Link> : <Link href={routes.login()}>Login</Link>}
+        {session ? <a onClick={logout}>Logout</a> : <Link href={routes.register()}>Register</Link>}
+        {session && <Link href={routes.backoffice.base()}>Backoffice</Link>}
         <Link href="">CGU</Link>
         <Link href="">Legal mentions</Link>
         <Link href="">Contact</Link>

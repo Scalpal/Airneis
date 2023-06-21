@@ -22,9 +22,9 @@ const handler = mw({
           .findOne({ id })
           .withGraphFetched("address")
 
-        res.send({ user: user })
+        res.send({ user: user });
       } catch (error) {
-        res.json({ error: "Error." })
+        res.status(500).send({ error: error });
       }
     },
   ],

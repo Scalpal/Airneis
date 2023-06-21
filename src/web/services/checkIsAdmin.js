@@ -6,35 +6,28 @@
 // const checkIsAdmin = async (context) => {
 //   const reqInstance = getApiClient(context)
 
-//   try {
-//     const {
-//       data: { user },
-//     } = await reqInstance.get(
-//       `http://localhost:3000/${routes.api.users.self()}`
-//     )
+const checkIsAdmin = async(context) => {
+  const reqInstance = getApiClient(context);
 
-//     const {
-//       data: { user },
-//     } = await reqInstance.get(
-//       `http://localhost:3000/${routes.api.users.self()}`
-//     )
-
-//     if (!user.isAdmin) {
-//       return {
-//         redirect: {
-//           destination: "/home",
-//           permanent: false,
-//         },
-//       }
-//           permanent: false,
-//         },
-//       }
-//     }
-//   } catch (error) {
-//     if (error instanceof AxiosError) {
-//       console.log(error.response)
-//     }
-//   }
-// }
-
-// export default checkIsAdmin
+  try {
+    const { data: { user } } = await reqInstance.get(`${process.env.API_URL}/${routes.api.users.self()}`);
+   
+    if (!user.isAdmin) {
+      return {
+        redirect: {
+          destination: "/home",
+          permanent: false
+        }
+      };
+    }
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      return {
+        redirect: {
+          destination: "/home",
+          permanent: false
+        }
+      };
+    }
+  }
+};

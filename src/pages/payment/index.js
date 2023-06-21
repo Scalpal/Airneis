@@ -48,15 +48,7 @@ const Payment = () => {
         </div>
       </form>
     </>
-  )
-}
+  );
+};
 
-export const getStaticProps = async ({ locale }) => {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ["payment"])),
-    },
-  }
-}
-Payment.isPublic = false
-export default Payment
+export default Payment;

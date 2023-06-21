@@ -42,8 +42,6 @@
 /* Main content */
 .mainContent {
   border-radius: 12px;
-  /* background-color: var(--secondary); */
-  /* background-color: rgb(216, 216, 216); */
   padding: 1rem 1.5rem;
   overflow: scroll;
   z-index: 100;

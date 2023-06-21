@@ -1,10 +1,10 @@
-import "@/styles/global.css"
-import Layout from "@/web/components/Layout"
-import Head from "next/head"
-import { Montserrat } from "@next/font/google"
-import { Nunito } from "@next/font/google"
-import { AppContextProvider } from "@/web/hooks/useAppContext.jsx"
-import { appWithTranslation } from "next-i18next"
+import "@/styles/global.css";
+import "@/styles/inputRange.css";
+import Layout from "@/web/components/Layout";
+import Head from "next/head";
+import { Montserrat } from "@next/font/google";
+import { Nunito } from "@next/font/google";
+import { AppContextProvider } from "@/web/hooks/useAppContext.jsx";
 
 export const classnames = require("classnames")
 
@@ -20,7 +20,7 @@ export const nunito = Nunito({
   subsets: ["latin"],
 })
 
-function App({ Component, pageProps }) {
+export default function App({ Component, pageProps }) {
   const renderWithLayout =
     Component.getLayout ||
     ((page) => {
@@ -28,7 +28,7 @@ function App({ Component, pageProps }) {
     })
 
   return (
-    <AppContextProvider isPublicPage={Component.isPublic}>
+    <AppContextProvider>
       <Head>
         <title> Airneis </title>
         <meta name="description" content="Airneis" />

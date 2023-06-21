@@ -6,7 +6,7 @@ const Contact = () => {
       <Banner title={"Contact"} />
       <h2> Contact page </h2>
     </>
-  )
-}
-Contact.isPublic = true
-export default Contact
+  );
+};
+
+export default Contact;

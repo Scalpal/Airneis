@@ -1,10 +1,10 @@
-import Carousel from "@/web/components/Carousel"
-import CustomerReview from "@/web/components/CustomerReview"
-import CategoriesBlocks from "@/web/components/CategoriesBlocks"
-import styles from "@/styles/home.module.css"
-import ProductCard from "@/web/components/ProductCard"
-import { serverSideTranslations } from "next-i18next/serverSideTranslations"
-import { useTranslation } from "next-i18next"
+import Carousel from "@/web/components/Carousel";
+import CustomerReview from "@/web/components/CustomerReview";
+import CategoriesBlocks from "@/web/components/CategoriesBlocks";
+import styles from "@/styles/home.module.css";
+import ProductCard from "@/web/components/ProductCard";
+import routes from "@/web/routes";
+import SeeMoreButton from "@/web/components/SeeMoreButton";
 
 const placeholderImages = ["/meuble-4.jpeg", "/meuble-2.jpeg", "/meuble-3.png"]
 
@@ -97,9 +97,9 @@ const Home = () => {
           })}
         </div>
 
-        <button className={styles.popularProductsButton}>
-          {translate("moreProducts")}
-        </button>
+        <SeeMoreButton route={routes.products.base()}>
+          See more products
+        </SeeMoreButton>
       </section>
 
       {/* Categories block */}
@@ -124,15 +124,7 @@ const Home = () => {
         </div>
       </section>
     </>
-  )
-}
+  );
+};
 
-export const getStaticProps = async ({ locale }) => {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ["common"])),
-    },
-  }
-}
-Home.isPublic = true
-export default Home
+export default Home;

@@ -6,14 +6,11 @@ import useAppContext from "../hooks/useAppContext"
 import { useEffect, useState } from "react"
 import { classnames } from "@/pages/_app"
 
-const CartButton = (props) => {
-  const { fixed } = props
-  const router = useRouter()
-  const {
-    state: { cart },
-    actions: { setCart },
-  } = useAppContext()
-  const [productsCount, setProductsCount] = useState(0)
+const CartButton = () => {
+  const router = useRouter(); 
+  const { state: { cart }, actions: { setCart } } = useAppContext(); 
+
+  const [productsCount, setProductsCount] = useState(0);
 
   useEffect(() => {
     if (cart) {

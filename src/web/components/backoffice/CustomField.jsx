@@ -5,9 +5,9 @@ import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline"
 import { useState } from "react"
 
 const CustomField = (props) => {
-  const { name, type, label, showError, ...otherProps } = props
+  const { name, type, label, showError, ...otherProps } = props;
 
-  const [passwordVisibility, setPasswordVisibility] = useState(false)
+  const [passwordVisibility, setPasswordVisibility] = useState(false);
 
   const typeIs = () => {
     if (type === "password") {
@@ -27,13 +27,14 @@ const CustomField = (props) => {
       )
     }
 
-    return (
-      <EyeIcon
-        className={classnames(styles.inputIcon, styles.eyeIcon)}
-        onClick={() => setPasswordVisibility(true)}
-      />
-    )
-  }
+    return (<EyeIcon
+      className={classnames(
+        styles.inputIcon,
+        styles.eyeIcon
+      )}
+      onClick={() => setPasswordVisibility(true)}
+    />);
+  };
 
   return (
     <Field name={name}>

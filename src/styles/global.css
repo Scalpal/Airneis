@@ -7,10 +7,10 @@
 :root {
   --primary: black;
   --secondary: #F6F6F6;
-  --primaryHovered: rgb(237, 186, 119);
   --grey: #bababa; 
   --error: rgb(183, 0, 0);
   --disabled: rgb(165, 165, 165); 
+  --light-grey: rgb(203, 203, 203); 
 }
 
 html,
@@ -18,8 +18,8 @@ body {
   width: 100%;
   font-size: calc(15px + 0.390625vw);
   font-weight: 300;
-  background-color: #F6F6F6;
-  /* overflow-x: hidden; */
+  scroll-behavior: smooth;
+  background-color: var(--secondary);
 }
 
 a {
@@ -63,12 +63,12 @@ input:focus {
   border-bottom: 1px solid rgba(255, 255, 255, 0.3) !important;
 }
 
-.navbarBackground ul {
-  filter: invert(1);
+.navbarBackground > ul {
+  color: black;
 }
 
-.navbarBackground .navbarLogo {
-  filter: invert(1);
+.navbarBackground > .navbarLogo {
+  color: black;
 }
 
 @media only screen and (max-width: 767px) {

@@ -1,17 +1,15 @@
-import Layout from "@/web/components/backoffice/Layout"
-import { useEffect, useState } from "react"
-import Table from "@/web/components/backoffice/Table"
-import { classnames } from "@/pages/_app"
-import { nunito } from "@/pages/_app"
-import { MagnifyingGlassIcon } from "@heroicons/react/24/outline"
-import styles from "@/styles/backoffice/statsPages.module.css"
-import { parseCookies } from "nookies"
-import checkToken from "@/web/services/checkToken"
-import checkIsAdmin from "@/web/services/checkIsAdmin"
+import Layout from "@/web/components/backoffice/Layout";
+import Table from "@/web/components/backoffice/Table";
+import { classnames } from "@/pages/_app";
+import { nunito } from "@/pages/_app";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import styles from "@/styles/backoffice/statsPages.module.css";
+import { parseCookies } from "nookies";
+import checkToken from "@/web/services/checkToken";
+import checkIsAdmin from "@/web/services/checkIsAdmin";
 
 // Prototype datas
-// Prototype datas
-const ordersProto = [
+const orders = [
   {
     id: 1,
     userId: 223,
@@ -59,10 +57,7 @@ const ordersProto = [
 ]
 
 const BackofficeOrders = () => {
-  const [orders, setOrder] = useState([])
-  useEffect(() => {
-    setOrder(ordersProto)
-  }, [])
+  // const [orders, setOrders] = useState(ordersProto);
 
   return (
     <main className={classnames(styles.mainContainer, nunito.className)}>
@@ -93,10 +88,9 @@ const BackofficeOrders = () => {
         <Table array={orders} />
       </div>
     </main>
-  )
-}
+  );
+};
 
-BackofficeOrders.isPublic = false
 BackofficeOrders.getLayout = function (page) {
   return <Layout>{page}</Layout>
 }

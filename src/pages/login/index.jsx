@@ -102,17 +102,9 @@ const Login = () => {
         )}
       </Formik>
     </main>
-  )
-}
+  );
+};
 
-export const getStaticProps = async ({ locale }) => {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ["login"])),
-    },
-  }
-}
-Login.isPublic = true
 Login.getLayout = function (page) {
   return <LoginLayout>{page}</LoginLayout>
 }

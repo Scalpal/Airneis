@@ -8,6 +8,8 @@
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 9998;
   transition-duration: 800ms;
+  overflow: scroll;
+  overscroll-behavior: contain;
 }
 
 .overlayInactive {
@@ -38,6 +40,8 @@
   align-items: center;
   gap: 0.5rem; 
   transition-duration: 500ms;
+  overflow: scroll;
+  overscroll-behavior: contain;
 
   background: rgba(255, 255, 255, 0.2);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);

@@ -4,7 +4,7 @@ import { classnames } from "@/pages/_app"
 import routes from "@/web/routes"
 import Link from "next/link"
 
-const LoginLayout = ({ children }) => {
+const LoginLayout = ({children}) => {
   return (
     <div className={classnames(styles.container, nunito.className)}>
       <div className={styles.left}>

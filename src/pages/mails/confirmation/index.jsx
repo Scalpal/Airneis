@@ -49,6 +49,9 @@ const MailConfirmation = () => {
     fetchData()
   }, [codedId, confirmAccount, crypt, err, id])
 
+const MailConfirmation = ({ error }) => {
+  const router = useRouter();
+  
   const handleclick = () => {
     router.push(routes.pages.home())
   }
@@ -62,14 +65,38 @@ const MailConfirmation = () => {
         {translate("returnHomeButton")}
       </button>
     </div>
-  )
-}
+  );
+};
 
-export const getStaticProps = async ({ locale }) => {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ["confirmationMail"])),
-    },
+MailConfirmation.getLayout = function (page) {
+  return (
+    <BackofficeLoginLayout>
+      {page}
+    </BackofficeLoginLayout>
+  );
+};
+
+export default MailConfirmation;
+
+export async function getServerSideProps(context) {
+  const { id } = context.query;
+
+  try {
+    await axios.put(`
+    ${process.env.API_URL}/api/mail/confirmation?id=${id}`);
+
+    
+return {
+      props: {
+        error: null
+      }
+    };
+  } catch (error) {
+    return {
+      props: {
+        error: true
+      }
+    };
   }
 }
 MailConfirmation.isPublic = true

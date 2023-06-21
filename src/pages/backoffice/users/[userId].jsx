@@ -33,17 +33,8 @@ const validationSchema = createValidator({
 })
 
 const BackofficeUserPage = (props) => {
-  const { user } = props
-  // const {
-  //   actions: { api },
-  // } = useAppContext()
-
-  const [currentUser, setCurrentUser] = useState(null)
-  setCurrentUser(user)
-  const [editMode, setEditMode] = useState({ type: "", editing: false })
-  const [alert, setAlert] = useState({})
-  setAlert({ status: "", message: "" })
-  const [showAlert, setShowAlert] = useState(false)
+  const { user } = props; 
+  const { actions: { api } } = useAppContext();
 
   const handleEditMode = useCallback(
     (type, handleReset) => {
@@ -52,8 +43,23 @@ const BackofficeUserPage = (props) => {
         editing: !editMode.editing,
       })
 
-      if (editMode.type === type) {
-        handleReset()
+    if (editMode.type === type) {
+      handleReset(); 
+    }
+  }, [editMode]);
+
+  const handleSubmit = useCallback(async (values) => {
+    try {
+      const { data } = await api.patch(routes.api.users.patch(user.id), values);
+
+      setEditMode({ type: "", editing: false });
+      setCurrentUser(data.user);
+      setShowAlert(true);
+      setAlert({ status: data.status, message: data.message });
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        setShowAlert(true);
+        setAlert({ status: error.response.status, message: error.response.message });
       }
     },
     [editMode]
@@ -278,14 +284,8 @@ export const getServerSideProps = async (context) => {
   //     `http://localhost:3000/${routes.api.users.single(id)}`
   //   )
 
-  //   if (!result.data.user) {
-  //     return {
-  //       redirect: {
-  //         destination: "/backoffice/users",
-  //         permanent: false,
-  //       },
-  //     }
-  //   }
+  try {
+    const result = await reqInstance.get(`${process.env.API_URL}/${routes.api.users.single(id)}`);
 
   //   return {
   //     props: {
@@ -299,7 +299,24 @@ export const getServerSideProps = async (context) => {
   // }
 }
 
-BackofficeUserPage.isPublic = false
+    return {
+      props: {
+        user: result.data.user
+      }
+    };
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      return {
+        redirect: {
+          destination: "/backoffice/users",
+          permanent: false
+        }
+      };
+    }
+  }
+};
+
+
 BackofficeUserPage.getLayout = function (page) {
   return <Layout>{page}</Layout>
 }

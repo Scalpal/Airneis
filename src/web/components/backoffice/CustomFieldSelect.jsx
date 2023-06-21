@@ -2,7 +2,7 @@ import { Field } from "formik"
 import styles from "@/styles/backoffice/CustomField.module.css"
 
 const CustomField = (props) => {
-  const { name, label, options, showError, ...otherProps } = props
+  const { name, label, options, showError, ...otherProps } = props;
 
   return (
     <Field name={name}>

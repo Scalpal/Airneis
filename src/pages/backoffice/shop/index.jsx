@@ -10,9 +10,10 @@ const BackofficeShop = () => {
       <h2>Gestion des produits populaires</h2>
       <h2>Gestion des catégories </h2>
     </>
-  )
-}
-BackofficeShop.isPublic = true
+
+  );
+};
+
 BackofficeShop.getLayout = function (page) {
   return <Layout>{page}</Layout>
 }

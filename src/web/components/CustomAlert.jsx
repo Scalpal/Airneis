@@ -7,25 +7,25 @@ import {
 import { useEffect } from "react"
 
 const CustomAlert = (props) => {
-  const { alert, showAlert, setShowAlert } = props
+  const { alert, showAlert, setShowAlert } = props;
 
-  let customStyle = ""
+  let customStyle = "";
 
   switch (alert.status) {
-    case "success":
-      customStyle = styles.success
+    case "success": 
+      customStyle = styles.success;
 
-      break
+      break;
+  
+    case "error": 
+      customStyle = styles.error;
 
-    case "error":
-      customStyle = styles.error
-
-      break
-
+      break;
+    
     default:
-      customStyle = styles.error
+      customStyle = styles.error;
 
-      break
+      break;
   }
 
   useEffect(() => {

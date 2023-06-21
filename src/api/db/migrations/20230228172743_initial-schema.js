@@ -77,18 +77,14 @@ module.exports.up = async (knex) => {
 
   // Related to reviews
   await knex.schema.createTable("reviews", (table) => {
-    table.increments("id")
-    table
-      .integer("productId")
-      .references("id")
-      .inTable("products")
-      .notNullable()
-    table.integer("userId").references("id").inTable("users").notNullable()
-    table.text("title").notNullable()
-    table.text("content").notNullable()
-    table.enum("stars", [1, 2, 3, 4, 5]).notNullable().defaultTo(1)
-    table.timestamps(true, true, true)
-  })
+    table.increments("id");
+    table.integer("productId").references("id").inTable("products").notNullable();
+    table.integer("userId").references("id").inTable("users").notNullable();
+    table.text("title").notNullable();
+    table.text("content").notNullable();
+    table.integer("rating").unsigned().notNullable().checkIn([1, 2, 3, 4, 5]);
+    table.timestamps(true, true, true);
+  });
 
   // Related to orders
   await knex.schema.createTable("orders", (table) => {
@@ -98,21 +94,19 @@ module.exports.up = async (knex) => {
       .integer("deliveryAddress")
       .notNullable()
       .references("id")
-      .inTable("addresses")
-    table.enum("status", ["cancelled", "on standby", "delivered"]).notNullable()
-    table.timestamps(true, true, true)
-  })
+      .inTable("addresses");
+    table
+      .enum("status", ["cancelled", "on standby", "delivered"])
+      .notNullable();
+    table.timestamps(true, true, true);
+  });
 
   await knex.schema.createTable("orders_products_relation", (table) => {
-    table.integer("orderId").notNullable().references("id").inTable("orders")
-    table
-      .integer("productId")
-      .notNullable()
-      .references("id")
-      .inTable("products")
-    table.integer("quantity").notNullable().defaultTo(1)
-    table.primary(["orderId", "productId"])
-  })
+    table.integer("orderId").notNullable().references("id").inTable("orders");
+    table.integer("productId").notNullable().references("id").inTable("products");
+    table.integer("quantity").notNullable().defaultTo(1);
+    table.primary(["orderId", "productId"]);
+  });
 
   await knex.schema.createTable("image_home_carousel", (table) => {
     table.increments("id")

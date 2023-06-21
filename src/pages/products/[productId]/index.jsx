@@ -1,154 +1,44 @@
-import Carousel from "@/web/components/Carousel"
-import ProductCard from "@/web/components/ProductCard"
-import Banner from "@/web/components/Banner"
-import Button from "@/web/components/Button"
-import styles from "@/styles/productPage.module.css"
-import useAppContext from "@/web/hooks/useAppContext"
-import CircleAnimation from "@/web/components/circleAnimation"
-import { useState } from "react"
-import { useRouter } from "next/router"
-import { serverSideTranslations } from "next-i18next/serverSideTranslations"
-import { useTranslation } from "next-i18next"
+import Carousel from "@/web/components/Carousel";
+import ProductCard from "@/web/components/ProductCard";
+import Banner from "@/web/components/Banner";
+import Button from "@/web/components/Button";
+import styles from "@/styles/productPage.module.css";
+import Axios from "axios";
+import routes from "@/web/routes";
+import useAppContext from "@/web/hooks/useAppContext";
+import SeeMoreButton from "@/web/components/SeeMoreButton";
+import ProductReviews from "@/web/components/ProductReviews";
+import { useState } from "react"; 
 
 const placeholderImages = ["/meuble-1.jpeg", "/meuble-2.jpeg", "/meuble-3.png"]
 
-const AllProducts = [
-  {
-    id: 1,
-    name: "Chaise moderne en bois de hêtre",
-    type: "bois",
-    description:
-      "Chaises noir en bois de hêtre centenaire d'Himalayad,zkdanaldza nzdn lkdn jlkdznland kzalzdnalkd nkldzndzlaknalkn",
-    price: 200,
-    stock: 25,
-    picture: "/meuble-2.jpeg",
-    materials: ["métal", "acier", "fer"],
-  },
-  {
-    id: 2,
-    name: "chaise",
-    type: "bois",
-    price: 29,
-    stock: 25,
-    picture: "/meuble-2.jpeg",
-    materials: ["métal", "acier", "fer"],
-  },
-  {
-    id: 3,
-    name: "chaise",
-    type: "bois",
-    description: "Chaises noir en bois de hêtre centenaire d'Himalaya",
-    price: 87,
-    stock: 25,
-    picture: "/meuble-2.jpeg",
-    materials: ["métal", "acier", "fer"],
-  },
-  {
-    id: 4,
-    name: "chaise",
-    type: "bois",
-    price: 129,
-    stock: 25,
-    picture: "/meuble-2.jpeg",
-    materials: ["métal", "acier", "fer"],
-  },
-  {
-    id: 5,
-    name: "chaise",
-    type: "bois",
-    description: "Chaises noir en bois de hêtre centenaire d'Himalaya",
-    price: 987,
-    stock: 25,
-    picture: "/meuble-2.jpeg",
-    materials: ["métal", "acier", "fer"],
-  },
-  {
-    id: 6,
-    name: "chaise",
-    type: "bois",
-    price: 100,
-    stock: 25,
-    picture: "/meuble-2.jpeg",
-    materials: ["métal", "acier", "fer"],
-  },
-]
+export const getServerSideProps = async (context) => {
+  const { productId } = context.query;  
 
-const similarProducts = [
-  {
-    id: 1,
-    name: "Chair",
-    type: "Wood",
-    price: "$145",
-    imageSrc: "/meuble-2.jpeg",
-  },
-  {
-    name: "Table",
-    type: "Oak",
-    price: "$105",
-    imageSrc: "/meuble-2.jpeg",
-  },
-  {
-    name: "Curtain",
-    type: "Wool",
-    price: "$45",
-    imageSrc: "/meuble-2.jpeg",
-  },
-  {
-    name: "Curtain",
-    type: "Wool",
-    price: "$45",
-    imageSrc: "/meuble-2.jpeg",
-  },
-  {
-    name: "Curtain",
-    type: "Wool",
-    price: "$45",
-    imageSrc: "/meuble-2.jpeg",
-  },
-  {
-    name: "Curtain",
-    type: "Wool",
-    price: "$45",
-    imageSrc: "/meuble-2.jpeg",
-  },
-  {
-    name: "Curtain",
-    type: "Wool",
-    price: "$45",
-    imageSrc: "/meuble-2.jpeg",
-  },
-  {
-    name: "Curtain",
-    type: "Wool",
-    price: "$45",
-    imageSrc: "/meuble-2.jpeg",
-  },
-]
+  const { data: { product } } = await Axios.get(`${process.env.API_URL}${routes.api.products.single(productId)}`); 
 
-const ProductPage = () => {
-  const { t: translate } = useTranslation("productPage")
-  const [bubbleAnimation, setBubbleAnimation] = useState(null)
-  const router = useRouter()
-  const { productId = 1 } = router.query
-  const {
-    actions: { addToCart },
-  } = useAppContext()
-  const currentProduct = AllProducts.filter(
-    (product) => product.id === Number.parseInt(productId)
-  )[0]
+  const specificCategory = `?categories=${Number.parseInt(product.category.id)}&`;
+  const { data: { products } } = await Axios.get(`${process.env.API_URL}${routes.api.products.collection(specificCategory, 1)}`);
 
-  const handleAddToCart = () => {
-    !bubbleAnimation && setBubbleAnimation(true)
-    addToCart(currentProduct)
+  return ({
+    props: {
+      product: product,
+      categoryProducts: products
+    }
+  }); 
+};
 
-    setTimeout(() => {
-      setBubbleAnimation(false)
-    }, 1900)
-  }
+const ProductPage = (props) => {
+  const { product, categoryProducts } = props;
+
+  const { actions: { addToCart } } = useAppContext(); 
+  const [limit] = useState(4);
+  const [page, setPage] = useState(1); 
+
 
   return (
     <>
-      <Banner title={currentProduct.name} />
+      <Banner title={product.name} />
 
       <main>
         <section className={styles.mainContent}>
@@ -162,48 +52,70 @@ const ProductPage = () => {
 
           <div className={styles.productInfos}>
             <div className={styles.productInfosTopBlock}>
-              <h1>{currentProduct.name}</h1>
-              <p>{currentProduct.description}</p>
+              <h1 className={styles.productInfosName}>{product.name}</h1>
+              <p className={styles.productInfosDescription}>{product.description}</p>
             </div>
 
+
             <div className={styles.productInfosBottomBlock}>
-              <p>{currentProduct.price}€</p>
-              <p>
-                {currentProduct.stock > 0
-                  ? "Stocks : " + currentProduct.stock + " available"
-                  : "Out of stock"}
+              <p className={styles.productInfosMaterials}>
+                Materials : {product.materials.map(({ name }, index) => {
+                  const dash = index < product.materials.length - 1 ? "-" : "";
+                  
+                  return name + " " + dash + " ";
+                })}
               </p>
+
+              <div className={styles.productInfosStockPrice}>
+                <p className={styles.productInfosPrice}>{product.price}€</p>
+                <p>
+                  {product.stock > 0 ? ("Stocks : " + product.stock + " available") : ("Out of stock")}
+                </p>
+              </div>
             </div>
+
           </div>
         </section>
 
-        <div className={styles.addToCartBtnWrapper}>
-          <Button bgWhite={bubbleAnimation} onClick={handleAddToCart}>
-            {translate("addToCartButton")}
-            {bubbleAnimation && <CircleAnimation />}
+        <div className={styles.addToCartBtnWrapper} id="productReviewAnchor">
+          <Button
+            onClick={() => addToCart(product)}
+          >
+            Add to cart
           </Button>
         </div>
 
+        <ProductReviews
+          productId={product.id}
+          page={page}
+          setPage={setPage}
+          limit={limit}
+        />
+
+        <div className={styles.titleWrapper}>
+          <div className={styles.line}></div>
+          <p className={styles.title}>Similar products</p>
+          <div className={styles.line}></div>
+        </div>
+
         <section className={styles.similarProductsWrapper}>
-          <h1> {translate("similiarProductTitle")}</h1>
 
           <div className={styles.similarProductsContainer}>
-            {similarProducts.map((product, index) => {
-              return <ProductCard key={index} product={product} />
+            {categoryProducts.map((product, index) => {
+              return <ProductCard key={index} product={product} />;
             })}
           </div>
+
+          <SeeMoreButton route={routes.products.base()}>
+            View all products
+          </SeeMoreButton>
+
         </section>
+
       </main>
     </>
-  )
-}
+  );
+};
 
-export const getStaticProps = async ({ locale }) => {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ["productPage"])),
-    },
-  }
-}
-ProductPage.isPublic = true
-export default ProductPage
+
+export default ProductPage;

@@ -27,7 +27,7 @@
   transition-duration: 300ms;
 }
 
-/* Product card infos OVERLAY */
+/* Product card infos */
 .productCardInfos {
   position: relative;
   display: flex;
@@ -156,6 +156,7 @@
   .productCardImageContainer {
     border-radius: 10px;
     min-height: 10rem;
+    pointer-events: none;
   }
 
   .productCardImage {
@@ -204,20 +205,21 @@
   }
 
   .productMaterialWrapper {
-    display: none;
+    font-size: 0.9rem;
   }
 
   .showMoreButton {
     order: 3;
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
+    align-self: flex-end;
     gap: 0.3rem;
     align-items: center;
     color: rgb(133, 133, 133);
     border-radius: 10px;
     padding: 0.3rem;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
+    width: fit-content;
   }
 
   .showMoreIcon {
