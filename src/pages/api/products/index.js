@@ -80,7 +80,8 @@ const handler = mw({
           .select("id", "name", "description", "price", "stock")
           .withGraphFetched("category")
           .withGraphFetched("materials")
-          .withGraphFetched("reviews");
+          .withGraphFetched("reviews")
+          .withGraphFetched("productImages");
         
         // Products with average rating
         const finalProducts = products.map((product) => {
