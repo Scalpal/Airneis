@@ -1,4 +1,5 @@
 import S3 from "aws-sdk/clients/s3";
+import crypto from "crypto"; 
 
 const bucketName = process.env.AWS_BUCKET_NAME;
 const region = process.env.AWS_BUCKET_REGION;
@@ -11,12 +12,15 @@ const s3 = new S3({
   secretAccessKey
 });
 
+const randomImageName = (bytes = 32) => crypto.randomBytes(bytes).toString("hex");
+
+
 //Upload file
 export const uploadImageToS3 = (file, folderPath) => {
   const uploadParams = {
     Bucket: bucketName,
     Body: file.buffer,
-    Key: `${folderPath}${file.originalname}`
+    Key: `${folderPath}${randomImageName()}`
   };
 
   return s3.upload(uploadParams).promise();
