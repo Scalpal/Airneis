@@ -1,6 +1,7 @@
-import createAPIClient from "@/web/createAPIClient.js"
-import parseSession from "@/web/parseSession.js"
-import prepareService from "@/web/prepareService"
+import createAPIClient from "@/web/createAPIClient.js";
+import parseSession from "@/web/parseSession.js";
+import signInService from "@/web/services/signIn.js";
+import signUpService from "@/web/services/signUp.js";
 import {
   createContext,
   useCallback,
@@ -13,7 +14,7 @@ import { parseCookies } from "nookies";
 import Axios from "axios";
 import routes from "../routes";
 
-const AppContext = createContext()
+const AppContext = createContext();
 
 export const AppContextProvider = (props) => {
   const { ...otherProps } = props;
@@ -21,7 +22,8 @@ export const AppContextProvider = (props) => {
   const [jwt, setJWT] = useState(null);
   const api = createAPIClient({ jwt });
 
-  const services = prepareService({ api, setSession, setJWT, session })
+  const signUp = signUpService({ api });
+  const signIn = signInService({ api, setSession, setJWT });
   const signOut = useCallback(() => {
     document.cookie = "token" + "=;expires=Thu, 01 Jan 1970 00:00:01 GMT;";
     setSession(false);
@@ -29,11 +31,13 @@ export const AppContextProvider = (props) => {
 
   const getLoggedUser = useCallback(async () => {
     if (session === null) {
-      return; 
+      return;
     }
 
     try {
-      const { data: { user } } = await Axios.get(routes.api.users.single(session.user.id));
+      const {
+        data: { user },
+      } = await Axios.get(routes.api.users.single(session.user.id));
 
       return user;
     } catch (error) {
@@ -46,139 +50,139 @@ export const AppContextProvider = (props) => {
       return localStorage.getItem("products") !== "undefined" &&
         localStorage.getItem("products") !== "null"
         ? JSON.parse(localStorage.getItem("products"))
-        : []
+        : [];
     }
-  })
+  });
 
   const addToCart = useCallback(
     (product) => {
       if (typeof window !== "undefined" && window.localStorage) {
         const localStorageProducts = JSON.parse(
           localStorage.getItem("products")
-        )
+        );
 
         // Create the array of products in localStorage (init an array of products on first add)
         if (!Array.isArray(localStorageProducts)) {
-          const arrayProducts = []
+          const arrayProducts = [];
 
-          product.quantity = 1
-          arrayProducts.push(product)
-          localStorage.setItem("products", JSON.stringify(arrayProducts))
-          setCart(arrayProducts)
+          product.quantity = 1;
+          arrayProducts.push(product);
+          localStorage.setItem("products", JSON.stringify(arrayProducts));
+          setCart(arrayProducts);
 
-          return
+          return;
         }
 
         const productIndex = localStorageProducts.findIndex(
           (elt) => elt.id === product.id
-        )
+        );
 
         // If product is not already in the cart, we add it
         if (productIndex === -1) {
-          product.quantity = 1
+          product.quantity = 1;
           localStorage.setItem(
             "products",
             JSON.stringify([...localStorageProducts, product])
-          )
-          setCart([...cart, product])
+          );
+          setCart([...cart, product]);
 
-          return
+          return;
         }
 
         //Otherwise, we increment it's quantity
-        localStorageProducts[productIndex].quantity++
-        localStorage.setItem("products", JSON.stringify(localStorageProducts))
-        setCart(localStorageProducts)
+        localStorageProducts[productIndex].quantity++;
+        localStorage.setItem("products", JSON.stringify(localStorageProducts));
+        setCart(localStorageProducts);
       }
     },
     [cart, setCart]
-  )
+  );
 
   const deleteProductFromCart = useCallback(
     (product) => {
-      const localStorageProducts = JSON.parse(localStorage.getItem("products"))
+      const localStorageProducts = JSON.parse(localStorage.getItem("products"));
 
       const updatedLocalStorageProducts = localStorageProducts.filter(
         (elt) => elt.id !== product.id
-      )
-      localStorage.setItem("products", updatedLocalStorageProducts)
-      setCart(updatedLocalStorageProducts)
+      );
+      localStorage.setItem("products", updatedLocalStorageProducts);
+      setCart(updatedLocalStorageProducts);
     },
     [setCart]
-  )
+  );
 
-  const changeValuesProductFromCart = useCallback(
-    (values) => {
-      if (values.values === 0) {
-        deleteProductFromCart(values.product)
+  const removeProductFromCart = useCallback(
+    (product) => {
+      const localStorageProducts = JSON.parse(localStorage.getItem("products"));
 
-    const productIndex = localStorageProducts.findIndex((elt) => elt.id === product.id);
-    const currentProduct = localStorageProducts[productIndex];
+      const productIndex = localStorageProducts.findIndex(
+        (elt) => elt.id === product.id
+      );
+      const currentProduct = localStorageProducts[productIndex];
 
-    if (currentProduct.quantity - 1 === 0) {
-      deleteProductFromCart(product);
+      if (currentProduct.quantity - 1 === 0) {
+        deleteProductFromCart(product);
 
-      
-return;
-    }
+        return;
+      }
 
-    localStorageProducts[productIndex].quantity--;
-    localStorage.setItem("products", localStorageProducts); 
-    setCart(localStorageProducts);
-  }, [deleteProductFromCart, setCart]);
-
-  useEffect(() => {
-    localStorage.setItem("products", JSON.stringify(cart))
-  }, [cart])
+      localStorageProducts[productIndex].quantity--;
+      localStorage.setItem("products", localStorageProducts);
+      setCart(localStorageProducts);
+    },
+    [deleteProductFromCart, setCart]
+  );
 
   useEffect(() => {
-    const { token } = parseCookies()
+    localStorage.setItem("products", JSON.stringify(cart));
+  }, [cart]);
+
+  useEffect(() => {
+    const { token } = parseCookies();
 
     if (!token) {
-      return
+      return;
     }
 
-    const session = parseSession(token)
+    const session = parseSession(token);
 
-    setSession(session)
-    setJWT(token)
-  }, [])
+    setSession(session);
+    setJWT(token);
+  }, []);
 
   const contextValues = useMemo(() => {
     return {
       actions: {
+        api,
+        signUp,
+        signIn,
         signOut,
+        getLoggedUser,
         setCart,
         addToCart,
-        changeValuesProductFromCart,
+        removeProductFromCart,
         deleteProductFromCart,
       },
-      services,
       state: {
         session,
         cart,
       },
-    }
+    };
   }, [
-    signOut,
-    addToCart,
-    changeValuesProductFromCart,
-    deleteProductFromCart,
-    session,
+    api,
     cart,
-    services,
-  ])
+    session,
+    signUp,
+    signIn,
+    signOut,
+    getLoggedUser,
+    setCart,
+    addToCart,
+    removeProductFromCart,
+    deleteProductFromCart,
+  ]);
 
-  // if (!isPublicPage && session === null) {
-  //   return <span>Not connected</span>
-  // }
-
-  return (
-    <AppContext.Provider
-      {...otherProps}
-      value={contextValues}
-    />
-  );
+  return <AppContext.Provider {...otherProps} value={contextValues} />;
 };
 
 const useAppContext = () => {
@@ -187,4 +191,4 @@ const useAppContext = () => {
   return { state, actions };
 };
 
-export default useAppContext
+export default useAppContext;

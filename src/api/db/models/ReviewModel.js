@@ -24,4 +24,4 @@ class ReviewModel extends BaseModel {
   }
 }
 
-export default ReviewModel
+export default ReviewModel;

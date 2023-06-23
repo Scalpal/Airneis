@@ -1,55 +1,55 @@
-import { createValidator, stringValidator, emailValidator } from "@/validator"
-import BackofficeLoginLayout from "@/web/components/backoffice/LoginLayout"
-import { Formik, Form } from "formik"
-import CustomField from "@/web/components/backoffice/CustomField"
-import Button from "@/web/components/Button"
-import routes from "@/web/routes.js"
-import styles from "@/styles/backoffice/loginPage.module.css"
-import { useRouter } from "next/router"
-import { useCallback, useState } from "react"
-import useAppContext from "@/web/hooks/useAppContext"
+import { createValidator, stringValidator, emailValidator } from "@/validator";
+import BackofficeLoginLayout from "@/web/components/backoffice/LoginLayout";
+import { Formik, Form } from "formik";
+import CustomField from "@/web/components/backoffice/CustomField";
+import Button from "@/web/components/Button";
+import routes from "@/web/routes.js";
+import styles from "@/styles/backoffice/loginPage.module.css";
+import { useRouter } from "next/router";
+import { useCallback, useState } from "react";
+import useAppContext from "@/web/hooks/useAppContext";
 
-const merge = require("deepmerge")
+const merge = require("deepmerge");
 
 const validationSchema = createValidator({
   email: emailValidator.required(),
   password: stringValidator.required(),
-})
+});
 
 const initialValues = {
   email: "",
   password: "",
-}
+};
 
 const Login = () => {
-  const router = useRouter()
+  const router = useRouter();
   const {
     actions: { signIn },
-  } = useAppContext()
-  const [error, setError] = useState(null)
+  } = useAppContext();
+  const [error, setError] = useState(null);
   const handleSubmit = useCallback(
     async (values) => {
-      const newValues = merge(values, { access: "admin" })
-      const [err] = await signIn(newValues)
+      const newValues = merge(values, { access: "admin" });
+      const [err] = await signIn(newValues);
 
       if (err && error) {
         document
           .getElementById("errormsg")
           .animate([{ opacity: "100" }, { opacity: "0" }, { opacity: "100" }], {
             duration: 1000,
-          })
+          });
       }
 
       if (err) {
-        setError(err)
+        setError(err);
 
-        return
+        return;
       }
 
-      router.push(routes.home())
+      router.push(routes.home());
     },
     [signIn, error, router]
-  )
+  );
 
   return (
     <main className={styles.mainContent}>
@@ -94,11 +94,11 @@ const Login = () => {
         )}
       </Formik>
     </main>
-  )
-}
+  );
+};
 
-Login.isPublic = true
+Login.isPublic = true;
 Login.getLayout = function (page) {
-  return <BackofficeLoginLayout>{page}</BackofficeLoginLayout>
-}
-export default Login
+  return <BackofficeLoginLayout>{page}</BackofficeLoginLayout>;
+};
+export default Login;

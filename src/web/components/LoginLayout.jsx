@@ -1,8 +1,8 @@
-import styles from "@/styles/components/LoginLayout.module.css"
-import { nunito } from "@/pages/_app"
-import { classnames } from "@/pages/_app"
-import routes from "@/web/routes"
-import Link from "next/link"
+import styles from "@/styles/components/LoginLayout.module.css";
+import { nunito } from "@/pages/_app";
+import { classnames } from "@/pages/_app";
+import routes from "@/web/routes";
+import Link from "next/link";
 
 const LoginLayout = ({children}) => {
   return (
@@ -15,7 +15,7 @@ const LoginLayout = ({children}) => {
 
       <div className={styles.right}>{children}</div>
     </div>
-  )
-}
+  );
+};
 
-export default LoginLayout
+export default LoginLayout;

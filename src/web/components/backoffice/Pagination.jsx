@@ -1,18 +1,18 @@
-import { useCallback, useEffect, useState } from "react"
-import styles from "@/styles/backoffice/Pagination.module.css"
-import { classnames } from "@/pages/_app"
+import { useCallback, useEffect, useState } from "react";
+import styles from "@/styles/backoffice/Pagination.module.css";
+import { classnames } from "@/pages/_app";
 import {
   ChevronDoubleLeftIcon,
   ChevronDoubleRightIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
-} from "@heroicons/react/24/solid"
+} from "@heroicons/react/24/solid";
 
 const Pagination = (props) => {
   const { dataCount, page, limit, setPage, nextPage, previousPage, firstPage, lastPage } = props; 
 
-  const [totalPages, setTotalPages] = useState([[]])
-  const [activeChunk, setActiveChunk] = useState(0)
+  const [totalPages, setTotalPages] = useState([[]]);
+  const [activeChunk, setActiveChunk] = useState(0);
 
   useEffect(() => {
     const pages = []; 
@@ -20,15 +20,15 @@ const Pagination = (props) => {
     const pagesCount = Math.ceil(dataCount / limit);
 
     for (let i = 1; i <= pagesCount; i++) {
-      pages.push(i)
+      pages.push(i);
     }
 
     // Chunked pages 5 by 5
     const chunkedPages = pages.reduce((acc, curr, i) => {
-      const chunkIndex = Math.floor(i / chunkSize)
+      const chunkIndex = Math.floor(i / chunkSize);
 
       if (!acc[chunkIndex]) {
-        acc[chunkIndex] = []
+        acc[chunkIndex] = [];
       }
 
       acc[chunkIndex].push(curr);
@@ -44,14 +44,14 @@ const Pagination = (props) => {
       if (chunk.includes(page)) {
         setActiveChunk(index);
 
-        return
+        return;
       }
     });
   }, [totalPages, page]);
 
   useEffect(() => {
-    findActiveChunk()
-  }, [findActiveChunk, activeChunk])
+    findActiveChunk();
+  }, [findActiveChunk, activeChunk]);
 
   return (
     <div className={styles.container}>
@@ -106,7 +106,7 @@ const Pagination = (props) => {
       
       <p className={styles.bottomText}>Page {page} of {Math.ceil(dataCount / limit)}</p>
     </div>
-  )
-}
+  );
+};
 
-export default Pagination
+export default Pagination;

@@ -1,14 +1,14 @@
-import styles from "@/styles/components/CircleAnimation.module.css"
-import classNames from "classnames"
-import { useState } from "react"
-import { CheckCircleIcon } from "@heroicons/react/24/outline"
+import styles from "@/styles/components/CircleAnimation.module.css";
+import classNames from "classnames";
+import { useState } from "react";
+import { CheckCircleIcon } from "@heroicons/react/24/outline";
 
 const CircleAnimation = () => {
-  const [bubbleAnimation, setBubbleAnimation] = useState(true)
+  const [bubbleAnimation, setBubbleAnimation] = useState(true);
 
   setTimeout(() => {
-    setBubbleAnimation(false)
-  }, 550)
+    setBubbleAnimation(false);
+  }, 550);
 
   return (
     <>
@@ -29,7 +29,7 @@ const CircleAnimation = () => {
         {!bubbleAnimation && <CheckCircleIcon className={styles.check} />}
       </div>
     </>
-  )
-}
+  );
+};
 
-export default CircleAnimation
+export default CircleAnimation;

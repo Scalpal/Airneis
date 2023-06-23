@@ -1,39 +1,39 @@
-import { useRouter } from "next/router"
-import styles from "@/styles/mails/confirmation.module.css"
-import BackofficeLoginLayout from "@/web/components/backoffice/LoginLayout"
-import useAppContext from "@/web/hooks/useAppContext"
-import { useEffect, useState } from "react"
-import classNames from "classnames"
+import { useRouter } from "next/router";
+import styles from "@/styles/mails/confirmation.module.css";
+import BackofficeLoginLayout from "@/web/components/backoffice/LoginLayout";
+import useAppContext from "@/web/hooks/useAppContext";
+import { useEffect, useState } from "react";
+import classNames from "classnames";
 
 const MailSent = () => {
-  const router = useRouter()
-  const [answer, setAnswer] = useState(null)
-  const [err, setErr] = useState(null)
-  const { codedId } = router.query
-  const id = decodeURIComponent(codedId)
+  const router = useRouter();
+  const [answer, setAnswer] = useState(null);
+  const [err, setErr] = useState(null);
+  const { codedId } = router.query;
+  const id = decodeURIComponent(codedId);
   const {
     services: {
       security: { crypt },
     },
-  } = useAppContext()
+  } = useAppContext();
 
   useEffect(() => {
     const fetchData = async () => {
       if (codedId) {
-        const [{ getId }] = await crypt([{ id }])
+        const [{ getId }] = await crypt([{ id }]);
 
         if (!getId) {
-          setAnswer("Invalid page")
-          setErr(true)
+          setAnswer("Invalid page");
+          setErr(true);
 
-          return
+          return;
         }
 
-        setAnswer("We send you a mail")
+        setAnswer("We send you a mail");
       }
-    }
-    fetchData()
-  }, [codedId, crypt, id])
+    };
+    fetchData();
+  }, [codedId, crypt, id]);
 
   return (
     <div className={styles.div}>
@@ -41,10 +41,10 @@ const MailSent = () => {
         {answer}
       </span>
     </div>
-  )
-}
-MailSent.isPublic = true
+  );
+};
+MailSent.isPublic = true;
 MailSent.getLayout = function (page) {
-  return <BackofficeLoginLayout>{page}</BackofficeLoginLayout>
-}
-export default MailSent
+  return <BackofficeLoginLayout>{page}</BackofficeLoginLayout>;
+};
+export default MailSent;

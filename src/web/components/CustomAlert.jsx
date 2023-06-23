@@ -1,10 +1,10 @@
-import { classnames } from "@/pages/_app"
-import styles from "@/styles/components/CustomAlert.module.css"
+import { classnames } from "@/pages/_app";
+import styles from "@/styles/components/CustomAlert.module.css";
 import {
   CheckBadgeIcon,
   ExclamationTriangleIcon,
-} from "@heroicons/react/24/solid"
-import { useEffect } from "react"
+} from "@heroicons/react/24/solid";
+import { useEffect } from "react";
 
 const CustomAlert = (props) => {
   const { alert, showAlert, setShowAlert } = props;
@@ -30,9 +30,9 @@ const CustomAlert = (props) => {
 
   useEffect(() => {
     setTimeout(() => {
-      setShowAlert(false)
-    }, [5000])
-  }, [showAlert, setShowAlert])
+      setShowAlert(false);
+    }, [5000]);
+  }, [showAlert, setShowAlert]);
 
   return (
     <div
@@ -48,7 +48,7 @@ const CustomAlert = (props) => {
       )}
       <p>{alert.message}</p>
     </div>
-  )
-}
+  );
+};
 
-export default CustomAlert
+export default CustomAlert;

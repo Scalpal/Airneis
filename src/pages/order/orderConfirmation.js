@@ -1,8 +1,7 @@
-import { serverSideTranslations } from "next-i18next/serverSideTranslations"
-import { useTranslation } from "next-i18next"
+import { useTranslation } from "next-i18next";
 
 const OrderConfirmation = () => {
-  const { t: translate } = useTranslation("orderConfirmation")
+  const { t: translate } = useTranslation("orderConfirmation");
 
   return (
     <>

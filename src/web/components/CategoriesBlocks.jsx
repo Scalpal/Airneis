@@ -24,10 +24,10 @@ const CategoriesBlocks = (props) => {
               className={styles.categoriesContainerImage}
             />
           </div>
-        )
+        );
       })}
     </div>
-  )
-}
+  );
+};
 
-export default CategoriesBlocks
+export default CategoriesBlocks;

@@ -1,9 +1,9 @@
-import { classnames } from "@/pages/_app"
-import styles from "@/styles/components/CheckboxItem.module.css"
-import { CheckIcon } from "@heroicons/react/24/solid"
+import { classnames } from "@/pages/_app";
+import styles from "@/styles/components/CheckboxItem.module.css";
+import { CheckIcon } from "@heroicons/react/24/solid";
 
 const CheckboxItem = (props) => {
-  const { name, value, checked, disabled, onChange } = props
+  const { name, value, checked, disabled, onChange } = props;
 
   return (
     <div className={styles.checkboxItem}>
@@ -25,9 +25,9 @@ const CheckboxItem = (props) => {
       >
         {checked && <CheckIcon className={styles.icon} />}
       </label>
-      <p>{label}</p>
+      <p>{name}</p>
     </div>
-  )
-}
+  );
+};
 
-export default CheckboxItem
+export default CheckboxItem;

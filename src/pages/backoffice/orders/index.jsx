@@ -54,7 +54,7 @@ const orders = [
       },
     ],
   },
-]
+];
 
 const BackofficeOrders = () => {
   // const [orders, setOrders] = useState(ordersProto);
@@ -92,27 +92,27 @@ const BackofficeOrders = () => {
 };
 
 BackofficeOrders.getLayout = function (page) {
-  return <Layout>{page}</Layout>
-}
+  return <Layout>{page}</Layout>;
+};
 
 export const getServerSideProps = async (context) => {
-  const { token } = parseCookies(context)
-  const badTokenRedirect = await checkToken(token)
+  const { token } = parseCookies(context);
+  const badTokenRedirect = await checkToken(token);
 
   if (badTokenRedirect) {
-    return badTokenRedirect
+    return badTokenRedirect;
   }
 
-  const notAdminRedirect = await checkIsAdmin(context)
+  const notAdminRedirect = await checkIsAdmin(context);
 
   if (notAdminRedirect) {
-    return notAdminRedirect
+    return notAdminRedirect;
   }
 
   return {
     props: {
       prototype: "nothing",
     },
-  }
-}
-export default BackofficeOrders
+  };
+};
+export default BackofficeOrders;

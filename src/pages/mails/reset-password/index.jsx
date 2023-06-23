@@ -1,92 +1,92 @@
-import Button from "@/web/components/Button"
-import LoginField from "@/web/components/LoginField"
-import LoginLayout from "@/web/components/LoginLayout"
-import { Form, Formik } from "formik"
-import routes from "@/web/routes.js"
-import styles from "@/styles/login.module.css"
-import { useRouter } from "next/router"
-import useAppContext from "@/web/hooks/useAppContext"
-import { useCallback, useEffect, useState } from "react"
+import Button from "@/web/components/Button";
+import LoginField from "@/web/components/LoginField";
+import LoginLayout from "@/web/components/LoginLayout";
+import { Form, Formik } from "formik";
+import routes from "@/web/routes.js";
+import styles from "@/styles/login.module.css";
+import { useRouter } from "next/router";
+import useAppContext from "@/web/hooks/useAppContext";
+import { useCallback, useEffect, useState } from "react";
 import {
   createValidator,
   passwordValidator,
   confirmPasswordValidator,
-} from "@/validator"
-import { serverSideTranslations } from "next-i18next/serverSideTranslations"
-import { useTranslation } from "next-i18next"
-const merge = require("deepmerge")
+} from "@/validator";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "next-i18next";
+const merge = require("deepmerge");
 
 const validationSchema = createValidator({
   password: passwordValidator.required(),
   passwordConfirmation: confirmPasswordValidator.required(),
-})
+});
 
 const initialValues = {
   password: "",
   passwordConfirmation: "",
-}
+};
 
 const MailResetPassword = () => {
-  const { t: translate } = useTranslation("resetPasswordMail")
-  const router = useRouter()
-  const { codedId, codedTimer } = router.query
-  const id = decodeURIComponent(codedId)
-  const timer = decodeURIComponent(codedTimer)
-  const [errorURL, setErrorURL] = useState(null)
-  const [error, setError] = useState(null)
-  const [cryptoId, setCryptoId] = useState(null)
-  const [cryptoTimer, setCryptoTimer] = useState(null)
+  const { t: translate } = useTranslation("resetPasswordMail");
+  const router = useRouter();
+  const { codedId, codedTimer } = router.query;
+  const id = decodeURIComponent(codedId);
+  const timer = decodeURIComponent(codedTimer);
+  const [errorURL, setErrorURL] = useState(null);
+  const [error, setError] = useState(null);
+  const [cryptoId, setCryptoId] = useState(null);
+  const [cryptoTimer, setCryptoTimer] = useState(null);
   const {
     services: {
       resetPassword,
       security: { crypt },
     },
-  } = useAppContext()
+  } = useAppContext();
 
   useEffect(() => {
     const fetchData = async () => {
       if (codedId && codedTimer) {
-        const [{ getId }, { getTimer }] = await crypt([{ id }, { timer }])
+        const [{ getId }, { getTimer }] = await crypt([{ id }, { timer }]);
 
         if (!getId && !getTimer) {
-          setErrorURL(true)
-          setError("Invalid page")
+          setErrorURL(true);
+          setError("Invalid page");
 
-          return
+          return;
         }
 
-        setCryptoId(getTimer)
-        setCryptoTimer(getId)
+        setCryptoId(getTimer);
+        setCryptoTimer(getId);
       }
-    }
+    };
 
-    fetchData()
-  }, [codedId, codedTimer, crypt, id, timer])
+    fetchData();
+  }, [codedId, codedTimer, crypt, id, timer]);
 
   const handleSubmit = useCallback(
     async (values) => {
       if (errorURL) {
-        setError(errorURL)
+        setError(errorURL);
 
-        return
+        return;
       }
 
       const newValues = merge(values, {
         id: cryptoId,
         timer: cryptoTimer,
-      })
-      const [err] = await resetPassword(newValues)
+      });
+      const [err] = await resetPassword(newValues);
 
       if (err) {
-        setError(err)
+        setError(err);
 
-        return
+        return;
       }
 
-      router.push(routes.pages.signIn())
+      router.push(routes.pages.signIn());
     },
     [cryptoId, cryptoTimer, errorURL, resetPassword, router]
-  )
+  );
 
   return (
     <main className={styles.container}>
@@ -134,20 +134,20 @@ const MailResetPassword = () => {
         )}
       </Formik>
     </main>
-  )
-}
+  );
+};
 
 export const getStaticProps = async ({ locale }) => {
   return {
     props: {
       ...(await serverSideTranslations(locale, ["resetPasswordMail"])),
     },
-  }
-}
+  };
+};
 
-MailResetPassword.isPublic = true
+MailResetPassword.isPublic = true;
 MailResetPassword.getLayout = function (page) {
-  return <LoginLayout>{page}</LoginLayout>
-}
+  return <LoginLayout>{page}</LoginLayout>;
+};
 
-export default MailResetPassword
+export default MailResetPassword;

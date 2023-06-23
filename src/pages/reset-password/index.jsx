@@ -1,49 +1,49 @@
-import Button from "@/web/components/Button"
-import LoginField from "@/web/components/LoginField"
-import LoginLayout from "@/web/components/LoginLayout"
-import { Form, Formik } from "formik"
-import routes from "@/web/routes.js"
-import styles from "@/styles/login.module.css"
-import { useRouter } from "next/router"
-import useAppContext from "@/web/hooks/useAppContext"
-import { useCallback, useState } from "react"
-import { createValidator, emailValidator } from "@/validator"
-import { serverSideTranslations } from "next-i18next/serverSideTranslations"
-import { useTranslation } from "next-i18next"
+import Button from "@/web/components/Button";
+import LoginField from "@/web/components/LoginField";
+import LoginLayout from "@/web/components/LoginLayout";
+import { Form, Formik } from "formik";
+import routes from "@/web/routes.js";
+import styles from "@/styles/login.module.css";
+import { useRouter } from "next/router";
+import useAppContext from "@/web/hooks/useAppContext";
+import { useCallback, useState } from "react";
+import { createValidator, emailValidator } from "@/validator";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "next-i18next";
 
 const validationSchema = createValidator({
   email: emailValidator.required(),
-})
+});
 
 const initialValues = {
   email: "",
-}
+};
 
 const ResetPassword = () => {
-  const { t: translate } = useTranslation("resetPasswordPage")
-  const router = useRouter()
+  const { t: translate } = useTranslation("resetPasswordPage");
+  const router = useRouter();
 
   const {
     services: {
       sendMail: { resetPassword },
     },
-  } = useAppContext()
-  const [error, setError] = useState(null)
+  } = useAppContext();
+  const [error, setError] = useState(null);
 
   const handleSubmit = useCallback(
     async (values) => {
-      const [err, id] = await resetPassword(values)
+      const [err, id] = await resetPassword(values);
 
       if (err) {
-        setError(err)
+        setError(err);
 
-        return
+        return;
       }
 
-      router.push(router.push(routes.paramsPage.mailSent(`codedId=${id}`)))
+      router.push(router.push(routes.paramsPage.mailSent(`codedId=${id}`)));
     },
     [resetPassword, router]
-  )
+  );
 
   return (
     <main className={styles.container}>
@@ -86,20 +86,20 @@ const ResetPassword = () => {
         )}
       </Formik>
     </main>
-  )
-}
+  );
+};
 
 export const getStaticProps = async ({ locale }) => {
   return {
     props: {
       ...(await serverSideTranslations(locale, ["resetPasswordPage"])),
     },
-  }
-}
+  };
+};
 
-ResetPassword.isPublic = true
+ResetPassword.isPublic = true;
 ResetPassword.getLayout = function (page) {
-  return <LoginLayout>{page}</LoginLayout>
-}
+  return <LoginLayout>{page}</LoginLayout>;
+};
 
-export default ResetPassword
+export default ResetPassword;

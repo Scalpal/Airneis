@@ -1,5 +1,5 @@
-import styles from "@/styles/backoffice/Navbar.module.css"
-import Link from "next/link"
+import styles from "@/styles/backoffice/Navbar.module.css";
+import Link from "next/link";
 import {
   HomeIcon,
   UserIcon,
@@ -8,10 +8,10 @@ import {
   ChartBarIcon,
   ArrowRightOnRectangleIcon,
   ReceiptPercentIcon,
-} from "@heroicons/react/24/outline"
-import { nunito } from "@/pages/_app"
-import { classnames } from "@/pages/_app"
-import { useUser } from "@/web/hooks/useUser"
+} from "@heroicons/react/24/outline";
+import { nunito } from "@/pages/_app";
+import { classnames } from "@/pages/_app";
+import { useUser } from "@/web/hooks/useUser";
 
 const navLinks = [
   {
@@ -44,7 +44,7 @@ const navLinks = [
     text: "Shop",
     icon: <BuildingStorefrontIcon className={styles.linksIcon} />,
   },
-]
+];
 
 const Navbar = () => {
   const { data } = useUser(); 
@@ -65,7 +65,7 @@ const Navbar = () => {
               {link.icon}
               <p className={styles.linksText}>{link.text}</p>
             </Link>
-          )
+          );
         })}
       </div>
 
@@ -75,7 +75,7 @@ const Navbar = () => {
         />
       </div>
     </nav>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;

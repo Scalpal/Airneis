@@ -43,7 +43,7 @@ const Banner = (props) => {
       <BackToTopButton onPress={handleClick} />
 
     </header>
-  )
-}
+  );
+};
 
-export default Banner
+export default Banner;

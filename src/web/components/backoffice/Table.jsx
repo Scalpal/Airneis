@@ -14,7 +14,7 @@ const Table = (props) => {
     visibleColumns,
     showSpecificRowFunction,
     deleteRowFunction,
-  } = props
+  } = props;
   // safeArray is the array coming from getServerSideProps, it is always not empty so in case array is empty
   // we still have the table headers
 
@@ -48,7 +48,7 @@ const Table = (props) => {
         <CheckIcon className={styles.tableIcon} />
       ) : (
         <XMarkIcon className={styles.tableIcon} />
-      )
+      );
     }
 
     return <p key={i}>{value && value.toString()}</p>;
@@ -76,10 +76,10 @@ const Table = (props) => {
             </td>
           )}
         </>
-      )
+      );
     },
     [deleteRowFunction, showSpecificRowFunction]
-  )
+  );
 
   return (
     <table className={classnames(styles.table)}>
@@ -151,7 +151,7 @@ const Table = (props) => {
 
                 {showActionsButtons(item.id)}
               </tr>
-            )
+            );
           })}
         </tbody>
       ) : (
@@ -160,7 +160,7 @@ const Table = (props) => {
         </tr>
       )}
     </table>
-  )
-}
+  );
+};
 
-export default Table
+export default Table;

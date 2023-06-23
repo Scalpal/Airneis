@@ -1,17 +1,17 @@
-import styles from "@/styles/components/Footer.module.css"
-import Link from "next/link"
-import routes from "@/web/routes"
-import { useRouter } from "next/router"
+import styles from "@/styles/components/Footer.module.css";
+import Link from "next/link";
+import routes from "@/web/routes";
+import { useRouter } from "next/router";
 
 const Footer = (props) => {
-  const { actions } = props
-  const [signOut, session] = actions ? actions : [null, null]
-  const router = useRouter()
+  const { actions } = props;
+  const [signOut, session] = actions ? actions : [null, null];
+  const router = useRouter();
 
   const logout = () => {
-    signOut()
-    router.push(routes.pages.home())
-  }
+    signOut();
+    router.push(routes.pages.home());
+  };
 
   return (
     <footer className={styles.footer}>
@@ -78,7 +78,7 @@ const Footer = (props) => {
         Copyright ©2022 Airneis. All Rights Reserved{" "}
       </p>
     </footer>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;

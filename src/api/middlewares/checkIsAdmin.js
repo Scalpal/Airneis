@@ -7,24 +7,24 @@ const checkIsAdmin = () => {
 
     try {
       if (user.isAdmin === false) {
-        res.status(403).send({ error: "Forbidden" })
+        res.status(403).send({ error: "Forbidden" });
 
-        return
+        return;
       }
 
-      next()
+      next();
     } catch (error) {
       if (error instanceof yup.ValidationError) {
-        res.status(422).send({ error: error.errors })
+        res.status(422).send({ error: error.errors });
 
-        return
+        return;
       }
 
-      logger.error(error)
+      logger.error(error);
 
-      res.status(500).send({ error: "Oops. Something went wrong." })
+      res.status(500).send({ error: "Oops. Something went wrong." });
     }
-  }
-}
+  };
+};
 
-export default checkIsAdmin
+export default checkIsAdmin;

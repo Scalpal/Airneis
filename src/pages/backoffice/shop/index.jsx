@@ -1,7 +1,7 @@
-import Layout from "@/web/components/backoffice/Layout"
-import { parseCookies } from "nookies"
-import checkToken from "@/web/services/checkToken"
-import checkIsAdmin from "@/web/services/checkIsAdmin"
+import Layout from "@/web/components/backoffice/Layout";
+import { parseCookies } from "nookies";
+import checkToken from "@/web/services/checkToken";
+import checkIsAdmin from "@/web/services/checkIsAdmin";
 
 const BackofficeShop = () => {
   return (
@@ -15,28 +15,28 @@ const BackofficeShop = () => {
 };
 
 BackofficeShop.getLayout = function (page) {
-  return <Layout>{page}</Layout>
-}
+  return <Layout>{page}</Layout>;
+};
 
-export default BackofficeShop
+export default BackofficeShop;
 
 export const getServerSideProps = async (context) => {
-  const { token } = parseCookies(context)
-  const badTokenRedirect = await checkToken(token)
+  const { token } = parseCookies(context);
+  const badTokenRedirect = await checkToken(token);
 
   if (badTokenRedirect) {
-    return badTokenRedirect
+    return badTokenRedirect;
   }
 
-  const notAdminRedirect = await checkIsAdmin(context)
+  const notAdminRedirect = await checkIsAdmin(context);
 
   if (notAdminRedirect) {
-    return notAdminRedirect
+    return notAdminRedirect;
   }
 
   return {
     props: {
       prototype: "nothing",
     },
-  }
-}
+  };
+};

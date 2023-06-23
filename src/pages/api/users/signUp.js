@@ -1,18 +1,18 @@
-import hashPassword from "@/api/db/hashPassword"
-import AddressModel from "@/api/db/models/AddressModel"
-import UserModel from "@/api/db/models/UserModel.js"
-const { transaction } = require("objection")
-import validate from "@/api/middlewares/validate.js"
-import mw from "@/api/mw.js"
-import { AES } from "crypto-js"
+import hashPassword from "@/api/db/hashPassword";
+import AddressModel from "@/api/db/models/AddressModel";
+import UserModel from "@/api/db/models/UserModel.js";
+const { transaction } = require("objection");
+import validate from "@/api/middlewares/validate.js";
+import mw from "@/api/mw.js";
+import { AES } from "crypto-js";
 import {
   emailValidator,
   phoneValidator,
   stringValidator,
   passwordValidator,
-} from "@/validator"
-import sgMail from "@sendgrid/mail"
-import config from "@/api/config.js"
+} from "@/validator";
+import sgMail from "@sendgrid/mail";
+import config from "@/api/config.js";
 
 const handler = mw({
   POST: [
@@ -47,15 +47,15 @@ const handler = mw({
       },
       res,
     }) => {
-      const user = await UserModel.query().findOne({ email })
+      const user = await UserModel.query().findOne({ email });
 
       if (user) {
-        res.status(409).send({ error: "Email already used." })
+        res.status(409).send({ error: "Email already used." });
 
-        return
+        return;
       }
 
-      const [passwordHash, passwordSalt] = await hashPassword(password)
+      const [passwordHash, passwordSalt] = await hashPassword(password);
 
       const result = await transaction(
         UserModel,
@@ -68,7 +68,7 @@ const handler = mw({
             passwordHash,
             passwordSalt,
             phoneNumber,
-          })
+          });
 
           return AddressModel.query().insert({
             address,
@@ -77,22 +77,22 @@ const handler = mw({
             postalCode,
             country,
             userId: newUser.id,
-          })
+          });
         }
-      )
+      );
 
       const encryptId = (id) => {
         const encryptedId = AES.encrypt(
           id.toString(),
           config.security.encrypt
-        ).toString()
+        ).toString();
 
-        return encryptedId
-      }
+        return encryptedId;
+      };
 
-      sgMail.setApiKey(config.security.sendgrid)
+      sgMail.setApiKey(config.security.sendgrid);
 
-      const idCypted = encodeURIComponent(encryptId(result.userId))
+      const idCypted = encodeURIComponent(encryptId(result.userId));
 
       const msg = {
         to: email,
@@ -104,16 +104,16 @@ const handler = mw({
           lastname: lastName,
           url: `${config.baseURL}/mails/confirmation?codedId=${idCypted}`,
         },
-      }
+      };
 
       try {
-        sgMail.send(msg)
-        res.send({ result: idCypted })
+        sgMail.send(msg);
+        res.send({ result: idCypted });
       } catch (error) {
-        res.status(404).send({ error: error })
+        res.status(404).send({ error: error });
       }
     },
   ],
-})
+});
 
-export default handler
+export default handler;

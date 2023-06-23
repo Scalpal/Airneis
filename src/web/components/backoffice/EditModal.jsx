@@ -1,7 +1,7 @@
-import { PencilSquareIcon } from "@heroicons/react/24/outline"
-import styles from "@/styles/backoffice/EditModal.module.css"
-import { useState } from "react"
-import { classnames } from "@/pages/_app"
+import { PencilSquareIcon } from "@heroicons/react/24/outline";
+import styles from "@/styles/backoffice/EditModal.module.css";
+import { useState } from "react";
+import { classnames } from "@/pages/_app";
 
 const EditModal = () => {
   const [showEditModal, setShowEditModal] = useState(false); 
@@ -23,7 +23,7 @@ const EditModal = () => {
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default EditModal
+export default EditModal;

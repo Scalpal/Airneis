@@ -1,66 +1,29 @@
-import { useRouter } from "next/router"
-import BackofficeLoginLayout from "@/web/components/backoffice/LoginLayout"
-import routes from "@/web/routes"
-import styles from "@/styles/mails/confirmation.module.css"
-import { useEffect, useState } from "react"
-import useAppContext from "@/web/hooks/useAppContext"
-import classNames from "classnames"
-import { serverSideTranslations } from "next-i18next/serverSideTranslations"
-import { useTranslation } from "next-i18next"
-
-const MailConfirmation = () => {
-  const { t: translate } = useTranslation("confirmationMail")
-  const [err, setErr] = useState(false)
-  const [answer, setAnswer] = useState(null)
-  const router = useRouter()
-  const { codedId } = router.query
-  const id = decodeURIComponent(codedId)
-  const {
-    services: {
-      sendMail: { confirmAccount },
-      security: { crypt },
-    },
-  } = useAppContext()
-
-  useEffect(() => {
-    const fetchData = async () => {
-      if (codedId) {
-        const [{ getId }] = await crypt([{ id }])
-
-        if (!getId) {
-          setAnswer("Invalid page")
-          setErr(true)
-
-          return
-        }
-
-        const [error, results] = await confirmAccount(getId)
-
-        if (error) {
-          setAnswer(error)
-          setErr(true)
-
-          return
-        }
-
-        setAnswer(results)
-      }
-    }
-    fetchData()
-  }, [codedId, confirmAccount, crypt, err, id])
+import { useRouter } from "next/router";
+import BackofficeLoginLayout from "@/web/components/backoffice/LoginLayout";
+import routes from "@/web/routes";
+import axios from "axios";
+import styles from "@/styles/mails/confirmation.module.css";
+import { useTranslation } from "next-i18next";
 
 const MailConfirmation = ({ error }) => {
+  const { t: translate } = useTranslation("confirmationMail");
   const router = useRouter();
-  
+
   const handleclick = () => {
-    router.push(routes.pages.home())
-  }
+    router.push(routes.home());
+  };
 
   return (
     <div className={styles.div}>
-      <span className={classNames(styles.answer, { [styles.error]: err })}>
-        {answer}
-      </span>
+      {error ? (
+        <span className={styles.error}>
+          We cannot activate your account, please retry later
+        </span>
+      ) : (
+        <span className={styles.success}>
+          Your account is validate with success
+        </span>
+      )}
       <button className={styles.button} onClick={handleclick}>
         {translate("returnHomeButton")}
       </button>
@@ -69,11 +32,7 @@ const MailConfirmation = ({ error }) => {
 };
 
 MailConfirmation.getLayout = function (page) {
-  return (
-    <BackofficeLoginLayout>
-      {page}
-    </BackofficeLoginLayout>
-  );
+  return <BackofficeLoginLayout>{page}</BackofficeLoginLayout>;
 };
 
 export default MailConfirmation;
@@ -85,23 +44,16 @@ export async function getServerSideProps(context) {
     await axios.put(`
     ${process.env.API_URL}/api/mail/confirmation?id=${id}`);
 
-    
-return {
+    return {
       props: {
-        error: null
-      }
+        error: null,
+      },
     };
   } catch (error) {
     return {
       props: {
-        error: true
-      }
+        error: true,
+      },
     };
   }
 }
-MailConfirmation.isPublic = true
-MailConfirmation.getLayout = function (page) {
-  return <BackofficeLoginLayout>{page}</BackofficeLoginLayout>
-}
-
-export default MailConfirmation

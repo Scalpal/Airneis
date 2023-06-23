@@ -1,23 +1,23 @@
-import Button from "@/web/components/Button"
-import LoginField from "@/web/components/LoginField"
-import LoginLayout from "@/web/components/LoginLayout"
-import { Form, Formik } from "formik"
-import styles from "@/styles/register.module.css"
-import { useCallback, useState } from "react"
+import Button from "@/web/components/Button";
+import LoginField from "@/web/components/LoginField";
+import LoginLayout from "@/web/components/LoginLayout";
+import { Form, Formik } from "formik";
+import styles from "@/styles/register.module.css";
+import { useCallback, useState } from "react";
 import {
   createValidator,
   emailValidator,
   passwordValidator,
   phoneValidator,
   stringValidator,
-} from "@/validator"
-import { useRouter } from "next/router"
-import { ExclamationTriangleIcon } from "@heroicons/react/24/solid"
-import CollapseMenu from "@/web/components/CollapseMenu"
-import useAppContext from "@/web/hooks/useAppContext"
-import routes from "@/web/routes"
-import { serverSideTranslations } from "next-i18next/serverSideTranslations"
-import { useTranslation } from "next-i18next"
+} from "@/validator";
+import { useRouter } from "next/router";
+import { ExclamationTriangleIcon } from "@heroicons/react/24/solid";
+import CollapseMenu from "@/web/components/CollapseMenu";
+import useAppContext from "@/web/hooks/useAppContext";
+import routes from "@/web/routes";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "next-i18next";
 
 const validationSchema = createValidator({
   firstName: stringValidator
@@ -34,7 +34,7 @@ const validationSchema = createValidator({
   region: stringValidator,
   postalCode: stringValidator,
   country: stringValidator,
-})
+});
 
 const initialValues = {
   firstName: "",
@@ -47,32 +47,32 @@ const initialValues = {
   region: "",
   postalCode: "",
   country: "",
-}
+};
 
 const Register = () => {
-  const { t: translate } = useTranslation("register")
-  const router = useRouter()
+  const { t: translate } = useTranslation("register");
+  const router = useRouter();
   const {
     services: { signUp },
-  } = useAppContext()
-  const [error, setError] = useState(null)
+  } = useAppContext();
+  const [error, setError] = useState(null);
 
   const handleSubmit = useCallback(
     async (values) => {
-      const [error, id] = await signUp(values)
+      const [error, id] = await signUp(values);
 
       if (error) {
         if (error) {
-          setError(error)
+          setError(error);
 
-          return
+          return;
         }
       }
 
-      router.push(routes.paramsPage.mailSent(`codedId=${id}`))
+      router.push(routes.paramsPage.mailSent(`codedId=${id}`));
     },
     [router, signUp]
-  )
+  );
 
   return (
     <main className={styles.container}>
@@ -194,20 +194,20 @@ const Register = () => {
         )}
       </Formik>
     </main>
-  )
-}
+  );
+};
 
 export const getStaticProps = async ({ locale }) => {
   return {
     props: {
       ...(await serverSideTranslations(locale, ["register"])),
     },
-  }
-}
+  };
+};
 
-Register.isPublic = true
+Register.isPublic = true;
 Register.getLayout = function (page) {
-  return <LoginLayout>{page}</LoginLayout>
-}
+  return <LoginLayout>{page}</LoginLayout>;
+};
 
-export default Register
+export default Register;

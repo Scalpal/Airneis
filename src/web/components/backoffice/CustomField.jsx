@@ -1,8 +1,8 @@
-import { Field } from "formik"
-import styles from "@/styles/backoffice/CustomField.module.css"
-import classnames from "classnames"
-import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline"
-import { useState } from "react"
+import { Field } from "formik";
+import styles from "@/styles/backoffice/CustomField.module.css";
+import classnames from "classnames";
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
+import { useState } from "react";
 
 const CustomField = (props) => {
   const { name, type, label, showError, ...otherProps } = props;
@@ -11,11 +11,11 @@ const CustomField = (props) => {
 
   const typeIs = () => {
     if (type === "password") {
-      return passwordVisibility ? "text" : "password"
+      return passwordVisibility ? "text" : "password";
     }
 
-    return type
-  }
+    return type;
+  };
 
   const passwordIcon = () => {
     if (passwordVisibility) {
@@ -24,7 +24,7 @@ const CustomField = (props) => {
           className={classnames(styles.inputIcon, styles.eyeIcon)}
           onClick={() => setPasswordVisibility(false)}
         />
-      )
+      );
     }
 
     return (<EyeIcon
@@ -61,10 +61,10 @@ const CustomField = (props) => {
               <span className={styles.errorText}>{meta.error}</span>
             ) : null}
           </div>
-        )
+        );
       }}
     </Field>
-  )
-}
+  );
+};
 
-export default CustomField
+export default CustomField;

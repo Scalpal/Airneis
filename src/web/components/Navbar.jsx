@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Bars3Icon} from "@heroicons/react/24/solid";
+import { Bars3Icon } from "@heroicons/react/24/solid";
 import styles from "@/styles/components/Navbar.module.css";
 import { useEffect } from "react";
 import { classnames } from "@/pages/_app";
@@ -7,37 +7,38 @@ import CartButton from "./CartButton";
 import SearchProductOverlay from "./SearchProductOverlay";
 
 const Navbar = (props) => {
-  const { fixed, isDrawerToggledState } = props
+  const { fixed, isDrawerToggledState } = props;
 
-  const [isDrawerToggled, setIsDrawerToggled] = isDrawerToggledState
+  const [isDrawerToggled, setIsDrawerToggled] = isDrawerToggledState;
 
   useEffect(() => {
-    const navbar = document.querySelector("#navbar")
+    const navbar = document.querySelector("#navbar");
 
     if (fixed) {
-      const carouselObserver = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting === true || isDrawerToggled === true) {
-          navbar.classList.remove("navbarBackground");
-        } else {
-          navbar.classList.add("navbarBackground");
-        }
-      }, { threshold: [0.1] });
+      const carouselObserver = new IntersectionObserver(
+        (entries) => {
+          if (entries[0].isIntersecting === true || isDrawerToggled === true) {
+            navbar.classList.remove("navbarBackground");
+          } else {
+            navbar.classList.add("navbarBackground");
+          }
+        },
+        { threshold: [0.1] }
+      );
 
-      carouselObserver.observe(document.querySelector("#carousel"))
+      carouselObserver.observe(document.querySelector("#carousel"));
     } else {
-      navbar.classList.remove("navbarBackground")
+      navbar.classList.remove("navbarBackground");
     }
-  })
+  });
 
   return (
     <nav
-      className={classnames(
-        fixed ? styles.navbar : styles.navbarNotFixed)
-      }
+      className={classnames(fixed ? styles.navbar : styles.navbarNotFixed)}
       id="navbar"
     >
       <Link
-        href={routes.pages.home()}
+        href="/home"
         className={classnames("navbarLogo", styles.navbarLogo)}
       >
         Airneis
@@ -45,19 +46,19 @@ const Navbar = (props) => {
 
       <ul className={classnames(styles.navbarList, styles.midLinks)}>
         <li>
-          <Link href={routes.pages.home()} className={styles.navbarLink}>
+          <Link href="/home" className={styles.navbarLink}>
             Home
           </Link>
         </li>
 
         <li>
-          <Link href={routes.pages.products()} className={styles.navbarLink}>
+          <Link href="/products" className={styles.navbarLink}>
             Products
           </Link>
         </li>
 
         <li>
-          <Link href={routes.pages.categories()} className={styles.navbarLink}>
+          <Link href="/category" className={styles.navbarLink}>
             Categories
           </Link>
         </li>
@@ -76,7 +77,7 @@ const Navbar = (props) => {
         </button>
       </ul>
     </nav>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;

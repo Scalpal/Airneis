@@ -223,7 +223,7 @@ const BackofficeProducts = (props) => {
 };
 
 BackofficeProducts.getLayout = function (page) {
-  return <Layout>{page}</Layout>
-}
+  return <Layout>{page}</Layout>;
+};
 
 export default BackofficeProducts;

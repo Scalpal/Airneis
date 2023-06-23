@@ -1,8 +1,6 @@
-import { serverSideTranslations } from "next-i18next/serverSideTranslations"
-import { useTranslation } from "next-i18next"
-
+import { useTranslation } from "next-i18next";
 const Delivery = () => {
-  const { t: translate } = useTranslation("delivery")
+  const { t: translate } = useTranslation("delivery");
 
   return (
     <>
@@ -12,8 +10,12 @@ const Delivery = () => {
           <section className="cartDeliverySummary">
             <div className="cartDeliveryForm">
               <div className="cartDeliveryRow">
+                <label htmlFor="gender">
+                  <span className="">Gender*</span>
+                  <input name="gender" type="text" required />
+                </label>
                 <label htmlFor="firstName">
-                  <span className="">{translate("firstName")}</span>
+                  <span className="">{translate("firstName")}*</span>
                   <input name="firstName" type="text" required />
                 </label>
                 <label htmlFor="lastName">

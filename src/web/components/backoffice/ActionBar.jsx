@@ -37,7 +37,7 @@ const ActionBar = (props) => {
   }, [handleQueryParams, queryParams.page]); 
 
   useEffect(() => {
-    const searchInput = document.getElementById("searchInput")
+    const searchInput = document.getElementById("searchInput");
 
     const handleKeyDown = (event) => {
       if (event.key === "Enter") {
@@ -45,15 +45,15 @@ const ActionBar = (props) => {
           ...queryParams,
           page: 1,
           search: searchValue,
-        })
+        });
       }
-    }
-    searchInput.addEventListener("keydown", handleKeyDown)
+    };
+    searchInput.addEventListener("keydown", handleKeyDown);
 
     return () => {
-      searchInput.removeEventListener("keydown", handleKeyDown)
-    }
-  }, [searchValue, queryParams, setQueryParams])
+      searchInput.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [searchValue, queryParams, setQueryParams]);
 
   return (
     <div className={styles.actionBar}>
@@ -102,7 +102,7 @@ const ActionBar = (props) => {
         />
       )}
     </div>
-  )
-}
+  );
+};
 
-export default ActionBar
+export default ActionBar;
