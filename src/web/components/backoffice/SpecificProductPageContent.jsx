@@ -1,7 +1,7 @@
 import { classnames, nunito } from "@/pages/_app";
 import styles from "@/styles/backoffice/SpecificProductPageContent.module.css";
 import { PencilSquareIcon } from "@heroicons/react/24/outline";
-import { FieldArray, Form, Formik } from "formik";
+import { Field, FieldArray, Form, Formik } from "formik";
 import LoginField from "../LoginField";
 import { useCallback, useEffect, useState } from "react";
 import Button from "../Button";
@@ -15,6 +15,9 @@ import CollapseMenu from "../CollapseMenu";
 import { useGetMaterials } from "@/web/hooks/useGetMaterials";
 import CheckboxItem from "../CheckboxItem";
 import BackButton from "./BackButton";
+import { useGetCategories } from "@/web/hooks/useGetCategories";
+import ProductImageList from "./ProductImageList";
+import uploadProductImage from "@/web/services/products/uploadProductImage";
 
 const validationSchema = createValidator({
   name: stringValidator.required(),
@@ -24,15 +27,22 @@ const validationSchema = createValidator({
   categoryId: numberValidator.required(),
 });
 
+const mappableKeys = ["name", "description", "price", "stock"];
+
 const SpecificProductPageContent = (props) => {
-  const { product, setActiveProduct, updateProducts, showModal, setShowModal } = props;
+  const { product, setActiveProduct, refreshProducts, showModal, setShowModal } = props;
   const { actions: { api } } = useAppContext();
   const { materialsData, materialsError, materialsIsLoading } = useGetMaterials(); 
+  const materials = (!materialsIsLoading && !materialsError) ? materialsData : [];
 
   const [currentProduct, setCurrentProduct] = useState(product);
+  const [currentProductImages, setCurrentProductImages] = useState(product.productImages);
   const [editMode, setEditMode] = useState(false);
   const [alert, setAlert] = useState({ status: "", message: "" });
   const [showAlert, setShowAlert] = useState(false);
+
+  const { categoriesData, categoriesError, categoriesIsLoading } = useGetCategories();
+  const categories = (!categoriesIsLoading && !categoriesError) ? categoriesData : [];
 
   const initialValues = {
     name: currentProduct.name,
@@ -70,34 +80,55 @@ const SpecificProductPageContent = (props) => {
   
     const materials = values.materials.reduce((acc, { id }) => [...acc, id], []);
     values.materials = materials;
+
+    const newImages = currentProductImages.filter(elt => elt instanceof File); //
     
     try {
+      if (newImages.length > 0) {
+        newImages.map(async (file) => {
+          const [error, response] = await uploadProductImage(file, currentProduct.id);
+
+          if (error) {
+            setShowAlert(true);
+            setAlert({ status: "error", message: "Error on image upload. Retry." });
+
+            return;
+          }
+
+          setCurrentProduct(response.data.product);
+        });
+      }
+
       const { data } = await api.patch(routes.api.products.update(currentProduct.id), values);
 
       setEditMode(false);
-      setCurrentProduct(data.product[0]);
+      setCurrentProduct(data.product);
       setShowAlert(true);
       setAlert({ status: data.status, message: data.message });
-      updateProducts();
+      refreshProducts();
     } catch (error) {
       if (error instanceof AxiosError) {
         setShowAlert(true);
         setAlert({ status: error.response.status, message: error.response.message });
       }
     }
-  }, [api, currentProduct.id, updateProducts]); 
+  }, [api, currentProduct.id, refreshProducts, currentProductImages]); 
 
-    const isMaterialChecked = (values, id) => {
+  const isMaterialChecked = (values, id) => {
     const productMaterialIds = values.reduce((acc, { id }) => [...acc, id], []); 
-       
+      
     return productMaterialIds.includes(id) ? true : false;
-    };
+  };
   
   useEffect(() => {
     if (showModal === false) {
       setActiveProduct(null);
     }
   }, [showModal, setActiveProduct]);
+
+  useEffect(() => {
+    setCurrentProductImages(currentProduct.productImages);
+  }, [currentProduct]); 
 
   return (
     <main
@@ -118,60 +149,91 @@ const SpecificProductPageContent = (props) => {
       >
       {({ values, isValid, dirty, isSubmitting, handleReset }) => {
           return (
-            <Form className={styles.contentWrapper}>
-              <div className={styles.contentLeft}>
-                <div className={styles.contentTitleWrapper}>
-                  <p className={styles.contentTitle}>Informations</p>
+            <Form className={styles.contentContainer}>
+              <div className={styles.contentWrapper}> 
+                <div className={styles.contentLeft}>
+                  <div className={styles.contentTitleWrapper}>
+                    <p>Informations</p>
 
-                  <PencilSquareIcon
-                    className={styles.titleIcon}
-                    onClick={() => handleEditMode("informations", handleReset)}
-                  />
+                    <PencilSquareIcon
+                      className={styles.titleIcon}
+                      onClick={() => handleEditMode("informations", handleReset)}
+                    />
+                  </div>
+
+                  {Object.entries(initialValues).map(([key, value], index) => (
+                    mappableKeys.includes(key) && (
+                      <LoginField
+                        key={index}
+                        name={key}
+                        type={getInputType(value)}
+                        label={splitCamelCase(key)}
+                        showError={true}
+                        disabled={!editMode}
+                      /> 
+                    )
+                  ))}
+
+                  <div className={styles.categorySelectWrapper}>
+                    <p className={styles.contentTitle}> Category </p>
+
+                    <Field name="categoryId" as="select" className={styles.select} disabled={!editMode}>
+                      <option disabled>Category</option>
+                        {categories.map(({ id, name }, index) => (
+                          <option
+                            key={index}
+                            value={id}
+                            defaultValue={id === currentProduct.category.id ? true : false}
+                          >
+                            {id} - {name}
+                          </option>
+                        ))}
+                    </Field>
+                  </div>
                 </div>
 
-                {Object.entries(initialValues).map(([key, value], index) => (
-                  !Array.isArray(value) && (
-                    <LoginField
-                      key={index}
-                      name={key}
-                      type={getInputType(value)}
-                      label={splitCamelCase(key)}
-                      showError={true}
-                      disabled={!editMode}
-                    /> 
-                  )
-                ))}
-
-                {editMode && (
-                  <Button
-                    type={"submit"}
-                    disabled={!(dirty && isValid) || isSubmitting}
-                  >
-                    Save
-                  </Button>
-                )}
-              </div>
-
-              <FieldArray name="materials">
-                {({ push, remove }) => (
-                  <div className={styles.contentRight}>
-                    <CollapseMenu title="Materials" defaultCollapsed={true} size="large">
-                      {(!materialsError && !materialsIsLoading) && (
-                        materialsData.map(({ id, name }, index) => (
-                          <CheckboxItem
-                            key={index}
-                            name={name}
-                            value={id}
-                            onClick={() => !isMaterialChecked(values.materials, id) ? push({ id: id, name: name }) : remove(values.materials.findIndex(elt => elt.id === id))}
-                            checked={isMaterialChecked(values.materials, id)}
-                            disabled={!editMode}
-                          />
-                        ))
-                      )}
-                    </CollapseMenu>
+                <div className={styles.contentRight}>
+                  <div className={styles.categorySelectWrapper}>
+                    <p className={styles.contentTitle}> Product images </p>
+                    
+                    <ProductImageList
+                      productId={currentProduct.id}
+                      currentProductImages={currentProductImages}
+                      setCurrentProductImages={setCurrentProductImages}
+                      setAlert={setAlert}
+                      setShowAlert={setShowAlert}
+                      setCurrentProduct={setCurrentProduct}
+                    />
                   </div>
-                )}
-              </FieldArray>
+          
+                  <FieldArray name="materials">
+                    {({ push, remove }) => (
+                      <CollapseMenu title="Materials" defaultCollapsed={true} size="small">
+                        {materials.map(({ id, name }, index) => (
+                            <CheckboxItem
+                              key={index}
+                              name={name}
+                              value={id}
+                              onClick={() => !isMaterialChecked(values.materials, id) ? push({ id: id, name: name }) : remove(values.materials.findIndex(elt => elt.id === id))}
+                              checked={isMaterialChecked(values.materials, id)}
+                              disabled={!editMode}
+                            />
+                          ))
+                        }
+                      </CollapseMenu>
+                    )}
+                  </FieldArray>
+                </div>
+              </div>
+              
+              {editMode && (
+                <Button
+                  type={"submit"}
+                  disabled={!(dirty && isValid) || isSubmitting}
+                >
+                  Save
+                </Button>
+              )}
             </Form>
           );
         }}

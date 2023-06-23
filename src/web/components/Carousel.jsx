@@ -28,10 +28,11 @@ const Carousel = (props) => {
 
   return (
     <div className={styles.carouselContainer} id="carousel">
-      {images.map((imageSrc, index) => {
+
+      {images.map((image, index) => {
         return (
           <Image
-            src={imageSrc}
+            src={image.imageUrl}
             alt={"Carousel Image" + index}
             key={index}
             fill

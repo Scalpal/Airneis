@@ -13,6 +13,9 @@ import CheckboxItem from "../CheckboxItem";
 import routes from "@/web/routes";
 import useAppContext from "@/web/hooks/useAppContext";
 import CustomAlert from "../CustomAlert";
+import uploadProductImage from "@/web/services/products/uploadProductImage";
+import ProductImageInput from "../ProductImageInput";
+import { XMarkIcon } from "@heroicons/react/24/solid";
 
 const validationSchema = createValidator({
   name: stringValidator.required(),
@@ -28,7 +31,8 @@ const initialValues = {
   price: 0,
   stock: 0,
   categoryId: "",
-  materials: []
+  materials: [],
+  productImages: []
 };
 
 const mappableKeys = ["name", "description", "price", "stock"];
@@ -37,10 +41,14 @@ const AddProductPageContent = (props) => {
   const { setShowModal, updateProducts } = props; 
   const { actions: { api } } = useAppContext();
   const { materialsData, materialsError, materialsIsLoading } = useGetMaterials();
+  const materials = (!materialsIsLoading && !materialsError) ? materialsData : [];
+
   const { categoriesData, categoriesError, categoriesIsLoading } = useGetCategories();
+  const categories = (!categoriesIsLoading && !categoriesError) ? categoriesData : [];
 
   const [alert, setAlert] = useState({ status: "", message: "" });
   const [showAlert, setShowAlert] = useState(false);
+  const [imagesToUpload, setImagesToUpload] = useState([]);
 
   const handleSubmit = useCallback(async(values, { resetForm }) => {
     values.price = Number.parseInt(values.price);
@@ -52,6 +60,19 @@ const AddProductPageContent = (props) => {
     try {
       const { data } = await api.post(routes.api.products.add(), values);
 
+      if (imagesToUpload.length > 0) {
+        imagesToUpload.map(async(imageFile) => {
+          const [error] = await uploadProductImage(imageFile, data.product.id);
+
+          if (error) {
+            setAlert({ status: "error" , message: "Error on add." });
+            setShowAlert(true);
+
+            return;
+          }
+        });
+      } 
+
       setAlert({ status: "success" , message: data.message });
       setShowAlert(true);
       updateProducts();
@@ -60,18 +81,23 @@ const AddProductPageContent = (props) => {
       setAlert({ status: 500, message: error });
       setShowAlert(true);
     }
-  }, [api, updateProducts]);
+  }, [api, updateProducts, imagesToUpload]);
 
-    const isMaterialChecked = (values, id) => {
-      const productMaterialIds = values.reduce((acc, { id }) => [...acc, id], []); 
-        
-      return productMaterialIds.includes(id) ? true : false;
-    };
+  const isMaterialChecked = (values, id) => {
+    const productMaterialIds = values.reduce((acc, { id }) => [...acc, id], []); 
+      
+    return productMaterialIds.includes(id) ? true : false;
+  };
+
+  const removeImage = useCallback((index) => {
+    const updatedImagesToUpload = imagesToUpload.filter((_, i) => i !== index); 
+
+    setImagesToUpload(updatedImagesToUpload);
+  }, [imagesToUpload]);
 
   return (
-    <main
-      className={styles.main}
-    >
+
+    <main className={styles.main}>
       <BackButton setShowModal={setShowModal} />
 
       <p className={styles.title}>Add a product</p>
@@ -109,36 +135,65 @@ const AddProductPageContent = (props) => {
 
                       <Field name="categoryId" as="select" className={styles.select}>
                         <option disabled>Category</option>
-                        {(!categoriesError && !categoriesIsLoading) && categoriesData.map(({ id, name }, index) => (
-                          <option key={index} value={id}>
-                            {id} - {name}
-                          </option>
-                        ))}
-                    </Field>
+                          {categories.map(({ id, name }, index) => (
+                            <option key={index} value={id}>
+                              {id} - {name}
+                            </option>
+                          ))}
+                      </Field>
                     </div>
 
                   </div>
                 </div>
 
-                <FieldArray name="materials">
-                  {({ push, remove }) => (
-                    <div className={styles.contentRight}>
-                      <CollapseMenu title="Materials" defaultCollapsed={true} size="medium">
-                        {(!materialsError && !materialsIsLoading) && (
-                          materialsData.map(({ id, name }, index) => (
-                            <CheckboxItem
-                              key={index}
-                              name={name}
-                              value={id}
-                              onChange={() => !isMaterialChecked(values.materials, id) ? push({ id: id, name: name }) : remove(values.materials.findIndex(elt => elt.id === id))}
-                              checked={isMaterialChecked(values.materials, id)}
-                            />
-                          ))
-                        )}
-                      </CollapseMenu>
+                <div className={styles.contentRight}>
+                  <div className={styles.contentTitleWrapper}>
+                    <p className={styles.contentTitle}>Product images</p>
+
+                    <div className={styles.productImagesContainer}>
+                      {imagesToUpload.length > 0 && (
+                        <div className={styles.productImageRowWrapper}>
+                          {imagesToUpload.map((imageFile, index) => {
+                            return (
+                              <p
+                                key={index}
+                                className={styles.productImageRow}
+                                onClick={() => removeImage(index)}
+                              >
+                                Image {index + 1} : {imageFile.name}
+
+                                <XMarkIcon className={styles.productImageRowIcon} />
+                              </p>
+                            );
+                          })}
+                        </div>
+                        )
+                      }
+
+                      <ProductImageInput
+                        images={imagesToUpload}
+                        onChangeEvent={setImagesToUpload}
+                      />
                     </div>
-                  )}
-                </FieldArray>
+                  </div>
+                
+                  <FieldArray name="materials">
+                    {({ push, remove }) => (
+                        <CollapseMenu title="Materials" defaultCollapsed={true} size="small">
+                          {materials.map(({ id, name }, index) => (
+                              <CheckboxItem
+                                key={index}
+                                name={name}
+                                value={id}
+                                onChange={() => !isMaterialChecked(values.materials, id) ? push({ id: id, name: name }) : remove(values.materials.findIndex(elt => elt.id === id))}
+                                checked={isMaterialChecked(values.materials, id)}
+                              />
+                            )
+                          )}
+                        </CollapseMenu>
+                    )}
+                  </FieldArray>
+                </div>
               </div>
 
               <div className={styles.submitButtonWrapper}>
