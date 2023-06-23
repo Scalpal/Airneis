@@ -19,6 +19,12 @@
   align-items: center;
 }
 
+.buttonWrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
 .button {
   background-color: var(--secondary);
   font-family: inherit;
