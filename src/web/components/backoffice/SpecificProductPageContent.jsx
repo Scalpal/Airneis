@@ -102,7 +102,7 @@ const SpecificProductPageContent = (props) => {
       const { data } = await api.patch(routes.api.products.update(currentProduct.id), values);
 
       setEditMode(false);
-      setCurrentProduct(data.product[0]);
+      setCurrentProduct(data.product);
       setShowAlert(true);
       setAlert({ status: data.status, message: data.message });
       refreshProducts();

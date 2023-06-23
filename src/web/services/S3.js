@@ -3,6 +3,7 @@ import S3 from "aws-sdk/clients/s3";
 import crypto from "crypto"; 
 
 
+
 const bucketName = process.env.AWS_BUCKET_NAME;
 const region = process.env.AWS_BUCKET_REGION;
 const accessKeyId = process.env.AWS_ACCESS_KEY;
@@ -25,7 +26,7 @@ export const s3CmdClient = new S3Client({
 
 const randomImageName = (bytes = 32) => crypto.randomBytes(bytes).toString("hex");
 
-//Upload file
+// Upload file
 export const uploadImageToS3 = (file, folderPath) => {
   const uploadParams = {
     Bucket: bucketName,
@@ -35,7 +36,6 @@ export const uploadImageToS3 = (file, folderPath) => {
 
   return s3.upload(uploadParams).promise();
 }; 
-
 
 
 // Delete file

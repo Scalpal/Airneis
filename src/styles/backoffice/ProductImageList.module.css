@@ -8,6 +8,7 @@
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
+  flex-wrap: wrap;
   gap: 1rem;
 }
 
@@ -50,6 +51,7 @@
 .imageWrapper {
   position: relative;
   width: 100px;
+  min-width: 100px;
   aspect-ratio: 9/12;
   border: 1px solid var(--light-grey);
   border-radius: 0.75rem;

@@ -44,7 +44,7 @@ const ProductImageList = (props) => {
                 <Image
                   className={styles.image}
                   alt={"Product image"}
-                  src={image.imageUrl ? image.imageUrl : process.env.AWS_BUCKET_URL + image.imageSrc}
+                  src={image.imageUrl ? image.imageUrl : `${process.env.AWS_BUCKET_URL}${image.imageSrc}`}
                   fill
                 />
 
