@@ -1,8 +1,8 @@
-import { Field } from "formik"
-import styles from "@/styles/backoffice/CustomField.module.css"
+import { Field } from "formik";
+import styles from "@/styles/backoffice/CustomField.module.css";
 
 const CustomField = (props) => {
-  const { name, label, options, showError, ...otherProps } = props
+  const { name, label, options, showError, ...otherProps } = props;
 
   return (
     <Field name={name}>
@@ -31,10 +31,10 @@ const CustomField = (props) => {
               <span className={styles.errorText}>{meta.error}</span>
             ) : null}
           </div>
-        )
+        );
       }}
     </Field>
-  )
-}
+  );
+};
 
-export default CustomField
+export default CustomField;

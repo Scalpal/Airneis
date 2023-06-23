@@ -23,7 +23,7 @@ module.exports = {
       "double",
       { avoidEscape: true, allowTemplateLiterals: true },
     ],
-    semi: ["error", "never"],
+    semi: [1, "always"],
     "no-console": "error",
     "no-implicit-globals": "error",
     "no-warning-comments": ["error", { terms: ["fixme", "todo"] }],
@@ -75,4 +75,4 @@ module.exports = {
     "react/prop-types": "off",
   },
   settings: { react: { version: "detect" } },
-}
+};

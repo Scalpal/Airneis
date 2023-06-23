@@ -1,16 +1,16 @@
-import styles from "@/styles/components/ReviewList.module.css"
-import useGetProductReviews from "../hooks/useGetProductReviews"
-import formatDate from "../services/formatDate"
-import Stars from "./Stars"
-import Loader from "./Loader"
-import routes from "../routes"
+import styles from "@/styles/components/ReviewList.module.css";
+import useGetProductReviews from "../hooks/useGetProductReviews";
+import formatDate from "../services/formatDate";
+import Stars from "./Stars";
+import Loader from "./Loader";
+import routes from "../routes";
 
 const ReviewList = (props) => {
-  const { productId, limit, page } = props
+  const { productId, limit, page } = props;
 
   const { productReviewsData, productReviewsLoading } = useGetProductReviews(
     routes.api.products.reviews(productId, limit, page)
-  )
+  );
 
   return (
     <div className={styles.reviewWrapper}>
@@ -43,7 +43,7 @@ const ReviewList = (props) => {
         <Loader />
       )}
     </div>
-  )
-}
+  );
+};
 
-export default ReviewList
+export default ReviewList;

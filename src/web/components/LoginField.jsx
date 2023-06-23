@@ -1,14 +1,14 @@
-import { Field } from "formik"
-import styles from "@/styles/components/LoginField.module.css"
-import classnames from "classnames"
-import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline"
-import { useState } from "react"
+import { Field } from "formik";
+import styles from "@/styles/components/LoginField.module.css";
+import classnames from "classnames";
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
+import { useState } from "react";
 
 const LoginField = (props) => {
   const { name, type, label, required, showError, disabled, ...otherProps } =
-    props
+    props;
 
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false)
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   return (
     <Field name={name}>
@@ -64,10 +64,10 @@ const LoginField = (props) => {
               <span className={styles.errorText}>{meta.error}</span>
             ) : null}
           </div>
-        )
+        );
       }}
     </Field>
-  )
-}
+  );
+};
 
-export default LoginField
+export default LoginField;

@@ -1,58 +1,58 @@
-import styles from "@/styles/components/ProductReviews.module.css"
-import Pagination from "./backoffice/Pagination"
-import { useCallback } from "react"
-import useGetProductReviews from "../hooks/useGetProductReviews"
-import routes from "../routes"
-import ReviewList from "./ReviewList"
-import { useRouter } from "next/router"
+import styles from "@/styles/components/ProductReviews.module.css";
+import Pagination from "./backoffice/Pagination";
+import { useCallback } from "react";
+import useGetProductReviews from "../hooks/useGetProductReviews";
+import routes from "../routes";
+import ReviewList from "./ReviewList";
+import { useRouter } from "next/router";
 
 const ProductReviews = (props) => {
-  const { productId, setPage, page, limit } = props
-  const router = useRouter() 
+  const { productId, setPage, page, limit } = props;
+  const router = useRouter(); 
 
   const {
     productReviewsData,
     productReviewsLoading
-  } = useGetProductReviews(routes.api.products.reviews(productId, limit, page))
+  } = useGetProductReviews(routes.api.products.reviews(productId, limit, page));
 
   // Handle pagination
   const setToPage = useCallback((value) => {
-    setPage(value)
+    setPage(value);
 
-    router.push(router.pathname, `#productReviewAnchor`, { scroll: false })
-  }, [setPage, router])
+    router.push(router.pathname, `#productReviewAnchor`, { scroll: false });
+  }, [setPage, router]);
 
   const firstPage = useCallback(() => {
-    setPage(1)
+    setPage(1);
 
-    router.push(router.pathname, `#productReviewAnchor`, { scroll: false })
-  }, [setPage, router])
+    router.push(router.pathname, `#productReviewAnchor`, { scroll: false });
+  }, [setPage, router]);
 
   const lastPage = useCallback(() => {
-    if (productReviewsLoading) { return }
+    if (productReviewsLoading) { return; }
 
-    setPage(Math.ceil(productReviewsData.count / limit))
+    setPage(Math.ceil(productReviewsData.count / limit));
 
-    router.push(router.pathname, `#productReviewAnchor`, { scroll: false })
-  }, [productReviewsLoading, productReviewsData, limit, setPage, router])
+    router.push(router.pathname, `#productReviewAnchor`, { scroll: false });
+  }, [productReviewsLoading, productReviewsData, limit, setPage, router]);
 
   const nextPage = useCallback(() => {
-    if (productReviewsLoading) { return }
+    if (productReviewsLoading) { return; }
   
     if (page !== Math.ceil(productReviewsData.count / limit)) {
-      setPage(page + 1)
+      setPage(page + 1);
     }
 
-    router.push(router.pathname, `#productReviewAnchor`, { scroll: false })
-  }, [page, limit, productReviewsLoading, productReviewsData, setPage, router])
+    router.push(router.pathname, `#productReviewAnchor`, { scroll: false });
+  }, [page, limit, productReviewsLoading, productReviewsData, setPage, router]);
 
   const previousPage = useCallback(() => {
     if (page !== 1) {
-      setPage(page - 1)
+      setPage(page - 1);
     }
 
-    router.push(router.pathname, `#productReviewAnchor`, { scroll: false })
-  }, [page, setPage, router]) 
+    router.push(router.pathname, `#productReviewAnchor`, { scroll: false });
+  }, [page, setPage, router]); 
 
   return (
     <section id="productReview" className={styles.container}>
@@ -92,7 +92,7 @@ const ProductReviews = (props) => {
       )}
 
     </section>
-  )
-}
+  );
+};
 
-export default ProductReviews
+export default ProductReviews;

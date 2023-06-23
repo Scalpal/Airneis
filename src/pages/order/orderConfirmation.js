@@ -19,7 +19,7 @@ const OrderConfirmation = () => {
         </section>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default OrderConfirmation
+export default OrderConfirmation;

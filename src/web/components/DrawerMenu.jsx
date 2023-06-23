@@ -1,33 +1,33 @@
-import styles from "@/styles/components/DrawerMenu.module.css"
-import Link from "next/link"
-import { classnames } from "@/pages/_app"
-import { ArrowRightIcon } from "@heroicons/react/24/outline"
-import { useRouter } from "next/router"
-import routes from "../routes"
-import { useEffect } from "react"
+import styles from "@/styles/components/DrawerMenu.module.css";
+import Link from "next/link";
+import { classnames } from "@/pages/_app";
+import { ArrowRightIcon } from "@heroicons/react/24/outline";
+import { useRouter } from "next/router";
+import routes from "../routes";
+import { useEffect } from "react";
 
 const DrawerMenu = (props) => {
-  const { isDrawerToggledState, actions } = props
-  const [isDrawerToggled, setIsDrawerToggled] = isDrawerToggledState
+  const { isDrawerToggledState, actions } = props;
+  const [isDrawerToggled, setIsDrawerToggled] = isDrawerToggledState;
 
-  const [signOut, session] = actions ? actions : [null, null]
+  const [signOut, session] = actions ? actions : [null, null];
 
-  const router = useRouter()
+  const router = useRouter();
 
   useEffect(() => {
     if (isDrawerToggled === true) {
-      document.body.style.overflow = "hidden"
+      document.body.style.overflow = "hidden";
 
-      return
+      return;
     }
 
-    document.body.style.overflow = ""
-  }, [isDrawerToggled])
+    document.body.style.overflow = "";
+  }, [isDrawerToggled]);
 
   const logout = () => {
-    signOut()
-    router.push("/home")
-  }
+    signOut();
+    router.push("/home");
+  };
 
   return (
     <>
@@ -65,7 +65,7 @@ const DrawerMenu = (props) => {
         <Link href="">About us</Link>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default DrawerMenu
+export default DrawerMenu;

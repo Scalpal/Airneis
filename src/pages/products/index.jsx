@@ -1,19 +1,19 @@
-import Banner from "@/web/components/Banner"
-import styles from "@/styles/products.module.css"
-import DetailedProductCard from "@/web/components/DetailedProductCard"
-import { useCallback, useEffect, useState } from "react"
-import ProductFilterMenu from "@/web/components/ProductFilterMenu"
-import ParamBadge from "@/web/components/ParamBadge"
-import useGetProducts from "@/web/hooks/useGetProducts"
-import Button from "@/web/components/Button"
-import Loader from "@/web/components/Loader"
+import Banner from "@/web/components/Banner";
+import styles from "@/styles/products.module.css";
+import DetailedProductCard from "@/web/components/DetailedProductCard";
+import { useCallback, useEffect, useState } from "react";
+import ProductFilterMenu from "@/web/components/ProductFilterMenu";
+import ParamBadge from "@/web/components/ParamBadge";
+import useGetProducts from "@/web/hooks/useGetProducts";
+import Button from "@/web/components/Button";
+import Loader from "@/web/components/Loader";
 import {
   MagnifyingGlassIcon,
   ShoppingBagIcon,
   XMarkIcon,
-} from "@heroicons/react/24/outline"
+} from "@heroicons/react/24/outline";
 
-const limit = 10
+const limit = 10;
 
 const Products = () => {
   const [queryParams, setQueryParams] = useState({
@@ -25,7 +25,7 @@ const Products = () => {
     search: "",
     orderField: "",
     order: "",
-  })
+  });
 
   const [appliedQueryParams, setAppliedQueryParams] = useState({
     priceMin: 0,
@@ -36,16 +36,16 @@ const Products = () => {
     search: "",
     orderField: "",
     order: "",
-  })
+  });
 
   const { data, error, isLoading, isValidating, size, setSize } =
-    useGetProducts(appliedQueryParams)
+    useGetProducts(appliedQueryParams);
   const products =
     data && !error
       ? data.reduce((acc, { products }) => [...acc, ...products], [])
-      : []
-  const totalPages = data && data[0] ? Math.ceil(data[0].count / limit) : 0
-  const isEndReached = size === totalPages
+      : [];
+  const totalPages = data && data[0] ? Math.ceil(data[0].count / limit) : 0;
+  const isEndReached = size === totalPages;
 
   const handleQueryParamsFilters = useCallback(
     (key, value, name) => {
@@ -53,27 +53,27 @@ const Products = () => {
         setQueryParams({
           ...queryParams,
           [key]: !value,
-        })
+        });
 
-        return
+        return;
       }
 
       if (typeof queryParams[key] === "number") {
         setQueryParams({
           ...queryParams,
           [key]: Number.parseInt(value),
-        })
+        });
 
-        return
+        return;
       }
 
       if (typeof queryParams[key] === "string") {
         setQueryParams({
           ...queryParams,
           [key]: value,
-        })
+        });
 
-        return
+        return;
       }
 
       // If the value at the specific key is an array
@@ -83,10 +83,10 @@ const Products = () => {
           queryParams[key].findIndex((elt) => elt.value === value) === -1 // If value not found
             ? [...queryParams[key], { name, value }]
             : [...queryParams[key].filter((elt) => elt.value !== value)],
-      })
+      });
     },
     [queryParams, setQueryParams]
-  )
+  );
 
   const handleAppliedQueryParams = useCallback(
     (key, value, name) => {
@@ -94,27 +94,27 @@ const Products = () => {
         setAppliedQueryParams({
           ...queryParams,
           [key]: !value,
-        })
+        });
 
-        return
+        return;
       }
 
       if (typeof appliedQueryParams[key] === "string") {
         setAppliedQueryParams({
           ...appliedQueryParams,
           [key]: value,
-        })
+        });
 
-        return
+        return;
       }
 
       if (typeof queryParams[key] === "number") {
         setAppliedQueryParams({
           ...queryParams,
           [key]: Number.parseInt(value),
-        })
+        });
 
-        return
+        return;
       }
 
       // If the value at the specific key is an array
@@ -124,53 +124,53 @@ const Products = () => {
           appliedQueryParams[key].findIndex((elt) => elt.value === value) === -1
             ? [...appliedQueryParams[key], { name, value }]
             : [...appliedQueryParams[key].filter((elt) => elt.value !== value)],
-      })
+      });
     },
     [appliedQueryParams, setAppliedQueryParams, queryParams]
-  )
+  );
 
   const handleLoadMore = useCallback(() => {
-    setSize((previousSize) => previousSize + 1)
-  }, [setSize])
+    setSize((previousSize) => previousSize + 1);
+  }, [setSize]);
 
   const handleNoSort = useCallback(() => {
     setAppliedQueryParams({
       ...queryParams,
       order: "",
       orderField: "",
-    })
-  }, [queryParams, setAppliedQueryParams])
+    });
+  }, [queryParams, setAppliedQueryParams]);
 
   useEffect(() => {
-    const searchInput = document.getElementById("searchInput")
+    const searchInput = document.getElementById("searchInput");
 
     const handleKeyDown = (event) => {
       if (event.key === "Enter") {
         setAppliedQueryParams((prevState) => ({
           ...prevState,
           search: queryParams.search,
-        }))
+        }));
       }
-    }
-    searchInput.addEventListener("keydown", handleKeyDown)
+    };
+    searchInput.addEventListener("keydown", handleKeyDown);
 
     return () => {
-      searchInput.removeEventListener("keydown", handleKeyDown)
-    }
+      searchInput.removeEventListener("keydown", handleKeyDown);
+    };
   }, [
     queryParams,
     setQueryParams,
     appliedQueryParams,
     handleAppliedQueryParams,
-  ])
+  ]);
 
   useEffect(() => {
-    setSize(1)
-  }, [appliedQueryParams, setSize])
+    setSize(1);
+  }, [appliedQueryParams, setSize]);
 
   useEffect(() => {
-    setQueryParams(appliedQueryParams)
-  }, [appliedQueryParams])
+    setQueryParams(appliedQueryParams);
+  }, [appliedQueryParams]);
 
   return (
     <>
@@ -313,7 +313,7 @@ const Products = () => {
         </div>
       </main>
     </>
-  )
-}
+  );
+};
 
-export default Products
+export default Products;

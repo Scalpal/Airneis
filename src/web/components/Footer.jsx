@@ -1,4 +1,4 @@
-import styles from "@/styles/components/Footer.module.css"
+import styles from "@/styles/components/Footer.module.css";
 
 const Footer = () => {
   return (
@@ -42,7 +42,7 @@ const Footer = () => {
         Copyright ©2022 Airneis. All Rights Reserved{" "}
       </p>
     </footer>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;

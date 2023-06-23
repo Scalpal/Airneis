@@ -1,10 +1,10 @@
-import { useRouter } from "next/router"
-import styles from "@/styles/components/CategoriesBlocks.module.css"
-import Image from "next/image"
+import { useRouter } from "next/router";
+import styles from "@/styles/components/CategoriesBlocks.module.css";
+import Image from "next/image";
 
 const CategoriesBlocks = (props) => {
-  const { categories } = props
-  const router = useRouter()
+  const { categories } = props;
+  const router = useRouter();
 
   return (
     <div className={styles.categoriesContainer}>
@@ -13,7 +13,7 @@ const CategoriesBlocks = (props) => {
           <div
             key={index}
             onClick={() => {
-              router.push("/category/" + category.name)
+              router.push("/category/" + category.name);
             }}
           >
             <p>{category.name}</p>
@@ -25,10 +25,10 @@ const CategoriesBlocks = (props) => {
               className={styles.categoriesContainerImage}
             />
           </div>
-        )
+        );
       })}
     </div>
-  )
-}
+  );
+};
 
-export default CategoriesBlocks
+export default CategoriesBlocks;

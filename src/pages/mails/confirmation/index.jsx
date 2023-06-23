@@ -1,15 +1,15 @@
-import { useRouter } from "next/router"
-import BackofficeLoginLayout from "@/web/components/backoffice/LoginLayout"
-import routes from "@/web/routes"
-import axios from "axios"
-import styles from "@/styles/mails/confirmation.module.css"
+import { useRouter } from "next/router";
+import BackofficeLoginLayout from "@/web/components/backoffice/LoginLayout";
+import routes from "@/web/routes";
+import axios from "axios";
+import styles from "@/styles/mails/confirmation.module.css";
 
 const MailConfirmation = ({ error }) => {
-  const router = useRouter()
+  const router = useRouter();
 
   const handleclick = () => {
-    router.push(routes.home())
-  }
+    router.push(routes.home());
+  };
 
   return (
     <div className={styles.div}>
@@ -26,32 +26,32 @@ const MailConfirmation = ({ error }) => {
         Return to Home
       </button>
     </div>
-  )
-}
+  );
+};
 
 MailConfirmation.getLayout = function (page) {
-  return <BackofficeLoginLayout>{page}</BackofficeLoginLayout>
-}
+  return <BackofficeLoginLayout>{page}</BackofficeLoginLayout>;
+};
 
-export default MailConfirmation
+export default MailConfirmation;
 
 export async function getServerSideProps(context) {
-  const { id } = context.query
+  const { id } = context.query;
 
   try {
     await axios.put(`
-    ${process.env.API_URL}/api/mail/confirmation?id=${id}`)
+    ${process.env.API_URL}/api/mail/confirmation?id=${id}`);
 
     return {
       props: {
         error: null,
       },
-    }
+    };
   } catch (error) {
     return {
       props: {
         error: true,
       },
-    }
+    };
   }
 }

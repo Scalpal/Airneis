@@ -1,16 +1,16 @@
-import { useRouter } from "next/router"
-import styles from "@/styles/components/DetailedProductCard.module.css"
-import Image from "next/image"
-import { ArrowRightIcon } from "@heroicons/react/24/solid"
-import Button from "./Button"
-import useAppContext from "../hooks/useAppContext"
-import routes from "../routes"
-import ProductRating from "./ProductRating"
+import { useRouter } from "next/router";
+import styles from "@/styles/components/DetailedProductCard.module.css";
+import Image from "next/image";
+import { ArrowRightIcon } from "@heroicons/react/24/solid";
+import Button from "./Button";
+import useAppContext from "../hooks/useAppContext";
+import routes from "../routes";
+import ProductRating from "./ProductRating";
 
 const DetailedProductCard = (props) => {
-  const { product } = props  
-  const router = useRouter()
-  const { actions: { addToCart } } = useAppContext()
+  const { product } = props;  
+  const router = useRouter();
+  const { actions: { addToCart } } = useAppContext();
   
   return (
     <div className={styles.productCard}>
@@ -45,9 +45,9 @@ const DetailedProductCard = (props) => {
           <p>
             Materials :{" "}
             {product.materials.map(({ name }, index) => {
-              const comma = index === product.materials.length - 1 ? " " : ", "
+              const comma = index === product.materials.length - 1 ? " " : ", ";
 
-              return name + comma
+              return name + comma;
             })}
           </p>
         </div>
@@ -74,7 +74,7 @@ const DetailedProductCard = (props) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default DetailedProductCard
+export default DetailedProductCard;

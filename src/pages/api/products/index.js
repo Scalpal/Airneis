@@ -1,12 +1,12 @@
-import CategoryModel from "@/api/db/models/CategoryModel"
-import ProductMaterialRelationModel from "@/api/db/models/ProductMaterialRelationModel"
-import ProductModel from "@/api/db/models/ProductModel"
-import auth from "@/api/middlewares/auth"
-import checkIsAdmin from "@/api/middlewares/checkIsAdmin"
-import slowDown from "@/api/middlewares/slowDown"
-import validate from "@/api/middlewares/validate"
-import mw from "@/api/mw"
-import { arrayOrStringValidator, arrayValidator, boolValidator, limitValidator, numberValidator, orderFieldValidator, orderValidator, pageValidator, searchValidator, stringValidator } from "@/validator"
+import CategoryModel from "@/api/db/models/CategoryModel";
+import ProductMaterialRelationModel from "@/api/db/models/ProductMaterialRelationModel";
+import ProductModel from "@/api/db/models/ProductModel";
+import auth from "@/api/middlewares/auth";
+import checkIsAdmin from "@/api/middlewares/checkIsAdmin";
+import slowDown from "@/api/middlewares/slowDown";
+import validate from "@/api/middlewares/validate";
+import mw from "@/api/mw";
+import { arrayOrStringValidator, arrayValidator, boolValidator, limitValidator, numberValidator, orderFieldValidator, orderValidator, pageValidator, searchValidator, stringValidator } from "@/validator";
 
 const handler = mw({
   GET: [
@@ -50,73 +50,73 @@ const handler = mw({
       try {
         const materialsArray = Array.isArray(materials)
           ? materials
-          : [materials]
+          : [materials];
         const categoriesArray = Array.isArray(categories)
           ? categories
-          : [categories]
+          : [categories];
 
-        const searchValue = search.toLowerCase()
-        const query = ProductModel.query()
+        const searchValue = search.toLowerCase();
+        const query = ProductModel.query();
 
         if (orderField) {
-          query.orderBy(orderField, order)
+          query.orderBy(orderField, order);
         }
 
         if (search) {
-          query.whereRaw('LOWER("name") LIKE ?', `%${searchValue}%`)
+          query.whereRaw('LOWER("name") LIKE ?', `%${searchValue}%`);
         }
 
         if (priceMin) {
-          query.where("price", ">", priceMin)
+          query.where("price", ">", priceMin);
         }
 
         if (priceMax) {
-          query.where("price", "<", priceMax)
+          query.where("price", "<", priceMax);
         }
 
         if (categories) {
-          query.whereIn("categoryId", categoriesArray)
+          query.whereIn("categoryId", categoriesArray);
         }
 
         if (materials) {
           const materialsProducts = await ProductMaterialRelationModel.query()
             .select("productId")
-            .whereIn("materialId", materialsArray)
+            .whereIn("materialId", materialsArray);
 
           const productIds = materialsProducts.reduce(
             (acc, { productId }) => [...acc, productId],
             []
-          )
+          );
 
-          query.whereIn("id", productIds)
+          query.whereIn("id", productIds);
         }
 
         if (onlyInStock === true) {
-          query.where("stock", ">", 0)
+          query.where("stock", ">", 0);
         }
 
-        const countQuery = query.clone()
-        const [{ count }] = await countQuery.clearSelect().clearOrder().count()
+        const countQuery = query.clone();
+        const [{ count }] = await countQuery.clearSelect().clearOrder().count();
 
         const products = await query
           .modify("paginate", limit, page)
           .select("id", "name", "description", "price", "stock")
           .withGraphFetched("category")
           .withGraphFetched("materials")
-          .withGraphFetched("reviews")
+          .withGraphFetched("reviews");
         
         // Products with average rating
         const finalProducts = products.map((product) => {
-          const avgRating = Math.round((product.reviews.reduce((acc, { rating }) => acc + rating , 0)) / product.reviews.length)
+          const avgRating = Math.round((product.reviews.reduce((acc, { rating }) => acc + rating , 0)) / product.reviews.length);
 
-          product.rating = avgRating
+          product.rating = avgRating;
 
-          return product
-        })
+          return product;
+        });
         
-        res.status(200).send({ products: finalProducts, count: count })
+        res.status(200).send({ products: finalProducts, count: count });
       } catch (error) {
-        res.status(500).send({ error: error })
+        res.status(500).send({ error: error });
       }
     },
   ],
@@ -141,12 +141,12 @@ const handler = mw({
       res,
     }) => {
       try {
-        const category = await CategoryModel.query().findOne({ id: categoryId })
+        const category = await CategoryModel.query().findOne({ id: categoryId });
 
         if (!category) {
-          res.status(404).send({ error: "Category not found" })
+          res.status(404).send({ error: "Category not found" });
 
-          return
+          return;
         }
 
         const newProduct = await ProductModel.query()
@@ -157,7 +157,7 @@ const handler = mw({
             stock: stock,
             categoryId: categoryId,
           })
-          .returning("*")
+          .returning("*");
 
         const materialsToAdd = materials.reduce(
           (acc, materialId) => [
@@ -165,22 +165,22 @@ const handler = mw({
             { productId: newProduct.id, materialId: materialId },
           ],
           []
-        )
+        );
 
         if (materialsToAdd.length > 0) {
           await ProductMaterialRelationModel.query()
             .insert(materialsToAdd)
-            .returning("*")
+            .returning("*");
         }
 
         res
           .status(201)
-          .send({ product: newProduct, message: "Product successfully added" })
+          .send({ product: newProduct, message: "Product successfully added" });
       } catch (error) {
-        res.status(500).send({ error: error })
+        res.status(500).send({ error: error });
       }
     },
   ],
-})
+});
 
-export default handler
+export default handler;

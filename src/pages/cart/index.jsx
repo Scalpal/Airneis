@@ -1,11 +1,11 @@
-import Button from "@/web/components/Button"
-import CartProduct from "@/web/components/CartProduct"
-import { useRouter } from "next/router"
-import { useCallback, useEffect, useState } from "react"
-import { ShoppingCartIcon } from "@heroicons/react/24/outline"
-import LayoutStickyNavbar from "@/web/components/LayoutStickyNavbar"
-import styles from "@/styles/cart.module.css"
-import useAppContext from "@/web/hooks/useAppContext"
+import Button from "@/web/components/Button";
+import CartProduct from "@/web/components/CartProduct";
+import { useRouter } from "next/router";
+import { useCallback, useEffect, useState } from "react";
+import { ShoppingCartIcon } from "@heroicons/react/24/outline";
+import LayoutStickyNavbar from "@/web/components/LayoutStickyNavbar";
+import styles from "@/styles/cart.module.css";
+import useAppContext from "@/web/hooks/useAppContext";
 
 // const products = [
 //   {
@@ -38,17 +38,17 @@ import useAppContext from "@/web/hooks/useAppContext"
 // ];
 
 const Cart = () => {
-  const router = useRouter()
+  const router = useRouter();
   const {
     state: { cart },
-  } = useAppContext()
+  } = useAppContext();
 
-  const [productsList, setProductsList] = useState([])
-  const [totalSum, setTotalSum] = useState(0)
+  const [productsList, setProductsList] = useState([]);
+  const [totalSum, setTotalSum] = useState(0);
 
   useEffect(() => {
-    setProductsList(cart)
-  }, [cart])
+    setProductsList(cart);
+  }, [cart]);
 
   useEffect(() => {
     setTotalSum(
@@ -56,16 +56,16 @@ const Cart = () => {
         (sum, product) => sum + product.price * product.quantity,
         0.0
       )
-    )
-  }, [productsList])
+    );
+  }, [productsList]);
 
   const handleSubmit = useCallback(() => {
-    router.push("/order/delivery")
-  }, [router])
+    router.push("/order/delivery");
+  }, [router]);
 
   const redirectToHomePage = useCallback(() => {
-    router.push("/home")
-  }, [router])
+    router.push("/home");
+  }, [router]);
 
   // console.log("Products list : ",productsList);
 
@@ -109,7 +109,7 @@ const Cart = () => {
                     productState={[productsList, setProductsList]}
                     totalSumState={[totalSum, setTotalSum]}
                   />
-                )
+                );
               })}
             </section>
 
@@ -137,11 +137,11 @@ const Cart = () => {
         )}
       </div>
     </>
-  )
-}
+  );
+};
 
 Cart.getLayout = function (page) {
-  return <LayoutStickyNavbar>{page}</LayoutStickyNavbar>
-}
+  return <LayoutStickyNavbar>{page}</LayoutStickyNavbar>;
+};
 
-export default Cart
+export default Cart;

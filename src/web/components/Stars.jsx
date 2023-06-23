@@ -1,10 +1,10 @@
-import Star from "./Star"
-import styles from "@/styles/components/Stars.module.css"
+import Star from "./Star";
+import styles from "@/styles/components/Stars.module.css";
 
 const Stars = (props) => {
-  const { rating } = props
+  const { rating } = props;
 
-  const arrayRating = new Array(5).fill("").map((_, i) => i + 1)
+  const arrayRating = new Array(5).fill("").map((_, i) => i + 1);
 
   return (
     <div className={styles.wrapper}>
@@ -15,7 +15,7 @@ const Stars = (props) => {
         />
       ))}
     </div>
-  )
-}
+  );
+};
 
-export default Stars
+export default Stars;

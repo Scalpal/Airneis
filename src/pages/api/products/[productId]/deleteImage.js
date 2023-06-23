@@ -1,13 +1,13 @@
-import ProductImageModel from "@/api/db/models/ProductImageModel"
-import ProductModel from "@/api/db/models/ProductModel"
-import auth from "@/api/middlewares/auth"
-import checkIsAdmin from "@/api/middlewares/checkIsAdmin"
-import slowDown from "@/api/middlewares/slowDown"
-import validate from "@/api/middlewares/validate"
-import mw from "@/api/mw"
-import { idValidator, stringValidator } from "@/validator"
-import { deleteImageFromS3 } from "@/web/services/S3"
-import getProductsImagesWithSignedUrls from "@/web/services/products/getProductsImagesWithSignedUrl"
+import ProductImageModel from "@/api/db/models/ProductImageModel";
+import ProductModel from "@/api/db/models/ProductModel";
+import auth from "@/api/middlewares/auth";
+import checkIsAdmin from "@/api/middlewares/checkIsAdmin";
+import slowDown from "@/api/middlewares/slowDown";
+import validate from "@/api/middlewares/validate";
+import mw from "@/api/mw";
+import { idValidator, stringValidator } from "@/validator";
+import { deleteImageFromS3 } from "@/web/services/S3";
+import getProductsImagesWithSignedUrls from "@/web/services/products/getProductsImagesWithSignedUrl";
 
 const handler = mw({
   PATCH: [
@@ -30,12 +30,12 @@ const handler = mw({
       res
     }) => {
       try {
-        const product = await ProductModel.query().findOne({ id: productId })
+        const product = await ProductModel.query().findOne({ id: productId });
 
         if (!product) {
-          res.status(404).send("Product not found")
+          res.status(404).send("Product not found");
 
-          return
+          return;
         }
 
         // Delete product image from database
@@ -43,33 +43,33 @@ const handler = mw({
           .delete()
           .where("productId", productId)
           .andWhere("imageSrc", imageName)
-          .returning("*")
+          .returning("*");
         
         // Delete product image from S3
-        await deleteImageFromS3(imageName)
+        await deleteImageFromS3(imageName);
 
         const updatedProduct = await ProductModel.query()
           .findOne({ id: productId })
           .select("id", "name", "description", "price", "stock")
           .withGraphFetched("category")
           .withGraphFetched("materials")
-          .withGraphFetched("productImages")
+          .withGraphFetched("productImages");
 
         if (!product) {
-          res.status(404).send({ error: "Product not found" })
+          res.status(404).send({ error: "Product not found" });
 
-          return
+          return;
         }
         
         // Add signed url to all products images
-        const productWithSignedUrlImages = await getProductsImagesWithSignedUrls([updatedProduct])
+        const productWithSignedUrlImages = await getProductsImagesWithSignedUrls([updatedProduct]);
         
-        res.send({ status: "success", message: "Image successfully deleted", product: productWithSignedUrlImages[0] })
+        res.send({ status: "success", message: "Image successfully deleted", product: productWithSignedUrlImages[0] });
       } catch (error) {
-        res.status(500).send({ error: error })
+        res.status(500).send({ error: error });
       }
     }
   ]
-})
+});
 
-export default handler 
+export default handler; 

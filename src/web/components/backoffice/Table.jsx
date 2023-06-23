@@ -1,14 +1,14 @@
-import styles from "@/styles/backoffice/Table.module.css"
-import { classnames } from "@/pages/_app"
-import { TrashIcon, InformationCircleIcon } from "@heroicons/react/24/outline"
-import { useCallback } from "react"
+import styles from "@/styles/backoffice/Table.module.css";
+import { classnames } from "@/pages/_app";
+import { TrashIcon, InformationCircleIcon } from "@heroicons/react/24/outline";
+import { useCallback } from "react";
 import {
   ChevronUpIcon,
   ChevronDownIcon,
   CheckIcon,
   XMarkIcon,
-} from "@heroicons/react/24/solid"
-import { splitCamelCase } from "@/web/services/SplitCamelCase"
+} from "@heroicons/react/24/solid";
+import { splitCamelCase } from "@/web/services/SplitCamelCase";
 
 const Table = (props) => {
   const {
@@ -19,7 +19,7 @@ const Table = (props) => {
     visibleColumns,
     showSpecificRowFunction,
     deleteRowFunction,
-  } = props
+  } = props;
   // safeArray is the array coming from getServerSideProps, it is always not empty so in case array is empty
   // we still have the table headers
 
@@ -32,17 +32,17 @@ const Table = (props) => {
               // This is adapted for object with this structure : { id: 1, name: "XXXX" }
               // Not fully adapted to all use cases
               if (objKey === "name") {
-                return objValue
+                return objValue;
               }
             })
             .join("- ")
             .replaceAll(",", "")}
         </p>
-      ))
+      ));
     }
 
     if (typeof value === "object") {
-      return <p>{value.name}</p>
+      return <p>{value.name}</p>;
     }
 
     if (typeof value === "boolean") {
@@ -50,11 +50,11 @@ const Table = (props) => {
         <CheckIcon className={styles.tableIcon} />
       ) : (
         <XMarkIcon className={styles.tableIcon} />
-      )
+      );
     }
 
-    return <p key={i}>{value && value.toString()}</p>
-  }, [])
+    return <p key={i}>{value && value.toString()}</p>;
+  }, []);
 
   const showActionsButtons = useCallback(
     (itemId) => {
@@ -78,10 +78,10 @@ const Table = (props) => {
             </td>
           )}
         </>
-      )
+      );
     },
     [deleteRowFunction, showSpecificRowFunction]
-  )
+  );
 
   return (
     <table className={classnames(styles.table)}>
@@ -93,7 +93,7 @@ const Table = (props) => {
                 <th
                   key={index}
                   onClick={() => {
-                    sortColumn(key)
+                    sortColumn(key);
                   }}
                 >
                   <p>
@@ -112,7 +112,7 @@ const Table = (props) => {
               <th
                 key={index}
                 onClick={() => {
-                  sortColumn(key)
+                  sortColumn(key);
                 }}
               >
                 <p>
@@ -145,12 +145,12 @@ const Table = (props) => {
                     )
                   ) : (
                     <td key={i}>{showValue(key, value, i)}</td>
-                  )
+                  );
                 })}
 
                 {showActionsButtons(item.id)}
               </tr>
-            )
+            );
           })}
         </tbody>
       ) : (
@@ -159,7 +159,7 @@ const Table = (props) => {
         </tr>
       )}
     </table>
-  )
-}
+  );
+};
 
-export default Table
+export default Table;

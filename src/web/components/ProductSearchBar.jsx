@@ -1,21 +1,21 @@
-import { classnames } from "@/pages/_app"
-import styles from "@/styles/components/ProductSearchBar.module.css" 
-import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/solid"
-import { useState } from "react"
-import useSearchProducts from "../hooks/useSearchProducts"
-import Highlighter from "./Highlighter"
-import routes from "../routes"
-import Link from "next/link"
-import Loader from "./Loader"
+import { classnames } from "@/pages/_app";
+import styles from "@/styles/components/ProductSearchBar.module.css"; 
+import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/solid";
+import { useState } from "react";
+import useSearchProducts from "../hooks/useSearchProducts";
+import Highlighter from "./Highlighter";
+import routes from "../routes";
+import Link from "next/link";
+import Loader from "./Loader";
 
 const ProductSearchBar = (props) => {
-  const { id, placeholder, showSuggestions, closeOverlay, ...otherProps } = props
+  const { id, placeholder, showSuggestions, closeOverlay, ...otherProps } = props;
 
-  const [inputFocused, setInputFocused] = useState(false)
-  const [searchValue, setSearchValue] = useState("")
+  const [inputFocused, setInputFocused] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
 
-  const { searchData, searchLoading } = useSearchProducts(searchValue)
-  const products = !searchLoading ? searchData.products : []
+  const { searchData, searchLoading } = useSearchProducts(searchValue);
+  const products = !searchLoading ? searchData.products : [];
   
   return (
     <div className={styles.container}>
@@ -45,8 +45,8 @@ const ProductSearchBar = (props) => {
         <button
           className={styles.button}
           onClick={() => {
-            setInputFocused(true)
-            setSearchValue("")
+            setInputFocused(true);
+            setSearchValue("");
           }}
         >
           <XMarkIcon className={styles.icons} />
@@ -86,7 +86,7 @@ const ProductSearchBar = (props) => {
       </div>
     </div>
 
-  )
-}
+  );
+};
 
-export default ProductSearchBar
+export default ProductSearchBar;

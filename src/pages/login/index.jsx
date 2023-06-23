@@ -1,45 +1,45 @@
-import { createValidator, stringValidator, emailValidator } from "@/validator"
-import { Formik, Form } from "formik"
-import Button from "@/web/components/Button"
-import styles from "@/styles/login.module.css"
-import { useRouter } from "next/router"
-import { useCallback, useState } from "react"
-import useAppContext from "@/web/hooks/useAppContext"
-import LoginLayout from "@/web/components/LoginLayout"
-import LoginField from "@/web/components/LoginField"
-import { ExclamationTriangleIcon } from "@heroicons/react/24/outline"
+import { createValidator, stringValidator, emailValidator } from "@/validator";
+import { Formik, Form } from "formik";
+import Button from "@/web/components/Button";
+import styles from "@/styles/login.module.css";
+import { useRouter } from "next/router";
+import { useCallback, useState } from "react";
+import useAppContext from "@/web/hooks/useAppContext";
+import LoginLayout from "@/web/components/LoginLayout";
+import LoginField from "@/web/components/LoginField";
+import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 
 const validationSchema = createValidator({
   email: emailValidator.required(),
   password: stringValidator.required(),
-})
+});
 
 const initialValues = {
   email: "",
   password: "",
-}
+};
 
 const Login = () => {
-  const router = useRouter()
+  const router = useRouter();
   const {
     actions: { signIn },
-  } = useAppContext()
-  const [error, setError] = useState(null)
+  } = useAppContext();
+  const [error, setError] = useState(null);
 
   const handleSubmit = useCallback(
     async (values) => {
-      const [err] = await signIn(values)
+      const [err] = await signIn(values);
 
       if (err) {
-        setError(err[0].response.data.error)
+        setError(err[0].response.data.error);
 
-        return
+        return;
       }
 
-      router.push("/home")
+      router.push("/home");
     },
     [signIn, router]
-  )
+  );
 
   return (
     <main className={styles.container}>
@@ -94,11 +94,11 @@ const Login = () => {
         )}
       </Formik>
     </main>
-  )
-}
+  );
+};
 
 Login.getLayout = function (page) {
-  return <LoginLayout>{page}</LoginLayout>
-}
+  return <LoginLayout>{page}</LoginLayout>;
+};
 
-export default Login
+export default Login;

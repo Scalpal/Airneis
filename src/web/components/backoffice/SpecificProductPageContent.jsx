@@ -1,23 +1,23 @@
-import { classnames, nunito } from "@/pages/_app"
-import styles from "@/styles/backoffice/SpecificProductPageContent.module.css"
-import { PencilSquareIcon } from "@heroicons/react/24/outline"
-import { Field, FieldArray, Form, Formik } from "formik"
-import LoginField from "../LoginField"
-import { useCallback, useEffect, useState } from "react"
-import Button from "../Button"
-import CustomAlert from "../CustomAlert"
-import { createValidator, numberValidator, stringValidator } from "@/validator"
-import { splitCamelCase } from "@/web/services/SplitCamelCase"
-import useAppContext from "@/web/hooks/useAppContext"
-import routes from "@/web/routes"
-import { AxiosError } from "axios"
-import CollapseMenu from "../CollapseMenu"
-import { useGetMaterials } from "@/web/hooks/useGetMaterials"
-import CheckboxItem from "../CheckboxItem"
-import BackButton from "./BackButton"
-import { useGetCategories } from "@/web/hooks/useGetCategories"
-import ProductImageList from "./ProductImageList"
-import uploadProductImage from "@/web/services/products/uploadProductImage"
+import { classnames, nunito } from "@/pages/_app";
+import styles from "@/styles/backoffice/SpecificProductPageContent.module.css";
+import { PencilSquareIcon } from "@heroicons/react/24/outline";
+import { Field, FieldArray, Form, Formik } from "formik";
+import LoginField from "../LoginField";
+import { useCallback, useEffect, useState } from "react";
+import Button from "../Button";
+import CustomAlert from "../CustomAlert";
+import { createValidator, numberValidator, stringValidator } from "@/validator";
+import { splitCamelCase } from "@/web/services/SplitCamelCase";
+import useAppContext from "@/web/hooks/useAppContext";
+import routes from "@/web/routes";
+import { AxiosError } from "axios";
+import CollapseMenu from "../CollapseMenu";
+import { useGetMaterials } from "@/web/hooks/useGetMaterials";
+import CheckboxItem from "../CheckboxItem";
+import BackButton from "./BackButton";
+import { useGetCategories } from "@/web/hooks/useGetCategories";
+import ProductImageList from "./ProductImageList";
+import uploadProductImage from "@/web/services/products/uploadProductImage";
 
 const validationSchema = createValidator({
   name: stringValidator.required(),
@@ -25,24 +25,24 @@ const validationSchema = createValidator({
   price: numberValidator.required(),
   stock: numberValidator.required(),
   categoryId: numberValidator.required(),
-})
+});
 
-const mappableKeys = ["name", "description", "price", "stock"]
+const mappableKeys = ["name", "description", "price", "stock"];
 
 const SpecificProductPageContent = (props) => {
-  const { product, setActiveProduct, refreshProducts, showModal, setShowModal } = props
-  const { actions: { api } } = useAppContext()
-  const { materialsData, materialsError, materialsIsLoading } = useGetMaterials() 
-  const materials = (!materialsIsLoading && !materialsError) ? materialsData : []
+  const { product, setActiveProduct, refreshProducts, showModal, setShowModal } = props;
+  const { actions: { api } } = useAppContext();
+  const { materialsData, materialsError, materialsIsLoading } = useGetMaterials(); 
+  const materials = (!materialsIsLoading && !materialsError) ? materialsData : [];
 
-  const [currentProduct, setCurrentProduct] = useState(product)
-  const [currentProductImages, setCurrentProductImages] = useState(product.productImages)
-  const [editMode, setEditMode] = useState(false)
-  const [alert, setAlert] = useState({ status: "", message: "" })
-  const [showAlert, setShowAlert] = useState(false)
+  const [currentProduct, setCurrentProduct] = useState(product);
+  const [currentProductImages, setCurrentProductImages] = useState(product.productImages);
+  const [editMode, setEditMode] = useState(false);
+  const [alert, setAlert] = useState({ status: "", message: "" });
+  const [showAlert, setShowAlert] = useState(false);
 
-  const { categoriesData, categoriesError, categoriesIsLoading } = useGetCategories()
-  const categories = (!categoriesIsLoading && !categoriesError) ? categoriesData : []
+  const { categoriesData, categoriesError, categoriesIsLoading } = useGetCategories();
+  const categories = (!categoriesIsLoading && !categoriesError) ? categoriesData : [];
 
   const initialValues = {
     name: currentProduct.name,
@@ -51,84 +51,84 @@ const SpecificProductPageContent = (props) => {
     stock: currentProduct.stock,
     categoryId: currentProduct.category.id,
     materials: currentProduct.materials
-  }
+  };
 
   const handleEditMode = useCallback((type, handleReset) => {
     if (editMode) {
-      setEditMode(false) 
-      handleReset() 
+      setEditMode(false); 
+      handleReset(); 
 
-      return
+      return;
     }
 
-    setEditMode(true) 
-  }, [editMode])
+    setEditMode(true); 
+  }, [editMode]);
 
   const getInputType = useCallback((value) => {
     if (typeof value === "string" || typeof value === "number") {
-      return "text"
+      return "text";
     }
 
     if (typeof value === "boolean") {
-      return "checkbox"
+      return "checkbox";
     }
-  }, [])
+  }, []);
 
   const handleSubmit = useCallback(async (values) => {
-    values.price = Number.parseInt(values.price)
-    values.stock = Number.parseInt(values.stock)
+    values.price = Number.parseInt(values.price);
+    values.stock = Number.parseInt(values.stock);
   
-    const materials = values.materials.reduce((acc, { id }) => [...acc, id], [])
-    values.materials = materials
+    const materials = values.materials.reduce((acc, { id }) => [...acc, id], []);
+    values.materials = materials;
 
-    const newImages = currentProductImages.filter(elt => elt instanceof File) //
+    const newImages = currentProductImages.filter(elt => elt instanceof File); //
     
     try {
       if (newImages.length > 0) {
         newImages.map(async (file) => {
-          const [error, response] = await uploadProductImage(file, currentProduct.id)
+          const [error, response] = await uploadProductImage(file, currentProduct.id);
 
           if (error) {
-            setShowAlert(true)
-            setAlert({ status: "error", message: "Error on image upload. Retry." })
+            setShowAlert(true);
+            setAlert({ status: "error", message: "Error on image upload. Retry." });
 
-            return
+            return;
           }
 
-          setCurrentProduct(response.data.product)
-        })
+          setCurrentProduct(response.data.product);
+        });
       }
 
-      const { data } = await api.patch(routes.api.products.update(currentProduct.id), values)
+      const { data } = await api.patch(routes.api.products.update(currentProduct.id), values);
 
-      setEditMode(false)
-      setCurrentProduct(data.product)
-      setShowAlert(true)
-      setAlert({ status: data.status, message: data.message })
-      refreshProducts()
+      setEditMode(false);
+      setCurrentProduct(data.product);
+      setShowAlert(true);
+      setAlert({ status: data.status, message: data.message });
+      refreshProducts();
     } catch (error) {
       if (error instanceof AxiosError) {
-        setShowAlert(true)
-        setAlert({ status: error.response.status, message: error.response.message })
+        setShowAlert(true);
+        setAlert({ status: error.response.status, message: error.response.message });
       }
     }
-  }, [api, currentProduct.id, refreshProducts, currentProductImages]) 
+  }, [api, currentProduct.id, refreshProducts, currentProductImages]); 
 
   const isMaterialChecked = (values, id) => {
-    const productMaterialIds = values.reduce((acc, { id }) => [...acc, id], []) 
+    const productMaterialIds = values.reduce((acc, { id }) => [...acc, id], []); 
       
-    return productMaterialIds.includes(id) ? true : false
-  }
+    return productMaterialIds.includes(id) ? true : false;
+  };
   
   useEffect(() => {
     if (showModal === false) {
-      setActiveProduct(null)
+      setActiveProduct(null);
     }
-  }, [showModal, setActiveProduct])
+  }, [showModal, setActiveProduct]);
 
   useEffect(() => {
-    setCurrentProductImages(currentProduct.productImages)
-  }, [currentProduct]) 
+    setCurrentProductImages(currentProduct.productImages);
+  }, [currentProduct]); 
 
   return (
     <main
@@ -235,7 +235,7 @@ const SpecificProductPageContent = (props) => {
                 </Button>
               )}
             </Form>
-          )
+          );
         }}
       </Formik>
 
@@ -245,7 +245,7 @@ const SpecificProductPageContent = (props) => {
         setShowAlert={setShowAlert}
       />
     </main>
-  )
-} 
+  );
+}; 
 
-export default SpecificProductPageContent
+export default SpecificProductPageContent;

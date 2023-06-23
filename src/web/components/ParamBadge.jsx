@@ -1,9 +1,9 @@
-import styles from "@/styles/components/ParamBadge.module.css"
-import { XMarkIcon } from "@heroicons/react/24/outline"
+import styles from "@/styles/components/ParamBadge.module.css";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 
 const ParamBadge = (props) => {
   const { label, appliedQueryParams, queryKey, handleAppliedQueryParams } =
-    props
+    props;
 
   return (
     <>
@@ -54,7 +54,7 @@ const ParamBadge = (props) => {
         </p>
       )}
     </>
-  )
-}
+  );
+};
 
-export default ParamBadge
+export default ParamBadge;

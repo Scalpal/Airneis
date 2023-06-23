@@ -1,8 +1,8 @@
-import { ArrowUpIcon } from "@heroicons/react/24/solid"
-import styles from "@/styles/components/BackToTopButton.module.css" 
+import { ArrowUpIcon } from "@heroicons/react/24/solid";
+import styles from "@/styles/components/BackToTopButton.module.css"; 
 
 const BackToTopButton = (props) => {
-  const { onPress } = props
+  const { onPress } = props;
 
   return (
     <button
@@ -12,7 +12,7 @@ const BackToTopButton = (props) => {
       <ArrowUpIcon className={styles.icon} />
       <p>Back to top</p>
     </button>
-  )
-}
+  );
+};
 
-export default BackToTopButton 
+export default BackToTopButton; 

@@ -1,13 +1,13 @@
-import styles from "@/styles/components/ProductFilterMenu.module.css"
-import CollapseMenu from "./CollapseMenu"
-import CheckboxItem from "./CheckboxItem"
-import Button from "./Button"
-import { useCallback, useEffect, useState } from "react"
-import { classnames } from "@/pages/_app"
-import { useGetMaterials } from "../hooks/useGetMaterials"
-import { useGetCategories } from "../hooks/useGetCategories"
-import InputRange from "./InputRange"
-import RadioItem from "./RadioItem"
+import styles from "@/styles/components/ProductFilterMenu.module.css";
+import CollapseMenu from "./CollapseMenu";
+import CheckboxItem from "./CheckboxItem";
+import Button from "./Button";
+import { useCallback, useEffect, useState } from "react";
+import { classnames } from "@/pages/_app";
+import { useGetMaterials } from "../hooks/useGetMaterials";
+import { useGetCategories } from "../hooks/useGetCategories";
+import InputRange from "./InputRange";
+import RadioItem from "./RadioItem";
 
 const ProductFilterMenu = (props) => {
   const {
@@ -15,19 +15,19 @@ const ProductFilterMenu = (props) => {
     setQueryParams,
     queryParams,
     setAppliedQueryParams,
-  } = props
+  } = props;
   const { materialsData, materialsIsLoading, materialsError } =
-    useGetMaterials()
+    useGetMaterials();
   const { categoriesData, categoriesIsLoading, categoriesError } =
-    useGetCategories()
+    useGetCategories();
 
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     isOpen
       ? (document.body.style.position = "fixed")
-      : (document.body.style.position = "initial")
-  }, [isOpen, setIsOpen])
+      : (document.body.style.position = "initial");
+  }, [isOpen, setIsOpen]);
 
   const handleResetButton = useCallback(() => {
     setQueryParams({
@@ -36,7 +36,7 @@ const ProductFilterMenu = (props) => {
       materials: [],
       onlyInStock: false,
       categories: [],
-    })
+    });
 
     setAppliedQueryParams({
       priceMin: 0,
@@ -44,65 +44,65 @@ const ProductFilterMenu = (props) => {
       materials: [],
       onlyInStock: false,
       categories: [],
-    })
-  }, [setQueryParams, setAppliedQueryParams])
+    });
+  }, [setQueryParams, setAppliedQueryParams]);
 
   const handlePriceLowToHigh = useCallback(() => {
     setQueryParams({
       ...queryParams,
       order: "asc",
       orderField: "price",
-    })
-  }, [queryParams, setQueryParams])
+    });
+  }, [queryParams, setQueryParams]);
 
   const handlePriceHighToLow = useCallback(() => {
     setQueryParams({
       ...queryParams,
       order: "desc",
       orderField: "price",
-    })
-  }, [queryParams, setQueryParams])
+    });
+  }, [queryParams, setQueryParams]);
 
   const handleNoSort = useCallback(() => {
     setQueryParams({
       ...queryParams,
       order: "",
       orderField: "",
-    })
-  }, [queryParams, setQueryParams])
+    });
+  }, [queryParams, setQueryParams]);
 
   const handleSort = useCallback(
     (value) => {
       if (value === "1") {
-        handleNoSort()
+        handleNoSort();
 
-        return
+        return;
       }
 
       if (value === "2") {
-        handlePriceLowToHigh()
+        handlePriceLowToHigh();
 
-        return
+        return;
       }
 
-      handlePriceHighToLow()
+      handlePriceHighToLow();
 
-      return
+      return;
     },
     [handlePriceLowToHigh, handlePriceHighToLow, handleNoSort]
-  )
+  );
 
   const isValueChecked = useCallback(
     (queryKey, value) => {
       const bool =
         queryParams[queryKey].findIndex((elt) => elt.value === value) === -1
           ? false
-          : true
+          : true;
 
-      return bool
+      return bool;
     },
     [queryParams]
-  )
+  );
 
   return (
     <>
@@ -241,7 +241,7 @@ const ProductFilterMenu = (props) => {
         <div className={styles.closeButton}>
           <Button
             onClick={() => {
-              setIsOpen(false)
+              setIsOpen(false);
             }}
           >
             Close
@@ -249,7 +249,7 @@ const ProductFilterMenu = (props) => {
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default ProductFilterMenu
+export default ProductFilterMenu;

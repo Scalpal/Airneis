@@ -1,12 +1,12 @@
-import hashPassword from "@/api/db/hashPassword"
-import AddressModel from "@/api/db/models/AddressModel"
-import UserModel from "@/api/db/models/UserModel.js"
-import slowDown from "@/api/middlewares/slowDown.js"
-import validate from "@/api/middlewares/validate.js"
-import mw from "@/api/mw.js"
-import { emailValidator, phoneValidator, stringValidator, passwordValidator } from "@/validator"
-import sgMail from "@sendgrid/mail"
-import config from "@/api/config.js"
+import hashPassword from "@/api/db/hashPassword";
+import AddressModel from "@/api/db/models/AddressModel";
+import UserModel from "@/api/db/models/UserModel.js";
+import slowDown from "@/api/middlewares/slowDown.js";
+import validate from "@/api/middlewares/validate.js";
+import mw from "@/api/mw.js";
+import { emailValidator, phoneValidator, stringValidator, passwordValidator } from "@/validator";
+import sgMail from "@sendgrid/mail";
+import config from "@/api/config.js";
 
 const handler = mw({
   POST: [
@@ -32,15 +32,15 @@ const handler = mw({
       res,
     }) => {
       try {
-        const user = await UserModel.query().findOne({ email }) 
+        const user = await UserModel.query().findOne({ email }); 
         
         if (user) {
-          res.status(409).send({ error: "Email already used." })
+          res.status(409).send({ error: "Email already used." });
 
-          return
+          return;
         }
 
-        const [passwordHash, passwordSalt] = await hashPassword(password)
+        const [passwordHash, passwordSalt] = await hashPassword(password);
 
         const addedUser = await UserModel.query()
           .insert({
@@ -51,7 +51,7 @@ const handler = mw({
             passwordSalt,
             phoneNumber,
           })
-          .returning("*")
+          .returning("*");
 
         if (address !== "" && city !== "" && region !== "" && postalCode !== "" && country !== "") {
           await AddressModel.query()
@@ -63,10 +63,10 @@ const handler = mw({
               country,
               userId : addedUser.id,
             })
-            .returning("*")
+            .returning("*");
         }
 
-        sgMail.setApiKey(config.security.sendgrid)
+        sgMail.setApiKey(config.security.sendgrid);
 
         const msg = {
           to: email,
@@ -78,15 +78,15 @@ const handler = mw({
             lastname: lastName,
             url: `${process.env.API_URL}/mails/confirmation?id=${addedUser.id}`,
           },
-        }
+        };
 
-        sgMail.send(msg)
-        res.send({ success: true })
+        sgMail.send(msg);
+        res.send({ success: true });
       } catch (error) {
-        res.status(500).send({ error: error })
+        res.status(500).send({ error: error });
       }
     },
   ],
-})
+});
 
-export default handler
+export default handler;

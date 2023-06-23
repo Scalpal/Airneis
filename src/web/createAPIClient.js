@@ -1,4 +1,4 @@
-import axios from "axios"
+import axios from "axios";
 
 const createAPIClient = ({ jwt } = {}) =>
   axios.create({
@@ -6,6 +6,6 @@ const createAPIClient = ({ jwt } = {}) =>
     headers: {
       ...(jwt ? { Authorization: `Bearer ${jwt}` } : {}),
     },
-  })
+  });
 
-export default createAPIClient
+export default createAPIClient;

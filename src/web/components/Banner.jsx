@@ -1,20 +1,20 @@
-import Image from "next/image"
-import styles from "@/styles/components/Banner.module.css"
-import { ArrowSmallDownIcon } from "@heroicons/react/24/solid"
-import { useRef } from "react"
-import BackToTopButton from "./BackToTopButton"
+import Image from "next/image";
+import styles from "@/styles/components/Banner.module.css";
+import { ArrowSmallDownIcon } from "@heroicons/react/24/solid";
+import { useRef } from "react";
+import BackToTopButton from "./BackToTopButton";
 
 const Banner = (props) => {
-  const { title } = props
-  const anchorRef = useRef(null)
+  const { title } = props;
+  const anchorRef = useRef(null);
 
   const handleClick = () => {
-    const element = anchorRef.current
+    const element = anchorRef.current;
 
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" })
+      element.scrollIntoView({ behavior: "smooth" });
     }
-  }
+  };
 
   return (
     <header className={styles.banner} id="carousel">
@@ -36,7 +36,7 @@ const Banner = (props) => {
 
       <BackToTopButton onPress={handleClick} />
     </header>
-  )
-}
+  );
+};
 
-export default Banner
+export default Banner;

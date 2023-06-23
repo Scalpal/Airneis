@@ -1,7 +1,7 @@
-import styles from "@/styles/components/InputRange.module.css" 
+import styles from "@/styles/components/InputRange.module.css"; 
 
 const InputRange = (props) => {
-  const { label, currentValue, handler } = props
+  const { label, currentValue, handler } = props;
 
   return (
     <div>
@@ -19,7 +19,7 @@ const InputRange = (props) => {
       />
     </div>
 
-  )
-}
+  );
+};
 
-export default InputRange
+export default InputRange;

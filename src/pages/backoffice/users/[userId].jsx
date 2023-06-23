@@ -1,24 +1,24 @@
-import Layout from "@/web/components/backoffice/Layout"
-import { AxiosError } from "axios"
-import { parseCookies } from "nookies"
-import routes from "@/web/routes"
-import { useCallback, useState } from "react"
-import styles from "@/styles/backoffice/userPage.module.css"
-import { classnames, nunito } from "@/pages/_app"
-import { CheckIcon } from "@heroicons/react/24/outline"
-import LoginField from "@/web/components/LoginField"
-import { Field, Form, Formik } from "formik"
-import { PencilSquareIcon } from "@heroicons/react/24/solid"
-import Button from "@/web/components/Button"
-import AddressCard from "@/web/components/AddressCard"
-import { boolValidator, createValidator, phoneValidator } from "@/validator"
-import { stringValidator } from "@/validator"
-import { emailValidator } from "@/validator"
-import useAppContext from "@/web/hooks/useAppContext"
-import CustomAlert from "@/web/components/CustomAlert"
-import checkToken from "@/web/services/checkToken"
-import getApiClient from "@/web/services/getApiClient"
-import checkIsAdmin from "@/web/services/checkIsAdmin"
+import Layout from "@/web/components/backoffice/Layout";
+import { AxiosError } from "axios";
+import { parseCookies } from "nookies";
+import routes from "@/web/routes";
+import { useCallback, useState } from "react";
+import styles from "@/styles/backoffice/userPage.module.css";
+import { classnames, nunito } from "@/pages/_app";
+import { CheckIcon } from "@heroicons/react/24/outline";
+import LoginField from "@/web/components/LoginField";
+import { Field, Form, Formik } from "formik";
+import { PencilSquareIcon } from "@heroicons/react/24/solid";
+import Button from "@/web/components/Button";
+import AddressCard from "@/web/components/AddressCard";
+import { boolValidator, createValidator, phoneValidator } from "@/validator";
+import { stringValidator } from "@/validator";
+import { emailValidator } from "@/validator";
+import useAppContext from "@/web/hooks/useAppContext";
+import CustomAlert from "@/web/components/CustomAlert";
+import checkToken from "@/web/services/checkToken";
+import getApiClient from "@/web/services/getApiClient";
+import checkIsAdmin from "@/web/services/checkIsAdmin";
 
 const validationSchema = createValidator({
   firstName: stringValidator.required(),
@@ -27,32 +27,32 @@ const validationSchema = createValidator({
   phoneNumber: phoneValidator.required(),
   active: boolValidator.required(),
   isAdmin: boolValidator.required(),
-})
+});
 
 const BackofficeUserPage = (props) => {
-  const { user } = props
+  const { user } = props;
   const {
     actions: { api },
-  } = useAppContext()
+  } = useAppContext();
 
-  const [currentUser, setCurrentUser] = useState(user)
-  const [editMode, setEditMode] = useState({ type: "", editing: false })
-  const [alert, setAlert] = useState({ status: "", message: "" })
-  const [showAlert, setShowAlert] = useState(false)
+  const [currentUser, setCurrentUser] = useState(user);
+  const [editMode, setEditMode] = useState({ type: "", editing: false });
+  const [alert, setAlert] = useState({ status: "", message: "" });
+  const [showAlert, setShowAlert] = useState(false);
 
   const handleEditMode = useCallback(
     (type, handleReset) => {
       setEditMode({
         type: editMode.type !== type ? type : "",
         editing: !editMode.editing,
-      })
+      });
 
       if (editMode.type === type) {
-        handleReset()
+        handleReset();
       }
     },
     [editMode]
-  )
+  );
 
   const handleSubmit = useCallback(
     async (values) => {
@@ -60,24 +60,24 @@ const BackofficeUserPage = (props) => {
         const { data } = await api.patch(
           routes.api.users.patch(user.id),
           values
-        )
+        );
 
-        setEditMode({ type: "", editing: false })
-        setCurrentUser(data.user)
-        setShowAlert(true)
-        setAlert({ status: data.status, message: data.message })
+        setEditMode({ type: "", editing: false });
+        setCurrentUser(data.user);
+        setShowAlert(true);
+        setAlert({ status: data.status, message: data.message });
       } catch (error) {
         if (error instanceof AxiosError) {
-          setShowAlert(true)
+          setShowAlert(true);
           setAlert({
             status: error.response.status,
             message: error.response.message,
-          })
+          });
         }
       }
     },
     [api, user.id]
-  )
+  );
 
   return (
     <main className={classnames(styles.mainContainer, nunito.className)}>
@@ -219,7 +219,7 @@ const BackofficeUserPage = (props) => {
                   </Button>
                 )}
               </Form>
-            )
+            );
           }}
         </Formik>
 
@@ -237,7 +237,7 @@ const BackofficeUserPage = (props) => {
                     key={index}
                     index={index + 1}
                   />
-                )
+                );
               })
             ) : (
               <AddressCard address={user.address} index={1} />
@@ -252,30 +252,30 @@ const BackofficeUserPage = (props) => {
         setShowAlert={setShowAlert}
       />
     </main>
-  )
-}
+  );
+};
 
 export const getServerSideProps = async (context) => {
-  const id = context.params.userId
-  const { token } = parseCookies(context)
-  const badTokenRedirect = await checkToken(token)
+  const id = context.params.userId;
+  const { token } = parseCookies(context);
+  const badTokenRedirect = await checkToken(token);
 
   if (badTokenRedirect) {
-    return badTokenRedirect
+    return badTokenRedirect;
   }
 
-  const notAdminRedirect = await checkIsAdmin(context)
+  const notAdminRedirect = await checkIsAdmin(context);
 
   if (notAdminRedirect) {
-    return notAdminRedirect
+    return notAdminRedirect;
   }
 
-  const reqInstance = getApiClient(context)
+  const reqInstance = getApiClient(context);
 
   try {
     const result = await reqInstance.get(
       `${process.env.API_URL}/${routes.api.users.single(id)}`
-    )
+    );
 
     if (!result.data.user) {
       return {
@@ -283,14 +283,14 @@ export const getServerSideProps = async (context) => {
           destination: "/backoffice/users",
           permanent: false,
         },
-      }
+      };
     }
 
     return {
       props: {
         user: result.data.user,
       },
-    }
+    };
   } catch (error) {
     if (error instanceof AxiosError) {
       return {
@@ -298,13 +298,13 @@ export const getServerSideProps = async (context) => {
           destination: "/backoffice/users",
           permanent: false,
         },
-      }
+      };
     }
   }
-}
+};
 
 BackofficeUserPage.getLayout = function (page) {
-  return <Layout>{page}</Layout>
-}
+  return <Layout>{page}</Layout>;
+};
 
-export default BackofficeUserPage
+export default BackofficeUserPage;

@@ -1,30 +1,30 @@
-import styles from "@/styles/components/Carousel.module.css"
-import Image from "next/image"
-import { useCallback, useEffect, useState } from "react"
-import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/solid"
+import styles from "@/styles/components/Carousel.module.css";
+import Image from "next/image";
+import { useCallback, useEffect, useState } from "react";
+import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/solid";
 
 const Carousel = (props) => {
-  const { images, Autoplay, controls } = props
+  const { images, Autoplay, controls } = props;
 
-  const [currentSlide, setCurrentSlide] = useState(0)
-  const [slides] = useState(images)
-  const [autoplay] = useState(Autoplay)
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [slides] = useState(images);
+  const [autoplay] = useState(Autoplay);
 
   const nextSlide = useCallback(() => {
-    setCurrentSlide(currentSlide === slides.length - 1 ? 0 : currentSlide + 1)
-  }, [currentSlide, slides.length])
+    setCurrentSlide(currentSlide === slides.length - 1 ? 0 : currentSlide + 1);
+  }, [currentSlide, slides.length]);
 
   const previousSlide = useCallback(() => {
-    setCurrentSlide(currentSlide === 0 ? slides.length - 1 : currentSlide - 1)
-  }, [currentSlide, slides.length])
+    setCurrentSlide(currentSlide === 0 ? slides.length - 1 : currentSlide - 1);
+  }, [currentSlide, slides.length]);
 
   useEffect(() => {
     if (autoplay) {
       setTimeout(() => {
-        nextSlide()
-      }, 5000)
+        nextSlide();
+      }, 5000);
     }
-  })
+  });
 
   return (
     <div className={styles.carouselContainer} id="carousel">
@@ -45,7 +45,7 @@ const Carousel = (props) => {
               objectFit: "cover",
             }}
           />
-        )
+        );
       })}
 
       <div className={controls ? styles.controlButtons : styles.hidden}>
@@ -58,10 +58,10 @@ const Carousel = (props) => {
                   : styles.controlButton
               }
               key={index}
-              onClick={() => { setCurrentSlide(index) }}
+              onClick={() => { setCurrentSlide(index); }}
             >
             </span>
-          )
+          );
         })}
       </div>
 
@@ -79,7 +79,7 @@ const Carousel = (props) => {
         <ArrowRightIcon className={styles.icon} />
       </button>
     </div>
-  )
-}
+  );
+};
 
-export default Carousel
+export default Carousel;

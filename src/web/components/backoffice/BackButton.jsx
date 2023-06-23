@@ -1,8 +1,8 @@
-import styles from "@/styles/backoffice/BackButton.module.css"
-import { ArrowLeftIcon } from "@heroicons/react/24/solid"
+import styles from "@/styles/backoffice/BackButton.module.css";
+import { ArrowLeftIcon } from "@heroicons/react/24/solid";
 
 const BackButton = (props) => {
-  const { setShowModal } = props 
+  const { setShowModal } = props; 
  
   return (
     <div className={styles.backButtonWrapper}>
@@ -14,7 +14,7 @@ const BackButton = (props) => {
       </button>
       <span className={styles.line}></span>
     </div>
-  )
-}
+  );
+};
 
-export default BackButton
+export default BackButton;

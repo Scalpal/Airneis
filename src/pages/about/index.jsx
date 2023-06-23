@@ -1,4 +1,4 @@
-import Banner from "@/web/components/Banner"
+import Banner from "@/web/components/Banner";
 
 const About = () => {
   return (
@@ -6,7 +6,7 @@ const About = () => {
       <Banner title={"About"} />
       <h2> About us page </h2>
     </>
-  )
-}
+  );
+};
 
-export default About
+export default About;

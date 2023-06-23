@@ -1,34 +1,34 @@
-import Banner from "@/web/components/Banner"
-import DetailedProductCard from "@/web/components/DetailedProductCard"
-import { useRouter } from "next/router"
-import styles from "@/styles/categoryPage.module.css"
-import useGetProducts from "@/web/hooks/useGetProducts"
-import { useCallback } from "react"
-import Loader from "@/web/components/Loader"
-import Button from "@/web/components/Button"
+import Banner from "@/web/components/Banner";
+import DetailedProductCard from "@/web/components/DetailedProductCard";
+import { useRouter } from "next/router";
+import styles from "@/styles/categoryPage.module.css";
+import useGetProducts from "@/web/hooks/useGetProducts";
+import { useCallback } from "react";
+import Loader from "@/web/components/Loader";
+import Button from "@/web/components/Button";
 
 export const getServerSideProps = async (context) => {
-  const { categoryId } = context.query
+  const { categoryId } = context.query;
 
   return {
     props: {
       categoryId: Number.parseInt(categoryId)
     }
-  }
-}
+  };
+};
 
 const Category = (props) => {
-  const { categoryId } = props
-  const router = useRouter()
+  const { categoryId } = props;
+  const router = useRouter();
 
-  const { data, isLoading, isValidating, size, setSize } = useGetProducts({ categories: categoryId, limit: 3 })
-  const products = data ? data.reduce((acc, { products }) => [...acc, ...products], []) : []
-  const totalPages = data && data[0] ? Math.ceil(data[0].count / 3 ) : 0
-  const isEndReached = size === totalPages
+  const { data, isLoading, isValidating, size, setSize } = useGetProducts({ categories: categoryId, limit: 3 });
+  const products = data ? data.reduce((acc, { products }) => [...acc, ...products], []) : [];
+  const totalPages = data && data[0] ? Math.ceil(data[0].count / 3 ) : 0;
+  const isEndReached = size === totalPages;
 
   const handleLoadMore = useCallback(() => { 
-    setSize((previousSize) => previousSize + 1)
-  }, [setSize]) 
+    setSize((previousSize) => previousSize + 1);
+  }, [setSize]); 
 
   return (
     <>
@@ -42,7 +42,7 @@ const Category = (props) => {
 
         <div className={styles.productsList}>
           {products.map((product, index) => {
-            return <DetailedProductCard key={index} product={product} />
+            return <DetailedProductCard key={index} product={product} />;
           })}
         </div>
 
@@ -68,7 +68,7 @@ const Category = (props) => {
         </div>
       </main>
     </>
-  )
-}
+  );
+};
 
-export default Category
+export default Category;

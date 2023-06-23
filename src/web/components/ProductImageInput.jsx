@@ -1,9 +1,9 @@
-import styles from "@/styles/components/ProductImageInput.module.css"
-import { PlusCircleIcon } from "@heroicons/react/24/outline"
+import styles from "@/styles/components/ProductImageInput.module.css";
+import { PlusCircleIcon } from "@heroicons/react/24/outline";
 
 
 const ProductImageInput = (props) => {
-  const { images, onChangeEvent } = props
+  const { images, onChangeEvent } = props;
 
   return (
     <>
@@ -24,7 +24,7 @@ const ProductImageInput = (props) => {
         Add a product image
       </label>
     </>
-  )
-}
+  );
+};
 
-export default ProductImageInput
+export default ProductImageInput;

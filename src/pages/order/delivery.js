@@ -56,7 +56,7 @@ const Delivery = () => {
         </div>
       </form>
     </>
-  )
-}
+  );
+};
 
-export default Delivery
+export default Delivery;

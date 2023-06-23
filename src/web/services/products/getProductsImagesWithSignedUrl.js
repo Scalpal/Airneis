@@ -1,6 +1,6 @@
-const { GetObjectCommand } = require("@aws-sdk/client-s3")
-const { getSignedUrl } = require("@aws-sdk/s3-request-presigner")
-const { s3CmdClient } = require("../S3")
+const { GetObjectCommand } = require("@aws-sdk/client-s3");
+const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
+const { s3CmdClient } = require("../S3");
 
 const getProductsImagesWithSignedUrls = async (products) => {
   const finalProducts = await Promise.all(products.map(async (product) => {
@@ -8,21 +8,21 @@ const getProductsImagesWithSignedUrls = async (products) => {
       const uploadParams = {
         Bucket: process.env.AWS_BUCKET_NAME,
         Key: image.imageSrc
-      }
+      };
 
-      const command = new GetObjectCommand(uploadParams)
-      const url = await getSignedUrl(s3CmdClient, command, { expiresIn: 3600 })
+      const command = new GetObjectCommand(uploadParams);
+      const url = await getSignedUrl(s3CmdClient, command, { expiresIn: 3600 });
 
-      image.imageUrl = url
+      image.imageUrl = url;
 
-      return image
-    }))
-    product.productImages = productImagesWithUrl
+      return image;
+    }));
+    product.productImages = productImagesWithUrl;
 
-    return product
-  }))
+    return product;
+  }));
 
-  return finalProducts
-}
+  return finalProducts;
+};
 
-export default getProductsImagesWithSignedUrls
+export default getProductsImagesWithSignedUrls;

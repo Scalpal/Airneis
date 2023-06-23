@@ -1,7 +1,7 @@
-import BaseModel from "@/api/db/models/BaseModel.js"
+import BaseModel from "@/api/db/models/BaseModel.js";
 
 class OrderModel extends BaseModel {
-  static tableName = "orders"
+  static tableName = "orders";
 
   // static relationMappings() {
   //   return {
@@ -17,4 +17,4 @@ class OrderModel extends BaseModel {
   // }
 }
 
-export default OrderModel
+export default OrderModel;

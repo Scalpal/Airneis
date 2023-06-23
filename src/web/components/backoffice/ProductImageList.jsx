@@ -1,9 +1,9 @@
-import styles from "@/styles/backoffice/ProductImageList.module.css"
-import Image from "next/image"
-import ProductImageInput from "../ProductImageInput"
-import { XMarkIcon } from "@heroicons/react/24/solid"
-import { useCallback } from "react"
-import deleteProductImage from "@/web/services/products/deleteProductImage"
+import styles from "@/styles/backoffice/ProductImageList.module.css";
+import Image from "next/image";
+import ProductImageInput from "../ProductImageInput";
+import { XMarkIcon } from "@heroicons/react/24/solid";
+import { useCallback } from "react";
+import deleteProductImage from "@/web/services/products/deleteProductImage";
 
 
 const ProductImageList = (props) => {
@@ -14,22 +14,22 @@ const ProductImageList = (props) => {
     setAlert,
     setShowAlert,
     setCurrentProduct
-  } = props 
+  } = props; 
 
   const deleteImage = useCallback(async(imageName) => {
-    const [error, { data }] = await deleteProductImage(imageName, productId)
+    const [error, { data }] = await deleteProductImage(imageName, productId);
 
     if (error) {
-      setAlert({ status: "error", message: "Error on image deletion." })
-      setShowAlert(true)
+      setAlert({ status: "error", message: "Error on image deletion." });
+      setShowAlert(true);
 
-      return
+      return;
     }
 
-    setAlert({ status: data.status, message: data.message })
-    setShowAlert(true)
-    setCurrentProduct(data.product) 
-  }, [productId, setAlert, setShowAlert, setCurrentProduct])
+    setAlert({ status: data.status, message: data.message });
+    setShowAlert(true);
+    setCurrentProduct(data.product); 
+  }, [productId, setAlert, setShowAlert, setCurrentProduct]);
 
   return (
     <div className={styles.container}>
@@ -55,7 +55,7 @@ const ProductImageList = (props) => {
                   />
                 </div>
               </div>
-            )
+            );
           }
         })}
 
@@ -85,14 +85,14 @@ const ProductImageList = (props) => {
                 {image.name}
                 <XMarkIcon className={styles.newProductImageRowIcon} />
               </p>
-            )
+            );
           }
         })}
       </div>
 
 
     </div>
-  )
-}
+  );
+};
 
-export default ProductImageList
+export default ProductImageList;

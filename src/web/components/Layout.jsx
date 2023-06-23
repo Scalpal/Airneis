@@ -1,17 +1,17 @@
-import Navbar from "@/web/components/Navbar"
-import Footer from "./Footer"
-import DrawerMenu from "./DrawerMenu"
-import { useState } from "react"
-import { nunito } from "@/pages/_app"
-import useAppContext from "@/web/hooks/useAppContext"
+import Navbar from "@/web/components/Navbar";
+import Footer from "./Footer";
+import DrawerMenu from "./DrawerMenu";
+import { useState } from "react";
+import { nunito } from "@/pages/_app";
+import useAppContext from "@/web/hooks/useAppContext";
 
 const Layout = ({ children }) => {
   const {
     actions: { signOut },
     state: { session },
-  } = useAppContext()
+  } = useAppContext();
 
-  const [isDrawerToggled, setIsDrawerToggled] = useState(false)
+  const [isDrawerToggled, setIsDrawerToggled] = useState(false);
 
   return (
     <div className={nunito.className}>
@@ -29,7 +29,7 @@ const Layout = ({ children }) => {
 
       <Footer actions={[signOut, session]} />
     </div>
-  )
-}
+  );
+};
 
-export default Layout
+export default Layout;

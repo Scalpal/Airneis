@@ -1,14 +1,14 @@
-import { classnames } from "@/pages/_app"
-import styles from "@/styles/components/AddressCard.module.css"
+import { classnames } from "@/pages/_app";
+import styles from "@/styles/components/AddressCard.module.css";
 import {
   GlobeEuropeAfricaIcon,
   MapPinIcon as OlMapPinIcon,
   BuildingOfficeIcon,
-} from "@heroicons/react/24/outline"
-import { MapPinIcon } from "@heroicons/react/24/solid"
+} from "@heroicons/react/24/outline";
+import { MapPinIcon } from "@heroicons/react/24/solid";
 
 const AddressCard = (props) => {
-  const { address, index } = props
+  const { address, index } = props;
 
   return (
     <div
@@ -36,7 +36,7 @@ const AddressCard = (props) => {
 
       {address.mainAddress && <MapPinIcon className={styles.mainAddressIcon} />}
     </div>
-  )
-}
+  );
+};
 
-export default AddressCard
+export default AddressCard;

@@ -1,21 +1,21 @@
-import styles from "@/styles/backoffice/AddProductPageContent.module.css" 
-import BackButton from "./BackButton"
-import { Field, FieldArray, Form, Formik } from "formik"
-import { createValidator, numberValidator, stringValidator } from "@/validator"
-import LoginField from "../LoginField"
-import { splitCamelCase } from "@/web/services/SplitCamelCase"
-import Button from "../Button"
-import { useGetCategories } from "@/web/hooks/useGetCategories"
-import { useGetMaterials } from "@/web/hooks/useGetMaterials"
-import { useCallback, useState } from "react"
-import CollapseMenu from "../CollapseMenu"
-import CheckboxItem from "../CheckboxItem"
-import routes from "@/web/routes"
-import useAppContext from "@/web/hooks/useAppContext"
-import CustomAlert from "../CustomAlert"
-import uploadProductImage from "@/web/services/products/uploadProductImage"
-import ProductImageInput from "../ProductImageInput"
-import { XMarkIcon } from "@heroicons/react/24/solid"
+import styles from "@/styles/backoffice/AddProductPageContent.module.css"; 
+import BackButton from "./BackButton";
+import { Field, FieldArray, Form, Formik } from "formik";
+import { createValidator, numberValidator, stringValidator } from "@/validator";
+import LoginField from "../LoginField";
+import { splitCamelCase } from "@/web/services/SplitCamelCase";
+import Button from "../Button";
+import { useGetCategories } from "@/web/hooks/useGetCategories";
+import { useGetMaterials } from "@/web/hooks/useGetMaterials";
+import { useCallback, useState } from "react";
+import CollapseMenu from "../CollapseMenu";
+import CheckboxItem from "../CheckboxItem";
+import routes from "@/web/routes";
+import useAppContext from "@/web/hooks/useAppContext";
+import CustomAlert from "../CustomAlert";
+import uploadProductImage from "@/web/services/products/uploadProductImage";
+import ProductImageInput from "../ProductImageInput";
+import { XMarkIcon } from "@heroicons/react/24/solid";
 
 const validationSchema = createValidator({
   name: stringValidator.required(),
@@ -23,7 +23,7 @@ const validationSchema = createValidator({
   price: numberValidator.required(),
   stock: numberValidator.required(),
   categoryId: numberValidator.required(),
-})
+});
 
 const initialValues = {
   name: "",
@@ -33,67 +33,67 @@ const initialValues = {
   categoryId: "",
   materials: [],
   productImages: []
-}
+};
 
-const mappableKeys = ["name", "description", "price", "stock"]
+const mappableKeys = ["name", "description", "price", "stock"];
 
 const AddProductPageContent = (props) => {
-  const { setShowModal, updateProducts } = props 
-  const { actions: { api } } = useAppContext()
-  const { materialsData, materialsError, materialsIsLoading } = useGetMaterials()
-  const materials = (!materialsIsLoading && !materialsError) ? materialsData : []
+  const { setShowModal, updateProducts } = props; 
+  const { actions: { api } } = useAppContext();
+  const { materialsData, materialsError, materialsIsLoading } = useGetMaterials();
+  const materials = (!materialsIsLoading && !materialsError) ? materialsData : [];
 
-  const { categoriesData, categoriesError, categoriesIsLoading } = useGetCategories()
-  const categories = (!categoriesIsLoading && !categoriesError) ? categoriesData : []
+  const { categoriesData, categoriesError, categoriesIsLoading } = useGetCategories();
+  const categories = (!categoriesIsLoading && !categoriesError) ? categoriesData : [];
 
-  const [alert, setAlert] = useState({ status: "", message: "" })
-  const [showAlert, setShowAlert] = useState(false)
-  const [imagesToUpload, setImagesToUpload] = useState([])
+  const [alert, setAlert] = useState({ status: "", message: "" });
+  const [showAlert, setShowAlert] = useState(false);
+  const [imagesToUpload, setImagesToUpload] = useState([]);
 
   const handleSubmit = useCallback(async(values, { resetForm }) => {
-    values.price = Number.parseInt(values.price)
-    values.stock = Number.parseInt(values.stock)
+    values.price = Number.parseInt(values.price);
+    values.stock = Number.parseInt(values.stock);
 
-    const materials = values.materials.reduce((acc, { id }) => [...acc, id], [])
-    values.materials = materials
+    const materials = values.materials.reduce((acc, { id }) => [...acc, id], []);
+    values.materials = materials;
 
     try {
-      const { data } = await api.post(routes.api.products.add(), values)
+      const { data } = await api.post(routes.api.products.add(), values);
 
       if (imagesToUpload.length > 0) {
         imagesToUpload.map(async(imageFile) => {
-          const [error] = await uploadProductImage(imageFile, data.product.id)
+          const [error] = await uploadProductImage(imageFile, data.product.id);
 
           if (error) {
-            setAlert({ status: "error" , message: "Error on add." })
-            setShowAlert(true)
+            setAlert({ status: "error" , message: "Error on add." });
+            setShowAlert(true);
 
-            return
+            return;
           }
-        })
+        });
       } 
 
-      setAlert({ status: "success" , message: data.message })
-      setShowAlert(true)
-      updateProducts()
-      resetForm() 
+      setAlert({ status: "success" , message: data.message });
+      setShowAlert(true);
+      updateProducts();
+      resetForm(); 
     } catch (error) {
-      setAlert({ status: 500, message: error })
-      setShowAlert(true)
+      setAlert({ status: 500, message: error });
+      setShowAlert(true);
     }
-  }, [api, updateProducts, imagesToUpload])
+  }, [api, updateProducts, imagesToUpload]);
 
   const isMaterialChecked = (values, id) => {
-    const productMaterialIds = values.reduce((acc, { id }) => [...acc, id], []) 
+    const productMaterialIds = values.reduce((acc, { id }) => [...acc, id], []); 
       
-    return productMaterialIds.includes(id) ? true : false
-  }
+    return productMaterialIds.includes(id) ? true : false;
+  };
 
   const removeImage = useCallback((index) => {
-    const updatedImagesToUpload = imagesToUpload.filter((_, i) => i !== index) 
+    const updatedImagesToUpload = imagesToUpload.filter((_, i) => i !== index); 
 
-    setImagesToUpload(updatedImagesToUpload)
-  }, [imagesToUpload])
+    setImagesToUpload(updatedImagesToUpload);
+  }, [imagesToUpload]);
 
   return (
 
@@ -164,7 +164,7 @@ const AddProductPageContent = (props) => {
 
                                 <XMarkIcon className={styles.productImageRowIcon} />
                               </p>
-                            )
+                            );
                           })}
                         </div>
                         )
@@ -205,7 +205,7 @@ const AddProductPageContent = (props) => {
                 </Button>
               </div>
             </Form>
-          )
+          );
         }}
       </Formik>
 
@@ -215,7 +215,7 @@ const AddProductPageContent = (props) => {
         setShowAlert={setShowAlert}
       />
     </main>
-  )
-}
+  );
+};
 
-export default AddProductPageContent
+export default AddProductPageContent;

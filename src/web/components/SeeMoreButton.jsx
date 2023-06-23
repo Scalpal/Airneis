@@ -1,9 +1,9 @@
-import styles from "@/styles/components/SeeMoreButton.module.css" 
-import { useRouter } from "next/router"
+import styles from "@/styles/components/SeeMoreButton.module.css"; 
+import { useRouter } from "next/router";
 
 const SeeMoreButton = (props) => {
-  const { children, route } = props
-  const router = useRouter()
+  const { children, route } = props;
+  const router = useRouter();
 
   return (
     <button
@@ -12,7 +12,7 @@ const SeeMoreButton = (props) => {
     >
       {children}
     </button>
-  )
-}
+  );
+};
 
-export default SeeMoreButton
+export default SeeMoreButton;

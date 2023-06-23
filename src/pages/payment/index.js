@@ -43,7 +43,7 @@ const Payment = () => {
         </div>
       </form>
     </>
-  )
-}
+  );
+};
 
-export default Payment
+export default Payment;

@@ -1,16 +1,16 @@
-import UserModel from "@/api/db/models/UserModel.js"
-import auth from "@/api/middlewares/auth"
-import checkIsAdmin from "@/api/middlewares/checkIsAdmin"
-import slowDown from "@/api/middlewares/slowDown.js"
-import validate from "@/api/middlewares/validate"
-import mw from "@/api/mw.js"
+import UserModel from "@/api/db/models/UserModel.js";
+import auth from "@/api/middlewares/auth";
+import checkIsAdmin from "@/api/middlewares/checkIsAdmin";
+import slowDown from "@/api/middlewares/slowDown.js";
+import validate from "@/api/middlewares/validate";
+import mw from "@/api/mw.js";
 import {
   limitValidator,
   orderFieldValidator,
   orderValidator,
   pageValidator,
   searchValidator,
-} from "@/validator"
+} from "@/validator";
 
 const handler = mw({
   GET: [
@@ -37,22 +37,22 @@ const handler = mw({
       res,
     }) => {
       try {
-        const searchValue = search.toLowerCase()
-        const query = UserModel.query()
+        const searchValue = search.toLowerCase();
+        const query = UserModel.query();
 
         if (orderField) {
-          query.orderBy(orderField, order)
+          query.orderBy(orderField, order);
         }
 
         if (search) {
           query
             .whereRaw('LOWER("firstName") LIKE ?', `%${searchValue}%`)
             .orWhereRaw('LOWER("lastName") LIKE ?', `%${searchValue}%`)
-            .orWhereRaw('LOWER("email") LIKE ?', `%${searchValue}%`)
+            .orWhereRaw('LOWER("email") LIKE ?', `%${searchValue}%`);
         }
 
-        const countQuery = query.clone()
-        const [{ count }] = await countQuery.clearSelect().clearOrder().count()
+        const countQuery = query.clone();
+        const [{ count }] = await countQuery.clearSelect().clearOrder().count();
 
         const users = await query
           .modify("paginate", limit, page)
@@ -65,14 +65,14 @@ const handler = mw({
             "active",
             "isAdmin"
           )
-          .withGraphFetched("address")
+          .withGraphFetched("address");
 
-        res.send({ users: users, count: count })
+        res.send({ users: users, count: count });
       } catch (error) {
-        res.status(500).send({ error: error })
+        res.status(500).send({ error: error });
       }
     },
   ],
-})
+});
 
-export default handler
+export default handler;

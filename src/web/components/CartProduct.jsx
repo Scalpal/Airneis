@@ -1,15 +1,15 @@
-import Image from "next/image"
-import styles from "@/styles/components/CartProduct.module.css"
-import { TrashIcon } from "@heroicons/react/24/solid"
-import useAppContext from "../hooks/useAppContext"
+import Image from "next/image";
+import styles from "@/styles/components/CartProduct.module.css";
+import { TrashIcon } from "@heroicons/react/24/solid";
+import useAppContext from "../hooks/useAppContext";
 
 const CartProduct = (props) => {
-  const { product, index, productState } = props
+  const { product, index, productState } = props;
   const {
     actions: { addToCart, removeProductFromCart, deleteProductFromCart },
-  } = useAppContext()
+  } = useAppContext();
 
-  const [productsList] = productState
+  const [productsList] = productState;
 
   return (
     <div className={styles.cartProduct}>
@@ -38,7 +38,7 @@ const CartProduct = (props) => {
         <div className={styles.cartProductControlsQuantity}>
           <button
             onClick={() => {
-              removeProductFromCart(product)
+              removeProductFromCart(product);
             }}
           >
             -
@@ -46,7 +46,7 @@ const CartProduct = (props) => {
           <p>{product.quantity}</p>
           <button
             onClick={() => {
-              addToCart(product)
+              addToCart(product);
             }}
           >
             +
@@ -56,12 +56,12 @@ const CartProduct = (props) => {
         <TrashIcon
           className={styles.cartProductControlIcon}
           onClick={() => {
-            deleteProductFromCart(product)
+            deleteProductFromCart(product);
           }}
         />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default CartProduct
+export default CartProduct;

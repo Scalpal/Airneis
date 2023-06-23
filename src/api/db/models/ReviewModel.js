@@ -1,13 +1,13 @@
-import BaseModel from "@/api/db/models/BaseModel.js"
-import UserModel from "./UserModel"
+import BaseModel from "@/api/db/models/BaseModel.js";
+import UserModel from "./UserModel";
 
 class ReviewModel extends BaseModel {
-  static tableName = "reviews"
+  static tableName = "reviews";
 
   static modifiers = {
     paginate: (query, limit, page) =>
       query.limit(limit).offset((page - 1) * limit),
-  }
+  };
 
   static relationMappings() {
     return {
@@ -20,8 +20,8 @@ class ReviewModel extends BaseModel {
         },
       },
       modify: (query) => query.select("firstName", "lastName"),
-    }
+    };
   }
 }
 
-export default ReviewModel
+export default ReviewModel;

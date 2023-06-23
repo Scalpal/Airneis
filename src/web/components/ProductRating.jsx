@@ -1,8 +1,8 @@
-import styles from "@/styles/components/ProductRating.module.css" 
-import Stars from "./Stars"
+import styles from "@/styles/components/ProductRating.module.css"; 
+import Stars from "./Stars";
 
 const ProductRating = (props) => {
-  const { rating, totalReviews } = props 
+  const { rating, totalReviews } = props; 
 
   return (
     <div className={styles.container}>
@@ -12,7 +12,7 @@ const ProductRating = (props) => {
         ({totalReviews < 100 ? totalReviews : "99+"})
       </p>
     </div>
-  )
-}
+  );
+};
 
-export default ProductRating
+export default ProductRating;

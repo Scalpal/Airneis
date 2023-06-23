@@ -1,8 +1,8 @@
-import styles from "@/styles/components/RadioItem.module.css"
-import { CheckIcon } from "@heroicons/react/24/outline"
+import styles from "@/styles/components/RadioItem.module.css";
+import { CheckIcon } from "@heroicons/react/24/outline";
 
 const RadioItem = (props) => {
-  const { label, name, value, inputId, checked, ...otherProps } = props
+  const { label, name, value, inputId, checked, ...otherProps } = props;
 
   return (
     <div
@@ -23,7 +23,7 @@ const RadioItem = (props) => {
       </label>
       <p>{label}</p>
     </div>
-  )
-}
+  );
+};
 
-export default RadioItem
+export default RadioItem;

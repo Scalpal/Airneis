@@ -1,16 +1,16 @@
-import BaseModel from "@/api/db/models/BaseModel.js"
-import CategoryModel from "@/api/db/models/CategoryModel.js"
-import MaterialModel from "./MaterialModel"
-import ReviewModel from "./ReviewModel"
-import ProductImageModel from "./ProductImageModel"
+import BaseModel from "@/api/db/models/BaseModel.js";
+import CategoryModel from "@/api/db/models/CategoryModel.js";
+import MaterialModel from "./MaterialModel";
+import ReviewModel from "./ReviewModel";
+import ProductImageModel from "./ProductImageModel";
 
 class ProductModel extends BaseModel {
-  static tableName = "products"
+  static tableName = "products";
 
   static modifiers = {
     paginate: (query, limit, page) =>
       query.limit(limit).offset((page - 1) * limit),
-  }
+  };
 
   static relationMappings() {
     return {
@@ -52,8 +52,8 @@ class ProductModel extends BaseModel {
         }
       },
       modify: (query) => query.select("*")
-    }
+    };
   }
 }
 
-export default ProductModel
+export default ProductModel;

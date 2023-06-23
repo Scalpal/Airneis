@@ -1,40 +1,40 @@
-import { useCallback, useEffect, useState } from "react"
-import styles from "@/styles/components/SearchProductOverlay.module.css"
-import { MagnifyingGlassIcon } from "@heroicons/react/24/outline"
-import ProductSearchBar from "./ProductSearchBar"
-import { XMarkIcon } from "@heroicons/react/24/solid"
+import { useCallback, useEffect, useState } from "react";
+import styles from "@/styles/components/SearchProductOverlay.module.css";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import ProductSearchBar from "./ProductSearchBar";
+import { XMarkIcon } from "@heroicons/react/24/solid";
 
 
 
 const SearchProductOverlay = () => {
-  const [isOpened, setIsOpened] = useState(false)
+  const [isOpened, setIsOpened] = useState(false);
 
   const closeOverlay = useCallback(() => {
-    setIsOpened(false)
-  }, [setIsOpened])
+    setIsOpened(false);
+  }, [setIsOpened]);
 
   useEffect(() => {
     if (isOpened === true) {
-      document.body.style.overflow = "hidden"
+      document.body.style.overflow = "hidden";
 
-      return
+      return;
     }
 
-    document.body.style.overflow = "" 
-  }, [isOpened])
+    document.body.style.overflow = ""; 
+  }, [isOpened]);
 
   useEffect(() => {
     const handleKeyDown = (event) => {
       if (event.key === "Escape") {
-        setIsOpened(false) 
+        setIsOpened(false); 
       }
-    }
-    window.addEventListener("keydown", handleKeyDown)
+    };
+    window.addEventListener("keydown", handleKeyDown);
 
     return () => {
-      window.removeEventListener("keydown", handleKeyDown)
-    }
-  }, [setIsOpened])
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [setIsOpened]);
 
 
   return (
@@ -70,7 +70,7 @@ const SearchProductOverlay = () => {
         </div>
       )}
     </>
-  )
-}
+  );
+};
 
-export default SearchProductOverlay
+export default SearchProductOverlay;

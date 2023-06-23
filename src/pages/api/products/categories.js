@@ -1,6 +1,6 @@
-import CategoryModel from "@/api/db/models/CategoryModel"
-import slowDown from "@/api/middlewares/slowDown"
-import mw from "@/api/mw"
+import CategoryModel from "@/api/db/models/CategoryModel";
+import slowDown from "@/api/middlewares/slowDown";
+import mw from "@/api/mw";
 
 
 const handler = mw({
@@ -10,14 +10,14 @@ const handler = mw({
       res
     }) => {
       try {
-        const categories = await CategoryModel.query().select("*")
+        const categories = await CategoryModel.query().select("*");
 
-        res.send({ categories: categories })
+        res.send({ categories: categories });
       } catch (error) {
-        res.status(500).send({ error: error })
+        res.status(500).send({ error: error });
       }
     }
   ]
-})
+});
 
-export default handler 
+export default handler; 

@@ -1,14 +1,14 @@
-import routes from "@/web/routes"
+import routes from "@/web/routes";
 
 const signUp = ({ api }) =>
   async (values) => {
     try {
-      const { data } = await api.post(routes.api.register(), values)
+      const { data } = await api.post(routes.api.register(), values);
 
-      return [null, data]
+      return [null, data];
     } catch (error) {
-      return [Array.isArray(error) ? error : [error]]
+      return [Array.isArray(error) ? error : [error]];
     }
-  }
+  };
 
-export default signUp
+export default signUp;

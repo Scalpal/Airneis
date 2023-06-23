@@ -1,6 +1,6 @@
-import MaterialModel from "@/api/db/models/MaterialModel"
-import slowDown from "@/api/middlewares/slowDown"
-import mw from "@/api/mw"
+import MaterialModel from "@/api/db/models/MaterialModel";
+import slowDown from "@/api/middlewares/slowDown";
+import mw from "@/api/mw";
 
 
 const handler = mw({
@@ -10,14 +10,14 @@ const handler = mw({
       res
     }) => {
       try {
-        const materials = await MaterialModel.query().select("*")
+        const materials = await MaterialModel.query().select("*");
 
-        res.send({ materials: materials })
+        res.send({ materials: materials });
       } catch (error) {
-        res.status(500).send({ error: error })
+        res.status(500).send({ error: error });
       }
     }
   ]
-})
+});
 
-export default handler 
+export default handler; 

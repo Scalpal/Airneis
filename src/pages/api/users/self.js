@@ -1,14 +1,14 @@
-import UserModel from "@/api/db/models/UserModel"
-import slowDown from "@/api/middlewares/slowDown"
-import mw from "@/api/mw.js"
-import auth from "@/api/middlewares/auth"
+import UserModel from "@/api/db/models/UserModel";
+import slowDown from "@/api/middlewares/slowDown";
+import mw from "@/api/mw.js";
+import auth from "@/api/middlewares/auth";
 
 const handler = mw({
   GET: [
     slowDown(500),
     auth(),
     async ({ res, locals }) => {
-      const id = locals.userId
+      const id = locals.userId;
 
       try {
         const user = await UserModel.query()
@@ -22,14 +22,14 @@ const handler = mw({
             "isAdmin"
           )
           .findOne({ id })
-          .withGraphFetched("address")
+          .withGraphFetched("address");
 
-        res.send({ user: user })
+        res.send({ user: user });
       } catch (error) {
-        res.status(500).send({ error: error })
+        res.status(500).send({ error: error });
       }
     },
   ],
-})
+});
 
-export default handler
+export default handler;

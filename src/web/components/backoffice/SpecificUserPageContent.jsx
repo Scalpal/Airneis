@@ -1,18 +1,18 @@
-import { classnames, nunito } from "@/pages/_app"
-import styles from "@/styles/backoffice/SpecificUserPageContent.module.css" 
-import { CheckIcon, PencilSquareIcon } from "@heroicons/react/24/outline"
-import { Field, Form, Formik } from "formik"
-import { useCallback, useState } from "react"
-import LoginField from "../LoginField"
-import { splitCamelCase } from "@/web/services/SplitCamelCase"
-import Button from "../Button"
-import AddressCard from "../AddressCard"
-import BackButton from "./BackButton"
-import { boolValidator, createValidator, emailValidator, phoneValidator, stringValidator } from "@/validator"
-import routes from "@/web/routes"
-import useAppContext from "@/web/hooks/useAppContext"
-import { AxiosError } from "axios"
-import CustomAlert from "../CustomAlert"
+import { classnames, nunito } from "@/pages/_app";
+import styles from "@/styles/backoffice/SpecificUserPageContent.module.css"; 
+import { CheckIcon, PencilSquareIcon } from "@heroicons/react/24/outline";
+import { Field, Form, Formik } from "formik";
+import { useCallback, useState } from "react";
+import LoginField from "../LoginField";
+import { splitCamelCase } from "@/web/services/SplitCamelCase";
+import Button from "../Button";
+import AddressCard from "../AddressCard";
+import BackButton from "./BackButton";
+import { boolValidator, createValidator, emailValidator, phoneValidator, stringValidator } from "@/validator";
+import routes from "@/web/routes";
+import useAppContext from "@/web/hooks/useAppContext";
+import { AxiosError } from "axios";
+import CustomAlert from "../CustomAlert";
 
 const validationSchema = createValidator({
   firstName: stringValidator.required(),
@@ -21,18 +21,18 @@ const validationSchema = createValidator({
   phoneNumber: phoneValidator.required(),
   active: boolValidator.required(),
   isAdmin: boolValidator.required()
-})
+});
 
-const mappableKeys = ["email", "firstName", "lastName", "phoneNumber"]
+const mappableKeys = ["email", "firstName", "lastName", "phoneNumber"];
 
 const SpecificUserPageContent = (props) => {
-  const { user, setShowModal, updateUsers } = props
-  const { actions: { api } } = useAppContext() 
+  const { user, setShowModal, updateUsers } = props;
+  const { actions: { api } } = useAppContext(); 
 
-  const [currentUser, setCurrentUser] = useState(user) 
-  const [editMode, setEditMode] = useState(false)
-  const [showAlert, setShowAlert] = useState(false)
-  const [alert, setAlert] = useState("")
+  const [currentUser, setCurrentUser] = useState(user); 
+  const [editMode, setEditMode] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
+  const [alert, setAlert] = useState("");
 
   const initialValues = {
     email: currentUser.email,
@@ -41,28 +41,28 @@ const SpecificUserPageContent = (props) => {
     phoneNumber: currentUser.phoneNumber,
     active: currentUser.active,
     isAdmin: currentUser.isAdmin
-  }
+  };
 
   const handleSubmit = useCallback(async(values) => {
     try {
-      const { data } = await api.patch(routes.api.users.patch(user.id), values)
+      const { data } = await api.patch(routes.api.users.patch(user.id), values);
 
-      setCurrentUser(data.user)
-      setShowAlert(true)
-      setAlert({ status: data.status, message: data.message })
-      updateUsers()
+      setCurrentUser(data.user);
+      setShowAlert(true);
+      setAlert({ status: data.status, message: data.message });
+      updateUsers();
     } catch (error) {
-      setShowAlert(true)
+      setShowAlert(true);
 
       if (error instanceof AxiosError) {
-        setAlert({ status: error.response.status, message: error.response.message })
+        setAlert({ status: error.response.status, message: error.response.message });
       }
 
-      setAlert({ status: "error", message: "An error occured during the update." })
+      setAlert({ status: "error", message: "An error occured during the update." });
     } finally {
-      setEditMode(false)
+      setEditMode(false);
     }
-  }, [api, updateUsers, user.id])
+  }, [api, updateUsers, user.id]);
 
   return (
     <main
@@ -107,7 +107,7 @@ const SpecificUserPageContent = (props) => {
                         disabled={!editMode}
                       />
                     )
-                  )
+                  );
                 })}
 
                 <div className={styles.checkboxItem}>
@@ -157,7 +157,7 @@ const SpecificUserPageContent = (props) => {
                   </Button>
                 )}
               </Form>
-            )
+            );
           }}
         </Formik>
 
@@ -171,7 +171,7 @@ const SpecificUserPageContent = (props) => {
               user.address.map((address, index) => {
                 return (
                   <AddressCard address={address} key={index} index={index + 1} />
-                )
+                );
               })
             ): (
               <p>You currently have added no address</p>
@@ -187,7 +187,7 @@ const SpecificUserPageContent = (props) => {
         setShowAlert={setShowAlert}
       />
     </main>
-  )
-}
+  );
+};
 
-export default SpecificUserPageContent
+export default SpecificUserPageContent;

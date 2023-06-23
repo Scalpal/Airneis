@@ -1,27 +1,27 @@
-import Carousel from "@/web/components/Carousel"
-import ProductCard from "@/web/components/ProductCard"
-import Banner from "@/web/components/Banner"
-import Button from "@/web/components/Button"
-import styles from "@/styles/productPage.module.css"
-import Axios from "axios"
-import routes from "@/web/routes"
-import useAppContext from "@/web/hooks/useAppContext"
-import SeeMoreButton from "@/web/components/SeeMoreButton"
-import ProductReviews from "@/web/components/ProductReviews"
-import { useState } from "react"
+import Carousel from "@/web/components/Carousel";
+import ProductCard from "@/web/components/ProductCard";
+import Banner from "@/web/components/Banner";
+import Button from "@/web/components/Button";
+import styles from "@/styles/productPage.module.css";
+import Axios from "axios";
+import routes from "@/web/routes";
+import useAppContext from "@/web/hooks/useAppContext";
+import SeeMoreButton from "@/web/components/SeeMoreButton";
+import ProductReviews from "@/web/components/ProductReviews";
+import { useState } from "react";
 
 export const getServerSideProps = async (context) => {
-  const { productId } = context.query
+  const { productId } = context.query;
 
   const {
     data: { product },
   } = await Axios.get(
     `${process.env.API_URL}${routes.api.products.single(productId)}`
-  )
+  );
 
   const specificCategory = `?categories=${Number.parseInt(
     product.category.id
-  )}&`
+  )}&`;
   const {
     data: { products },
   } = await Axios.get(
@@ -29,24 +29,24 @@ export const getServerSideProps = async (context) => {
       specificCategory,
       1
     )}`
-  )
+  );
 
   return {
     props: {
       product: product,
       categoryProducts: products,
     },
-  }
-}
+  };
+};
 
 const ProductPage = (props) => {
-  const { product, categoryProducts } = props
+  const { product, categoryProducts } = props;
 
   const {
     actions: { addToCart },
-  } = useAppContext()
-  const [limit] = useState(4)
-  const [page, setPage] = useState(1)
+  } = useAppContext();
+  const [limit] = useState(4);
+  const [page, setPage] = useState(1);
 
   return (
     <>
@@ -74,9 +74,9 @@ const ProductPage = (props) => {
               <p className={styles.productInfosMaterials}>
                 Materials :{" "}
                 {product.materials.map(({ name }, index) => {
-                  const dash = index < product.materials.length - 1 ? "-" : ""
+                  const dash = index < product.materials.length - 1 ? "-" : "";
 
-                  return name + " " + dash + " "
+                  return name + " " + dash + " ";
                 })}
               </p>
 
@@ -112,7 +112,7 @@ const ProductPage = (props) => {
         <section className={styles.similarProductsWrapper}>
           <div className={styles.similarProductsContainer}>
             {categoryProducts.map((product, index) => {
-              return <ProductCard key={index} product={product} />
+              return <ProductCard key={index} product={product} />;
             })}
           </div>
 
@@ -122,7 +122,7 @@ const ProductPage = (props) => {
         </section>
       </main>
     </>
-  )
-}
+  );
+};
 
-export default ProductPage
+export default ProductPage;
