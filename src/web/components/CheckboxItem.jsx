@@ -1,35 +1,9 @@
-import styles from "@/styles/components/CheckboxItem.module.css"; 
+import { classnames } from "@/pages/_app";
+import styles from "@/styles/components/CheckboxItem.module.css";
 import { CheckIcon } from "@heroicons/react/24/solid";
-import { useState, useCallback, useEffect } from "react";
-
 
 const CheckboxItem = (props) => {
-  const { name, value, queryKey, queryParams, handleQueryParamsFilters } = props
-
-  const [checked, setChecked] = useState(false)
-
-  const handleCheckbox = useCallback(() => {
-    if (typeof queryParams[queryKey] === "boolean") {
-      handleQueryParamsFilters(queryKey, { name: name, value: value })
-      setChecked(!checked)
-
-      return
-    }
-
-    handleQueryParamsFilters(queryKey, { name: name, value: value })
-    setChecked(!checked)
-  }, [name, value, queryKey, queryParams, handleQueryParamsFilters, checked])
-
-  useEffect(() => {
-    if (Array.isArray(queryParams[queryKey])) {
-      const bool =
-        queryParams[queryKey].findIndex((elt) => elt.value === value) === -1
-          ? false
-          : true
-
-      setChecked(bool ? true : false)
-    }
-  }, [queryParams, queryKey, value])
+  const { name, value, checked, disabled, onChange } = props;
 
   return (
     <div className={styles.checkboxItem}>
@@ -38,16 +12,15 @@ const CheckboxItem = (props) => {
         value={value}
         name={name}
         id={name}
-        onClick={() => {
-          handleCheckbox()
-        }}
+        disabled={disabled}
+        onChange={onChange}
       />
       <label htmlFor={name} className={checked ? styles.checked : ""}>
         {checked && <CheckIcon className={styles.icon} />}
       </label>
-      <p>{label}</p>
+      <p>{name}</p>
     </div>
-  )
-}
+  );
+};
 
-export default CheckboxItem
+export default CheckboxItem;

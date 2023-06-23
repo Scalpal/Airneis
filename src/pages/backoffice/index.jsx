@@ -12,6 +12,7 @@ const Backoffice = () => {
 Backoffice.getLayout = function (page) {
   return <Layout>{page}</Layout>;
 };
+export default Backoffice;
 
 export const getServerSideProps = async (context) => {
   const { token } = parseCookies(context);
@@ -19,12 +20,15 @@ export const getServerSideProps = async (context) => {
 
   if (badTokenRedirect) {
     return badTokenRedirect;
+
   }
 
   const notAdminRedirect = await checkIsAdmin(context);
 
+
   if (notAdminRedirect) {
     return notAdminRedirect;
+
   }
 
   return {
@@ -33,4 +37,3 @@ export const getServerSideProps = async (context) => {
     },
   };
 };
-export default Backoffice;

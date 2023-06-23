@@ -1,6 +1,6 @@
-import styles from "@/styles/backoffice/LoginLayout.module.css"
-import { classnames } from "@/pages/_app"
-import { nunito } from "@/pages/_app"
+import styles from "@/styles/backoffice/LoginLayout.module.css";
+import { classnames } from "@/pages/_app";
+import { nunito } from "@/pages/_app";
 
 const BackofficeLoginLayout = ({children}) => {
   return (
@@ -9,3 +9,5 @@ const BackofficeLoginLayout = ({children}) => {
     </div>
   );
 };
+
+export default BackofficeLoginLayout;

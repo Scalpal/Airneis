@@ -1,7 +1,7 @@
-import MaterialModel from "@/api/db/models/MaterialModel"
-import mw from "@/api/mw.js"
-import validate from "@/api/middlewares/validate"
-import { pageValidator, limitValidator } from "@/validator"
+import MaterialModel from "@/api/db/models/MaterialModel";
+import mw from "@/api/mw.js";
+import validate from "@/api/middlewares/validate";
+import { pageValidator, limitValidator } from "@/validator";
 
 const materials = mw({
   GET: [
@@ -17,21 +17,21 @@ const materials = mw({
       },
       res,
     }) => {
-      const query = MaterialModel.query()
+      const query = MaterialModel.query();
 
-      const [{ count }] = await query.clone().limit(1).offset(0).count()
-      const totalCount = parseInt(count, 10)
+      const [{ count }] = await query.clone().limit(1).offset(0).count();
+      const totalCount = parseInt(count, 10);
 
-      const materials = await query.modify("paginate", { limit, page })
+      const materials = await query.modify("paginate", { limit, page });
 
       res.send({
         result: materials,
         meta: {
           totalCount,
         },
-      })
+      });
     },
   ],
-})
+});
 
-export default materials
+export default materials;

@@ -64,7 +64,7 @@ const CustomField = (props) => {
               <span className={styles.errorText}>{meta.error}</span>
             ) : null}
           </div>
-        )
+        );
       }}
     </Field>
   );

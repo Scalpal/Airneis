@@ -1,6 +1,6 @@
-import UserModel from "@/api/db/models/UserModel"
-import mw from "@/api/mw.js"
-import auth from "@/api/middlewares/auth"
+import UserModel from "@/api/db/models/UserModel";
+import mw from "@/api/mw.js";
+import auth from "@/api/middlewares/auth";
 
 const handler = mw({
   GET: [
@@ -29,4 +29,5 @@ const handler = mw({
     },
   ],
 });
+
 export default handler;

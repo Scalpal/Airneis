@@ -13,15 +13,15 @@ const merge = require("deepmerge");
 const validationSchema = createValidator({
   email: emailValidator.required(),
   password: stringValidator.required(),
-})
+});
 
 const initialValues = {
   email: "",
   password: "",
-}
+};
 
 const Login = () => {
-  const router = useRouter()
+  const router = useRouter();
   const {
     actions: { signIn },
   } = useAppContext();
@@ -40,9 +40,9 @@ const Login = () => {
       }
 
       if (err) {
-        setError(err)
+        setError(err);
 
-        return
+        return;
       }
 
       router.push(routes.home());
@@ -93,10 +93,10 @@ const Login = () => {
         )}
       </Formik>
     </main>
-  )
-}
+  );
+};
 
-Login.isPublic = true
+Login.isPublic = true;
 Login.getLayout = function (page) {
   return <BackofficeLoginLayout>{page}</BackofficeLoginLayout>;
 };

@@ -17,6 +17,8 @@ BackofficeShop.getLayout = function (page) {
   return <Layout>{page}</Layout>;
 };
 
+export default BackofficeShop;
+
 export const getServerSideProps = async (context) => {
   const { token } = parseCookies(context);
   const badTokenRedirect = await checkToken(token);
@@ -29,7 +31,6 @@ export const getServerSideProps = async (context) => {
 
   if (notAdminRedirect) {
     return notAdminRedirect;
-  }
 
   return {
     props: {
@@ -37,5 +38,3 @@ export const getServerSideProps = async (context) => {
     },
   };
 };
-
-export default BackofficeShop;

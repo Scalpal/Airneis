@@ -2,25 +2,23 @@ import { createValidator, stringValidator, emailValidator } from "@/validator";
 import { Formik, Form } from "formik";
 import Button from "@/web/components/Button";
 import styles from "@/styles/login.module.css";
-import routes from "@/web/routes.js";
 import { useRouter } from "next/router";
 import { useCallback, useState } from "react";
 import useAppContext from "@/web/hooks/useAppContext";
 import LoginLayout from "@/web/components/LoginLayout";
 import LoginField from "@/web/components/LoginField";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
 
 const validationSchema = createValidator({
   email: emailValidator.required(),
   password: stringValidator.required(),
-})
+});
 
 const initialValues = {
   email: "",
   password: "",
-}
+};
 
 const Login = () => {
   const router = useRouter();
@@ -34,13 +32,16 @@ const Login = () => {
     async (values) => {
       const [err] = await signIn(values);
 
+
       if (err) {
         setError(err[0].response.data.error);
 
+
         return;
+
       }
 
-      router.push(routes.home());
+      router.push("/");
     },
     [signIn, router]
   );
@@ -85,14 +86,11 @@ const Login = () => {
             <div className={styles.noAccountText}>
               <p>
                 {translate("forgotPassword")}
-                <span onClick={() => router.push(routes.resetPassword())}>
-                  {" "}
-                  {translate("forgotPasswordLink")}
-                </span>
+                <span>{translate("forgotPasswordLink")}</span>
               </p>
               <p>
                 {translate("noAccount")}
-                <span onClick={() => router.push(routes.register())}>
+                <span onClick={() => router.push("/register")}>
                   {" "}
                   {translate("noAccountLink")}
                 </span>
@@ -108,4 +106,5 @@ const Login = () => {
 Login.getLayout = function (page) {
   return <LoginLayout>{page}</LoginLayout>;
 };
+
 export default Login;

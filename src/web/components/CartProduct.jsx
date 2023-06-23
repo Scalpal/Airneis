@@ -5,7 +5,9 @@ import useAppContext from "../hooks/useAppContext";
 
 const CartProduct = (props) => {
   const { product, index, productState } = props;
-  const { actions: { addToCart, removeProductFromCart, deleteProductFromCart } } = useAppContext(); 
+  const {
+    actions: { addToCart, removeProductFromCart, deleteProductFromCart },
+  } = useAppContext();
 
   const [productsList] = productState;
 
@@ -13,7 +15,7 @@ const CartProduct = (props) => {
     <div className={styles.cartProduct}>
       <div className={styles.cartProductImageContainer}>
         <Image
-          src={product.images[0].imageSrc}
+          src={product.picture}
           alt="Image du produit"
           fill
           className={styles.cartProductImage}
@@ -31,51 +33,35 @@ const CartProduct = (props) => {
       </div>
 
       <div className={styles.cartProductControls}>
-        <p>{product.price * product.quantity}$</p>
-        <span className={styles.unityPrice}>({product.price}$ / unity)</span>
+        <p>{productsList[index].price * productsList[index].quantity}€</p>
 
-        <div className={styles.cartProductSelectQuantity}>
-          {product.quantity < 10 ? (
-            <div className={styles.cartProductContentSelect}>
-              <span>Qty:</span>
-              <span className={styles.cartProductQuantityValues}>
-                {product.quantity}
-              </span>
-              <ChevronDownIcon />
-              <select
-                value={product.quantity}
-                className={styles.cartProductSelect}
-                onChange={handleValueChange}
-              >
-                {[...Array(11)].map((_, index) => (
-                  <option key={index} value={index}>
-                    {getDisplayValue(index)}
-                  </option>
-                ))}
-              </select>
-            </div>
-          ) : (
-            <div className={styles.cartProductInputContent}>
-              <input
-                type="number"
-                defaultValue={product.quantity}
-                className={styles.cartProductInputValues}
-                onChange={handleInputChange}
-              />
-              <button onClick={handleButtonClick}>Sauvegarder</button>
-            </div>
-          )}
+        <div className={styles.cartProductControlsQuantity}>
+          <button
+            onClick={() => {
+              removeProductFromCart(product);
+            }}
+          >
+            -
+          </button>
+          <p>{product.quantity}</p>
+          <button
+            onClick={() => {
+              addToCart(product);
+            }}
+          >
+            +
+          </button>
         </div>
 
         <TrashIcon
           className={styles.cartProductControlIcon}
           onClick={() => {
-            deleteProductFromCart(product)
+            deleteProductFromCart(product);
           }}
         />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default CartProduct
+export default CartProduct;

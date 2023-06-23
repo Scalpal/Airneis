@@ -7,21 +7,21 @@ import { Nunito } from "@next/font/google";
 import { AppContextProvider } from "@/web/hooks/useAppContext.jsx";
 import { appWithTranslation } from "next-i18next";
 
-export const classnames = require("classnames")
+export const classnames = require("classnames");
 
 export const montserrat = Montserrat({
   variable: ["100", "200", "300", "400", "500", "600", "700"],
   style: ["normal", "italic"],
   subsets: ["latin"],
-})
+});
 
 export const nunito = Nunito({
   variable: ["100", "200", "300", "400", "500", "600", "700"],
   style: ["normal", "italic"],
   subsets: ["latin"],
-})
+});
 
-export default function App({ Component, pageProps }) {
+function App({ Component, pageProps }) {
   const renderWithLayout =
     Component.getLayout ||
     ((page) => {
@@ -38,7 +38,7 @@ export default function App({ Component, pageProps }) {
       </Head>
       {renderWithLayout(<Component {...pageProps} />)}
     </AppContextProvider>
-  )
+  );
 }
 
-export default appWithTranslation(App)
+export default appWithTranslation(App);

@@ -26,9 +26,9 @@ const DrawerMenu = (props) => {
   }, [isDrawerToggled]);
 
   const logout = () => {
-    signOut()
-    router.push(routes.home())
-  }
+    signOut();
+    router.push(routes.pages.home());
+  };
 
   return (
     <>
@@ -60,4 +60,5 @@ const DrawerMenu = (props) => {
     </>
   );
 };
+
 export default DrawerMenu;

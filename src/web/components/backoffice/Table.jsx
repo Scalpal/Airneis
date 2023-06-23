@@ -48,7 +48,7 @@ const Table = (props) => {
         <CheckIcon className={styles.tableIcon} />
       ) : (
         <XMarkIcon className={styles.tableIcon} />
-      )
+      );
     }
 
     return <p key={i}>{value && value.toString()}</p>
@@ -76,7 +76,7 @@ const Table = (props) => {
             </td>
           )}
         </>
-      )
+      );
     },
     [deleteRowFunction,showSpecificRowFunction]
   );

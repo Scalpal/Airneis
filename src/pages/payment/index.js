@@ -1,7 +1,7 @@
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
 
 const Payment = () => {
+  const { t: translate } = useTranslation("payment");
   const { t: translate } = useTranslation("payment");
 
   return (

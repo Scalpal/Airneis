@@ -13,12 +13,8 @@
   cursor: pointer;
 }
 
-.navbar .navbarButtonIcon {
-  color: white;
-}
-
-.navbarNotFixed .navbarButtonIcon {
-  color: white;
+.navbarButtonIcon.black {
+  color: black;
 }
 
 .navbarButtonCartCount {

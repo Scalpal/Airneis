@@ -54,7 +54,7 @@ const orders = [
       },
     ],
   },
-]
+];
 
 const BackofficeOrders = () => {
   // const [orders, setOrders] = useState(ordersProto);
@@ -92,8 +92,8 @@ const BackofficeOrders = () => {
 };
 
 BackofficeOrders.getLayout = function (page) {
-  return <Layout>{page}</Layout>
-}
+  return <Layout>{page}</Layout>;
+};
 
 export const getServerSideProps = async (context) => {
   const { token } = parseCookies(context);

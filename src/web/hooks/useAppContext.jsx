@@ -1,6 +1,5 @@
 import createAPIClient from "@/web/createAPIClient.js";
 import parseSession from "@/web/parseSession.js";
-import signUpService from "@/web/services/signUp.js";
 import signInService from "@/web/services/signIn.js";
 import signUpService from "@/web/services/signUp.js";
 import {
@@ -15,7 +14,7 @@ import { parseCookies } from "nookies";
 import Axios from "axios";
 import routes from "../routes";
 
-const AppContext = createContext()
+const AppContext = createContext();
 
 export const AppContextProvider = (props) => {
   const { ...otherProps } = props;
@@ -41,7 +40,6 @@ export const AppContextProvider = (props) => {
       } = await Axios.get(routes.api.users.single(session.user.id));
 
       return user;
-      return user;
     } catch (error) {
       return error;
     }
@@ -54,7 +52,7 @@ export const AppContextProvider = (props) => {
         ? JSON.parse(localStorage.getItem("products"))
         : [];
     }
-  })
+  });
 
   const addToCart = useCallback(
     (product) => {
@@ -122,17 +120,18 @@ export const AppContextProvider = (props) => {
       );
       const currentProduct = localStorageProducts[productIndex];
 
-    if (currentProduct.quantity - 1 === 0) {
-      deleteProductFromCart(product);
+      if (currentProduct.quantity - 1 === 0) {
+        deleteProductFromCart(product);
 
-      
-return;
-    }
+        return;
+      }
 
-    localStorageProducts[productIndex].quantity--;
-    localStorage.setItem("products", localStorageProducts); 
-    setCart(localStorageProducts);
-  }, [deleteProductFromCart, setCart]);
+      localStorageProducts[productIndex].quantity--;
+      localStorage.setItem("products", localStorageProducts);
+      setCart(localStorageProducts);
+    },
+    [deleteProductFromCart, setCart]
+  );
 
   useEffect(() => {
     localStorage.setItem("products", JSON.stringify(cart));
@@ -142,10 +141,10 @@ return;
     const { token } = parseCookies();
 
     if (!token) {
-      return
+      return;
     }
 
-    const session = parseSession(token)
+    const session = parseSession(token);
 
     setSession(session);
     setJWT(token);
@@ -161,7 +160,7 @@ return;
         getLoggedUser,
         setCart,
         addToCart,
-        changeValuesProductFromCart,
+        removeProductFromCart,
         deleteProductFromCart,
       },
       state: {
@@ -183,12 +182,7 @@ return;
     deleteProductFromCart,
   ]);
 
-  return (
-    <AppContext.Provider
-      {...otherProps}
-      value={contextValues}
-    />
-  );
+  return <AppContext.Provider {...otherProps} value={contextValues} />;
 };
 
 const useAppContext = () => {
@@ -197,4 +191,4 @@ const useAppContext = () => {
   return { state, actions };
 };
 
-export default useAppContext
+export default useAppContext;

@@ -1,12 +1,12 @@
-import config from "@/api/config.js"
-import BaseModel from "@/api/db/models/BaseModel.js"
-import chalk from "chalk"
-import deepmerge from "deepmerge"
-import knex from "knex"
-import winston from "winston"
+import config from "@/api/config.js";
+import BaseModel from "@/api/db/models/BaseModel.js";
+import chalk from "chalk";
+import deepmerge from "deepmerge";
+import knex from "knex";
+import winston from "winston";
 
-const db = knex(config.db)
-BaseModel.knex(db)
+const db = knex(config.db);
+BaseModel.knex(db);
 const logger = winston.createLogger({
   transports: [
     new winston.transports.Console({
@@ -19,26 +19,26 @@ const logger = winston.createLogger({
             info.level === "sql" ? "whiteBright" : "red"
           ](info.level)}] ${chalk[
             info.level === "sql" ? "cyanBright" : "blueBright"
-          ](info.message)}`
+          ](info.message)}`;
 
-          return info
+          return info;
         })()
       ),
     }),
   ],
   levels: { ...winston.config.cli.levels, sql: 10 },
   level: 0,
-})
+});
 
-db.on("query", ({ sql }) => logger.sql(sql))
+db.on("query", ({ sql }) => logger.sql(sql));
 
 const mw = (methodHandlers) => async (req, res) => {
-  const methodHandler = methodHandlers[req.method]
+  const methodHandler = methodHandlers[req.method];
 
   if (!methodHandler) {
-    res.status(405).send({ error: "method not allowed" })
+    res.status(405).send({ error: "method not allowed" });
 
-    return
+    return;
   }
 
   const handlers = Array.isArray(methodHandler) ? methodHandler : [methodHandler];
@@ -51,20 +51,20 @@ const mw = (methodHandlers) => async (req, res) => {
     req,
     res,
     get locals() {
-      return locals
+      return locals;
     },
     set locals(newLocals) {
-      Object.assign(locals, deepmerge(locals, newLocals))
+      Object.assign(locals, deepmerge(locals, newLocals));
     },
     next: async () => {
-      const handler = handlers[handlerIndex]
-      handlerIndex += 1
+      const handler = handlers[handlerIndex];
+      handlerIndex += 1;
 
-      await handler(ctx)
+      await handler(ctx);
     },
-  }
+  };
 
-  await ctx.next()
-}
+  await ctx.next();
+};
 
-export default mw
+export default mw;

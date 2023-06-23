@@ -1,10 +1,10 @@
-import config from "@/api/config.js"
-import UserModel from "@/api/db/models/UserModel.js"
-import slowDown from "@/api/middlewares/slowDown.js"
-import validate from "@/api/middlewares/validate.js"
-import mw from "@/api/mw.js"
-import { emailValidator, stringValidator } from "@/validator"
-import jsonwebtoken from "jsonwebtoken"
+import config from "@/api/config.js";
+import UserModel from "@/api/db/models/UserModel.js";
+import slowDown from "@/api/middlewares/slowDown.js";
+import validate from "@/api/middlewares/validate.js";
+import mw from "@/api/mw.js";
+import { emailValidator, stringValidator } from "@/validator";
+import jsonwebtoken from "jsonwebtoken";
 
 const handler = mw({
   POST: [
@@ -60,6 +60,6 @@ const handler = mw({
       }
     },
   ],
-})
+});
 
-export default handler
+export default handler;
