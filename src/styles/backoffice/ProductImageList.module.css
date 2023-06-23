@@ -1,0 +1,99 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.currentProductImagesWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 1rem;
+}
+
+.currentProductImagesWrapper > label {
+  width: 100px;
+  aspect-ratio: 9/12;
+}
+
+.newProductImagesWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.newProductImagesTitle {
+  font-weight: 500;
+}
+
+.newProductImageRow {
+  font-size: 0.8rem;
+  background-color: var(--light-grey);
+  padding: 0.5rem;
+  border-radius: 1rem;
+  text-align: center;
+  position: relative;
+}
+
+.newProductImageRowIcon {
+  width: 20px;
+  height: 20px;
+  visibility: hidden;
+  opacity: 0;
+  transition-duration: 300ms;
+  position: absolute;
+  top: 50%;
+  right: 0.5rem;
+  transform: translateY(-50%);
+}
+
+.imageWrapper {
+  position: relative;
+  width: 100px;
+  aspect-ratio: 9/12;
+  border: 1px solid var(--light-grey);
+  border-radius: 0.75rem;
+  overflow: hidden;
+  background-size: cover;
+}
+
+.image {
+  width: 100%;
+}
+
+.imageOverlay {
+  display: flex;
+  flex-direction: row;
+  justify-content:center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(20, 20, 20, 0.9);
+  transition-duration: 300ms;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0; 
+}
+
+.imageOverlayIcon {
+  width: 25px;
+  height: 25px;
+  color: white;
+}
+
+/* Hover effects */
+.imageWrapper:hover {
+  cursor: pointer;
+}
+
+.imageWrapper:hover .imageOverlay
+{
+  opacity: 1;
+  z-index: 9999;
+}
+
+.newProductImageRow:hover .newProductImageRowIcon {
+  visibility: visible;
+  opacity: 1;
+}

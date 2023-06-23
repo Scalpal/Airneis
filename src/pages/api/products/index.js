@@ -7,6 +7,9 @@ import slowDown from "@/api/middlewares/slowDown";
 import validate from "@/api/middlewares/validate";
 import mw from "@/api/mw";
 import { arrayOrStringValidator, arrayValidator, boolValidator, limitValidator, numberValidator, orderFieldValidator, orderValidator, pageValidator, searchValidator, stringValidator } from "@/validator";
+import getProductsAverageRating from "@/web/services/products/getProductsAverageRating";
+import getProductsImagesWithSignedUrls from "@/web/services/products/getProductsImagesWithSignedUrl";
+
 
 const handler = mw({
   GET: [
@@ -84,15 +87,12 @@ const handler = mw({
           .withGraphFetched("productImages");
         
         // Products with average rating
-        const finalProducts = products.map((product) => {
-          const avgRating = Math.round((product.reviews.reduce((acc, { rating }) => acc + rating , 0)) / product.reviews.length);
-
-          product.rating = avgRating;
-
-          return product;
-        });
+        const productsWithAverageRating = getProductsAverageRating(products); 
         
-        res.status(200).send({ products: finalProducts, count: count });
+        // Add signed url to all products images
+        const productsWithSignedUrlImages = await getProductsImagesWithSignedUrls(productsWithAverageRating);
+
+        res.status(200).send({ products: productsWithSignedUrlImages, count: count });
       } catch (error) {
         res.status(500).send({ error: error });
       }

@@ -1,5 +1,5 @@
-// import ProductImageModel from "@/api/db/models/ProductImageModel";
 import ProductImageModel from "@/api/db/models/ProductImageModel";
+import ProductModel from "@/api/db/models/ProductModel";
 import auth from "@/api/middlewares/auth";
 import checkIsAdmin from "@/api/middlewares/checkIsAdmin";
 import slowDown from "@/api/middlewares/slowDown";
@@ -40,7 +40,14 @@ const handler = mw({
             imageSrc: uploadedImage.Key
           }).returning("*");
 
-          res.send({ image: uploadedImage.Location });
+          const updatedProduct = await ProductModel.query()
+            .findOne({ id: productId })
+            .withGraphFetched("category")
+            .withGraphFetched("materials")
+            .withGraphFetched("reviews")
+            .withGraphFetched("productImages");
+      
+          res.send({ image: uploadedImage.Location, product: updatedProduct });
         } catch (error) {
           res.status(500).send({ error: error });
         }
