@@ -1,4 +1,4 @@
-import routes from "@/web/routes"
+import routes from "@/web/routes";
 
 const signUp =
   ({ api }) =>
@@ -6,14 +6,14 @@ const signUp =
     try {
       const {
         data: { result },
-      } = await api.post(routes.api.signUp(), values)
+      } = await api.post(routes.api.signUp(), values);
 
-      return [null, result]
+      return [null, result];
     } catch (err) {
-      const error = err.response?.data?.error || "Oops. Something went wrong"
+      const error = err.response?.data?.error || "Oops. Something went wrong";
 
-      return [Array.isArray(error) ? error : [error]]
+      return [Array.isArray(error) ? error : [error]];
     }
-  }
+  };
 
-export default signUp
+export default signUp;

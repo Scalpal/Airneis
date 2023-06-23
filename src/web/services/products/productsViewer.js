@@ -1,4 +1,4 @@
-import routes from "@/web/routes.js"
+import routes from "@/web/routes.js";
 
 const productsViewer =
   ({ api }) =>
@@ -6,26 +6,26 @@ const productsViewer =
     if (values.materials?.length) {
       values.materials = values.materials
         .map((value) => `material=${value}`)
-        .join("&")
+        .join("&");
     }
 
     if (values.categories?.length) {
       values.categories = values.categories
         .map((value) => `material=${value}`)
-        .join("&")
+        .join("&");
     }
 
     try {
       const { data: result } = await api.get(routes.api.products(), {
         params: values,
-      })
+      });
 
-      return [null, result]
+      return [null, result];
     } catch (err) {
-      const error = err.response?.data?.error || "Oops. Something went wrong"
+      const error = err.response?.data?.error || "Oops. Something went wrong";
 
-      return [Array.isArray(error) ? error : [error]]
+      return [Array.isArray(error) ? error : [error]];
     }
-  }
+  };
 
-export default productsViewer
+export default productsViewer;

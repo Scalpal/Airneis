@@ -1,4 +1,4 @@
-import routes from "@/web/routes.js"
+import routes from "@/web/routes.js";
 
 const resetPassword =
   ({ api }) =>
@@ -9,14 +9,14 @@ const resetPassword =
         password,
         passwordConfirmation,
         timer,
-      })
+      });
 
-      return [null, data]
+      return [null, data];
     } catch (err) {
-      const error = err.response?.data?.error || "Oops. Something went wrong"
+      const error = err.response?.data?.error || "Oops. Something went wrong";
 
-      return [Array.isArray(error) ? error : [error]]
+      return [Array.isArray(error) ? error : [error]];
     }
-  }
+  };
 
-export default resetPassword
+export default resetPassword;

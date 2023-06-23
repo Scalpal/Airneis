@@ -1,4 +1,4 @@
-import routes from "@/web/routes.js"
+import routes from "@/web/routes.js";
 
 const crypt =
   ({ api }) =>
@@ -10,14 +10,14 @@ const crypt =
         params: {
           CryptoValues: JSON.stringify(CryptoValues),
         },
-      })
+      });
 
-      return CryptoKey
+      return CryptoKey;
     } catch (err) {
-      const error = err.response?.data?.error || "Oops. Something went wrong"
+      const error = err.response?.data?.error || "Oops. Something went wrong";
 
-      return [Array.isArray(error) ? error : [error]]
+      return [Array.isArray(error) ? error : [error]];
     }
-  }
+  };
 
-export default crypt
+export default crypt;

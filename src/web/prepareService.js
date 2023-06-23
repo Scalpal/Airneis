@@ -1,12 +1,12 @@
-import signUpService from "@/web/services/users/signUp.js"
-import signInService from "@/web/services/users/signIn.js"
-import mailResetPasswordService from "@/web/services/mails/mailResetPassword.js"
-import confirmAccountService from "@/web/services/mails/confirmAccount.js"
-import productsViewerService from "@/web/services/products/productsViewer.js"
-import materialsViewerService from "@/web/services/materials/materialsViewer.js"
-import categoriesViewerService from "@/web/services/categories/categoriesViewer.js"
-import resetPasswordService from "@/web/services/users/resetPassword.js"
-import cryptService from "@/web/services/crypt.js"
+import signUpService from "@/web/services/users/signUp.js";
+import signInService from "@/web/services/users/signIn.js";
+import mailResetPasswordService from "@/web/services/mails/mailResetPassword.js";
+import confirmAccountService from "@/web/services/mails/confirmAccount.js";
+import productsViewerService from "@/web/services/products/productsViewer.js";
+import materialsViewerService from "@/web/services/materials/materialsViewer.js";
+import categoriesViewerService from "@/web/services/categories/categoriesViewer.js";
+import resetPasswordService from "@/web/services/users/resetPassword.js";
+import cryptService from "@/web/services/crypt.js";
 // import loggedUserService from "@/web/services/loggedUser.js"
 
 // eslint-disable-next-line no-unused-vars
@@ -26,7 +26,7 @@ const prepareService = ({ api, setSession, setJWT, session }) => {
     security: {
       crypt: cryptService({ api }),
     },
-  }
-}
+  };
+};
 
-export default prepareService
+export default prepareService;

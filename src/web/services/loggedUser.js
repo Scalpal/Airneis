@@ -1,5 +1,5 @@
 // import parseSession from "@/web/parseSession"
-import routes from "@/web/routes.js"
+import routes from "@/web/routes.js";
 
 const resetPassword =
   ({ api, session }) =>
@@ -7,14 +7,14 @@ const resetPassword =
     try {
       const {
         data: { user },
-      } = await api.get(routes.api.users.single(session.user.id))
+      } = await api.get(routes.api.users.single(session.user.id));
 
-      return user
+      return user;
     } catch (err) {
-      const error = err.response?.data?.error || "Oops. Something went wrong"
+      const error = err.response?.data?.error || "Oops. Something went wrong";
 
-      return [Array.isArray(error) ? error : [error]]
+      return [Array.isArray(error) ? error : [error]];
     }
-  }
+  };
 
-export default resetPassword
+export default resetPassword;

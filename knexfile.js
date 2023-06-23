@@ -1,7 +1,7 @@
-const { resolve } = require("path")
-const { config } = require("dotenv")
+const { resolve } = require("path");
+const { config } = require("dotenv");
 
-config()
+config();
 
 const knexfile = {
   client: "pg",
@@ -19,6 +19,6 @@ const knexfile = {
   seeds: {
     directory: resolve("src/api/db/seeds"),
   },
-}
+};
 
-module.exports = knexfile
+module.exports = knexfile;
