@@ -5,7 +5,6 @@ import OrderModel from "./OrderModel"
 
 class UserModel extends BaseModel {
   static tableName = "users"
-  static tableName = "users"
 
   static modifiers = {
     paginate: (query, limit, page) =>

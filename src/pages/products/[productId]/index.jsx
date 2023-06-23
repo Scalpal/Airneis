@@ -10,8 +10,6 @@ import SeeMoreButton from "@/web/components/SeeMoreButton"
 import ProductReviews from "@/web/components/ProductReviews"
 import { useState } from "react"
 
-const placeholderImages = ["/meuble-1.jpeg", "/meuble-2.jpeg", "/meuble-3.png"]
-
 export const getServerSideProps = async (context) => {
   const { productId } = context.query
 
@@ -58,7 +56,7 @@ const ProductPage = (props) => {
         <section className={styles.mainContent}>
           <div className={styles.productCarousel}>
             <Carousel
-              images={placeholderImages}
+              images={product.productImages}
               Autoplay={false}
               controls={true}
             />

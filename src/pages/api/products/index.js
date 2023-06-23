@@ -6,18 +6,7 @@ import checkIsAdmin from "@/api/middlewares/checkIsAdmin"
 import slowDown from "@/api/middlewares/slowDown"
 import validate from "@/api/middlewares/validate"
 import mw from "@/api/mw"
-import {
-  arrayOrStringValidator,
-  arrayValidator,
-  boolValidator,
-  limitValidator,
-  numberValidator,
-  orderFieldValidator,
-  orderValidator,
-  pageValidator,
-  searchValidator,
-  stringValidator,
-} from "@/validator"
+import { arrayOrStringValidator, arrayValidator, boolValidator, limitValidator, numberValidator, orderFieldValidator, orderValidator, pageValidator, searchValidator, stringValidator } from "@/validator"
 
 const handler = mw({
   GET: [
@@ -115,19 +104,16 @@ const handler = mw({
           .withGraphFetched("category")
           .withGraphFetched("materials")
           .withGraphFetched("reviews")
-
+        
         // Products with average rating
         const finalProducts = products.map((product) => {
-          const avgRating = Math.round(
-            product.reviews.reduce((acc, { rating }) => acc + rating, 0) /
-              product.reviews.length
-          )
+          const avgRating = Math.round((product.reviews.reduce((acc, { rating }) => acc + rating , 0)) / product.reviews.length)
 
           product.rating = avgRating
 
           return product
         })
-
+        
         res.status(200).send({ products: finalProducts, count: count })
       } catch (error) {
         res.status(500).send({ error: error })

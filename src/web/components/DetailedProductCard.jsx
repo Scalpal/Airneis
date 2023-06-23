@@ -8,12 +8,10 @@ import routes from "../routes"
 import ProductRating from "./ProductRating"
 
 const DetailedProductCard = (props) => {
-  const { product } = props
+  const { product } = props  
   const router = useRouter()
-  const {
-    actions: { addToCart },
-  } = useAppContext()
-
+  const { actions: { addToCart } } = useAppContext()
+  
   return (
     <div className={styles.productCard}>
       <div
@@ -22,8 +20,8 @@ const DetailedProductCard = (props) => {
       >
         <Image
           className={styles.productCardImage}
-          src={"/meuble-1.jpeg"}
-          alt={"Image du produit"}
+          src={typeof product.productImages[0] !== "undefined" ?  product.productImages[0].imageUrl : "/product-image-placeholder.jpg"}
+          alt={product.name} 
           fill
         />
       </div>
@@ -32,9 +30,7 @@ const DetailedProductCard = (props) => {
         <p className={styles.productCardInfoName}> {product.name} </p>
 
         <div className={styles.descriptionWrapper}>
-          <p className={styles.productCardInfoDescription}>
-            {product.description}
-          </p>
+          <p className={styles.productCardInfoDescription}>{product.description}</p>
         </div>
 
         <div

@@ -81,7 +81,7 @@ const Pagination = (props) => {
         </button>
       </div>
 
-      <div>
+      <div className={styles.buttonWrapper}>
         {totalPages[activeChunk].map((value, index) => (
           <button
             key={index}

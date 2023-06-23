@@ -7,6 +7,8 @@ import slowDown from "@/api/middlewares/slowDown"
 import validate from "@/api/middlewares/validate"
 import mw from "@/api/mw"
 import { arrayValidator, idValidator, numberValidator, stringValidator } from "@/validator"
+import getProductsAverageRating from "@/web/services/products/getProductsAverageRating"
+import getProductsImagesWithSignedUrls from "@/web/services/products/getProductsImagesWithSignedUrl"
 
 const handler = mw({
   GET: [
@@ -30,6 +32,8 @@ const handler = mw({
           .select("id", "name", "description", "price", "stock")
           .withGraphFetched("category")
           .withGraphFetched("materials")
+          .withGraphFetched("reviews")
+          .withGraphFetched("productImages")
 
         if (!product) {
           res.status(404).send({ error: "Product not found" })
@@ -37,7 +41,13 @@ const handler = mw({
           return
         }
 
-        res.send({ product: product })
+        // Products with average rating
+        const productWithAverageRating = getProductsAverageRating([product]) 
+        
+        // Add signed url to all products images
+        const productWithSignedUrlImages = await getProductsImagesWithSignedUrls(productWithAverageRating)
+
+        res.send({ product: productWithSignedUrlImages[0] })
       } catch (error) {
         res.status(500).send({ error: error })
       }
@@ -116,8 +126,16 @@ const handler = mw({
           .returning("*")
           .withGraphFetched("materials")
           .withGraphFetched("category")
+          .withGraphFetched("reviews")
+          .withGraphFetched("productImages")
+                
+        // Products with average rating
+        const productWithAverageRating = getProductsAverageRating([updatedProduct[0]]) 
         
-        res.send({ status: "success", message: "Product edited successfully.", product: updatedProduct})
+        // Add signed url to all products images
+        const productWithSignedUrlImages = await getProductsImagesWithSignedUrls(productWithAverageRating)
+
+        res.send({ status: "success", message: "Product edited successfully.", product: productWithSignedUrlImages[0]})
       } catch (error) {
         res.status(500).send({ error: error })
       }
