@@ -5,6 +5,8 @@ import checkIsAdmin from "@/api/middlewares/checkIsAdmin";
 import slowDown from "@/api/middlewares/slowDown";
 import mw from "@/api/mw";
 import { uploadImageToS3 } from "@/web/services/S3";
+import getProductsAverageRating from "@/web/services/products/getProductsAverageRating";
+import getProductsImagesWithSignedUrls from "@/web/services/products/getProductsImagesWithSignedUrl";
 import multer from "multer";
 
 export const config = {
@@ -46,8 +48,14 @@ const handler = mw({
             .withGraphFetched("materials")
             .withGraphFetched("reviews")
             .withGraphFetched("productImages");
+          
+            // Products with average rating
+            const productWithAverageRating = getProductsAverageRating([updatedProduct]); 
+                          
+            // Add signed url to all products images
+            const productWithSignedUrlImages = await getProductsImagesWithSignedUrls(productWithAverageRating);
       
-          res.send({ image: uploadedImage.Location, product: updatedProduct });
+          res.send({ image: uploadedImage.Location, product: productWithSignedUrlImages[0] });
         } catch (error) {
           res.status(500).send({ error: error });
         }

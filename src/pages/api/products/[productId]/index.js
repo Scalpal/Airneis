@@ -128,9 +128,9 @@ const handler = mw({
           .withGraphFetched("category")
           .withGraphFetched("reviews")
           .withGraphFetched("productImages");
-        
+                
         // Products with average rating
-        const productWithAverageRating = getProductsAverageRating([updatedProduct]); 
+        const productWithAverageRating = getProductsAverageRating([updatedProduct[0]]); 
         
         // Add signed url to all products images
         const productWithSignedUrlImages = await getProductsImagesWithSignedUrls(productWithAverageRating);
