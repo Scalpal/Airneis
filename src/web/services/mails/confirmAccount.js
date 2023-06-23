@@ -1,4 +1,4 @@
-import routes from "@/web/routes.js"
+import routes from "@/web/routes.js";
 
 const mailResetPassword =
   ({ api }) =>
@@ -8,14 +8,14 @@ const mailResetPassword =
         data: { result },
       } = await api.patch(routes.api.confirmAccount(), {
         id,
-      })
+      });
 
-      return [null, Array.isArray(result) ? result : [result]]
+      return [null, Array.isArray(result) ? result : [result]];
     } catch (err) {
-      const error = err.response?.data?.error || "Oops. Something went wrong"
+      const error = err.response?.data?.error || "Oops. Something went wrong";
 
-      return [Array.isArray(error) ? error : [error]]
+      return [Array.isArray(error) ? error : [error]];
     }
-  }
+  };
 
-export default mailResetPassword
+export default mailResetPassword;

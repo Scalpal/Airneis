@@ -1,10 +1,11 @@
 import styles from "@/styles/components/ProductCard.module.css";
 import { useRouter } from "next/router";
+import routes from "@/web/routes";
 import Image from "next/image";
 
 const ProductCard = (props) => {
-  const { product } = props; 
-  const router = useRouter(); 
+  const { product } = props;
+  const router = useRouter();
 
   return (
     <div
@@ -28,3 +29,5 @@ const ProductCard = (props) => {
     </div>
   );
 };
+
+export default ProductCard;

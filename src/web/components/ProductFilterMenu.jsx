@@ -1,4 +1,4 @@
-import styles from "@/styles/components/ProductFilterMenu.module.css"; 
+import styles from "@/styles/components/ProductFilterMenu.module.css";
 import CollapseMenu from "./CollapseMenu";
 import CheckboxItem from "./CheckboxItem";
 import Button from "./Button";
@@ -27,7 +27,7 @@ const ProductFilterMenu = (props) => {
       priceMax: 0,
       materials: [],
       onlyInStock: false,
-      categories: []
+      categories: [],
     });
 
     setAppliedQueryParams({
@@ -35,7 +35,7 @@ const ProductFilterMenu = (props) => {
       priceMax: 0,
       materials: [],
       onlyInStock: false,
-      categories: []
+      categories: [],
     });
   },[setQueryParams,setAppliedQueryParams]);
 
@@ -43,7 +43,7 @@ const ProductFilterMenu = (props) => {
     setQueryParams({
       ...queryParams,
       order: "asc",
-      orderField: "price"
+      orderField: "price",
     });
   },[queryParams,setQueryParams]);
 
@@ -51,7 +51,7 @@ const ProductFilterMenu = (props) => {
     setQueryParams({
       ...queryParams,
       order: "desc",
-      orderField: "price"
+      orderField: "price",
     });
   },[queryParams,setQueryParams]);
 
@@ -59,22 +59,23 @@ const ProductFilterMenu = (props) => {
     setQueryParams({
       ...queryParams,
       order: "",
-      orderField: ""
+      orderField: "",
     });
   },[queryParams,setQueryParams]);
 
-  const handleSort = useCallback((value) => {
-    if (value === "1") {
-      handleNoSort();
+  const handleSort = useCallback(
+    (value) => {
+      if (value === "1") {
+        handleNoSort();
 
-      return;
-    }
+        return;
+      }
 
-    if (value === "2") {
-      handlePriceLowToHigh();
-      
-      return;
-    }
+      if (value === "2") {
+        handlePriceLowToHigh();
+
+        return;
+      }
 
     handlePriceHighToLow();
     

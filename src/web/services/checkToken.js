@@ -10,8 +10,8 @@ const checkToken = async (token) => {
     }
   }
 
-  const decodedToken = jsonwebtoken.decode(token);
-  const isTokenExpired = Date.now() >= decodedToken.exp * 1000;
+  const decodedToken = jsonwebtoken.decode(token)
+  const isTokenExpired = Date.now() >= decodedToken.exp * 1000
 
   if (isTokenExpired) {
     return {
@@ -21,4 +21,6 @@ const checkToken = async (token) => {
       },
     }
   }
-};
+}
+
+export default checkToken

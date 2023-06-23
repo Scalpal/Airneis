@@ -1,4 +1,4 @@
-import routes from "@/web/routes.js"
+import routes from "@/web/routes.js";
 
 const productsViewer =
   ({ api }) =>
@@ -6,14 +6,14 @@ const productsViewer =
     try {
       const {
         data: { result },
-      } = await api.get(routes.api.categories())
+      } = await api.get(routes.api.categories());
 
-      return [null, result]
+      return [null, result];
     } catch (err) {
-      const error = err.response?.data?.error || "Oops. Something went wrong"
+      const error = err.response?.data?.error || "Oops. Something went wrong";
 
-      return [Array.isArray(error) ? error : [error]]
+      return [Array.isArray(error) ? error : [error]];
     }
-  }
+  };
 
-export default productsViewer
+export default productsViewer;
