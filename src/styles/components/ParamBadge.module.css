@@ -18,7 +18,6 @@
   width: 20px;
   height: 20px;
 }
-
 .filterBadge:hover {
   background-color: var(--secondary);
   color: black;

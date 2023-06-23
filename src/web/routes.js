@@ -58,11 +58,14 @@ const routes = {
       base: () => "/api/products/categories",
       products: (categoryId) => `/api/products?categories=${categoryId}`,
     },
-    // posts: {
-    //   collection: (query) => createRouteWithQueryParams("/posts", query),
-    //   single: (postId, query) =>
-    //     createRouteWithQueryParams(`/posts/${postId}`, query),
-    // },
+    users: {
+      collection: (query) => createRouteWithQueryParams("/api/users", query),
+      single: (userId, query) =>
+        createRouteWithQueryParams(`/api/users/${userId}`, query),
+      self: () => "/api/users/self",
+      patch: (userId) => createRouteWithQueryParams(`/users/${userId}`),
+      delete: (userId) => createRouteWithQueryParams(`/users/${userId}`),
+    },
   },
 };
 

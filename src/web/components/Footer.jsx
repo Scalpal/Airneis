@@ -1,18 +1,6 @@
 import styles from "@/styles/components/Footer.module.css";
-import Link from "next/link";
-import routes from "@/web/routes";
-import { useRouter } from "next/router";
 
-const Footer = (props) => {
-  const { actions } = props;
-  const [signOut, session] = actions ? actions : [null, null];
-  const router = useRouter();
-
-  const logout = () => {
-    signOut();
-    router.push(routes.pages.home());
-  };
-
+const Footer = () => {
   return (
     <footer className={styles.footer}>
       <div className={styles.footerInfos}>
@@ -30,39 +18,15 @@ const Footer = (props) => {
 
         <div>
           <h2>My Account </h2>
-          {session ? (
-            <Link href={routes.profil()}>
-              <p>My profil</p>
-            </Link>
-          ) : (
-            <Link href={routes.login()}>
-              <p>Sign in</p>
-            </Link>
-          )}
-          {session ? (
-            <a onClick={logout}>
-              <p>Logout</p>
-            </a>
-          ) : (
-            <Link href={routes.register()}>
-              <p>Register</p>
-            </Link>
-          )}
-          {session && (
-            <Link href={routes.order()}>
-              <p>Orders</p>
-            </Link>
-          )}
+          <p>Sign in</p>
+          <p>Register </p>
+          <p>Order status</p>
         </div>
 
         <div>
           <h2>Shop</h2>
-          <Link href={routes.products()}>
-            <p>All products</p>
-          </Link>
-          <Link href={routes.categories()}>
-            <p>All categories</p>
-          </Link>
+          <p>All products</p>
+          <p>All categories </p>
         </div>
 
         <div>

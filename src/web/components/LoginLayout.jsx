@@ -3,12 +3,12 @@ import { nunito } from "@/pages/_app";
 import { classnames } from "@/pages/_app";
 import Link from "next/link";
 
-const LoginLayout = ({children}) => {
+const LoginLayout = ({ children }) => {
   return (
     <div className={classnames(styles.container, nunito.className)}>
       <div className={styles.left}>
         <div className={styles.leftBackground}></div>
-        <Link href={routes.home()}>Airneis </Link>
+        <Link href="/">Airneis </Link>
         <p>A reference in the world of furniture.</p>
       </div>
 
