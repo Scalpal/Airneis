@@ -16,7 +16,7 @@ const ProductCard = (props) => {
         <Image
           className={styles.productCardImage}
           // src={typeof product.productImages[0] !== "undefined" ?  product.productImages[0].imageUrl : "/product-image-placeholder.jpg"}
-          // src="/meuble-2.jpeg"
+          src="/meuble-2.jpeg"
           alt={"Image du produit"}
           fill
         />
