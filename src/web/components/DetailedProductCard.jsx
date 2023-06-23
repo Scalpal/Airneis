@@ -11,20 +11,8 @@ import ProductRating from "./ProductRating";
 const DetailedProductCard = (props) => {
   const { product } = props;  
   const router = useRouter();
-  const [bubbleAnimation, setBubbleAnimation] = useState(null);
-  const {
-    actions: { addToCart },
-  } = useAppContext();
-
-  const handleAddToCart = () => {
-    !bubbleAnimation && setBubbleAnimation(true);
-    addToCart(product);
-
-    setTimeout(() => {
-      setBubbleAnimation(false);
-    }, 1900);
-  };
-
+  const { actions: { addToCart } } = useAppContext();
+  
   return (
     <div className={styles.productCard}>
       <div
@@ -33,8 +21,8 @@ const DetailedProductCard = (props) => {
       >
         <Image
           className={styles.productCardImage}
-          src={"/meuble-1.jpeg"}
-          alt={"Image du produit"}
+          src={typeof product.productImages[0] !== "undefined" ?  product.productImages[0].imageUrl : "/product-image-placeholder.jpg"}
+          alt={product.name} 
           fill
         />
       </div>

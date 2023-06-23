@@ -2,6 +2,7 @@ import BaseModel from "@/api/db/models/BaseModel.js";
 import CategoryModel from "@/api/db/models/CategoryModel.js";
 import MaterialModel from "./MaterialModel";
 import ReviewModel from "./ReviewModel";
+import ProductImageModel from "./ProductImageModel";
 
 class ProductModel extends BaseModel {
   static tableName = "products";
@@ -46,6 +47,14 @@ class ProductModel extends BaseModel {
           to: "reviews.productId"
         },
         modify: (query) => query.select("userId", "title", "content","rating")
+      },
+      productImages: {
+        relation: BaseModel.HasManyRelation,
+        modelClass: ProductImageModel,
+        join: {
+          from: "products.id",
+          to: "products_images.productId"
+        }
       },
       modify: (query) => query.select("*")
     };

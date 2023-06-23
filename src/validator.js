@@ -2,9 +2,9 @@ import * as yup from "yup";
 import "yup-phone";
 
 // Base
-export const stringValidator = yup.string(); 
+export const stringValidator = yup.string("Only strings are accepted."); 
 export const numberValidator = yup.number();
-export const idValidator = yup.string().min(1);
+export const idValidator = yup.string("Only strings are accepted.").min(1);
 export const arrayValidator = yup.array().of(stringValidator);
 export const arrayOrStringValidator = yup.mixed().test("isArrayOfStrings", "Invalid values", (value) => {
   if (typeof value === "string") {
