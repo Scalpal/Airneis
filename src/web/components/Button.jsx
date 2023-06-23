@@ -5,6 +5,8 @@ import { nunito } from "@/pages/_app";
 const Button = (props) => {
   const { children, disabled, variant, ...otherProps } = props; 
 
+  console.log("disabled : ", disabled);
+
   return (
     <button
       className={classnames(
@@ -13,6 +15,7 @@ const Button = (props) => {
         variant === "outlined" ? styles.outlined : styles.contained,
         disabled ? styles.disabled : ""
       )}
+      disabled={disabled}
       {...otherProps}
     >
       {children}

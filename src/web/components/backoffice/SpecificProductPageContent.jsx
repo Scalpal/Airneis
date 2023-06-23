@@ -147,7 +147,7 @@ const SpecificProductPageContent = (props) => {
         enableReinitialize={true}
         initialValues={initialValues}
       >
-      {({ values, isValid, dirty, isSubmitting, handleReset }) => {
+      {({ values, isSubmitting, handleReset }) => {
           return (
             <Form className={styles.contentContainer}>
               <div className={styles.contentWrapper}> 
@@ -226,10 +226,10 @@ const SpecificProductPageContent = (props) => {
                 </div>
               </div>
               
-              {editMode && (
+              {(editMode || currentProductImages.findIndex(elt => elt instanceof File) !== -1) && (
                 <Button
                   type={"submit"}
-                  disabled={!(dirty && isValid) || isSubmitting}
+                  disabled={isSubmitting || !(currentProductImages.findIndex(elt => elt instanceof File) !== -1)}
                 >
                   Save
                 </Button>
