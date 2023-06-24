@@ -53,7 +53,9 @@ const routes = {
     },
     categories: {
       base: () => "/api/products/categories",
-      products: (categoryId) => `/api/products?categories=${categoryId}`
+      single: (categoryId) => `/api/products/categories/${categoryId}`,
+      upload: (categoryId) => `/api/products/categories/${categoryId}/upload`,
+      products: (categoryId) => `/api/products?categories=${categoryId}`,
     },
     users: {
       collection: (query) => createRouteWithQueryParams("/api/users", query),

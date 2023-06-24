@@ -11,11 +11,12 @@ const fetcher = async (url) => {
 };
 
 export const useGetCategories = () => {
-  const { data, error, isLoading } = useSWR(`${process.env.API_URL}${routes.api.categories.base()}`, fetcher, { revalidateOnFocus: false });
+  const { data, error, isLoading, mutate } = useSWR(`${process.env.API_URL}${routes.api.categories.base()}`, fetcher, { revalidateOnFocus: false });
 
   return {
     categoriesData: data,
     categoriesError: error,
-    categoriesIsLoading: isLoading
+    categoriesIsLoading: isLoading,
+    refreshCategories: mutate
   };
 };

@@ -40,7 +40,12 @@ const ProductImageList = (props) => {
               <ImageCard
                 key={index}
                 image={image}
-                onPress={() => deleteImage(image.imageSrc)}
+                deleteButton={
+                  <XMarkIcon
+                    className={styles.imageIcon}
+                    onClick={() => deleteImage(image.imageSrc)}
+                  />
+                }
               />
             );
           }

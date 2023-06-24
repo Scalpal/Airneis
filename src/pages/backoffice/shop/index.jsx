@@ -13,8 +13,13 @@ import deleteHomeCarouselImage from "@/web/services/images/homeCarousel/deleteHo
 import CustomAlert from "@/web/components/CustomAlert";
 import Loader from "@/web/components/Loader";
 import CollapseMenu from "@/web/components/CollapseMenu";
-import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
+import { ArrowsRightLeftIcon, EyeIcon, EyeSlashIcon, PencilSquareIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import updateHomeCarouselImage from "@/web/services/images/homeCarousel/updateHomeCarouselImage";
+import { useGetCategories } from "@/web/hooks/useGetCategories";
+import uploadCategoryImage from "@/web/services/categories/uploadCategoryImage";
+import Modal from "@/web/components/Modal";
+import Button from "@/web/components/Button";
+import editCategory from "@/web/services/categories/editCategory";
 
 
 export const getServerSideProps = async (context) => {
@@ -36,11 +41,18 @@ export const getServerSideProps = async (context) => {
 const BackofficeShop = () => {
   const [alert, setAlert] = useState({ status: "", message: "" });
   const [showAlert, setShowAlert] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [activeCategoryId, setActiveCategoryId] = useState(null); 
+  const [newCategoryName, setNewCategoryName] = useState("");
 
 
   const { carouselImageData, carouselImageError ,carouselImageIsLoading, refreshCarouselImages } = useGetHomeCarouselImage();
   const carouselImages = (!carouselImageError && !carouselImageIsLoading) ? carouselImageData : [];
 
+  const { categoriesData, categoriesError, categoriesIsLoading, refreshCategories } = useGetCategories();
+  const categories = (!categoriesError && !categoriesIsLoading) ? categoriesData : [];
+
+  // Home carousel images 
   const uploadCarouselImage = useCallback(async(file) => {
     const [error, response] = await uploadHomeCarouselImage(file);
 
@@ -86,6 +98,43 @@ const BackofficeShop = () => {
     refreshCarouselImages();
   }, [refreshCarouselImages]);
 
+  // Categories
+  const changeCategoryImage = useCallback(async (categoryId, file) => {
+    const [error, response] = await uploadCategoryImage(categoryId, file); 
+
+    if (error) {
+      setAlert({ status: "error", message: error.message });
+      setShowAlert(true);
+
+      return;
+    }
+
+    setAlert({ status: "success", message: response.data.message });
+    setShowAlert(true);
+    refreshCategories();
+  }, [refreshCategories]);
+
+  const handleEditCategory = useCallback((categoryId) => {
+    setShowModal(true);
+    setActiveCategoryId(categoryId);
+  }, []);
+
+  const changeCategoryName = useCallback(async(categoryId) => {
+    const [error, response] = await editCategory(categoryId, newCategoryName);
+
+    if (error) {
+      setAlert({ status: "error", message: error.message });
+      setShowAlert(true);
+
+      return;
+    }
+
+    setShowModal(false);
+    setAlert({ status: "success", message: response.data.message });
+    setShowAlert(true);
+    refreshCategories();
+  }, [refreshCategories, newCategoryName]);
+
   return (
     <div className={classnames(
       styles.container,
@@ -105,7 +154,6 @@ const BackofficeShop = () => {
                   <ImageCard
                     key={index}
                     image={image}
-                    onPress={() => deleteCarouselImage(image.id, image.imageSrc)}
                     editButton={
                       !image.visible ?
                         <EyeIcon
@@ -116,6 +164,12 @@ const BackofficeShop = () => {
                           className={styles.imageIcon}
                           onClick={() => handleImageVisibility(image.id, false)}
                         />
+                    }
+                    deleteButton={
+                      <XMarkIcon
+                        className={styles.imageIcon}
+                        onClick={() => deleteCarouselImage(image.id, image.imageSrc)}
+                      />
                     }
                   />
                 ))) : (
@@ -134,12 +188,56 @@ const BackofficeShop = () => {
             />
           </div>
         </CollapseMenu>
-
-
       </div>
 
       <div className={styles.block}>
-        <p className={styles.blockTitle}>Categories images</p>
+        <CollapseMenu
+          title={"Categories"}
+          defaultCollapsed={false}
+          size={"fit-to-parent"}
+        >
+          <div className={styles.categoriesContainer}>
+            {!categoriesIsLoading ? (
+              categoriesData.length > 0 ? (
+                categories.map((category, index) => (
+                  <ImageCard
+                    key={index}
+                    title={category.name}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    image={{ imageUrl: category.imageUrl }} // this should be category.imageUrl
+                    addButton={
+                      <>
+                        <input
+                          type="file"
+                          name="file"
+                          id={`categoryFileInput${index}`}
+                          hidden
+                          onChange={(e) => changeCategoryImage(category.id, e.target.files[0])}
+                        />
+
+                        <label htmlFor={`categoryFileInput${index}`}>
+                          <ArrowsRightLeftIcon
+                            className={styles.imageIcon}
+                          />
+                        </label>
+                      </>
+                    }
+                    editButton={
+                      <PencilSquareIcon
+                        className={styles.imageIcon}
+                        onClick={() => handleEditCategory(category.id)}
+                      />
+                    }
+                  />
+                ))
+              ): (
+                <p>You currently have no categories</p>
+              )
+            ): (
+              <Loader />
+            )}
+          </div>
+        </CollapseMenu>
       </div>
 
       <div className={styles.block}>
@@ -152,6 +250,36 @@ const BackofficeShop = () => {
         setShowAlert={setShowAlert}
       />
 
+      {showModal && (
+        <Modal
+          showModal={showModal}
+          setShowModal={setShowModal}
+          size={"fit-to-content"}
+        >
+          <div className={styles.categoryEditForm}>
+            <p className={styles.categoryEditFormTitle}>Edit category name</p>
+
+            <input
+              type="text"
+              className={styles.categoryInput}
+              onChange={(e) => setNewCategoryName(e.target.value)}
+            />
+
+            <Button
+              onClick={() => changeCategoryName(activeCategoryId)}
+            >
+              Save
+            </Button>
+
+            <Button
+              variant={"outlined"}
+              onClick={() => setShowModal(false)}
+            >
+              Close
+            </Button>
+          </div>
+        </Modal>
+      )}
     </div>
   );
 };

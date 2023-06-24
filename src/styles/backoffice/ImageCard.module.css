@@ -10,6 +10,21 @@
   width: 100%;
 }
 
+.title {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 999;
+  color: var(--primary);
+  font-size: 1rem;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.58);
+  padding: 0.3rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
 .overlay {
   display: flex;
   flex-direction: row;

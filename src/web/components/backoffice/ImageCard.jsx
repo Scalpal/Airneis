@@ -1,9 +1,8 @@
 import styles from "@/styles/backoffice/ImageCard.module.css";
-import { XMarkIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 
 const ImageCard = (props) => {
-  const { image, onPress, editButton } = props;
+  const { title, image, addButton, editButton, deleteButton  } = props;
   
   return (
     <div
@@ -16,14 +15,14 @@ const ImageCard = (props) => {
         fill
       />
 
+      {title && (
+        <p className={styles.title}>{title}</p>
+      )}
+
       <div className={styles.overlay}>
-
-        <XMarkIcon
-          onClick={() => onPress(image.imageSrc)}
-          className={styles.overlayIcon}
-        />
-
+        {addButton}
         {editButton}
+        {deleteButton}
       </div>
     </div>
   );

@@ -4,6 +4,11 @@
   gap: 1rem;
 }
 
+.imageIcon {
+  width: 25px;
+  height: 25px;
+}
+
 .currentProductImagesWrapper {
   display: grid;
   grid-template-rows: auto;

@@ -28,6 +28,7 @@ module.exports.up = async (knex) => {
   await knex.schema.createTable("categories", (table) => {
     table.increments("id");
     table.text("name").notNullable();
+    table.text("imageSrc").notNullable().defaultTo("/meuble-1.jpeg");
   });
 
   await knex.schema.createTable("materials", (table) => {
