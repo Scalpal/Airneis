@@ -5,8 +5,6 @@ import { nunito } from "@/pages/_app";
 const Button = (props) => {
   const { children, disabled, variant, ...otherProps } = props; 
 
-  console.log("disabled : ", disabled);
-
   return (
     <button
       className={classnames(
