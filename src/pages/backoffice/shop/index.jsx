@@ -11,6 +11,8 @@ import ImageCard from "@/web/components/backoffice/ImageCard";
 import ImageInput from "@/web/components/backoffice/ImageInput";
 import deleteHomeCarouselImage from "@/web/services/images/homeCarousel/deleteHomeCarouselImage";
 import CustomAlert from "@/web/components/CustomAlert";
+import Loader from "@/web/components/Loader";
+import CollapseMenu from "@/web/components/CollapseMenu";
 
 
 export const getServerSideProps = async (context) => {
@@ -72,28 +74,39 @@ const BackofficeShop = () => {
       styles.container,
       nunito.className
     )}>
+      <p className={styles.title}>Website content management</p>
+
       <div className={styles.block}>
-        <p className={styles.blockTitle}>Home carousel</p>
+        <CollapseMenu
+          title={"Home carousel"}
+          defaultCollapsed={false}
+        >
+          <div className={styles.homeCarouselImagesWrapper}>
+            {!carouselImageIsLoading ? (
+              carouselImages.length !== 0 ? (carouselImages.map((image, index) => (
+                  <ImageCard
+                    key={index}
+                    image={image}
+                    onPress={() => deleteCarouselImage(image.id, image.imageSrc)}
+                  />
+                ))) : (
+                <p>There is currently no images on the home carousel.</p>
+              )
+            ) : (
+              <div>
+                <Loader />
+              </div>
+            )}
 
-        <div className={styles.homeCarouselImagesWrapper}>
-          {!carouselImageIsLoading && (
-            carouselImages.length !== 0 ? (carouselImages.map((image, index) => (
-                <ImageCard
-                  key={index}
-                  image={image}
-                  onPress={() => deleteCarouselImage(image.id, image.imageSrc)}
-                />
-              ))) : (
-              <p>There is currently no images on the home carousel.</p>
-            )
-          )}
+            <ImageInput
+              id={"homeCarouselImageInput"}
+              text={"Add an image"}
+              onChangeEvent={(e) => uploadCarouselImage(e.target.files[0])}
+            />
+          </div>
+        </CollapseMenu>
 
-          <ImageInput
-            id={"homeCarouselImageInput"}
-            text={"Add an image"}
-            onChangeEvent={(e) => uploadCarouselImage(e.target.files[0])}
-          />
-        </div>
+
       </div>
 
       <div className={styles.block}>

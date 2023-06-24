@@ -5,8 +5,7 @@ import styles from "@/styles/home.module.css";
 import ProductCard from "@/web/components/ProductCard";
 import routes from "@/web/routes";
 import SeeMoreButton from "@/web/components/SeeMoreButton";
-
-const placeholderImages = ["/meuble-4.jpeg", "/meuble-2.jpeg", "/meuble-3.png"];
+import useGetHomeCarouselImage from "@/web/hooks/useGetHomeCarouselImage";
 
 const products = [
   {
@@ -77,10 +76,13 @@ const categories = [
 ];
 
 const Home = () => {
+  const { carouselImageData, carouselImageError ,carouselImageIsLoading } = useGetHomeCarouselImage();
+  const carouselImages = (!carouselImageError && !carouselImageIsLoading) ? carouselImageData : [];
+
   return (
     <>
       <header className="fullWidthCarousel" id="carousel">
-        <Carousel images={placeholderImages} Autoplay={true} controls={false} />
+        <Carousel images={carouselImages} Autoplay={true} controls={false} />
       </header>
 
       {/* Popular products block */}

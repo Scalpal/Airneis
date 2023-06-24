@@ -6,6 +6,7 @@ import validate from "@/api/middlewares/validate";
 import mw from "@/api/mw";
 import { boolValidator, idValidator, stringValidator } from "@/validator";
 import { deleteImageFromS3 } from "@/web/services/S3";
+import getImagesWithSignedUrl from "@/web/services/images/getImagesWithSignedUrl";
 
 const handler = mw({
   GET: [
@@ -25,7 +26,9 @@ const handler = mw({
       try {
         const response = await query.select("*");
 
-        res.send({ images: response });
+        const imagesWithSignedUrl = await getImagesWithSignedUrl(response);
+
+        res.send({ images: imagesWithSignedUrl });
       } catch (error) {
         res.status(500).send({ error: error });
       }

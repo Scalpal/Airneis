@@ -9,6 +9,13 @@
   padding: 1rem 1.5rem;
 }
 
+.title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  padding: 0 0 0.5rem 0;
+  border-bottom: 1px solid var(--light-grey);
+}
+
 .block {
   display: flex;
   flex-direction: column;

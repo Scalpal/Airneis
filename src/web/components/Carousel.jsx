@@ -8,17 +8,16 @@ const Carousel = (props) => {
   const { images, Autoplay, controls } = props; 
 
   const [currentSlide, setCurrentSlide] = useState(0); 
-  const [slides] = useState(images); 
   const [autoplay] = useState(Autoplay); 
 
   const nextSlide = useCallback(() => {
-    setCurrentSlide(currentSlide === slides.length - 1 ? 0 : currentSlide + 1); 
-  }, [currentSlide, slides.length]); 
+    setCurrentSlide(currentSlide === images.length - 1 ? 0 : currentSlide + 1); 
+  }, [currentSlide, images.length]); 
 
 
   const previousSlide = useCallback(() => {
-    setCurrentSlide(currentSlide === 0 ? slides.length - 1 : currentSlide - 1);
-  }, [currentSlide, slides.length]);
+    setCurrentSlide(currentSlide === 0 ? images.length - 1 : currentSlide - 1);
+  }, [currentSlide, images.length]);
 
   useEffect(() => {
     if (autoplay) {
