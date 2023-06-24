@@ -109,7 +109,7 @@ module.exports.up = async (knex) => {
 
   await knex.schema.createTable("image_home_carousel", (table) => {
     table.increments("id");
-    table.text("src").notNullable().unique();
+    table.text("imageSrc").notNullable().unique();
     table.boolean("visible").notNullable().defaultTo(true);
     table.integer("rank").unique();
   });
