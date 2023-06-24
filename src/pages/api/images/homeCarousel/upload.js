@@ -37,7 +37,7 @@ const handler = mw({
             imageSrc: uploadedImage.Key
           }).returning("*");
           
-          res.send({ image: uploadedImage.Location });
+          res.send({ status: "success", message:"Image added to the carousel successfully." });
         } catch (error) {
           res.status(500).send({ error: error });
         }
