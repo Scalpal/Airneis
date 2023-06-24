@@ -2,17 +2,15 @@ import routes from "@/web/routes";
 import getApiClient from "../../getApiClient";
 
 
-
-const deleteHomeCarouselImage = async (id, imageName) => {
+const updateHomeCarouselImage = async(imageId, visible) => {
   const reqInstance = getApiClient();
-  const url = process.env.API_URL + routes.api.images.homeCarousel.single(id);
+  const url = process.env.API_URL + routes.api.images.homeCarousel.single(imageId);
   const body = {
-    id,
-    imageName
+    visible
   };
 
   try {
-    const response = await reqInstance.post(url, body);
+    const response = await reqInstance.patch(url, body);
     
     return [null, response];
   } catch (error) {
@@ -20,4 +18,4 @@ const deleteHomeCarouselImage = async (id, imageName) => {
   }
 };
 
-export default deleteHomeCarouselImage;
+export default updateHomeCarouselImage;

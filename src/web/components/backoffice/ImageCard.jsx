@@ -3,8 +3,8 @@ import { XMarkIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 
 const ImageCard = (props) => {
-  const { image, onPress } = props;
-
+  const { image, onPress, editButton } = props;
+  
   return (
     <div
       className={styles.wrapper}
@@ -17,10 +17,13 @@ const ImageCard = (props) => {
       />
 
       <div className={styles.overlay}>
+
         <XMarkIcon
           onClick={() => onPress(image.imageSrc)}
           className={styles.overlayIcon}
         />
+
+        {editButton}
       </div>
     </div>
   );

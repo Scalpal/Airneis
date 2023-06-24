@@ -1,6 +1,7 @@
 import useSWR from "swr";
 import routes from "../routes";
 import Axios from "axios";
+import { createQueryString } from "../services/createQueryString";
 
 const fetcher = async (url) => {
   try {
@@ -12,8 +13,10 @@ const fetcher = async (url) => {
   }
 };
 
-const useGetHomeCarouselImage = () => {
-  const url = process.env.API_URL + routes.api.images.homeCarousel.base();
+const useGetHomeCarouselImage = (queryParams) => {
+  const queryString = createQueryString(queryParams ? queryParams : {});
+
+  const url = process.env.API_URL + routes.api.images.homeCarousel.base(queryString);
   const config = {
     revalidateOnFocus: false
   };

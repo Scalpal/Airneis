@@ -76,7 +76,7 @@ const categories = [
 ];
 
 const Home = () => {
-  const { carouselImageData, carouselImageError ,carouselImageIsLoading } = useGetHomeCarouselImage();
+  const { carouselImageData, carouselImageError ,carouselImageIsLoading } = useGetHomeCarouselImage({ visible: true });
   const carouselImages = (!carouselImageError && !carouselImageIsLoading) ? carouselImageData : [];
 
   return (

@@ -46,7 +46,8 @@ const routes = {
     },
     images: {
       homeCarousel: {
-        base: () => `/api/images/homeCarousel`,
+        base: (queryString) => `/api/images/homeCarousel${queryString ? queryString : ""}`,
+        single: (imageId) => `/api/images/homeCarousel/${imageId}`,
         upload: () => "/api/images/homeCarousel/upload",
       }
     },

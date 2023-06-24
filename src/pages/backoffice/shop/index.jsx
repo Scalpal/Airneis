@@ -13,6 +13,8 @@ import deleteHomeCarouselImage from "@/web/services/images/homeCarousel/deleteHo
 import CustomAlert from "@/web/components/CustomAlert";
 import Loader from "@/web/components/Loader";
 import CollapseMenu from "@/web/components/CollapseMenu";
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
+import updateHomeCarouselImage from "@/web/services/images/homeCarousel/updateHomeCarouselImage";
 
 
 export const getServerSideProps = async (context) => {
@@ -69,6 +71,21 @@ const BackofficeShop = () => {
     refreshCarouselImages();
   }, [refreshCarouselImages]); 
 
+  const handleImageVisibility = useCallback(async(imageId, visible) => {
+    const [error, response] = await updateHomeCarouselImage(imageId, visible); 
+    
+    if (error) {
+      setAlert({ status: "error", message: error.message });
+      setShowAlert(true);
+
+      return;
+    }
+
+    setAlert({ status: "success", message: response.data.message });
+    setShowAlert(true);
+    refreshCarouselImages();
+  }, [refreshCarouselImages]);
+
   return (
     <div className={classnames(
       styles.container,
@@ -80,6 +97,7 @@ const BackofficeShop = () => {
         <CollapseMenu
           title={"Home carousel"}
           defaultCollapsed={false}
+          size={"fit-to-parent"}
         >
           <div className={styles.homeCarouselImagesWrapper}>
             {!carouselImageIsLoading ? (
@@ -88,6 +106,17 @@ const BackofficeShop = () => {
                     key={index}
                     image={image}
                     onPress={() => deleteCarouselImage(image.id, image.imageSrc)}
+                    editButton={
+                      !image.visible ?
+                        <EyeIcon
+                          className={styles.imageIcon}
+                          onClick={() => handleImageVisibility(image.id, true)}
+                        /> :
+                        <EyeSlashIcon
+                          className={styles.imageIcon}
+                          onClick={() => handleImageVisibility(image.id, false)}
+                        />
+                    }
                   />
                 ))) : (
                 <p>There is currently no images on the home carousel.</p>

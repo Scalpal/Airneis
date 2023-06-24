@@ -1,11 +1,8 @@
 import ImageHomeCarousel from "@/api/db/models/ImageHomeCarousel";
-import auth from "@/api/middlewares/auth";
-import checkIsAdmin from "@/api/middlewares/checkIsAdmin";
 import slowDown from "@/api/middlewares/slowDown";
 import validate from "@/api/middlewares/validate";
 import mw from "@/api/mw";
-import { boolValidator, idValidator, stringValidator } from "@/validator";
-import { deleteImageFromS3 } from "@/web/services/S3";
+import { boolValidator } from "@/validator";
 import getImagesWithSignedUrl from "@/web/services/images/getImagesWithSignedUrl";
 
 const handler = mw({
@@ -13,51 +10,24 @@ const handler = mw({
     slowDown(500),
     validate({
       query: {
-        active: boolValidator.default(false)
+        visible: boolValidator.default(false)
       }
     }),
     async ({ req, res }) => {
       const query = ImageHomeCarousel.query();
 
-      if (req.query.active === true) {
-        query.where("active", true);
+      if (req.query.visible === "true") {
+        query.where("visible", true);
       }
 
       try {
-        const response = await query.select("*");
+        const response = await query.select("*").orderBy("id");
 
         const imagesWithSignedUrl = await getImagesWithSignedUrl(response);
 
         res.send({ images: imagesWithSignedUrl });
       } catch (error) {
         res.status(500).send({ error: error });
-      }
-    }
-  ], 
-  PATCH: [
-    slowDown(500),
-    auth(),
-    checkIsAdmin(),
-    validate({
-      body: {
-        id: idValidator.required(),
-        imageName: stringValidator.required()
-      }
-    }),
-    async({
-      locals: {
-        body: { id, imageName }
-      },
-      res
-    }) => {
-      try {
-        await ImageHomeCarousel.query().delete().where("id", id);
-
-        await deleteImageFromS3(imageName);
-
-        res.send({ status: "success", message: "Image was deleted successfully from the carousel." });
-      } catch (error) {
-        res.status(500).send({ status: "error", message: error.message });
       }
     }
   ]
