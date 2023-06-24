@@ -44,6 +44,12 @@ const routes = {
       productImage: (productId) => `/api/products/${productId}/images`,
       deleteImage: (productId) => `/api/products/${productId}/deleteImage` 
     },
+    images: {
+      homeCarousel: {
+        base: () => `/api/images/homeCarousel`,
+        upload: () => "/api/images/homeCarousel/upload",
+      }
+    },
     categories: {
       base: () => "/api/products/categories",
       products: (categoryId) => `/api/products?categories=${categoryId}`

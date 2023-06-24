@@ -1,0 +1,39 @@
+.container {
+  display: flex;
+  flex-direction: column; 
+  gap: 2rem;
+  background: var(--secondary);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.41);
+  padding: 1rem 1.5rem;
+}
+
+.block {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 0.5rem;
+}
+
+.blockTitle {
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0 0 0.5rem 0;
+  border-bottom: 1px solid var(--light-grey);
+}
+
+/* Home carousel images wrapper */
+.homeCarouselImagesWrapper {
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-gap: 0.5rem;
+}
+
+.homeCarouselImagesWrapper > div,
+.homeCarouselImagesWrapper > label {
+  aspect-ratio: 16/9;
+  width: 100%;
+}
+
