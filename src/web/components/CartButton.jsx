@@ -8,7 +8,7 @@ const CartButton = () => {
   const router = useRouter();
   const {
     state: { cart },
-    actions: { setCart },
+    actions: { setCart }
   } = useAppContext();
 
   const [productsCount, setProductsCount] = useState(0);

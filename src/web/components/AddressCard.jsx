@@ -3,7 +3,7 @@ import styles from "@/styles/components/AddressCard.module.css";
 import {
   GlobeEuropeAfricaIcon,
   MapPinIcon as OlMapPinIcon,
-  BuildingOfficeIcon,
+  BuildingOfficeIcon
 } from "@heroicons/react/24/outline";
 import { MapPinIcon } from "@heroicons/react/24/solid";
 

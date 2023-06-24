@@ -9,7 +9,7 @@ import {
   orderFieldValidator,
   orderValidator,
   pageValidator,
-  searchValidator,
+  searchValidator
 } from "@/validator";
 
 const handler = mw({
@@ -24,17 +24,17 @@ const handler = mw({
         orderField: orderFieldValidator([
           "id",
           "firstName",
-          "lastName",
+          "lastName"
         ]).default("id"),
         order: orderValidator.default("asc"),
-        search: searchValidator,
-      },
+        search: searchValidator
+      }
     }),
     async ({
       locals: {
-        query: { limit, page, orderField, order, search },
+        query: { limit, page, orderField, order, search }
       },
-      res,
+      res
     }) => {
       try {
         const searchValue = search.toLowerCase();
@@ -71,8 +71,8 @@ const handler = mw({
       } catch (error) {
         res.status(500).send({ error: error });
       }
-    },
-  ],
+    }
+  ]
 });
 
 export default handler;

@@ -13,7 +13,7 @@ const ActionBar = (props) => {
     queryParams,
     setQueryParams,
     handleQueryParams,
-    addRowFunction,
+    addRowFunction
   } = props;
 
   const [searchValue, setSearchValue] = useState("");
@@ -54,7 +54,7 @@ const ActionBar = (props) => {
         setQueryParams({
           ...queryParams,
           page: 1,
-          search: searchValue,
+          search: searchValue
         });
       }
     };

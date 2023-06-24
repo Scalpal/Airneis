@@ -7,7 +7,7 @@ const checkIsAdmin = async (context) => {
 
   try {
     const {
-      data: { user },
+      data: { user }
     } = await reqInstance.get(
       `${process.env.API_URL}/${routes.api.users.self()}`
     );
@@ -16,8 +16,8 @@ const checkIsAdmin = async (context) => {
       return {
         redirect: {
           destination: "/home",
-          permanent: false,
-        },
+          permanent: false
+        }
       };
     }
   } catch (error) {
@@ -25,8 +25,8 @@ const checkIsAdmin = async (context) => {
       return {
         redirect: {
           destination: "/home",
-          permanent: false,
-        },
+          permanent: false
+        }
       };
     }
   }

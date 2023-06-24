@@ -14,23 +14,23 @@ const routes = {
   login: () => "/login",
   products: {
     base: () => `/products`,
-    single: (productId) => `/products/${productId}`,
+    single: (productId) => `/products/${productId}`
   },
   categories: {
     base: () => "/category",
-    single: (categoryId) => `/category/${categoryId}`,
+    single: (categoryId) => `/category/${categoryId}`
   },
   backoffice: {
     base: () => "/backoffice",
     users: {
       single: (userId) =>
-        createRouteWithQueryParams(`/backoffice/users/${userId}`),
+        createRouteWithQueryParams(`/backoffice/users/${userId}`)
     },
     products: {
       add: () => "/backoffice/products/add",
       single: (productId) =>
-        createRouteWithQueryParams(`/backoffice/products/${productId}`),
-    },
+        createRouteWithQueryParams(`/backoffice/products/${productId}`)
+    }
   },
   api: {
     register: () => "/users/register",
@@ -55,7 +55,7 @@ const routes = {
     },
     categories: {
       base: () => "/api/products/categories",
-      products: (categoryId) => `/api/products?categories=${categoryId}`,
+      products: (categoryId) => `/api/products?categories=${categoryId}`
     },
     users: {
       collection: (query) => createRouteWithQueryParams("/api/users", query),
@@ -63,9 +63,9 @@ const routes = {
         createRouteWithQueryParams(`/api/users/${userId}`, query),
       self: () => "/api/users/self",
       patch: (userId) => createRouteWithQueryParams(`/users/${userId}`),
-      delete: (userId) => createRouteWithQueryParams(`/users/${userId}`),
-    },
-  },
+      delete: (userId) => createRouteWithQueryParams(`/users/${userId}`)
+    }
+  }
 };
 
 export default routes;

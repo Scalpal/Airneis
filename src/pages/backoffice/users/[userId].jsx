@@ -26,13 +26,13 @@ const validationSchema = createValidator({
   email: emailValidator.required(),
   phoneNumber: phoneValidator.required(),
   active: boolValidator.required(),
-  isAdmin: boolValidator.required(),
+  isAdmin: boolValidator.required()
 });
 
 const BackofficeUserPage = (props) => {
   const { user } = props;
   const {
-    actions: { api },
+    actions: { api }
   } = useAppContext();
 
   const [currentUser, setCurrentUser] = useState(user);
@@ -44,7 +44,7 @@ const BackofficeUserPage = (props) => {
     (type, handleReset) => {
       setEditMode({
         type: editMode.type !== type ? type : "",
-        editing: !editMode.editing,
+        editing: !editMode.editing
       });
 
       if (editMode.type === type) {
@@ -71,7 +71,7 @@ const BackofficeUserPage = (props) => {
           setShowAlert(true);
           setAlert({
             status: error.response.status,
-            message: error.response.message,
+            message: error.response.message
           });
         }
       }
@@ -281,23 +281,23 @@ export const getServerSideProps = async (context) => {
       return {
         redirect: {
           destination: "/backoffice/users",
-          permanent: false,
-        },
+          permanent: false
+        }
       };
     }
 
     return {
       props: {
-        user: result.data.user,
-      },
+        user: result.data.user
+      }
     };
   } catch (error) {
     if (error instanceof AxiosError) {
       return {
         redirect: {
           destination: "/backoffice/users",
-          permanent: false,
-        },
+          permanent: false
+        }
       };
     }
   }

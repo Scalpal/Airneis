@@ -7,7 +7,7 @@ import {
   TagIcon,
   ChartBarIcon,
   ArrowRightOnRectangleIcon,
-  ReceiptPercentIcon,
+  ReceiptPercentIcon
 } from "@heroicons/react/24/outline";
 import { nunito } from "@/pages/_app";
 import { classnames } from "@/pages/_app";
@@ -17,33 +17,33 @@ const navLinks = [
   {
     route: "/backoffice/dashboard",
     text: "Dashboard",
-    icon: <HomeIcon className={styles.linksIcon} />,
+    icon: <HomeIcon className={styles.linksIcon} />
   },
   {
     route: "/backoffice/users",
     text: "Users",
-    icon: <UserIcon className={styles.linksIcon} />,
+    icon: <UserIcon className={styles.linksIcon} />
   },
   {
     route: "/backoffice/products",
     text: "Products",
-    icon: <TagIcon className={styles.linksIcon} />,
+    icon: <TagIcon className={styles.linksIcon} />
   },
   {
     route: "/backoffice/orders",
     text: "Orders",
-    icon: <ReceiptPercentIcon className={styles.linksIcon} />,
+    icon: <ReceiptPercentIcon className={styles.linksIcon} />
   },
   {
     route: "/backoffice/statistics",
     text: "Statistics",
-    icon: <ChartBarIcon className={styles.linksIcon} />,
+    icon: <ChartBarIcon className={styles.linksIcon} />
   },
   {
     route: "/backoffice/shop",
     text: "Shop",
-    icon: <BuildingStorefrontIcon className={styles.linksIcon} />,
-  },
+    icon: <BuildingStorefrontIcon className={styles.linksIcon} />
+  }
 ];
 
 const Navbar = () => {

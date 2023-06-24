@@ -6,7 +6,7 @@ class CategoryModel extends BaseModel {
 
   static modifiers = {
     paginate: (query, limit, page) =>
-      query.limit(limit).offset((page - 1) * limit),
+      query.limit(limit).offset((page - 1) * limit)
   };
 
   static relationMappings() {
@@ -16,9 +16,9 @@ class CategoryModel extends BaseModel {
         modelClass: UserModel,
         join: {
           from: "addresses.userId",
-          to: "users.id",
-        },
-      },
+          to: "users.id"
+        }
+      }
     };
   }
 }

@@ -8,8 +8,8 @@ const fetcher = async (url) => {
 
   const reqInstance = Axios.create({
     headers: {
-      Authorization: `Bearer ${token}`,
-    },
+      Authorization: `Bearer ${token}`
+    }
   });
   const { data } = await reqInstance.get(url);
 
@@ -18,7 +18,7 @@ const fetcher = async (url) => {
 
 export const useUser = () => {
   const config = {
-    revalidateOnFocus: false,
+    revalidateOnFocus: false
   };
 
   const { data, error, isLoading } = useSWR(
@@ -30,6 +30,6 @@ export const useUser = () => {
   return {
     data: data,
     error: error,
-    isLoading: isLoading,
+    isLoading: isLoading
   };
 };

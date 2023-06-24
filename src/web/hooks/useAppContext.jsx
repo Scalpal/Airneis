@@ -8,7 +8,7 @@ import {
   useContext,
   useEffect,
   useMemo,
-  useState,
+  useState
 } from "react";
 import { parseCookies } from "nookies";
 import Axios from "axios";
@@ -36,7 +36,7 @@ export const AppContextProvider = (props) => {
 
     try {
       const {
-        data: { user },
+        data: { user }
       } = await Axios.get(routes.api.users.single(session.user.id));
 
       return user;
@@ -161,12 +161,12 @@ export const AppContextProvider = (props) => {
         setCart,
         addToCart,
         removeProductFromCart,
-        deleteProductFromCart,
+        deleteProductFromCart
       },
       state: {
         session,
-        cart,
-      },
+        cart
+      }
     };
   }, [
     api,
@@ -179,7 +179,7 @@ export const AppContextProvider = (props) => {
     setCart,
     addToCart,
     removeProductFromCart,
-    deleteProductFromCart,
+    deleteProductFromCart
   ]);
 
   return <AppContext.Provider {...otherProps} value={contextValues} />;

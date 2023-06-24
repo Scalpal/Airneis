@@ -2,7 +2,7 @@ import { classnames } from "@/pages/_app";
 import styles from "@/styles/components/CustomAlert.module.css";
 import {
   CheckBadgeIcon,
-  ExclamationTriangleIcon,
+  ExclamationTriangleIcon
 } from "@heroicons/react/24/solid";
 import { useEffect } from "react";
 

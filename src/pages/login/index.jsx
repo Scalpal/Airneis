@@ -11,18 +11,18 @@ import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 
 const validationSchema = createValidator({
   email: emailValidator.required(),
-  password: stringValidator.required(),
+  password: stringValidator.required()
 });
 
 const initialValues = {
   email: "",
-  password: "",
+  password: ""
 };
 
 const Login = () => {
   const router = useRouter();
   const {
-    actions: { signIn },
+    actions: { signIn }
   } = useAppContext();
   const [error, setError] = useState(null);
 

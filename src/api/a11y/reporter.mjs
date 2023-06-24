@@ -7,15 +7,15 @@ const runPa11y = async () => {
       runners: ["axe"],
       standard: "WCAG2AAA",
       chromeLaunchConfig: {
-        args: ["--no-sandbox"],
+        args: ["--no-sandbox"]
       },
       log: {
         debug: console.log,
         error: console.error,
-        info: console.log,
+        info: console.log
       },
       includeWarnings: false,
-      includeNotices: false,
+      includeNotices: false
     };
 
     const urls = [pa11y("http://localhost:3000/home", options)];

@@ -8,7 +8,7 @@ import {
   boolValidator,
   emailValidator,
   phoneValidator,
-  stringValidator,
+  stringValidator
 } from "@/validator";
 import { idValidator } from "@/validator";
 
@@ -19,14 +19,14 @@ const handler = mw({
     checkIsAdmin(),
     validate({
       query: {
-        userId: idValidator.required(),
-      },
+        userId: idValidator.required()
+      }
     }),
     async ({
       locals: {
-        query: { userId },
+        query: { userId }
       },
-      res,
+      res
     }) => {
       const id = Number.parseInt(userId);
 
@@ -54,7 +54,7 @@ const handler = mw({
       } catch (error) {
         res.status(500).send({ error: error });
       }
-    },
+    }
   ],
   DELETE: [
     slowDown(500),
@@ -62,14 +62,14 @@ const handler = mw({
     checkIsAdmin(),
     validate({
       query: {
-        userId: idValidator.required(),
-      },
+        userId: idValidator.required()
+      }
     }),
     async ({
       locals: {
-        query: { userId },
+        query: { userId }
       },
-      res,
+      res
     }) => {
       try {
         const user = await UserModel.query().findById(userId);
@@ -87,12 +87,12 @@ const handler = mw({
 
         res.send({
           status: "success",
-          message: `User ${desactivatedUser[0].id} successfully desactivated`,
+          message: `User ${desactivatedUser[0].id} successfully desactivated`
         });
       } catch (error) {
         res.status(500).send({ error: error });
       }
-    },
+    }
   ],
   PATCH: [
     slowDown(500),
@@ -100,7 +100,7 @@ const handler = mw({
     checkIsAdmin(),
     validate({
       query: {
-        userId: idValidator.required(),
+        userId: idValidator.required()
       },
       body: {
         firstName: stringValidator,
@@ -108,15 +108,15 @@ const handler = mw({
         email: emailValidator,
         phoneNumber: phoneValidator,
         active: boolValidator,
-        isAdmin: boolValidator,
-      },
+        isAdmin: boolValidator
+      }
     }),
     async ({
       locals: {
         query: { userId },
-        body: { firstName, lastName, email, phoneNumber, active, isAdmin },
+        body: { firstName, lastName, email, phoneNumber, active, isAdmin }
       },
-      res,
+      res
     }) => {
       try {
         const user = await UserModel.query().findById(userId);
@@ -134,7 +134,7 @@ const handler = mw({
             ...(email ? { email } : {}),
             ...(phoneNumber ? { phoneNumber } : {}),
             ...(active !== undefined ? { active } : {}),
-            ...(isAdmin !== undefined ? { isAdmin } : {}),
+            ...(isAdmin !== undefined ? { isAdmin } : {})
           })
           .where({ id: userId })
           .returning("*");
@@ -142,13 +142,13 @@ const handler = mw({
         res.send({
           status: "success",
           message: `User ${updatedUser[0].id} updated successfully`,
-          user: updatedUser[0],
+          user: updatedUser[0]
         });
       } catch (error) {
         res.status(500).send({ error: error });
       }
-    },
-  ],
+    }
+  ]
 });
 
 export default handler;

@@ -37,21 +37,21 @@ export const getServerSideProps = async (context) => {
 
     return {
       props: {
-        productsProps: products,
-      },
+        productsProps: products
+      }
     };
   } catch (error) {
     if (error instanceof AxiosError) {
       return {
         props: {
-          productsProps: [],
+          productsProps: []
         }
       };
     }
 
     return {
       props: {
-        productsProps: [],
+        productsProps: []
       }
     };
   }
@@ -70,7 +70,7 @@ const BackofficeProducts = (props) => {
     page: 1,
     order: "asc",
     orderField: "id",
-    search: "",
+    search: ""
   });
 
   const { productsData, productsError, productsIsLoading, refreshProducts } = useGetProductsSWR(queryParams);
@@ -89,7 +89,7 @@ const BackofficeProducts = (props) => {
       setQueryParams({
         ...queryParams,
         page: 1,
-        limit: value,
+        limit: value
       });
     },
     [queryParams]
@@ -109,7 +109,7 @@ const BackofficeProducts = (props) => {
           ...queryParams,
           page: 1,
           orderField: column,
-          order: "asc",
+          order: "asc"
         });
 
         return;
@@ -119,7 +119,7 @@ const BackofficeProducts = (props) => {
         ...queryParams,
         page: 1,
         orderField: column,
-        order: queryParams["order"] === "asc" ? "desc" : "asc",
+        order: queryParams["order"] === "asc" ? "desc" : "asc"
       });
     },
     [queryParams]

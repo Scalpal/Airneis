@@ -8,7 +8,7 @@ import useAppContext from "@/web/hooks/useAppContext";
 const Layout = ({ children }) => {
   const {
     actions: { signOut },
-    state: { session },
+    state: { session }
   } = useAppContext();
 
   const [isDrawerToggled, setIsDrawerToggled] = useState(false);

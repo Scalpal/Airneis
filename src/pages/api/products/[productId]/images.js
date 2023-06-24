@@ -11,12 +11,12 @@ import multer from "multer";
 
 export const config = {
   api: {
-    bodyParser: false,
-  },
+    bodyParser: false
+  }
 };
 
 const upload = multer({
-  storage: multer.memoryStorage(),
+  storage: multer.memoryStorage()
 }).single("file");
 
 const handler = mw({
@@ -43,7 +43,7 @@ const handler = mw({
           await ProductImageModel.query()
             .insert({
               productId: productId,
-              imageSrc: uploadedImage.Key,
+              imageSrc: uploadedImage.Key
             })
             .returning("*");
 
@@ -56,7 +56,7 @@ const handler = mw({
 
           // Products with average rating
           const productWithAverageRating = getProductsAverageRating([
-            updatedProduct,
+            updatedProduct
           ]);
 
           // Add signed url to all products images
@@ -65,14 +65,14 @@ const handler = mw({
 
           res.send({
             image: uploadedImage.Location,
-            product: productWithSignedUrlImages[0],
+            product: productWithSignedUrlImages[0]
           });
         } catch (error) {
           res.status(500).send({ error: error });
         }
       });
-    },
-  ],
+    }
+  ]
 });
 
 export default handler;

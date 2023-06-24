@@ -10,7 +10,7 @@ import Loader from "@/web/components/Loader";
 import {
   MagnifyingGlassIcon,
   ShoppingBagIcon,
-  XMarkIcon,
+  XMarkIcon
 } from "@heroicons/react/24/outline";
 
 const limit = 10;
@@ -24,7 +24,7 @@ const Products = () => {
     categories: [],
     search: "",
     orderField: "",
-    order: "",
+    order: ""
   });
 
   const [appliedQueryParams, setAppliedQueryParams] = useState({
@@ -35,7 +35,7 @@ const Products = () => {
     categories: [],
     search: "",
     orderField: "",
-    order: "",
+    order: ""
   });
 
   const { data, error, isLoading, isValidating, size, setSize } =
@@ -52,7 +52,7 @@ const Products = () => {
       if (typeof queryParams[key] === "boolean") {
         setQueryParams({
           ...queryParams,
-          [key]: !value,
+          [key]: !value
         });
 
         return;
@@ -61,7 +61,7 @@ const Products = () => {
       if (typeof queryParams[key] === "number") {
         setQueryParams({
           ...queryParams,
-          [key]: Number.parseInt(value),
+          [key]: Number.parseInt(value)
         });
 
         return;
@@ -70,7 +70,7 @@ const Products = () => {
       if (typeof queryParams[key] === "string") {
         setQueryParams({
           ...queryParams,
-          [key]: value,
+          [key]: value
         });
 
         return;
@@ -82,7 +82,7 @@ const Products = () => {
         [key]:
           queryParams[key].findIndex((elt) => elt.value === value) === -1 // If value not found
             ? [...queryParams[key], { name, value }]
-            : [...queryParams[key].filter((elt) => elt.value !== value)],
+            : [...queryParams[key].filter((elt) => elt.value !== value)]
       });
     },
     [queryParams, setQueryParams]
@@ -93,7 +93,7 @@ const Products = () => {
       if (typeof queryParams[key] === "boolean") {
         setAppliedQueryParams({
           ...queryParams,
-          [key]: !value,
+          [key]: !value
         });
 
         return;
@@ -102,7 +102,7 @@ const Products = () => {
       if (typeof appliedQueryParams[key] === "string") {
         setAppliedQueryParams({
           ...appliedQueryParams,
-          [key]: value,
+          [key]: value
         });
 
         return;
@@ -111,7 +111,7 @@ const Products = () => {
       if (typeof queryParams[key] === "number") {
         setAppliedQueryParams({
           ...queryParams,
-          [key]: Number.parseInt(value),
+          [key]: Number.parseInt(value)
         });
 
         return;
@@ -123,7 +123,7 @@ const Products = () => {
         [key]:
           appliedQueryParams[key].findIndex((elt) => elt.value === value) === -1
             ? [...appliedQueryParams[key], { name, value }]
-            : [...appliedQueryParams[key].filter((elt) => elt.value !== value)],
+            : [...appliedQueryParams[key].filter((elt) => elt.value !== value)]
       });
     },
     [appliedQueryParams, setAppliedQueryParams, queryParams]
@@ -137,7 +137,7 @@ const Products = () => {
     setAppliedQueryParams({
       ...queryParams,
       order: "",
-      orderField: "",
+      orderField: ""
     });
   }, [queryParams, setAppliedQueryParams]);
 
@@ -148,7 +148,7 @@ const Products = () => {
       if (event.key === "Enter") {
         setAppliedQueryParams((prevState) => ({
           ...prevState,
-          search: queryParams.search,
+          search: queryParams.search
         }));
       }
     };
@@ -161,7 +161,7 @@ const Products = () => {
     queryParams,
     setQueryParams,
     appliedQueryParams,
-    handleAppliedQueryParams,
+    handleAppliedQueryParams
   ]);
 
   useEffect(() => {

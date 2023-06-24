@@ -42,7 +42,7 @@ const Carousel = (props) => {
                 : styles.carouselSlide
             }
             style={{
-              objectFit: "cover",
+              objectFit: "cover"
             }}
           />
         );

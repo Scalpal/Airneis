@@ -44,14 +44,14 @@ export async function getServerSideProps(context) {
 
     return {
       props: {
-        error: null,
-      },
+        error: null
+      }
     };
   } catch (error) {
     return {
       props: {
-        error: true,
-      },
+        error: true
+      }
     };
   }
 }

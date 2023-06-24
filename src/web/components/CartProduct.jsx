@@ -6,7 +6,7 @@ import useAppContext from "../hooks/useAppContext";
 const CartProduct = (props) => {
   const { product, index, productState } = props;
   const {
-    actions: { addToCart, removeProductFromCart, deleteProductFromCart },
+    actions: { addToCart, removeProductFromCart, deleteProductFromCart }
   } = useAppContext();
 
   const [productsList] = productState;

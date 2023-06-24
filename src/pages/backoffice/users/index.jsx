@@ -34,7 +34,7 @@ export const getServerSideProps = async (context) => {
 
   try {
     const {
-      data: { users, count },
+      data: { users, count }
     } = await reqInstance.get(
       `${process.env.API_URL}/${routes.api.users.collection()}`
     );
@@ -42,15 +42,15 @@ export const getServerSideProps = async (context) => {
     return {
       props: {
         usersProps: users,
-        count: count,
-      },
+        count: count
+      }
     };
   } catch (error) {
     return {
       redirect: {
         destination: "/home",
-        permanent: false,
-      },
+        permanent: false
+      }
     };
   }
 };
@@ -60,7 +60,7 @@ const userInfoTab = "user-info";
 const BackofficeUsers = (props) => {
   const { usersProps, count } = props;
   const {
-    actions: { api },
+    actions: { api }
   } = useAppContext();
 
   const [alert, setAlert] = useState({ status: "", message: "" });
@@ -74,14 +74,14 @@ const BackofficeUsers = (props) => {
     page: 1,
     order: "asc",
     orderField: "id",
-    search: "",
+    search: ""
   });
 
   const handleQueryParams = useCallback(
     (key, value) => {
       setQueryParams({
         ...queryParams,
-        [key]: value,
+        [key]: value
       });
     },
     [queryParams]
@@ -101,7 +101,7 @@ const BackofficeUsers = (props) => {
           ...queryParams,
           page: 1,
           orderField: column,
-          order: "asc",
+          order: "asc"
         });
 
         return;
@@ -111,7 +111,7 @@ const BackofficeUsers = (props) => {
         ...queryParams,
         page: 1,
         orderField: column,
-        order: queryParams["order"] === "asc" ? "desc" : "asc",
+        order: queryParams["order"] === "asc" ? "desc" : "asc"
       });
     },
     [queryParams]
@@ -122,7 +122,7 @@ const BackofficeUsers = (props) => {
       setQueryParams({
         ...queryParams,
         page: 1,
-        limit: value,
+        limit: value
       });
     },
     [queryParams]
@@ -133,7 +133,7 @@ const BackofficeUsers = (props) => {
 
     try {
       const {
-        data: { users, count },
+        data: { users, count }
       } = await reqInstance.get(
         `${process.env.API_URL}${routes.api.users.collection(queryParams)}`
       );
@@ -144,7 +144,7 @@ const BackofficeUsers = (props) => {
         setShowAlert(true);
         setAlert({
           status: error.response.status,
-          message: error.response.message,
+          message: error.response.message
         });
       }
     }
@@ -174,7 +174,7 @@ const BackofficeUsers = (props) => {
           setShowAlert(true);
           setAlert({
             status: error.response.status,
-            message: error.response.message,
+            message: error.response.message
           });
         }
       }
@@ -233,7 +233,7 @@ const BackofficeUsers = (props) => {
             "lastName",
             "phoneNumber",
             "active",
-            "isAdmin",
+            "isAdmin"
           ]}
           showSpecificRowFunction={showSpecificUser}
           deleteRowFunction={desactivateUser}

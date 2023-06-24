@@ -6,7 +6,7 @@ class ReviewModel extends BaseModel {
 
   static modifiers = {
     paginate: (query, limit, page) =>
-      query.limit(limit).offset((page - 1) * limit),
+      query.limit(limit).offset((page - 1) * limit)
   };
 
   static relationMappings() {
@@ -16,10 +16,10 @@ class ReviewModel extends BaseModel {
         modelClass: UserModel,
         join: {
           from: "reviews.userId",
-          to: "users.id",
-        },
+          to: "users.id"
+        }
       },
-      modify: (query) => query.select("firstName", "lastName"),
+      modify: (query) => query.select("firstName", "lastName")
     };
   }
 }

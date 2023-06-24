@@ -21,8 +21,8 @@ const auth = () => {
 
     const {
       payload: {
-        user: { id },
-      },
+        user: { id }
+      }
     } = jsonwebtoken.verify(jwt, config.security.jwt.secret);
     locals.userId = id;
 

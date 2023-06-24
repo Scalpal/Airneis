@@ -5,23 +5,24 @@ module.exports = {
     "prettier",
     "next",
     "plugin:react/recommended",
-    "plugin:react/jsx-runtime",
+    "plugin:react/jsx-runtime"
   ],
   plugins: ["react", "react-hooks"],
   env: {
     es2022: true,
-    node: true,
+    node: true
   },
   parserOptions: {
-    sourceType: "module",
+    sourceType: "module"
   },
   rules: {
+    "comma-dangle": ["error", "never"],
     indent: "off",
     "linebreak-style": ["error", "unix"],
     quotes: [
       "error",
       "double",
-      { avoidEscape: true, allowTemplateLiterals: true },
+      { avoidEscape: true, allowTemplateLiterals: true }
     ],
     semi: [1, "always"],
     "no-console": "error",
@@ -47,8 +48,8 @@ module.exports = {
           "switch",
           "try",
           "while",
-          "return",
-        ],
+          "return"
+        ]
       },
       {
         blankLine: "always",
@@ -63,16 +64,16 @@ module.exports = {
           "switch",
           "try",
           "while",
-          "return",
+          "return"
         ],
-        next: "*",
-      },
+        next: "*"
+      }
     ],
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
     "react/no-unescaped-entities": ["error", { forbid: [">", "}"] }],
     "react/react-in-jsx-scope": "off",
-    "react/prop-types": "off",
+    "react/prop-types": "off"
   },
-  settings: { react: { version: "detect" } },
+  settings: { react: { version: "detect" } }
 };

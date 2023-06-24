@@ -5,8 +5,8 @@ const checkToken = async (token) => {
     return {
       redirect: {
         destination: "/home",
-        permanent: false,
-      },
+        permanent: false
+      }
     };
   }
 
@@ -17,8 +17,8 @@ const checkToken = async (token) => {
     return {
       redirect: {
         destination: "/home",
-        permanent: false,
-      },
+        permanent: false
+      }
     };
   }
 };

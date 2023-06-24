@@ -22,14 +22,14 @@ const handler = mw({
         city: stringValidator,
         region: stringValidator,
         postalCode: stringValidator,
-        country: stringValidator, 
-      },
+        country: stringValidator 
+      }
     }),
     async ({
       locals: {
-        body: { firstName, lastName, phoneNumber, email, password, address, city, region, postalCode, country },
+        body: { firstName, lastName, phoneNumber, email, password, address, city, region, postalCode, country }
       },
-      res,
+      res
     }) => {
       try {
         const user = await UserModel.query().findOne({ email }); 
@@ -49,7 +49,7 @@ const handler = mw({
             lastName,
             passwordHash,
             passwordSalt,
-            phoneNumber,
+            phoneNumber
           })
           .returning("*");
 
@@ -61,7 +61,7 @@ const handler = mw({
               region,
               postalCode,
               country,
-              userId : addedUser.id,
+              userId : addedUser.id
             })
             .returning("*");
         }
@@ -76,8 +76,8 @@ const handler = mw({
           dynamic_template_data: {
             firstname: firstName,
             lastname: lastName,
-            url: `${process.env.API_URL}/mails/confirmation?id=${addedUser.id}`,
-          },
+            url: `${process.env.API_URL}/mails/confirmation?id=${addedUser.id}`
+          }
         };
 
         sgMail.send(msg);
@@ -85,8 +85,8 @@ const handler = mw({
       } catch (error) {
         res.status(500).send({ error: error });
       }
-    },
-  ],
+    }
+  ]
 });
 
 export default handler;

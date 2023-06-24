@@ -24,11 +24,11 @@ const handler = mw({
           "id",
           "name",
           "price",
-          "stock",
+          "stock"
         ]).default("id"),
         order: orderValidator.default("asc"),
-        search: searchValidator,
-      },
+        search: searchValidator
+      }
     }),
     async ({
       locals: {
@@ -42,10 +42,10 @@ const handler = mw({
           page,
           orderField,
           order,
-          search,
-        },
+          search
+        }
       },
-      res,
+      res
     }) => {
       try {
         const materialsArray = Array.isArray(materials)
@@ -118,7 +118,7 @@ const handler = mw({
       } catch (error) {
         res.status(500).send({ error: error });
       }
-    },
+    }
   ],
   POST: [
     slowDown(500),
@@ -131,14 +131,14 @@ const handler = mw({
         price: numberValidator.required(),
         stock: numberValidator.required(),
         categoryId: numberValidator.required(),
-        materials: arrayValidator.required(),
-      },
+        materials: arrayValidator.required()
+      }
     }),
     async ({
       locals: {
-        body: { name, description, price, stock, categoryId, materials },
+        body: { name, description, price, stock, categoryId, materials }
       },
-      res,
+      res
     }) => {
       try {
         const category = await CategoryModel.query().findOne({ id: categoryId });
@@ -155,14 +155,14 @@ const handler = mw({
             description: description,
             price: price,
             stock: stock,
-            categoryId: categoryId,
+            categoryId: categoryId
           })
           .returning("*");
 
         const materialsToAdd = materials.reduce(
           (acc, materialId) => [
             ...acc,
-            { productId: newProduct.id, materialId: materialId },
+            { productId: newProduct.id, materialId: materialId }
           ],
           []
         );
@@ -179,8 +179,8 @@ const handler = mw({
       } catch (error) {
         res.status(500).send({ error: error });
       }
-    },
-  ],
+    }
+  ]
 });
 
 export default handler;

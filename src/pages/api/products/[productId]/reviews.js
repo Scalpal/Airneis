@@ -11,7 +11,7 @@ const handler = mw({
       query: {
         productId: idValidator.required(),
         limit: limitValidator.default(1),
-        page: pageValidator,
+        page: pageValidator
       }
     }),
     async ({

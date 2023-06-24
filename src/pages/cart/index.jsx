@@ -40,7 +40,7 @@ import useAppContext from "@/web/hooks/useAppContext";
 const Cart = () => {
   const router = useRouter();
   const {
-    state: { cart },
+    state: { cart }
   } = useAppContext();
 
   const [productsList, setProductsList] = useState([]);

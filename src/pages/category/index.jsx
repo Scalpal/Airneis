@@ -6,19 +6,19 @@ import routes from "@/web/routes";
 export const getServerSideProps = async () => {
   try {
     const {
-      data: { categories },
+      data: { categories }
     } = await Axios.get(`${process.env.API_URL}${routes.api.categories.base()}`);
 
     return {
       props: {
-        categories: categories,
-      },
+        categories: categories
+      }
     };
   } catch (error) {
     return {
       props: {
-        categories: [],
-      },
+        categories: []
+      }
     };
   }
 };

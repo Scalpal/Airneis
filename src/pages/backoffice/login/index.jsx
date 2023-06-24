@@ -12,18 +12,18 @@ const merge = require("deepmerge");
 
 const validationSchema = createValidator({
   email: emailValidator.required(),
-  password: stringValidator.required(),
+  password: stringValidator.required()
 });
 
 const initialValues = {
   email: "",
-  password: "",
+  password: ""
 };
 
 const Login = () => {
   const router = useRouter();
   const {
-    actions: { signIn },
+    actions: { signIn }
   } = useAppContext();
   const [error, setError] = useState(null);
   const handleSubmit = useCallback(
@@ -35,7 +35,7 @@ const Login = () => {
         document
           .getElementById("errormsg")
           .animate([{ opacity: "100" }, { opacity: "0" }, { opacity: "100" }], {
-            duration: 1000,
+            duration: 1000
           });
       }
 

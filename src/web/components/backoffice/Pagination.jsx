@@ -5,7 +5,7 @@ import {
   ChevronDoubleLeftIcon,
   ChevronDoubleRightIcon,
   ChevronLeftIcon,
-  ChevronRightIcon,
+  ChevronRightIcon
 } from "@heroicons/react/24/solid";
 
 const Pagination = (props) => {
@@ -17,7 +17,7 @@ const Pagination = (props) => {
     nextPage,
     previousPage,
     firstPage,
-    lastPage,
+    lastPage
   } = props;
 
   const [totalPages, setTotalPages] = useState([[]]);
