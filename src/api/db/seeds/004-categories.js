@@ -1,11 +1,22 @@
-import { faker } from "@faker-js/faker";
-
 export const seed = async (knex) => {
-  const loop = 100;
+  const genericCategories = [
+    "Seating",
+    "Tables",
+    "Storage",
+    "Beds",
+    "Outdoor",
+    "Entertainment",
+    "Office",
+    "Dining",
+    "Kids",
+    "Lighting",
+  ];
+
+  const loop = genericCategories.length;
 
   const categories = [];
   for (let i = 0; i < loop; i++) {
-    categories.push({ name: faker.commerce.product() });
+    categories.push({ name: genericCategories[i] });
   }
   let uniqueCategories = categories.filter(
     (category, i, self) =>
