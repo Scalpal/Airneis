@@ -147,7 +147,7 @@ const SpecificProductPageContent = (props) => {
         enableReinitialize={true}
         initialValues={initialValues}
       >
-      {({ values, isSubmitting, handleReset }) => {
+        {({ values, isSubmitting, handleReset }) => {          
           return (
             <Form className={styles.contentContainer}>
               <div className={styles.contentWrapper}> 
@@ -210,16 +210,15 @@ const SpecificProductPageContent = (props) => {
                     {({ push, remove }) => (
                       <CollapseMenu title="Materials" defaultCollapsed={true} size="small">
                         {materials.map(({ id, name }, index) => (
-                            <CheckboxItem
-                              key={index}
-                              name={name}
-                              value={id}
-                              onClick={() => !isMaterialChecked(values.materials, id) ? push({ id: id, name: name }) : remove(values.materials.findIndex(elt => elt.id === id))}
-                              checked={isMaterialChecked(values.materials, id)}
-                              disabled={!editMode}
-                            />
-                          ))
-                        }
+                          <CheckboxItem
+                            key={index}
+                            name={name}
+                            value={id}
+                            onChange={() => !isMaterialChecked(values.materials, id) ? push({ id: id, name: name }) : remove(values.materials.findIndex(elt => elt.id === id))}
+                            checked={isMaterialChecked(values.materials, id)}
+                            disabled={!editMode}
+                          />
+                        ))}
                       </CollapseMenu>
                     )}
                   </FieldArray>
