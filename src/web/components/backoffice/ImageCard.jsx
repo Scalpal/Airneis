@@ -1,5 +1,5 @@
 import styles from "@/styles/backoffice/ImageCard.module.css";
-import Image from "next/image";
+import ImageWithFallback from "../ImageWithFallback";
 
 const ImageCard = (props) => {
   const { title, image, addButton, editButton, deleteButton  } = props;
@@ -8,10 +8,11 @@ const ImageCard = (props) => {
     <div
       className={styles.wrapper}
     >
-      <Image
+      <ImageWithFallback
         className={styles.image}
         alt={"Product image"}
         src={image.imageUrl ? image.imageUrl : `${process.env.AWS_BUCKET_URL}${image.imageSrc}`}
+        fallbackSrc={`/placeholder-image.png`}
         fill
       />
 
