@@ -47,7 +47,8 @@ const navLinks = [
 ];
 
 const Navbar = () => {
-  const { data } = useUser(); 
+  const { userData, userError, userIsLoading } = useUser(); 
+  const user = (!userError && !userIsLoading) ? userData : {};
 
   return (
     <nav
@@ -58,7 +59,7 @@ const Navbar = () => {
     > 
       <div className={styles.adminInfosBlock}>
         <p>Hello administrator </p>
-        <p>{data ? data.lastName : ""} {data ? data.firstName : ""}</p>
+        <p>{user.lastName} {user.firstName}</p>
       </div>
 
 
