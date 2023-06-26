@@ -1,0 +1,47 @@
+.wrapper {
+  position: relative;
+}
+
+.icon {
+  width: 25px;
+  height: 25px;
+  color: white;
+  z-index: 200;
+}
+
+.tooltip {
+  position: relative;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  transition-duration: 300ms;
+  visibility: hidden;
+  opacity: 0;
+  white-space: nowrap;
+  background-color: white;
+  padding: 0.2rem 0.3rem;
+  border-radius: 10px;
+}
+
+.tooltip::before {
+  background-color: white;
+  position: absolute;
+  content: "";
+  height: 10px;
+  width: 8px;
+  bottom: -3px;
+  top: -11%;
+  left: 50%;
+  transform: translate(-50%) rotate(45deg);
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  z-index: 1;
+}
+
+/* Hover effects */
+.icon:hover + .tooltip {
+  visibility: visible;
+  opacity: 1;
+  top: 100%;
+}
