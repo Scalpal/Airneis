@@ -13,10 +13,11 @@ const Products = () => {
     services: { getProducts },
   } = useAppContext()
   const router = useRouter()
+
+  // eslint-disable-next-line no-unused-vars
   const [error, setError] = useState(null)
   const [products, setProducts] = useState([])
   const [page, setPage] = useState(1)
-  const [limit, setLimit] = useState(20)
   const [count, setCount] = useState(0)
   const [startIndex, setStartIndex] = useState(0)
   const [endIndex, setEndIndex] = useState(0)
@@ -29,6 +30,7 @@ const Products = () => {
     search: null,
   })
   const [appliquedQueryParams, setAppliquedQueryParams] = useState(queryParams)
+  const limit = 20
   const { index } = router.query
   useEffect(() => {
     const fetchData = async () => {
@@ -50,10 +52,10 @@ const Products = () => {
 
     setPage(index ? Number.parseInt(index) : 1)
 
-    setStartIndex((index - 1) * limit + 1)
-    const indexEnd =
-      (index - 1) * limit + limit < count ? (index - 1) * limit + limit : count
-    setEndIndex(indexEnd)
+    setEndIndex(
+      (page - 1) * limit + limit < count ? (page - 1) * limit + limit : count
+    )
+    setStartIndex((page - 1) * limit + 1)
   }, [count, getProducts, index, queryParams, limit, page])
 
   const searchStateAction = (value) => {
@@ -74,7 +76,7 @@ const Products = () => {
 
         <div className={styles.indexProducts}>
           <span>
-            {startIndex} - {endIndex} on{" "}
+            {endIndex > 0 ? startIndex : 0} - {endIndex} on{" "}
             {count > 100000 ? `plus de ${count}` : count} products
           </span>
         </div>

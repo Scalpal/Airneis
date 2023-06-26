@@ -126,7 +126,7 @@ const similarProducts = [
 const ProductPage = () => {
   const [bubbleAnimation, setBubbleAnimation] = useState(null)
   const router = useRouter()
-  const { productId } = router.query
+  const { productId = 1 } = router.query
   const {
     actions: { addToCart },
   } = useAppContext()

@@ -3,7 +3,6 @@ import hashPassword from "../hashPassword.js"
 
 export const seed = async (knex) => {
   const loop = 100
-
   const users = []
   for (let i = 0; i < loop; i++) {
     const [passwordHash, passwordSalt] = await hashPassword(

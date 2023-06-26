@@ -4,33 +4,34 @@ import { classnames } from "@/pages/_app"
 import { nunito } from "@/pages/_app"
 import styles from "@/styles/backoffice/statsPages.module.css"
 import { parseCookies } from "nookies"
-import Axios, { AxiosError } from "axios"
-import routes from "@/web/routes"
-import { useCallback, useEffect, useState } from "react"
+// import routes from "@/web/routes"
+import { useCallback, useState } from "react"
 import ActionBar from "@/web/components/backoffice/ActionBar"
-import useAppContext from "@/web/hooks/useAppContext"
+// import useAppContext from "@/web/hooks/useAppContext"
 import CustomAlert from "@/web/components/CustomAlert"
 import { useRouter } from "next/router"
 import checkToken from "@/web/services/checkToken"
-import getApiClient from "@/web/services/getApiClient"
+// import getApiClient from "@/web/services/getApiClient"
 import checkIsAdmin from "@/web/services/checkIsAdmin"
 
 const BackofficeUsers = (props) => {
   const { usersProps, count } = props
-  const {
-    actions: { api },
-  } = useAppContext()
+  // const {
+  //   actions: { api },
+  // } = useAppContext()
   const router = useRouter()
 
-  const [alert, setAlert] = useState({ status: "", message: "" })
+  const [alert, setAlert] = useState({})
+  setAlert({ status: "", message: "" })
   const [showAlert, setShowAlert] = useState(false)
-  const [users, setUsers] = useState({ users: usersProps, count: count })
+  const [users, setUsers] = useState({})
+  setUsers({ users: usersProps, count: count })
   const [queryParams, setQueryParams] = useState({
     limit: 10,
     page: 1,
     order: "asc",
     orderField: "id",
-    search: "",
+    search: null,
   })
 
   const handleQueryParams = useCallback(
@@ -84,29 +85,29 @@ const BackofficeUsers = (props) => {
     [queryParams]
   )
 
-  const updateUsers = useCallback(async () => {
-    const { token } = parseCookies()
+  // const updateUsers = useCallback(async () => {
+  //   const { token } = parseCookies()
 
-    try {
-      const reqInstance = Axios.create({
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+  //   try {
+  //     const reqInstance = Axios.create({
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     })
 
-      const {
-        data: { users, count },
-      } = await reqInstance.get(
-        `http://localhost:3000${routes.api.users.collection(queryParams)}`
-      )
+  //     const {
+  //       data: { users, count },
+  //     } = await reqInstance.get(
+  //       `http://localhost:3000${routes.api.users.collection(queryParams)}`
+  //     )
 
-      setUsers({ users, count })
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        console.log(error)
-      }
-    }
-  }, [queryParams])
+  //     setUsers({ users, count })
+  //   } catch (error) {
+  //     if (error instanceof AxiosError) {
+  //       console.log(error)
+  //     }
+  //   }
+  // }, [queryParams])
 
   // Table row functions
   const showSpecificUser = useCallback(
@@ -116,26 +117,26 @@ const BackofficeUsers = (props) => {
     [router]
   )
 
-  const desactivateUser = useCallback(
-    async (userId) => {
-      try {
-        const { data } = await api.delete(routes.api.users.delete(userId))
+  // const desactivateUser = useCallback(
+  //   async (userId) => {
+  //     try {
+  //       const { data } = await api.delete(routes.api.users.delete(userId))
 
-        updateUsers()
-        setShowAlert(true)
-        setAlert({ status: data.status, message: data.message })
-      } catch (error) {
-        if (error instanceof AxiosError) {
-          console.log(error.response)
-        }
-      }
-    },
-    [api, updateUsers]
-  )
+  //       updateUsers()
+  //       setShowAlert(true)
+  //       setAlert({ status: data.status, message: data.message })
+  //     } catch (error) {
+  //       if (error instanceof AxiosError) {
+  //         console.log(error.response)
+  //       }
+  //     }
+  //   },
+  //   [api, updateUsers]
+  // )
 
-  useEffect(() => {
-    updateUsers()
-  }, [queryParams, updateUsers])
+  // useEffect(() => {
+  //   updateUsers()
+  // }, [queryParams, updateUsers])
 
   return (
     <main className={classnames(styles.mainContainer, nunito.className)}>
@@ -178,7 +179,7 @@ const BackofficeUsers = (props) => {
           queryParams={queryParams}
           sortColumn={sortColumn}
           showSpecificRowFunction={showSpecificUser}
-          deleteRowFunction={desactivateUser}
+          // deleteRowFunction={desactivateUser}
         />
       </div>
 
@@ -195,6 +196,7 @@ BackofficeUsers.isPublic = false
 BackofficeUsers.getLayout = function (page) {
   return <Layout>{page}</Layout>
 }
+export default BackofficeUsers
 
 export const getServerSideProps = async (context) => {
   const { token } = parseCookies(context)
@@ -210,29 +212,29 @@ export const getServerSideProps = async (context) => {
     return notAdminRedirect
   }
 
-  const reqInstance = getApiClient(context)
+  // const reqInstance = getApiClient(context)
 
-  try {
-    const {
-      data: { users, count },
-    } = await reqInstance.get(
-      `http://localhost:3000/${routes.api.users.collection()}`
-    )
+  // try {
+  //   const {
+  //     data: { users, count },
+  //   } = await reqInstance.get(
+  //     `http://localhost:3000/${routes.api.users.collection()}`
+  //   )
 
-    return {
-      props: {
-        usersProps: users,
-        count: count,
-      },
-    }
-  } catch (error) {
-    console.log("Error in GetServerSideProps : ", error)
+  //   return {
+  //     props: {
+  //       usersProps: users,
+  //       count: count,
+  //     },
+  //   }
+  // } catch (error) {
+  //   console.log("Error in GetServerSideProps : ", error)
 
-    return {
-      redirect: {
-        destination: "/home",
-        permanent: false,
-      },
-    }
-  }
+  //   return {
+  //     redirect: {
+  //       destination: "/home",
+  //       permanent: false,
+  //     },
+  //   }
+  // }
 }

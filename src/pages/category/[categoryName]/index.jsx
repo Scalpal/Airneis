@@ -5,6 +5,8 @@ import styles from "@/styles/categoryPage.module.css"
 
 const Category = () => {
   const router = useRouter()
+  // eslint-disable-next-line no-unused-vars
+  const { categoryName = "test" } = router.query
   const categoryProducts = [
     {
       id: 1,
@@ -67,7 +69,7 @@ const Category = () => {
 
   return (
     <>
-      <Banner title={router.query.categoryName} />
+      <Banner title={categoryName} />
 
       <main>
         <p className={styles.descriptionText}>

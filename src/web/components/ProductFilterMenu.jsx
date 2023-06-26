@@ -17,6 +17,7 @@ const ProductFilterMenu = (props) => {
   const {
     services: { getCategories, getMaterials },
   } = useAppContext()
+  // eslint-disable-next-line no-unused-vars
   const [error, setError] = useState(null)
   const [categories, setCategories] = useState([])
   const [materials, setMaterials] = useState([])

@@ -10,6 +10,7 @@ const BackofficeDashboard = () => {
 BackofficeDashboard.getLayout = (page) => {
   return <Layout>{page}</Layout>
 }
+export default BackofficeDashboard
 
 export const getServerSideProps = async (context) => {
   const { token } = parseCookies(context)

@@ -9,6 +9,7 @@ import resetPasswordService from "@/web/services/users/resetPassword.js"
 import cryptService from "@/web/services/crypt.js"
 // import loggedUserService from "@/web/services/loggedUser.js"
 
+// eslint-disable-next-line no-unused-vars
 const prepareService = ({ api, setSession, setJWT, session }) => {
   return {
     signUp: signUpService({ api }),

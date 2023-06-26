@@ -36,6 +36,7 @@ const Table = (props) => {
       // Loop on the value that IS an array
       return value.map((valueItem, index) => (
         <p key={index}>
+          {/* eslint-disable-next-line no-unused-vars */}
           {Object.entries(valueItem).map(([_, objValue]) => {
             return objValue + " - "
           })}

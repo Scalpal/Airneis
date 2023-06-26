@@ -10,6 +10,7 @@ BackofficeStats.isPublic = true
 BackofficeStats.getLayout = function (page) {
   return <Layout>{page}</Layout>
 }
+export default BackofficeStats
 
 export const getServerSideProps = async (context) => {
   const { token } = parseCookies(context)
