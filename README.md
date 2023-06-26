@@ -25,9 +25,9 @@
 - service & front & back de crypt
 - login
 - signout
+- materials
+- products
 
-* materials
-* products
 * logged user
 * checkToken
 * checkRole
