@@ -4,7 +4,7 @@ import checkIsAdmin from "@/api/middlewares/checkIsAdmin";
 import slowDown from "@/api/middlewares/slowDown";
 import validate from "@/api/middlewares/validate";
 import mw from "@/api/mw";
-import { idValidator, stringValidator } from "@/validator";
+import { boolValidator, idValidator, stringValidator } from "@/validator";
 import { deleteImageFromS3 } from "@/web/services/S3";
 import getImageWithSignedUrl from "@/web/services/images/getImageWithSignedUrl";
 
@@ -19,12 +19,14 @@ const handler = mw({
       },
       body: {
         name: stringValidator,
+        visible: boolValidator,
+        visibleInHome: boolValidator
       }
     }),
     async({
       locals: {
         query: { categoryId },
-        body: { name }
+        body: { name, visible, visibleInHome }
       },
       res
     }) => {
@@ -41,7 +43,9 @@ const handler = mw({
 
         const [updatedCategory] = await CategoryModel.query()
           .patch({
-            name
+            name,
+            visible, 
+            visibleInHome
           })
           .where("id", id)
           .returning("*");

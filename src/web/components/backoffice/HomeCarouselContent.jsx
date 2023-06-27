@@ -22,7 +22,7 @@ const HomeCarouselContent = () => {
   // Home carousel images 
   const uploadCarouselImage = useCallback(async(file) => {
     const [error, response] = await uploadHomeCarouselImage(file);
-
+    
     if (error) {
       setAlert({ status: "error", message: error.message });
       setShowAlert(true);

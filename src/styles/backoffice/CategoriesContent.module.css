@@ -36,6 +36,14 @@
   border-top-right-radius: 1rem;
 }
 
+.toggleWrapper {
+  display: flex; 
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+}
+
 .editFormInput:focus {
   border-bottom: 1px solid var(--primary);
 }

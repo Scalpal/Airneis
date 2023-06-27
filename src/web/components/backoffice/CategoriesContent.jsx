@@ -5,22 +5,39 @@ import IconButton from "../IconButton";
 import Loader from "../Loader";
 import CollapseMenu from "../CollapseMenu";
 import ImageCard from "./ImageCard";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useGetCategories } from "@/web/hooks/useGetCategories";
 import uploadCategoryImage from "@/web/services/categories/uploadCategoryImage";
 import editCategory from "@/web/services/categories/editCategory";
 import Button from "../Button";
 import Modal from "../Modal";
+import Toggle from "../Toggle";
 
 const CategoriesContent = () => {
   const [alert, setAlert] = useState({ status: "", message: "" });
   const [showAlert, setShowAlert] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [activeCategoryId, setActiveCategoryId] = useState(null); 
+  const [activeCategory, setActiveCategory] = useState(null); 
+  const [activeCategoryVisibilty, setActiveCategoryVisibilty] = useState();
+  const [activeCategoryVisibiltyInHome, setActiveCategoryVisibiltyInHome] = useState(null);
   const [newCategoryName, setNewCategoryName] = useState("");
 
   const { categoriesData, categoriesError, categoriesIsLoading, refreshCategories } = useGetCategories();
   const categories = (!categoriesError && !categoriesIsLoading) ? categoriesData : [];
+
+  const handleActiveCategoryVisibility = useCallback(() => {
+    setActiveCategory({
+      ...activeCategory,
+      visible: activeCategoryVisibilty ? false : true
+    });
+  }, [activeCategory, activeCategoryVisibilty]);
+
+  const handleActiveCategoryVisibilityInHome = useCallback(() => {
+    setActiveCategory({
+      ...activeCategory,
+      visibleInHome: activeCategoryVisibiltyInHome ? false : true
+    });
+  }, [activeCategory, activeCategoryVisibiltyInHome]);
 
   // Categories
   const changeCategoryImage = useCallback(async (categoryId, file) => {
@@ -39,12 +56,20 @@ const CategoriesContent = () => {
   }, [refreshCategories]);
 
   const handleEditCategory = useCallback((categoryId) => {
-    setShowModal(true);
-    setActiveCategoryId(categoryId);
-  }, []);
+    const category = categoriesData.find(elt => elt.id === categoryId);
 
-  const changeCategoryName = useCallback(async() => {
-    const [error, response] = await editCategory(activeCategoryId, newCategoryName);
+    setShowModal(true);
+    setActiveCategory(category);
+  }, [categoriesData]);
+
+  const changeCategoryInformations = useCallback(async () => {
+    const body = {
+      name: newCategoryName,
+      visible: activeCategoryVisibilty,
+      visibleInHome: activeCategoryVisibiltyInHome
+    };
+
+    const [error, response] = await editCategory(activeCategory.id, body);
 
     if (error) {
       setAlert({ status: "error", message: error.message });
@@ -57,8 +82,15 @@ const CategoriesContent = () => {
     setAlert({ status: "success", message: response.data.message });
     setShowAlert(true);
     refreshCategories();
-  }, [refreshCategories, activeCategoryId, newCategoryName]);
+  }, [refreshCategories, activeCategory, newCategoryName, activeCategoryVisibilty, activeCategoryVisibiltyInHome]);
 
+  useEffect(() => {
+    if (activeCategory) {
+      setNewCategoryName(activeCategory.name);
+      setActiveCategoryVisibilty(activeCategory.visible);
+      setActiveCategoryVisibiltyInHome(activeCategory.visibleInHome);
+    }
+  }, [activeCategory]);
 
   return (
     <>
@@ -123,11 +155,35 @@ const CategoriesContent = () => {
             <input
               type="text"
               className={styles.editFormInput}
+              defaultValue={newCategoryName}
               onChange={(e) => setNewCategoryName(e.target.value)}
             />
 
+            <div className={styles.toggleWrapper}>
+              <p>Visible</p>
+
+              {activeCategory && (
+                <Toggle
+                  toggled={activeCategoryVisibilty}
+                  onPress={() => handleActiveCategoryVisibility()}
+                />
+              )}
+            </div>
+
+            <div className={styles.toggleWrapper}>
+              <p>Visible in home page</p>
+
+              {activeCategory && (
+                <Toggle
+                  toggled={activeCategoryVisibiltyInHome}
+                  onPress={() => handleActiveCategoryVisibilityInHome()}
+                />
+              )}
+ 
+            </div>
+
             <Button
-              onClick={() => changeCategoryName()}
+              onClick={() => changeCategoryInformations()}
             >
               Save
             </Button>

@@ -44,7 +44,7 @@ export const getServerSideProps = async (context) => {
   } catch (error) {
     return {
       redirect: {
-        destination: "/home",
+        destination: "/",
         permanent: false
       }
     };
