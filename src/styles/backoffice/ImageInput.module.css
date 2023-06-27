@@ -19,3 +19,12 @@
 .label:hover {
   background-color: var(--grey);
 }
+
+.disabled {
+  opacity: 0.5;
+}
+
+.label.disabled:hover {
+  background: none;
+  cursor: not-allowed;
+}

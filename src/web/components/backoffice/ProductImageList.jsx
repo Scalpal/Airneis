@@ -4,6 +4,7 @@ import { useCallback } from "react";
 import deleteProductImage from "@/web/services/products/deleteProductImage";
 import ImageCard from "./ImageCard";
 import ImageInput from "./ImageInput";
+import IconButton from "../IconButton";
 
 
 const ProductImageList = (props) => {
@@ -13,7 +14,8 @@ const ProductImageList = (props) => {
     setCurrentProductImages,
     setAlert,
     setShowAlert,
-    setCurrentProduct
+    setCurrentProduct,
+    editMode
   } = props; 
 
   const deleteImage = useCallback(async(imageName) => {
@@ -41,9 +43,10 @@ const ProductImageList = (props) => {
                 key={index}
                 image={image}
                 deleteButton={
-                  <XMarkIcon
-                    className={styles.imageIcon}
-                    onClick={() => deleteImage(image.imageSrc)}
+                  <IconButton 
+                    Icon={XMarkIcon}
+                    tooltip={"Delete"}
+                    onPress={() => deleteImage(image.imageSrc)}
                   />
                 }
               />
@@ -54,11 +57,11 @@ const ProductImageList = (props) => {
         <ImageInput
           id={"productImageInput"}
           text={"Add a product image"}
+          disabled={!editMode}
           onChangeEvent={(e) => setCurrentProductImages([...currentProductImages, e.target.files[0]])}
         />
       </div>
 
-      
       <div className={styles.newProductImagesWrapper}> 
         {currentProductImages.filter(elt => elt instanceof File).length > 0 && (
           <p
