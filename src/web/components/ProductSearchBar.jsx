@@ -15,7 +15,7 @@ const ProductSearchBar = (props) => {
   const [searchValue, setSearchValue] = useState("");
 
   const { searchData, searchLoading } = useSearchProducts(searchValue);
-  const products = !searchLoading ? searchData.products : [];
+  const products = (!searchLoading && searchData) ? searchData.products : [];
   
   return (
     <div className={styles.container}>

@@ -21,10 +21,6 @@ const fetcher = async(url) => {
 
     return { products, count }; 
   } catch (error) {
-    if (error instanceof AxiosError) {
-      return { error: "Error on products fetching" }; 
-    }
-
     return { products: [], count: 0 };
   }
 };
