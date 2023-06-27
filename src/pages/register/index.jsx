@@ -49,7 +49,7 @@ const initialValues = {
 };
 
 const Register = () => {
-  const { t: translate } = useTranslation(["register"]);
+  const { t } = useTranslation(["register"]);
   const router = useRouter();
   const {
     actions: { signUp },
@@ -87,7 +87,7 @@ const Register = () => {
       >
         {({ isValid, dirty, isSubmitting }) => (
           <Form className={styles.formContainer}>
-            <p className={styles.formTitle}>{translate("registerTitle")}</p>
+            <p className={styles.formTitle}>{t("registerTitle")}</p>
 
             {error && (
               <p className={styles.error}>
@@ -99,7 +99,7 @@ const Register = () => {
             <LoginField
               name="firstName"
               type="text"
-              label={translate("firstName")}
+              label={t("firstName")}
               showError={true}
               required={true}
             />
@@ -107,7 +107,7 @@ const Register = () => {
             <LoginField
               name="lastName"
               type="text"
-              label={translate("lastName")}
+              label={t("lastName")}
               showError={true}
               required={true}
             />
@@ -115,7 +115,7 @@ const Register = () => {
             <LoginField
               name="phoneNumber"
               type="text"
-              label={translate("phoneNumber")}
+              label={t("phoneNumber")}
               showError={true}
               required={true}
             />
@@ -123,7 +123,7 @@ const Register = () => {
             <LoginField
               name="email"
               type="text"
-              label={translate("email")}
+              label={t("email")}
               showError={true}
               required={true}
             />
@@ -131,7 +131,7 @@ const Register = () => {
             <LoginField
               name="password"
               type="password"
-              label={translate("password")}
+              label={t("password")}
               showError={true}
               required={true}
             />
@@ -140,35 +140,35 @@ const Register = () => {
               <LoginField
                 name="address"
                 type="text"
-                label={translate("address")}
+                label={t("address")}
                 showError={true}
               />
 
               <LoginField
                 name="city"
                 type="text"
-                label={translate("city")}
+                label={t("city")}
                 showError={true}
               />
 
               <LoginField
                 name="region"
                 type="text"
-                label={translate("region")}
+                label={t("region")}
                 showError={true}
               />
 
               <LoginField
                 name="postalCode"
                 type="text"
-                label={translate("postalCode")}
+                label={t("postalCode")}
                 showError={true}
               />
 
               <LoginField
                 name="country"
                 type="text"
-                label={translate("country")}
+                label={t("country")}
                 showError={true}
               />
             </CollapseMenu>
@@ -176,14 +176,14 @@ const Register = () => {
             <p className={styles.requiredText}>
               {" "}
               <span className={styles.requiredStar}>*</span>{" "}
-              {translate("fieldRequired")}
+              {t("fieldRequired")}
             </p>
 
             <Button
               disabled={!(dirty && isValid) || isSubmitting}
               type={"submit"}
             >
-              {translate("registerButton")}
+              {t("registerButton")}
             </Button>
           </Form>
         )}

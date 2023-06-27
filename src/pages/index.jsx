@@ -85,7 +85,7 @@ export async function getStaticProps({ locale }) {
         "common",
         "footer",
         "drawerMenu",
-        "navbar"
+        "navbar",
       ])),
     },
   };
@@ -111,7 +111,7 @@ const Home = () => {
         </div>
 
         <SeeMoreButton route={routes.products.base()}>
-          See more products
+          {t("moreProducts")}
         </SeeMoreButton>
       </section>
 

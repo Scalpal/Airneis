@@ -20,7 +20,7 @@ export const getServerSideProps = async (context) => {
 };
 
 const Category = (props) => {
-  const { t: translate } = useTranslation("categoryPage");
+  const { t } = useTranslation("categoryPage");
   const { categoryId } = props;
   const router = useRouter();
 
@@ -43,7 +43,7 @@ const Category = (props) => {
       <Banner title={router.query.categoryName} />
 
       <main>
-        <p className={styles.descriptionText}>{translate("categoryText")}</p>
+        <p className={styles.descriptionText}>{t("categoryText")}</p>
 
         <div className={styles.productsList}>
           {products.map((product, index) => {
@@ -56,14 +56,14 @@ const Category = (props) => {
           {!isLoading &&
             products.length > 0 &&
             (isEndReached ? (
-              <p>{translate("noMoreProducts")}</p>
+              <p>{t("noMoreProducts")}</p>
             ) : (
               <>
                 {isValidating ? (
                   <Loader />
                 ) : (
                   <Button onClick={() => handleLoadMore()}>
-                    {translate("seeMoreButton")}
+                    {t("seeMoreButton")}
                   </Button>
                 )}
               </>

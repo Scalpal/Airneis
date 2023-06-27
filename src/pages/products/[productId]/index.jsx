@@ -43,7 +43,7 @@ export const getServerSideProps = async (context) => {
 };
 
 const ProductPage = (props) => {
-  const { t: translate } = useTranslation("productPage");
+  const { t } = useTranslation("productPage");
   const { product, categoryProducts } = props;
 
   const {
@@ -98,7 +98,7 @@ const ProductPage = (props) => {
 
         <div className={styles.addToCartBtnWrapper} id="productReviewAnchor">
           <Button onClick={() => addToCart(product)}>
-            {translate("addToCartButton")}
+            {t("addToCartButton")}
           </Button>
         </div>
 
@@ -111,7 +111,7 @@ const ProductPage = (props) => {
 
         <div className={styles.titleWrapper}>
           <div className={styles.line}></div>
-          <p className={styles.title}>{translate("similarProductTitle")}</p>
+          <p className={styles.title}>{t("similarProductTitle")}</p>
           <div className={styles.line}></div>
         </div>
 
@@ -123,7 +123,7 @@ const ProductPage = (props) => {
           </div>
 
           <SeeMoreButton route={routes.products.base()}>
-            {translate("viewAllProductButton")}
+            {t("viewAllProductButton")}
           </SeeMoreButton>
         </section>
       </main>

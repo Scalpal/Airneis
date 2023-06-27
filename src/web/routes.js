@@ -12,6 +12,10 @@ const routes = {
   home: () => "/",
   register: () => "/register",
   login: () => "/login",
+  cgu: () => "/terms-and-conditions",
+  legalMention: () => "/legal-mention",
+  contact: () => "/contact",
+  aboutUs: () => "/about-us",
   products: {
     base: () => `/products`,
     single: (productId) => `/products/${productId}`,

@@ -1,7 +1,7 @@
 import Button from "@/web/components/Button";
 import CartProduct from "@/web/components/CartProduct";
 import { useRouter } from "next/router";
-import { useCallback, useEffect, useState, useTransition } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ShoppingCartIcon } from "@heroicons/react/24/outline";
 import LayoutStickyNavbar from "@/web/components/LayoutStickyNavbar";
 import styles from "@/styles/cart.module.css";
@@ -40,7 +40,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 // ];
 
 const Cart = () => {
-  const { t: translate } = useTranslation("cart");
+  const { t } = useTranslation("cart");
   const router = useRouter();
   const {
     state: { cart },
@@ -80,18 +80,16 @@ const Cart = () => {
             <section className={styles.emptyCartContainer}>
               <ShoppingCartIcon className={styles.emptyCartIcon} />
 
-              <p className={styles.emptyCartTitle}>
-                {translate("emptyCartTitle")}
-              </p>
+              <p className={styles.emptyCartTitle}>{t("emptyCartTitle")}</p>
 
               <div className={styles.emptyCartText}>
-                <p>{translate("emptyCartText")}</p>
-                <p>{translate("emptyCartTextSeconde")}</p>
+                <p>{t("emptyCartText")}</p>
+                <p>{t("emptyCartTextSeconde")}</p>
               </div>
 
               <div>
                 <Button onClick={() => redirectToHomePage()}>
-                  {translate("cartReturnButton")}
+                  {t("cartReturnButton")}
                 </Button>
               </div>
             </section>
@@ -116,24 +114,22 @@ const Cart = () => {
             <section className={styles.recapContainer}>
               <div className={styles.recapTopRows}>
                 <div className={styles.recapRow}>
-                  <p>{translate("subtotal")}</p>
+                  <p>{t("subtotal")}</p>
                   <p>{totalSum.toFixed(2)}$</p>
                 </div>
 
                 <div className={styles.recapRow}>
-                  <p>{translate("tax")}</p>
+                  <p>{t("tax")}</p>
                   <p>{(totalSum * 0.2).toFixed(2)}$</p>
                 </div>
               </div>
 
               <div className={styles.recapTotalRow}>
-                <p>{translate("total")}</p>
+                <p>{t("total")}</p>
                 <p>{(totalSum * 1.2).toFixed(2)}$</p>
               </div>
 
-              <Button onClick={() => handleSubmit()}>
-                {translate("order")}
-              </Button>
+              <Button onClick={() => handleSubmit()}>{t("order")}</Button>
             </section>
           </>
         )}
