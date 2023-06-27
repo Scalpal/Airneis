@@ -104,7 +104,7 @@ const CategoriesContent = () => {
             categoriesData.length > 0 ? (
               categories.map((category, index) => (
                 <ImageCard
-                  key={index}
+                  key={category.id}
                   title={category.name}
                   image={{ imageUrl: category.imageUrl }}
                   addButton={
