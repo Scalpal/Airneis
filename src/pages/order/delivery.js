@@ -1,4 +1,6 @@
 import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+
 const Delivery = () => {
   const { t: translate } = useTranslation("delivery");
 
@@ -63,5 +65,12 @@ const Delivery = () => {
     </>
   );
 };
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["delivery"])),
+    },
+  };
+}
 
 export default Delivery;

@@ -9,6 +9,7 @@ import LoginLayout from "@/web/components/LoginLayout";
 import LoginField from "@/web/components/LoginField";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 const validationSchema = createValidator({
   email: emailValidator.required(),
@@ -21,8 +22,8 @@ const initialValues = {
 };
 
 const Login = () => {
+  const { t } = useTranslation("login");
   const router = useRouter();
-  const { t: translate } = useTranslation("login");
   const {
     actions: { signIn },
   } = useAppContext();
@@ -38,7 +39,7 @@ const Login = () => {
         return;
       }
 
-      router.push("/home");
+      router.push("/");
     },
     [signIn, router]
   );
@@ -53,7 +54,7 @@ const Login = () => {
       >
         {({ isValid, dirty, isSubmitting }) => (
           <Form className={styles.formContainer}>
-            <p className={styles.formTitle}>{translate("formTitle")}</p>
+            <p className={styles.formTitle}>{t("formTitle")}</p>
 
             {error && (
               <p className={styles.error}>
@@ -65,31 +66,31 @@ const Login = () => {
             <LoginField
               name="email"
               type="text"
-              label={translate("email")}
+              label={t("email")}
               showError={false}
             />
 
             <LoginField
               name="password"
               type="password"
-              label={translate("password")}
+              label={t("password")}
               showError={false}
             />
 
             <Button disabled={!(dirty && isValid) || isSubmitting}>
-              {translate("loginButton")}
+              {t("loginButton")}
             </Button>
 
             <div className={styles.noAccountText}>
               <p>
-                {translate("forgotPassword")}
-                <span>{translate("forgotPasswordLink")}</span>
+                {t("forgotPassword")}
+                <span>{t("forgotPasswordLink")}</span>
               </p>
               <p>
-                {translate("noAccount")}
+                {t("noAccount")}
                 <span onClick={() => router.push("/register")}>
                   {" "}
-                  {translate("noAccountLink")}
+                  {t("noAccountLink")}
                 </span>
               </p>
             </div>
@@ -99,6 +100,14 @@ const Login = () => {
     </main>
   );
 };
+
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["login"])),
+    },
+  };
+}
 
 Login.getLayout = function (page) {
   return <LoginLayout>{page}</LoginLayout>;

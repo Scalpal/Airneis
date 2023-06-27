@@ -5,8 +5,11 @@ import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/router";
 import routes from "../routes";
 import { useEffect } from "react";
+//import { useContext } from "react";
+import { useTranslation } from "next-i18next";
 
 const DrawerMenu = (props) => {
+  const { t } = useTranslation(["drawerMenu"]);
   const { isDrawerToggledState, actions } = props;
   const [isDrawerToggled, setIsDrawerToggled] = isDrawerToggledState;
 
@@ -21,13 +24,17 @@ const DrawerMenu = (props) => {
       return;
     }
 
-    document.body.style.overflow = ""; 
+    document.body.style.overflow = "";
   }, [isDrawerToggled]);
 
   const logout = () => {
     signOut();
     router.push(routes.pages.home());
   };
+
+  //const { userLanguage, userLanguageChange } = useContext(LanguageContext);
+
+  // const handleLanguageChange = (e) => userLanguageChange(e.target.value);
 
   return (
     <>
@@ -48,13 +55,35 @@ const DrawerMenu = (props) => {
           className={styles.drawerMenuIcon}
           onClick={() => setIsDrawerToggled(!isDrawerToggled)}
         />
-        {session ? <Link href="/profil">My profil</Link> : <Link href={routes.login()}>Login</Link>}
-        {session ? <a onClick={logout}>Logout</a> : <Link href={routes.register()}>Register</Link>}
-        {session && <Link href={routes.backoffice.base()}>Backoffice</Link>}
-        <Link href="">CGU</Link>
-        <Link href="">Legal mentions</Link>
-        <Link href="">Contact</Link>
-        <Link href="">About us</Link>
+        {session ? (
+          <Link href="/profil">{t("myProfil")}</Link>
+        ) : (
+          <Link href={routes.login()}>{t("login")}</Link>
+        )}
+        {session ? (
+          <a onClick={logout}>{t("logout")}</a>
+        ) : (
+          <Link href={routes.register()}>{t("register")}</Link>
+        )}
+        {session && (
+          <Link href={routes.backoffice.base()}>
+            {t("backoffice")}
+          </Link>
+        )}
+        <Link href="">{t("termsOfUse")}</Link>
+        <Link href="">{t("legalMentions")}</Link>
+        <Link href="">{t("contact")}</Link>
+        <Link href="">{t("aboutUs")}</Link>
+        {/*<div>
+            <select onChange={handleLanguageChange} value={userLanguage}>
+            {" "}
+            {Object.entries(languageOptions).map(([id, name]) => (
+              <option key={id} value={id}>
+                {name}
+              </option>
+            ))}
+          </select>
+            </div>*/}
       </div>
     </>
   );

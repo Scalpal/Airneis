@@ -6,39 +6,44 @@ import useGetProducts from "@/web/hooks/useGetProducts";
 import { useCallback } from "react";
 import Loader from "@/web/components/Loader";
 import Button from "@/web/components/Button";
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 export const getServerSideProps = async (context) => {
   const { categoryId } = context.query;
 
   return {
     props: {
-      categoryId: Number.parseInt(categoryId)
-    }
+      categoryId: Number.parseInt(categoryId),
+    },
   };
 };
 
 const Category = (props) => {
+  const { t: translate } = useTranslation("categoryPage");
   const { categoryId } = props;
   const router = useRouter();
 
-  const { data, isLoading, isValidating, size, setSize } = useGetProducts({ categories: categoryId, limit: 3 });
-  const products = data ? data.reduce((acc, { products }) => [...acc, ...products], []) : [];
-  const totalPages = data && data[0] ? Math.ceil(data[0].count / 3 ) : 0;
+  const { data, isLoading, isValidating, size, setSize } = useGetProducts({
+    categories: categoryId,
+    limit: 3,
+  });
+  const products = data
+    ? data.reduce((acc, { products }) => [...acc, ...products], [])
+    : [];
+  const totalPages = data && data[0] ? Math.ceil(data[0].count / 3) : 0;
   const isEndReached = size === totalPages;
 
-  const handleLoadMore = useCallback(() => { 
+  const handleLoadMore = useCallback(() => {
     setSize((previousSize) => previousSize + 1);
-  }, [setSize]); 
+  }, [setSize]);
 
   return (
     <>
       <Banner title={router.query.categoryName} />
 
       <main>
-        <p className={styles.descriptionText}>
-          Nos chaises, fabriquée en bois de chêne sont d’une qualité premium,
-          idéale pour une maison moderne.
-        </p>
+        <p className={styles.descriptionText}>{translate("categoryText")}</p>
 
         <div className={styles.productsList}>
           {products.map((product, index) => {
@@ -48,27 +53,37 @@ const Category = (props) => {
 
         <div className={styles.buttonWrapper}>
           <span className={styles.emptySpace}></span>
-          {(!isLoading && products.length > 0) && (
-            isEndReached ? (
-              <p>No more products</p>
+          {!isLoading &&
+            products.length > 0 &&
+            (isEndReached ? (
+              <p>{translate("noMoreProducts")}</p>
             ) : (
               <>
                 {isValidating ? (
                   <Loader />
                 ) : (
-                  <Button
-                    onClick={() => handleLoadMore()}
-                  > 
-                    See more
+                  <Button onClick={() => handleLoadMore()}>
+                    {translate("seeMoreButton")}
                   </Button>
                 )}
               </>
-            )
-          )}
+            ))}
         </div>
       </main>
     </>
   );
 };
+
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, [
+        "categoryPage",
+        "footer",
+        "drawerMenu",
+      ])),
+    },
+  };
+}
 
 export default Category;

@@ -4,28 +4,40 @@ import LoginLayout from "@/web/components/LoginLayout";
 import { Form, Formik } from "formik";
 import styles from "@/styles/register.module.css";
 import { useCallback, useState } from "react";
-import { createValidator, emailValidator, passwordValidator, phoneValidator, stringValidator } from "@/validator";
+import {
+  createValidator,
+  emailValidator,
+  passwordValidator,
+  phoneValidator,
+  stringValidator,
+} from "@/validator";
 import { useRouter } from "next/router";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/solid";
 import CollapseMenu from "@/web/components/CollapseMenu";
 import useAppContext from "@/web/hooks/useAppContext";
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 const validationSchema = createValidator({
-  firstName: stringValidator.required("First name is a required field.").min(2, "Your firstname should be 2 characters long at least"),
-  lastName: stringValidator.required("Last name is a required field.").min(2, "Your lastname should be 2 characters long at least"),
-  phoneNumber: phoneValidator.required("The phone number is a required field."),  
+  firstName: stringValidator
+    .required("First name is a required field.")
+    .min(2, "Your firstname should be 2 characters long at least"),
+  lastName: stringValidator
+    .required("Last name is a required field.")
+    .min(2, "Your lastname should be 2 characters long at least"),
+  phoneNumber: phoneValidator.required("The phone number is a required field."),
   email: emailValidator.required("The email is a required field."),
   password: passwordValidator.required("The password is  a required field."),
   address: stringValidator,
   city: stringValidator,
   region: stringValidator,
   postalCode: stringValidator,
-  country: stringValidator, 
+  country: stringValidator,
 });
 
 const initialValues = {
   firstName: "",
-  lastName: "", 
+  lastName: "",
   phoneNumber: "",
   email: "",
   password: "",
@@ -33,31 +45,37 @@ const initialValues = {
   city: "",
   region: "",
   postalCode: "",
-  country: "", 
-}; 
+  country: "",
+};
 
 const Register = () => {
+  const { t: translate } = useTranslation(["register"]);
   const router = useRouter();
-  const { actions: { signUp } } = useAppContext();
+  const {
+    actions: { signUp },
+  } = useAppContext();
   const [error, setError] = useState(null);
 
-  const handleSubmit = useCallback(async (values) => {
-    const [error] = await signUp(values); 
+  const handleSubmit = useCallback(
+    async (values) => {
+      const [error] = await signUp(values);
 
-    if (error) {
-      if (error[0].response.status === 409) {
-        setError("E-mail already used.");
+      if (error) {
+        if (error[0].response.status === 409) {
+          setError("E-mail already used.");
 
-        return;
-      } else {
-        setError("Oops, something went wrong.");
- 
-        return;
+          return;
+        } else {
+          setError("Oops, something went wrong.");
+
+          return;
+        }
       }
-    }
 
-    router.push("/login"); 
-  }, [router, signUp]); 
+      router.push("/login");
+    },
+    [router, signUp]
+  );
 
   return (
     <main className={styles.container}>
@@ -69,19 +87,19 @@ const Register = () => {
       >
         {({ isValid, dirty, isSubmitting }) => (
           <Form className={styles.formContainer}>
-            <p className={styles.formTitle}>Register</p>
-            
-            {error &&
+            <p className={styles.formTitle}>{translate("registerTitle")}</p>
+
+            {error && (
               <p className={styles.error}>
                 <ExclamationTriangleIcon className={styles.errorIcon} />
                 {error}
               </p>
-            }
+            )}
 
             <LoginField
               name="firstName"
               type="text"
-              label="First name"
+              label={translate("firstName")}
               showError={true}
               required={true}
             />
@@ -89,24 +107,23 @@ const Register = () => {
             <LoginField
               name="lastName"
               type="text"
-              label="Last name"
+              label={translate("lastName")}
               showError={true}
               required={true}
             />
-
 
             <LoginField
               name="phoneNumber"
               type="text"
-              label="Phone number"
+              label={translate("phoneNumber")}
               showError={true}
               required={true}
             />
-            
+
             <LoginField
               name="email"
               type="text"
-              label="E-mail"
+              label={translate("email")}
               showError={true}
               required={true}
             />
@@ -114,7 +131,7 @@ const Register = () => {
             <LoginField
               name="password"
               type="password"
-              label="Password"
+              label={translate("password")}
               showError={true}
               required={true}
             />
@@ -123,46 +140,50 @@ const Register = () => {
               <LoginField
                 name="address"
                 type="text"
-                label="Address"
+                label={translate("address")}
                 showError={true}
               />
 
               <LoginField
                 name="city"
                 type="text"
-                label="City"
+                label={translate("city")}
                 showError={true}
               />
-              
+
               <LoginField
                 name="region"
                 type="text"
-                label="Region"
+                label={translate("region")}
                 showError={true}
               />
-              
+
               <LoginField
                 name="postalCode"
                 type="text"
-                label="Postal code"
+                label={translate("postalCode")}
                 showError={true}
               />
-              
+
               <LoginField
                 name="country"
                 type="text"
-                label="Country"
+                label={translate("country")}
                 showError={true}
               />
             </CollapseMenu>
 
-            <p className={styles.requiredText}> <span className={styles.requiredStar}>*</span> : This field is required</p>
+            <p className={styles.requiredText}>
+              {" "}
+              <span className={styles.requiredStar}>*</span>{" "}
+              {translate("fieldRequired")}
+            </p>
 
             <Button
               disabled={!(dirty && isValid) || isSubmitting}
               type={"submit"}
             >
-              Register
+              {translate("registerButton")}
             </Button>
           </Form>
         )}
@@ -171,13 +192,16 @@ const Register = () => {
   );
 };
 
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["register"])),
+    },
+  };
+}
 
 Register.getLayout = function (page) {
-  return (
-    <LoginLayout>
-      {page}
-    </LoginLayout>
-  );
+  return <LoginLayout>{page}</LoginLayout>;
 };
 
 export default Register;
