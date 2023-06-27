@@ -11,8 +11,8 @@ const Toggle = (props) => {
 	const handleToggler = useCallback(() => {
 		onPress(!toggled);
 		setIsToggled(!isToggled);
-	}, [isToggled, onPress, toggled]);
-
+  }, [isToggled, onPress, toggled]);
+  
 	return (
 		<div
 			className={classnames(

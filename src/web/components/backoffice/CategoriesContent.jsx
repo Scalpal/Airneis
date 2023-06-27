@@ -18,8 +18,6 @@ const CategoriesContent = () => {
   const [showAlert, setShowAlert] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [activeCategory, setActiveCategory] = useState(null); 
-  const [activeCategoryVisibilty, setActiveCategoryVisibilty] = useState();
-  const [activeCategoryVisibiltyInHome, setActiveCategoryVisibiltyInHome] = useState(null);
   const [newCategoryName, setNewCategoryName] = useState("");
 
   const { categoriesData, categoriesError, categoriesIsLoading, refreshCategories } = useGetCategories();
@@ -28,16 +26,16 @@ const CategoriesContent = () => {
   const handleActiveCategoryVisibility = useCallback(() => {
     setActiveCategory({
       ...activeCategory,
-      visible: activeCategoryVisibilty ? false : true
+      visible: activeCategory.visible ? false : true
     });
-  }, [activeCategory, activeCategoryVisibilty]);
+  }, [activeCategory]);
 
   const handleActiveCategoryVisibilityInHome = useCallback(() => {
     setActiveCategory({
       ...activeCategory,
-      visibleInHome: activeCategoryVisibiltyInHome ? false : true
+      visibleInHome: activeCategory.visibleInHome ? false : true
     });
-  }, [activeCategory, activeCategoryVisibiltyInHome]);
+  }, [activeCategory]);
 
   // Categories
   const changeCategoryImage = useCallback(async (categoryId, file) => {
@@ -65,8 +63,8 @@ const CategoriesContent = () => {
   const changeCategoryInformations = useCallback(async () => {
     const body = {
       name: newCategoryName,
-      visible: activeCategoryVisibilty,
-      visibleInHome: activeCategoryVisibiltyInHome
+      visible: activeCategory.visible,
+      visibleInHome: activeCategory.visibleInHome
     };
 
     const [error, response] = await editCategory(activeCategory.id, body);
@@ -82,13 +80,11 @@ const CategoriesContent = () => {
     setAlert({ status: "success", message: response.data.message });
     setShowAlert(true);
     refreshCategories();
-  }, [refreshCategories, activeCategory, newCategoryName, activeCategoryVisibilty, activeCategoryVisibiltyInHome]);
+  }, [refreshCategories, activeCategory, newCategoryName]);
 
   useEffect(() => {
     if (activeCategory) {
       setNewCategoryName(activeCategory.name);
-      setActiveCategoryVisibilty(activeCategory.visible);
-      setActiveCategoryVisibiltyInHome(activeCategory.visibleInHome);
     }
   }, [activeCategory]);
 
@@ -162,9 +158,9 @@ const CategoriesContent = () => {
             <div className={styles.toggleWrapper}>
               <p>Visible</p>
 
-              {activeCategory && (
+              {(activeCategory) && (
                 <Toggle
-                  toggled={activeCategoryVisibilty}
+                  toggled={activeCategory.visible}
                   onPress={() => handleActiveCategoryVisibility()}
                 />
               )}
@@ -175,7 +171,7 @@ const CategoriesContent = () => {
 
               {activeCategory && (
                 <Toggle
-                  toggled={activeCategoryVisibiltyInHome}
+                  toggled={activeCategory.visibleInHome}
                   onPress={() => handleActiveCategoryVisibilityInHome()}
                 />
               )}
