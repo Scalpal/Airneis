@@ -1,12 +1,13 @@
 import Button from "@/web/components/Button";
 import CartProduct from "@/web/components/CartProduct";
 import { useRouter } from "next/router";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useTransition } from "react";
 import { ShoppingCartIcon } from "@heroicons/react/24/outline";
 import LayoutStickyNavbar from "@/web/components/LayoutStickyNavbar";
 import styles from "@/styles/cart.module.css";
 import useAppContext from "@/web/hooks/useAppContext";
 import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 // const products = [
 //   {
@@ -140,6 +141,14 @@ const Cart = () => {
     </>
   );
 };
+
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["cart"])),
+    },
+  };
+}
 
 Cart.getLayout = function (page) {
   return <LayoutStickyNavbar>{page}</LayoutStickyNavbar>;

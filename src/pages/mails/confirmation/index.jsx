@@ -1,57 +1,64 @@
-import { useRouter } from "next/router"
-import BackofficeLoginLayout from "@/web/components/backoffice/LoginLayout"
-import routes from "@/web/routes"
-import axios from "axios"
-import styles from "@/styles/mails/confirmation.module.css"
+import { useRouter } from "next/router";
+import BackofficeLoginLayout from "@/web/components/backoffice/LoginLayout";
+import routes from "@/web/routes";
+import axios from "axios";
+import styles from "@/styles/mails/confirmation.module.css";
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 const MailConfirmation = ({ error }) => {
-  const router = useRouter()
+  const { t } = useTranslation("confirmationMail");
+  const router = useRouter();
 
   const handleclick = () => {
-    router.push(routes.home())
-  }
+    router.push(routes.home());
+  };
 
   return (
     <div className={styles.div}>
       {error ? (
-        <span className={styles.error}>
-          We cannot activate your account, please retry later
-        </span>
+        <span className={styles.error}>{t("accountErrorText")}</span>
       ) : (
-        <span className={styles.success}>
-          Your account is validate with success
-        </span>
+        <span className={styles.success}>{t("accountValidateText")}</span>
       )}
       <button className={styles.button} onClick={handleclick}>
-        Return to Home
+        {t("returnHomeButton")}
       </button>
     </div>
-  )
+  );
+};
+
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["confirmationMail"])),
+    },
+  };
 }
 
 MailConfirmation.getLayout = function (page) {
-  return <BackofficeLoginLayout>{page}</BackofficeLoginLayout>
-}
+  return <BackofficeLoginLayout>{page}</BackofficeLoginLayout>;
+};
 
-export default MailConfirmation
+export default MailConfirmation;
 
 export async function getServerSideProps(context) {
-  const { id } = context.query
+  const { id } = context.query;
 
   try {
     await axios.put(`
-    ${process.env.API_URL}/api/mail/confirmation?id=${id}`)
+    ${process.env.API_URL}/api/mail/confirmation?id=${id}`);
 
     return {
       props: {
         error: null,
       },
-    }
+    };
   } catch (error) {
     return {
       props: {
         error: true,
       },
-    }
+    };
   }
 }

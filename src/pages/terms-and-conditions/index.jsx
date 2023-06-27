@@ -1,10 +1,10 @@
 import styles from "@/styles/termsAndConditions.module.css";
 import Banner from "@/web/components/Banner";
-//import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 const Conditions = () => {
-  const { t: translate } = useTranslation("termsOfUse");
+  const { t: translate } = useTranslation(["termsOfUse"]);
 
   return (
     <>
@@ -51,12 +51,13 @@ const Conditions = () => {
   );
 };
 
-//export const getStaticProps = async ({ locale }) => {
-// return {
-//    props: {
-//     ...(await serverSideTranslations(locale, ["termsOfUse"])),
-//    },
-//  };
-//};
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["termsOfUse"])),
+    },
+  };
+}
+
 Conditions.isPublic = true;
 export default Conditions;
