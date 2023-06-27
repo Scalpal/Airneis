@@ -34,7 +34,7 @@ const DrawerMenu = (props) => {
 
   const logout = () => {
     signOut();
-    router.push("/home");
+    router.push("/");
   };
 
   return (

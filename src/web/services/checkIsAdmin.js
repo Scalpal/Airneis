@@ -11,7 +11,7 @@ const checkIsAdmin = async(context) => {
     if (!user.isAdmin) {
       return {
         redirect: {
-          destination: "/home",
+          destination: "/",
           permanent: false
         }
       };
@@ -20,7 +20,7 @@ const checkIsAdmin = async(context) => {
     if (error instanceof AxiosError) {
       return {
         redirect: {
-          destination: "/home",
+          destination: "/",
           permanent: false
         }
       };

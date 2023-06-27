@@ -33,7 +33,7 @@ const Login = () => {
       return;
     }
 
-    router.push("/home");
+    router.push("/");
   },[signIn, router]);
 
   return (
