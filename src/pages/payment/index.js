@@ -2,19 +2,18 @@ import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 const Payment = () => {
-  const { t: translate } = useTranslation("payment");
-  const { t: translate } = useTranslation("payment");
+  const { t } = useTranslation("payment");
 
   return (
     <>
-      <h1 className="cartTitle">{translate("paymentTitle")}</h1>
+      <h1 className="cartTitle">{t("paymentTitle")}</h1>
       <form>
         <div className="cartContainer">
           <section className="cartPaymentSummary">
             <div className="cartDeliveryForm">
               <div className="cartDeliveryRow">
                 <label htmlFor="cardNumber">
-                  <span className="">{translate("cartNumber")}</span>
+                  <span className="">{t("cartNumber")}</span>
                   <input
                     name="cardNumber"
                     type="text"
@@ -25,17 +24,17 @@ const Payment = () => {
               </div>
               <div className="cartDeliveryRow">
                 <label htmlFor="cardName">
-                  <span>{translate("cardName")}</span>
+                  <span>{t("cardName")}</span>
                   <input name="cardName" type="text" required />
                 </label>
               </div>
               <div className="cartDeliveryRow">
                 <label htmlFor="expDate">
-                  <span>{translate("expirationDate")}</span>
+                  <span>{t("expirationDate")}</span>
                   <input name="expDate" type="date" required />
                 </label>
                 <label htmlFor="cvv">
-                  <span>{translate("cvv")}</span>
+                  <span>{t("cvv")}</span>
                   <input name="cvv" type="text" maxLength="3" required />
                 </label>
               </div>
@@ -43,7 +42,7 @@ const Payment = () => {
           </section>
           <section className="cartTotal">
             <button type="submit" className="cartButtonSubmit">
-              {translate("paymentButton")}
+              {t("paymentButton")}
             </button>
           </section>
         </div>

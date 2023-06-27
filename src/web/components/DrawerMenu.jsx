@@ -67,14 +67,12 @@ const DrawerMenu = (props) => {
           <Link href={routes.register()}>{t("register")}</Link>
         )}
         {session && (
-          <Link href={routes.backoffice.base()}>
-            {t("backoffice")}
-          </Link>
+          <Link href={routes.backoffice.base()}>{t("backoffice")}</Link>
         )}
-        <Link href="">{t("termsOfUse")}</Link>
-        <Link href="">{t("legalMentions")}</Link>
-        <Link href="">{t("contact")}</Link>
-        <Link href="">{t("aboutUs")}</Link>
+        <Link href={routes.cgu()}>{t("termsOfUse")}</Link>
+        <Link href="/legal-mention">{t("legalMentions")}</Link>
+        <Link href="/contact">{t("contact")}</Link>
+        <Link href="/about-us">{t("aboutUs")}</Link>
         {/*<div>
             <select onChange={handleLanguageChange} value={userLanguage}>
             {" "}
