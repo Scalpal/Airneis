@@ -14,6 +14,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 export const getServerSideProps = async (context) => {
   const { productId } = context.query;
+  const locale = context.locale;
 
   const {
     data: { product },
@@ -38,6 +39,7 @@ export const getServerSideProps = async (context) => {
     props: {
       product: product,
       categoryProducts: products,
+      ...(await serverSideTranslations(locale, ["productPage"])),
     },
   };
 };
@@ -130,13 +132,5 @@ const ProductPage = (props) => {
     </>
   );
 };
-
-export async function getStaticProps({ locale }) {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ["productPage"])),
-    },
-  };
-}
 
 export default ProductPage;

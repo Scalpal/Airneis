@@ -11,10 +11,16 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 export const getServerSideProps = async (context) => {
   const { categoryId } = context.query;
+  const locale = context.locale;
 
   return {
     props: {
       categoryId: Number.parseInt(categoryId),
+      ...(await serverSideTranslations(locale, [
+        "categoryPage",
+        "footer",
+        "drawerMenu",
+      ])),
     },
   };
 };
@@ -73,17 +79,5 @@ const Category = (props) => {
     </>
   );
 };
-
-export async function getStaticProps({ locale }) {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, [
-        "categoryPage",
-        "footer",
-        "drawerMenu",
-      ])),
-    },
-  };
-}
 
 export default Category;
