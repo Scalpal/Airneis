@@ -12,6 +12,7 @@ import {
 import { nunito } from "@/pages/_app";
 import { classnames } from "@/pages/_app";
 import { useUser } from "@/web/hooks/useUser";
+import { useRouter } from "next/router";
 
 const navLinks = [
   {
@@ -47,6 +48,8 @@ const navLinks = [
 ];
 
 const Navbar = () => {
+  const router = useRouter();
+
   const { userData, userError, userIsLoading } = useUser(); 
   const user = (!userError && !userIsLoading) ? userData : {};
 
@@ -78,7 +81,10 @@ const Navbar = () => {
         })}
       </div>
 
-      <div className={styles.bottomBlock}>
+      <div
+        className={styles.bottomBlock}
+        onClick={() => router.push("/")}
+      >
         <ArrowRightOnRectangleIcon
           className={classnames(
             styles.linksIcon,

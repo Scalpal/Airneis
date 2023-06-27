@@ -22,13 +22,9 @@ const routes = {
   },
   backoffice: {
     base: () => "/backoffice",
-    users: {
-      single: (userId) => createRouteWithQueryParams(`/backoffice/users/${userId}`)
-    },
-    products: {
-      add: () => "/backoffice/products/add",
-      single: (productId) => createRouteWithQueryParams(`/backoffice/products/${productId}`)
-    }
+    users: () => "backoffice/users",
+    products: () => "backoffice/products",
+    shop: () => "backoffice/shop",
   },
   api: {
     register: () => "/users/register",
@@ -39,7 +35,7 @@ const routes = {
       search: (searchValue) => `/api/products?limit=30&${searchValue.length > 0 ? `search=${searchValue}` : ""}`,
       update: (productId) => `/products/${productId}`,
       materials: () => "/api/products/materials",
-      add: () => "/products",
+      add: () => "/api/products",
       reviews: (productId, limit, page) => `/api/products/${productId}/reviews?limit=${limit}&page=${page}`,
       productImage: (productId) => `/api/products/${productId}/images`,
       deleteImage: (productId) => `/api/products/${productId}/deleteImage` 

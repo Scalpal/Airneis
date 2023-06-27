@@ -59,7 +59,7 @@ const DrawerMenu = (props) => {
         />
         {session ? <Link href="/profil">My profil</Link> : <Link href={routes.login()}>Login</Link>}
         {session ? <a onClick={logout}>Logout</a> : <Link href={routes.register()}>Register</Link>}
-        {(!userIsLoading && user.isAdmin) && <Link href={routes.backoffice.base()}>Backoffice</Link>}
+        {(!userIsLoading && user.isAdmin) && <Link href={routes.backoffice.users()}>Backoffice</Link>}
         <Link href="">CGU</Link>
         <Link href="">Legal mentions</Link>
         <Link href="">Contact</Link>
