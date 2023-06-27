@@ -6,8 +6,8 @@ import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/router";
 import routes from "../routes";
 import { useEffect } from "react";
-//import { useContext } from "react";
 import { useTranslation } from "next-i18next";
+import LanguageSelect from "./LanguageSelect";
 
 const DrawerMenu = (props) => {
   const { t } = useTranslation(["drawerMenu"]);
@@ -32,10 +32,6 @@ const DrawerMenu = (props) => {
     signOut();
     router.push(routes.pages.home());
   };
-
-  //const { userLanguage, userLanguageChange } = useContext(LanguageContext);
-
-  // const handleLanguageChange = (e) => userLanguageChange(e.target.value);
 
   return (
     <>
@@ -73,16 +69,7 @@ const DrawerMenu = (props) => {
         <Link href="/legal-mention">{t("legalMentions")}</Link>
         <Link href="/contact">{t("contact")}</Link>
         <Link href="/about-us">{t("aboutUs")}</Link>
-        {/*<div>
-            <select onChange={handleLanguageChange} value={userLanguage}>
-            {" "}
-            {Object.entries(languageOptions).map(([id, name]) => (
-              <option key={id} value={id}>
-                {name}
-              </option>
-            ))}
-          </select>
-            </div>*/}
+        <LanguageSelect />
       </div>
     </>
   );
