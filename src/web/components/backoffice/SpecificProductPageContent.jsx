@@ -32,14 +32,15 @@ const mappableKeys = ["name", "description", "price", "stock"];
 const SpecificProductPageContent = (props) => {
   const { product, setActiveProduct, refreshProducts, showModal, setShowModal } = props;
   const { actions: { api } } = useAppContext();
-  const { materialsData, materialsError, materialsIsLoading } = useGetMaterials(); 
-  const materials = (!materialsIsLoading && !materialsError) ? materialsData : [];
 
   const [currentProduct, setCurrentProduct] = useState(product);
   const [currentProductImages, setCurrentProductImages] = useState(product.productImages);
   const [editMode, setEditMode] = useState(false);
   const [alert, setAlert] = useState({ status: "", message: "" });
   const [showAlert, setShowAlert] = useState(false);
+
+  const { materialsData, materialsError, materialsIsLoading } = useGetMaterials(); 
+  const materials = (!materialsIsLoading && !materialsError) ? materialsData : [];
 
   const { categoriesData, categoriesError, categoriesIsLoading } = useGetCategories();
   const categories = (!categoriesIsLoading && !categoriesError) ? categoriesData : [];
@@ -203,6 +204,7 @@ const SpecificProductPageContent = (props) => {
                       setAlert={setAlert}
                       setShowAlert={setShowAlert}
                       setCurrentProduct={setCurrentProduct}
+                      editMode={editMode}
                     />
                   </div>
           
@@ -225,10 +227,10 @@ const SpecificProductPageContent = (props) => {
                 </div>
               </div>
               
-              {(editMode || currentProductImages.findIndex(elt => elt instanceof File) !== -1) && (
+              {editMode && (
                 <Button
                   type={"submit"}
-                  disabled={isSubmitting || !(currentProductImages.findIndex(elt => elt instanceof File) !== -1)}
+                  disabled={isSubmitting}
                 >
                   Save
                 </Button>

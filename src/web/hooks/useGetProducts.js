@@ -1,7 +1,6 @@
 import useSWRInfinite from "swr/infinite"; 
 import routes from "../routes";
 import getApiClient from "../services/getApiClient";
-import { AxiosError } from "axios";
 import { createQueryString } from "../services/createQueryString";
 
 const getKey = (pageIndex, previousPageData, queryParams) => {
