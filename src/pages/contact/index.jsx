@@ -8,7 +8,7 @@ const Contact = () => {
 
   return (
     <>
-      <Banner title={"Contact"} />
+      <Banner title={t("contactTitle")} />
       <div className={styles.message}>
         <h2>{t("messsageAttente")}</h2>
       </div>
