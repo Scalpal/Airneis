@@ -8,7 +8,7 @@ const Conditions = () => {
 
   return (
     <>
-      <Banner className={styles.title} title={t("Terms and conditions")} />
+      <Banner className={styles.title} title={t("termsAndConditionsTitle")} />
       <p className={styles.informations}>{t("termsIntroduction")}</p>
       <h2 className={styles.titleInformations}>{t("accountAndMembership")}</h2>
       <p className={styles.informations}>{t("termsAccountAndMembership")}</p>

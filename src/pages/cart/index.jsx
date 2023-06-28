@@ -67,7 +67,7 @@ const Cart = () => {
   }, [router]);
 
   const redirectToHomePage = useCallback(() => {
-    router.push("/home");
+    router.push("/");
   }, [router]);
 
   // console.log("Products list : ",productsList);
@@ -141,7 +141,7 @@ const Cart = () => {
 export async function getStaticProps({ locale }) {
   return {
     props: {
-      ...(await serverSideTranslations(locale, ["cart"])),
+      ...(await serverSideTranslations(locale, ["cart", "footer", "navbar","drawerMenu"])),
     },
   };
 }
