@@ -103,6 +103,10 @@ const CategoriesContent = () => {
                   key={category.id}
                   title={category.name}
                   image={{ imageUrl: category.imageUrl }}
+                  additionnalClasses={[
+                    !category.visible ? styles.notVisible : "", 
+                    category.visibleInHome ? styles.visibleInHome : ""
+                  ]}
                   addButton={
                     <>
                       <input

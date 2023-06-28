@@ -1,12 +1,23 @@
 import styles from "@/styles/backoffice/ImageCard.module.css";
 import ImageWithFallback from "../ImageWithFallback";
+import { classnames } from "@/pages/_app";
 
 const ImageCard = (props) => {
-  const { title, image, addButton, editButton, deleteButton  } = props;
+  const {
+    title,
+    image,
+    addButton,
+    editButton,
+    deleteButton,
+    additionnalClasses
+  } = props;
   
   return (
     <div
-      className={styles.wrapper}
+      className={classnames(
+        styles.wrapper,
+        additionnalClasses
+      )}
     >
       <ImageWithFallback
         className={styles.image}

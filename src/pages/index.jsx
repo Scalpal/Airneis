@@ -7,6 +7,7 @@ import routes from "@/web/routes";
 import SeeMoreButton from "@/web/components/SeeMoreButton";
 import { createQueryString } from "@/web/services/createQueryString";
 import Axios from "axios";
+import { useGetCategories } from "@/web/hooks/useGetCategories";
 
 const products = [
   {
@@ -67,14 +68,6 @@ const reviews = [
   },
 ];
 
-const categories = [
-  { name: "Modern" },
-  { name: "Vintage" },
-  { name: "Chair" },
-  { name: "Contemporary" },
-  { name: "Artisanal" },
-  { name: "Wood" },
-];
 
 export const getServerSideProps = async () => {
   const queryString = createQueryString({ visible: true });
@@ -101,6 +94,9 @@ export const getServerSideProps = async () => {
 const Home = (props) => {
   const { carouselImages } = props;
 
+  const { categoriesData, categoriesError, categoriesIsLoading } = useGetCategories({ visibleInHome: true });
+  const categories = (!categoriesError && !categoriesIsLoading) ? categoriesData : [];
+ 
   return (
     <>
       <header className="fullWidthCarousel" id="carousel">

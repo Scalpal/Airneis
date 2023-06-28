@@ -77,7 +77,10 @@ const HomeCarouselContent = () => {
             carouselImages.length !== 0 ? (carouselImages.map((image, index) => (
               <ImageCard
                 key={index}
-                image={image}
+                image={image} 
+                additionnalClasses={[
+                  !image.visible ? styles.notVisible : ""
+                ]}
                 editButton={
                   !image.visible ?
                     <IconButton 

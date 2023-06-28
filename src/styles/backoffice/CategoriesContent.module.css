@@ -10,6 +10,21 @@
   aspect-ratio: 16/9;
 }
 
+.notVisible {
+  opacity: 0.5;
+}
+
+.visibleInHome:before {
+  content: "Visible in home";
+  z-index: 9999999;
+  font-size: 0.7rem;
+  background-color: var(--primary);
+  color: var(--secondary);
+  padding: 0.3rem;
+  position: absolute;
+  border-bottom-right-radius: 10px;
+}
+
 .editForm {
   display: flex;
   flex-direction: column;
@@ -44,6 +59,8 @@
   width: 100%;
 }
 
+
+/* Hover effects */
 .editFormInput:focus {
   border-bottom: 1px solid var(--primary);
 }
