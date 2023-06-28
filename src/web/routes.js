@@ -48,7 +48,7 @@ const routes = {
       }
     },
     categories: {
-      base: () => "/api/products/categories",
+      base: (queryString) => `/api/products/categories${queryString ? queryString : ""}`,
       single: (categoryId) => `/api/products/categories/${categoryId}`,
       upload: (categoryId) => `/api/products/categories/${categoryId}/upload`,
       products: (categoryId) => `/api/products?categories=${categoryId}`,

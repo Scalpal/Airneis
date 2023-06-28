@@ -1,6 +1,7 @@
 import useSWR from "swr"; 
 import routes from "../routes";
 import getApiClient from "../services/getApiClient";
+import { createQueryString } from "../services/createQueryString";
 
 const fetcher = async (url) => {
   const reqInstance = getApiClient(); 
@@ -10,8 +11,13 @@ const fetcher = async (url) => {
   return data.categories; 
 };
 
-export const useGetCategories = () => {
-  const { data, error, isLoading, mutate } = useSWR(`${process.env.API_URL}${routes.api.categories.base()}`, fetcher, { revalidateOnFocus: false });
+export const useGetCategories = (queryParams) => {
+  const queryString = createQueryString(queryParams ? queryParams : {});
+
+  const url = `${process.env.API_URL}${routes.api.categories.base(queryString)}`;
+  const config = { revalidateOnFocus: false };
+
+  const { data, error, isLoading, mutate } = useSWR(url, fetcher, config);
 
   return {
     categoriesData: data,
