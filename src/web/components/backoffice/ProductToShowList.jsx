@@ -16,7 +16,7 @@ const searchBarId = "searchInput";
 const limit = 30;
 
 const ProductToShowList = (props) => {
-  const { setShowModal, refreshProducts } = props;
+  const { setShowModal, refreshProducts, visibleProductsCount } = props;
 
   const [search, setSearch] = useState("");
   const [alert, setAlert] = useState({ status: "", message: "" });
@@ -43,7 +43,14 @@ const ProductToShowList = (props) => {
   }, []);
 
   const editProductVisibility = useCallback(async (productId, boolean) => {
-    const [error] = await editShowInHome(productId, boolean);
+    if (visibleProductsCount === 4 && boolean === false) {
+      setAlert({ status: "warning", message: "You can't have less than 4 products displayed in home page." });
+      setShowAlert(true);
+
+      return;
+    }
+
+    const [error, data] = await editShowInHome(productId, boolean);
 
     if (error) {
       setAlert({ status: "error", message: error.message });
@@ -51,10 +58,12 @@ const ProductToShowList = (props) => {
 
       return;
     }
-  
+
+    setAlert({ status: "success", message: data.message });
+    setShowAlert(true);
     setSize(1);
     refreshProducts();
-  }, [setSize, refreshProducts]);
+  }, [setSize, refreshProducts, visibleProductsCount]);
 
   useEffect(() => {
     setSize(1); 
@@ -65,74 +74,78 @@ const ProductToShowList = (props) => {
 
       <BackButton setShowModal={setShowModal} />
 
-      <p className={styles.pageTitle}>All products</p>
+      <div className={styles.contentContainer}>
+        <p className={styles.pageTitle}>All products</p>
 
-      <CustomSearchBar
-        id={searchBarId}
-        placeholder={"Search a product"}
-        size={"large"}
-        onPressEnter={setSearch}
-        onPressSearch={() => onClickSearch()}
-        onPressDelete={() => clearSearch()}
-      />
+        <CustomSearchBar
+          id={searchBarId}
+          placeholder={"Search a product"}
+          size={"large"}
+          onPressEnter={setSearch}
+          onPressSearch={() => onClickSearch()}
+          onPressDelete={() => clearSearch()}
+        />
 
-      <div className={styles.productContainer}>
-        {!isLoading ? (
-          products.map((product, index) => {
-            const image = product.productImages[0];
+        <div className={styles.productContainer}>
+          {!isLoading ? (
+            products.map((product, index) => {
+              const image = product.productImages[0];
 
-            return (
-              <div
-                key={index}
-                className={styles.productCard}
-              >
-                <div className={classnames(
-                  styles.productImageWrapper,
-                  product.showInHome ? styles.showedInHome : ""
-                )}>
-                  <ImageWithFallback
-                    className={styles.productImage}
-                    alt={"Product image"}
-                    src={image.imageUrl ? image.imageUrl : `${process.env.AWS_BUCKET_URL}${image.imageSrc}`}
-                    fallbackSrc={`/placeholder-image.png`}
-                    fill
-                  />
+              return (
+                <div
+                  key={index}
+                  className={styles.productCard}
+                >
+                  <div className={classnames(
+                    styles.productImageWrapper,
+                    product.showInHome ? styles.showedInHome : ""
+                  )}>
+                    <ImageWithFallback
+                      className={styles.productImage}
+                      alt={"Product image"}
+                      src={image && image.imageUrl ? image.imageUrl : `${process.env.AWS_BUCKET_URL}${image.imageSrc}`}
+                      fallbackSrc={`/placeholder-image.png`}
+                      fill
+                    />
+                  </div>
+
+                  <p className={styles.productTitle}>{product.name}</p>
+
+                  <div className={styles.cardOverlay}>
+                    <IconButton
+                      Icon={product.showInHome ? EyeSlashIcon : EyeIcon}
+                      tooltip={product.showInHome ? "Hide product" : "Show product"}
+                      onPress={() => editProductVisibility(product.id, product.showInHome ? false : true)}
+                    />
+                  </div>
                 </div>
+              );
+            })
+          ): (
+            <Loader />
+          )}
+        </div>
 
-                <p className={styles.productTitle}>{product.name}</p>
-
-                <div className={styles.cardOverlay}>
-                  <IconButton
-                    Icon={product.showInHome ? EyeSlashIcon : EyeIcon}
-                    tooltip={product.showInHome ? "Hide product" : "Show product"}
-                    onPress={() => editProductVisibility(product.id, product.showInHome ? false : true)}
-                  />
-                </div>
-              </div>
-            );
-          })
-        ): (
-          <Loader />
-        )}
-      </div>
-
-      {(!isLoading && products.length > 0) && (
-        isEndReached ? (
-          <p>No more products</p>
-        ) : (
-          <>
-            {isValidating ? (
-              <Loader />
+        <div className={styles.buttonWrapper}>
+          {(!isLoading && products.length > 0) && (
+            isEndReached ? (
+              <p>No more products</p>
             ) : (
-              <Button
-                onClick={() => handleLoadMore()}
-              > 
-                See more
-              </Button>
-            )}
-          </>
-        )
-      )}
+              <>
+                {isValidating ? (
+                  <Loader />
+                ) : (
+                  <Button
+                    onClick={() => handleLoadMore()}
+                  > 
+                    See more
+                  </Button>
+                )}
+              </>
+            )
+          )}
+        </div>
+      </div>
 
       <CustomAlert
         alert={alert}

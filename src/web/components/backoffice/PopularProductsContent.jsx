@@ -5,6 +5,7 @@ import Modal from "../Modal";
 import ProductToShowList from "./ProductToShowList";
 import { useState } from "react";
 import ProductCard from "../ProductCard";
+import { ShoppingBagIcon } from "@heroicons/react/24/solid";
 
 const queryParams = {
   showInHome: true
@@ -31,12 +32,13 @@ const PopularProductsContent = () => {
             );
           })}
 
-          <div
+          <button
             className={styles.addProductButton}
             onClick={() => setShowModal(true)}
           >
-            <p>Add a product to show</p>
-          </div>
+            <ShoppingBagIcon className={styles.addProductIcon} />
+            <p>Show product list</p>
+          </button>
         </div>
 
       </CollapseMenu>
@@ -48,6 +50,7 @@ const PopularProductsContent = () => {
         <ProductToShowList
           setShowModal={setShowModal}
           refreshProducts={refreshProducts}
+          visibleProductsCount={products.length}
         />
       </Modal>
     </>
