@@ -1,5 +1,6 @@
 import { createValidator, stringValidator, emailValidator } from "@/validator";
 import { Formik, Form } from "formik";
+import routes from "@/web/utils/routes";
 import Button from "@/web/components/Button";
 import styles from "@/styles/login.module.css";
 import { useRouter } from "next/router";
@@ -21,20 +22,27 @@ const initialValues = {
 
 const Login = () => {
   const router = useRouter();
-  const { actions: { signIn } } = useAppContext();
+  const {
+    services: {
+      users: { login },
+    },
+  } = useAppContext();
   const [error, setError] = useState(null);
 
-  const handleSubmit = useCallback(async (values) => {
-    const [err] = await signIn(values);
+  const handleSubmit = useCallback(
+    async (values) => {
+      const [err] = await login(values);
 
-    if (err) {
-      setError(err[0].response.data.error);
+      if (err) {
+        setError(err[0].response.data.error);
 
-      return;
-    }
+        return;
+      }
 
-    router.push("/home");
-  },[signIn, router]);
+      router.push(routes.home());
+    },
+    [login, router]
+  );
 
   return (
     <main className={styles.container}>
@@ -47,14 +55,14 @@ const Login = () => {
         {({ isValid, dirty, isSubmitting }) => (
           <Form className={styles.formContainer}>
             <p className={styles.formTitle}>Log into your account</p>
-            
-            {error &&
+
+            {error && (
               <p className={styles.error}>
                 <ExclamationTriangleIcon className={styles.errorIcon} />
                 {error}
               </p>
-            }
-            
+            )}
+
             <LoginField
               name="email"
               type="text"
@@ -69,17 +77,26 @@ const Login = () => {
               showError={false}
             />
 
-            <Button
-              disabled={!(dirty && isValid) || isSubmitting}
-            >
+            <Button disabled={!(dirty && isValid) || isSubmitting}>
               Login
             </Button>
 
             <div className={styles.noAccountText}>
-              <p>Forgot your password ? <span> Click here </span></p> 
-              <p>Don&apos;t have an account ? <span onClick={() => router.push("/register")}> Register here </span></p> 
+              <p>
+                Forgot your password ?{" "}
+                <span onClick={() => router.push(routes.reset())}>
+                  {" "}
+                  Click here{" "}
+                </span>
+              </p>
+              <p>
+                Don&apos;t have an account ?{" "}
+                <span onClick={() => router.push(routes.register())}>
+                  {" "}
+                  Register here{" "}
+                </span>
+              </p>
             </div>
-
           </Form>
         )}
       </Formik>
@@ -88,11 +105,7 @@ const Login = () => {
 };
 
 Login.getLayout = function (page) {
-  return (
-    <LoginLayout>
-      {page}
-    </LoginLayout>
-  );
+  return <LoginLayout>{page}</LoginLayout>;
 };
 
-export default Login; 
+export default Login;
