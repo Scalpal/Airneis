@@ -20,6 +20,7 @@ export const getServerSideProps = async (context) => {
         "categoryPage",
         "footer",
         "drawerMenu",
+        "navbar",
       ])),
     },
   };
