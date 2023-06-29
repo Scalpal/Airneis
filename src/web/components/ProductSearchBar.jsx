@@ -1,57 +1,46 @@
 import { classnames } from "@/pages/_app";
 import styles from "@/styles/components/ProductSearchBar.module.css"; 
-import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/solid";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import useSearchProducts from "../hooks/useSearchProducts";
 import Highlighter from "./Highlighter";
 import routes from "../routes";
 import Link from "next/link";
 import Loader from "./Loader";
+import CustomSearchBar from "./CustomSearchBar";
 
 const ProductSearchBar = (props) => {
-  const { id, placeholder, showSuggestions, closeOverlay, ...otherProps } = props;
+  const {
+    id,
+    placeholder,
+    showSuggestions,
+    closeOverlay,
+  } = props;
 
   const [inputFocused, setInputFocused] = useState(false);
   const [searchValue, setSearchValue] = useState("");
 
   const { searchData, searchLoading } = useSearchProducts(searchValue);
   const products = (!searchLoading && searchData) ? searchData.products : [];
-  
+
+  const clearSearch = useCallback(() => {
+    setInputFocused(true);
+    setSearchValue("");
+  }, []);
+    
   return (
     <div className={styles.container}>
-      <div className={classnames(
-        styles.wrapper,
-        inputFocused ? styles.inputFocused : ""
-      )}>
-        <button className={styles.button}>
-          <MagnifyingGlassIcon className={styles.icons} />
-        </button>
-        
-        <input
-          id={id}
-          type="text"
-          value={searchValue}
-          className={classnames(
-            styles.input,
-            (inputFocused && showSuggestions === true) ? styles.inputFocused : ""
-          )}
-          placeholder={placeholder}
-          onFocus={() => setInputFocused(true)}
-          onBlur={() => setInputFocused(false)}
-          onChange={(e) => setSearchValue(e.target.value)}
-          {...otherProps}
-        />
-
-        <button
-          className={styles.button}
-          onClick={() => {
-            setInputFocused(true);
-            setSearchValue("");
-          }}
-        >
-          <XMarkIcon className={styles.icons} />
-        </button>
-      </div>
+      
+      <CustomSearchBar
+        id={id}
+        placeholder={placeholder}
+        additionnalClasses={[
+          inputFocused ? styles.inputFocused : ""
+        ]}
+        clearSearch={() => clearSearch()}
+        onFocus={() => setInputFocused(true)}
+        onBlur={() => setInputFocused(false)}
+        onChange={(e) => setSearchValue(e.target.value)}
+      />
 
       <div
         className={classnames(
