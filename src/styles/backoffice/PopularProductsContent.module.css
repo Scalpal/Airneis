@@ -1,0 +1,19 @@
+.container {
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: repeat(auto-fit,minmax(200px, 1fr));
+  grid-gap: 1rem;
+}
+
+.container > div {
+  width: 100%;
+  aspect-ratio: 9/16;
+}
+
+.addProductButton {
+  display:flex;
+  flex-direction: column;
+  justify-content: center; 
+  align-items: center;
+  border: 2px solid red;
+}

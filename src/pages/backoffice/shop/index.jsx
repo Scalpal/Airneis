@@ -6,6 +6,7 @@ import checkIsAdmin from "@/web/services/checkIsAdmin";
 import { classnames, nunito } from "@/pages/_app";
 import HomeCarouselContent from "@/web/components/backoffice/HomeCarouselContent";
 import CategoriesContent from "@/web/components/backoffice/CategoriesContent";
+import PopularProductsContent from "@/web/components/backoffice/PopularProductsContent";
 
 
 export const getServerSideProps = async (context) => {
@@ -36,9 +37,7 @@ const BackofficeShop = () => {
 
       <CategoriesContent />
 
-      <div className={styles.block}>
-        <p className={styles.blockTitle}>Popular products</p>
-      </div>
+      <PopularProductsContent />
     </div>
   );
 };
