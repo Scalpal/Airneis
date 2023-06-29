@@ -8,57 +8,7 @@ import SeeMoreButton from "@/web/components/SeeMoreButton";
 import { createQueryString } from "@/web/services/createQueryString";
 import Axios from "axios";
 import { useGetCategories } from "@/web/hooks/useGetCategories";
-
-const products = [
-  {
-    id: 1,
-    name: "Modern beechwood chair",
-    type: "Wood",
-    price: "$145",
-    stock: 25,
-    imageSrc: "/meuble-2.jpeg",
-  },
-  {
-    id: 2,
-    name: "Chair",
-    type: "Wood",
-    price: "$145",
-    stock: 25,
-    imageSrc: "/meuble-2.jpeg",
-  },
-  {
-    id: 3,
-    name: "Chair",
-    type: "Wood",
-    price: "$145",
-    stock: 25,
-    imageSrc: "/meuble-2.jpeg",
-  },
-  {
-    id: 4,
-    name: "Chair",
-    type: "Wood",
-    price: "$145",
-    stock: 25,
-    imageSrc: "/meuble-2.jpeg",
-  },
-  {
-    id: 5,
-    name: "Chair",
-    type: "Wood",
-    price: "$145",
-    stock: 25,
-    imageSrc: "/meuble-2.jpeg",
-  },
-  {
-    id: 6,
-    name: "Chair",
-    type: "Wood",
-    price: "$145",
-    stock: 25,
-    imageSrc: "/meuble-2.jpeg",
-  },
-];
+import useGetProductsSWR from "@/web/hooks/useGetProductsSWR";
 
 const reviews = [
   {
@@ -93,6 +43,12 @@ export const getServerSideProps = async () => {
  
 const Home = (props) => {
   const { carouselImages } = props;
+
+  const productsQueryParams = {
+    showInHome: true
+  };
+  const { productsData, productsError, productsIsLoading } = useGetProductsSWR(productsQueryParams);
+  const products = (!productsError && !productsIsLoading) ? productsData.products : []; 
 
   const { categoriesData, categoriesError, categoriesIsLoading } = useGetCategories({ visibleInHome: true });
   const categories = (!categoriesError && !categoriesIsLoading) ? categoriesData : [];
