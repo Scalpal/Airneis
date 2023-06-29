@@ -33,6 +33,7 @@ const ProductSearchBar = (props) => {
       <CustomSearchBar
         id={id}
         placeholder={placeholder}
+        size={"fit-to-parent"}
         additionnalClasses={[
           inputFocused ? styles.inputFocused : ""
         ]}

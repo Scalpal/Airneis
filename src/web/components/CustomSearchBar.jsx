@@ -12,8 +12,23 @@ const CustomSearchBar = (props) => {
     onPressSearch,
     onPressDelete,
     additionnalClasses,
+    size,
     ...otherProps
   } = props;
+
+  const sizeStyle = () => {
+    switch (size) {
+      case "small": return styles.small;
+
+      case "medium": return styles.medium;
+
+      case "large": return styles.large;
+
+      case "fit-to-parent": return styles.fitToParent;
+
+      default: return styles.small;
+    }
+  };
 
   useEffect(() => {
     const searchInput = document.getElementById(id);
@@ -33,7 +48,8 @@ const CustomSearchBar = (props) => {
   return (
     <div className={classnames(
       styles.wrapper,
-      additionnalClasses
+      additionnalClasses,
+      sizeStyle()
     )}>
       <button
         className={styles.button}
