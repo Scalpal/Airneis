@@ -1,35 +1,20 @@
 import styles from "@/styles/legalMentions.module.css";
 import Banner from "@/web/components/Banner";
-import { useTranslation } from "next-i18next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 const Mentions = () => {
-  const { t } = useTranslation(["legalMentions"]);
-
   return (
     <>
-      <Banner className={styles.title} title={t("legalMentionsTitle")} />
-      <p className={styles.informations}>{t("airneisTypeEntreprise")}</p>
-      <p className={styles.informations}>{t("airneisNumeroSiret")}</p>
-      <p className={styles.informations}>{t("airneisAddress")}</p>
-      <p className={styles.informations}>{t("airneisTelephone")}</p>
-      <p className={styles.informations}>{t("airneisEmail")}</p>
+      <Banner className={styles.title} title={"Legal mentions"} />
+      <p className={styles.informations}>SAS ÀIRNEIS</p>
+      <p className={styles.informations}>Numéro de SIRET: 750102030458</p>
+      <p className={styles.informations}>
+        Adresse: 32 Spring Drive, Glasgow, United Kingdom
+      </p>
+      <p className={styles.informations}>Téléphone: +44 38 0946 5200</p>
+      <p className={styles.informations}>Email: airneis@contact.com</p>
     </>
   );
 };
-
-export async function getStaticProps({ locale }) {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, [
-        "legalMentions",
-        "footer",
-        "drawerMenu",
-        "navbar",
-      ])),
-    },
-  };
-}
 
 Mentions.isPublic = true;
 export default Mentions;
