@@ -65,7 +65,7 @@ const DrawerMenu = (props) => {
           <Link href={routes.backoffice.base()}>{t("backoffice")}</Link>
         )}
         <Link href={routes.cgu()}>{t("termsOfUse")}</Link>
-        <Link href="/legal-mention">{t("legalMentions")}</Link>
+        <Link href={routes.legalMentions()}>{t("legalMentions")}</Link>
         <Link href="/contact">{t("contact")}</Link>
         <Link href="/about-us">{t("aboutUs")}</Link>
         <LanguageSelect />
