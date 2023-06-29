@@ -28,13 +28,6 @@ const MailConfirmation = ({ error }) => {
   );
 };
 
-export async function getStaticProps({ locale }) {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ["confirmationMail"])),
-    },
-  };
-}
 
 MailConfirmation.getLayout = function (page) {
   return <BackofficeLoginLayout>{page}</BackofficeLoginLayout>;
@@ -44,6 +37,7 @@ export default MailConfirmation;
 
 export async function getServerSideProps(context) {
   const { id } = context.query;
+  const { locale } = context.locale; 
 
   try {
     await axios.put(`
@@ -58,6 +52,7 @@ export async function getServerSideProps(context) {
     return {
       props: {
         error: true,
+        ...(await serverSideTranslations(locale, ["confirmationMail"])),
       },
     };
   }
