@@ -7,8 +7,6 @@ import routes from "@/web/routes";
 import SeeMoreButton from "@/web/components/SeeMoreButton";
 import { createQueryString } from "@/web/services/createQueryString";
 import Axios from "axios";
-import { useGetCategories } from "@/web/hooks/useGetCategories";
-import useGetProductsSWR from "@/web/hooks/useGetProductsSWR";
 
 const reviews = [
   {
@@ -20,39 +18,40 @@ const reviews = [
 
 
 export const getServerSideProps = async () => {
-  const queryString = createQueryString({ visible: true });
+  const carouselQueryString = createQueryString({ visible: true });
+  const productsQueryString = createQueryString({ showInHome: true });
+  const categoriesQueryString = createQueryString({ visibleInHome: true });
 
-  const url = process.env.API_URL + routes.api.images.homeCarousel.base(queryString);
+  const carouselUrl = process.env.API_URL + routes.api.images.homeCarousel.base(carouselQueryString);
+  const popularProductsUrl = process.env.API_URL + routes.api.products.collection(productsQueryString);
+  const categoriesUrl = process.env.API_URL + routes.api.categories.base(categoriesQueryString);
 
   try {
-    const { data } = await Axios.get(url);
+    const responseCarousel = await Axios.get(carouselUrl);
+    const { data: { products } } = await Axios.get(popularProductsUrl);
+    const { data : { categories }} = await Axios.get(categoriesUrl);
 
     return {
       props: {
-        carouselImages: data.images
+        carouselImages: responseCarousel.data.images,
+        popularProducts: products,
+        categories: categories
       }
     };
   } catch (error) {
     return {
       props: {
-        carouselImages: []
+        carouselImages: [],
+        popularProducts: [],
+        categories: []
       }
     };
   }
 };
  
 const Home = (props) => {
-  const { carouselImages } = props;
+  const { carouselImages, popularProducts, categories } = props;
 
-  const productsQueryParams = {
-    showInHome: true
-  };
-  const { productsData, productsError, productsIsLoading } = useGetProductsSWR(productsQueryParams);
-  const products = (!productsError && !productsIsLoading) ? productsData.products : []; 
-
-  const { categoriesData, categoriesError, categoriesIsLoading } = useGetCategories({ visibleInHome: true });
-  const categories = (!categoriesError && !categoriesIsLoading) ? categoriesData : [];
- 
   return (
     <>
       <header className="fullWidthCarousel" id="carousel">
@@ -64,7 +63,7 @@ const Home = (props) => {
         <h1 className={styles.popularProductsTitle}> Popular products </h1>
 
         <div className={styles.popularProductsList}>
-          {products.map((product, index) => {
+          {popularProducts.map((product, index) => {
             return <ProductCard key={index} product={product} />;
           })}
         </div>
