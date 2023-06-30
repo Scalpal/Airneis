@@ -12,6 +12,7 @@ const routes = {
   home: () => "/",
   register: () => "/register",
   login: () => "/login",
+  legalMentions: () => "/legal-mentions",
   products: {
     base: () => `/products`,
     single: (productId) => `/products/${productId}`
@@ -23,26 +24,36 @@ const routes = {
   backoffice: {
     base: () => "/backoffice",
     users: {
-      single: (userId) => createRouteWithQueryParams(`/backoffice/users/${userId}`)
+      single: (userId) =>
+        createRouteWithQueryParams(`/backoffice/users/${userId}`)
     },
     products: {
       add: () => "/backoffice/products/add",
-      single: (productId) => createRouteWithQueryParams(`/backoffice/products/${productId}`)
+      single: (productId) =>
+        createRouteWithQueryParams(`/backoffice/products/${productId}`)
     }
   },
   api: {
     register: () => "/users/register",
     login: () => "/users/login",
     products: {
-      collection: (queryString, page) => `/api/products${queryString ? queryString : ""}${page ? `page=${page}` : ""}`,
-      single: (productId, query) => createRouteWithQueryParams(`/api/products/${productId}`, query),
-      search: (searchValue) => `/api/products?limit=30&${searchValue.length > 0 ? `search=${searchValue}` : ""}`,
+      collection: (queryString, page) =>
+        `/api/products${queryString ? queryString : ""}${
+          page ? `page=${page}` : ""
+        }`,
+      single: (productId, query) =>
+        createRouteWithQueryParams(`/api/products/${productId}`, query),
+      search: (searchValue) =>
+        `/api/products?limit=30&${
+          searchValue.length > 0 ? `search=${searchValue}` : ""
+        }`,
       update: (productId) => `/products/${productId}`,
       materials: () => "/api/products/materials",
       add: () => "/products",
-      reviews: (productId, limit, page) => `/api/products/${productId}/reviews?limit=${limit}&page=${page}`,
+      reviews: (productId, limit, page) =>
+        `/api/products/${productId}/reviews?limit=${limit}&page=${page}`,
       productImage: (productId) => `/api/products/${productId}/images`,
-      deleteImage: (productId) => `/api/products/${productId}/deleteImage` 
+      deleteImage: (productId) => `/api/products/${productId}/deleteImage`
     },
     categories: {
       base: () => "/api/products/categories",
