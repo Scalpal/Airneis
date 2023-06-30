@@ -11,13 +11,13 @@ import {
   useState,
 } from "react";
 import { parseCookies } from "nookies";
-import Axios, { AxiosError } from "axios";
+import Axios from "axios";
 import routes from "../routes";
 
 const AppContext = createContext();
 
 export const AppContextProvider = (props) => {
-  const { isPublicPage, ...otherProps } = props;
+  const { ...otherProps } = props;
   const [session, setSession] = useState(null);
   const [jwt, setJWT] = useState(null);
   const api = createAPIClient({ jwt });
@@ -35,16 +35,10 @@ export const AppContextProvider = (props) => {
     }
 
     try {
-      const {
-        data: { user },
-      } = await Axios.get(routes.api.users.single(session.user.id));
+      const { data: { user } } = await Axios.get(routes.api.users.single(session.user.id));
 
       return user;
     } catch (error) {
-      if (error instanceof AxiosError) {
-        console.log(error.response);
-      }
-
       return error;
     }
   }, [session]);
@@ -132,9 +126,34 @@ export const AppContextProvider = (props) => {
       localStorageProducts[productIndex].quantity--;
       localStorage.setItem("products", localStorageProducts);
       setCart(localStorageProducts);
-    },
-    [deleteProductFromCart, setCart]
-  );
+    }
+  }, [cart, setCart]);
+
+  const deleteProductFromCart = useCallback((product) => {
+    const localStorageProducts = JSON.parse(localStorage.getItem("products"));
+
+    const updatedLocalStorageProducts = localStorageProducts.filter((elt) => elt.id !== product.id);
+    localStorage.setItem("products", updatedLocalStorageProducts); 
+    setCart(updatedLocalStorageProducts); 
+  }, [setCart]); 
+
+  const removeProductFromCart = useCallback((product) => {
+    const localStorageProducts = JSON.parse(localStorage.getItem("products"));
+
+    const productIndex = localStorageProducts.findIndex((elt) => elt.id === product.id);
+    const currentProduct = localStorageProducts[productIndex];
+
+    if (currentProduct.quantity - 1 === 0) {
+      deleteProductFromCart(product);
+
+      
+return;
+    }
+
+    localStorageProducts[productIndex].quantity--;
+    localStorage.setItem("products", localStorageProducts); 
+    setCart(localStorageProducts);
+  }, [deleteProductFromCart, setCart]);
 
   useEffect(() => {
     localStorage.setItem("products", JSON.stringify(cart));
@@ -184,16 +203,17 @@ export const AppContextProvider = (props) => {
     removeProductFromCart,
     deleteProductFromCart,
   ]);
-
-  if (!isPublicPage && session === null) {
-    return <span>Not Connected</span>;
-  }
-
-  return <AppContext.Provider {...otherProps} value={contextValues} />;
+  return (
+    <AppContext.Provider
+      {...otherProps}
+      value={contextValues}
+    />
+  );
 };
 
 const useAppContext = () => {
   const { state, actions } = useContext(AppContext);
+
   return { state, actions };
 };
 

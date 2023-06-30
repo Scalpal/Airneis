@@ -142,7 +142,7 @@ const Cart = () => {
     </>
   );
 };
-Cart.isPublic = true;
+
 Cart.getLayout = function (page) {
   return (
     <LayoutStickyNavbar>

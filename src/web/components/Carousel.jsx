@@ -5,12 +5,11 @@ import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/solid";
 
 
 const Carousel = (props) => {
-
   const { images, Autoplay, controls } = props; 
 
   const [currentSlide, setCurrentSlide] = useState(0); 
-  const [slides, _] = useState(images); 
-  const [autoplay, __] = useState(Autoplay); 
+  const [slides] = useState(images); 
+  const [autoplay] = useState(Autoplay); 
 
   const nextSlide = useCallback(() => {
     setCurrentSlide(currentSlide === slides.length - 1 ? 0 : currentSlide + 1); 
@@ -22,7 +21,6 @@ const Carousel = (props) => {
   }, [currentSlide, slides.length]);
 
   useEffect(() => {
-
     if (autoplay) {
       setTimeout(() => {
         nextSlide();
@@ -34,10 +32,10 @@ const Carousel = (props) => {
 
     <div className={styles.carouselContainer} id="carousel">
 
-      {images.map((imageSrc, index) => {
+      {images.map((image, index) => {
         return (
           <Image
-            src={imageSrc}
+            src={image.imageUrl}
             alt={"Carousel Image" + index}
             key={index}
             fill

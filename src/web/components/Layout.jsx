@@ -7,7 +7,6 @@ import useAppContext from "@/web/hooks/useAppContext";
 
 
 const Layout = ({ children }) => {
-
   const {
     actions: { signOut },
     state: { session }

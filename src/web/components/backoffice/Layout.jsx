@@ -2,7 +2,6 @@ import Navbar from "@/web/components/backoffice/Navbar";
 import styles from "@/styles/backoffice/Layout.module.css";
 
 const BackofficeLayout = ({ children }) => {
-
   return (
     <div className={styles.layout} >
       <Navbar />

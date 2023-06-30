@@ -5,7 +5,7 @@
   justify-content: center;
   gap: 2rem; 
   margin: 0 auto;
-  width: 80vw;
+  width: 85vw;
 }
 
 .productCarousel {
@@ -57,20 +57,38 @@
   gap: 1.5rem; 
 }
 
-.productInfosTopBlock h1 {
+.productInfosName {
   text-align: justify;
   font-weight: 500;
+  font-size: 1.2rem;
 }
 
-.productInfosTopBlock p {
+.productsInfosDescription {
   text-align: justify;
-  font-weight: 300;
+  font-size: 0.8rem;
 }
 
 .productInfosBottomBlock {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
+  gap: 1.5rem;
   font-weight: 400;
+}
+
+.productInfosMaterials {
+  color: grey;
+}
+
+.productInfosStockPrice {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between
+}
+
+.productInfosPrice {
+  font-size: 1.2rem;
+  font-weight: 600;
 }
 
 /* Add to cart button */
@@ -82,16 +100,31 @@
 
 
 /* ------------- Similar products block ----------------- */
-.similarProductsWrapper {
-  width: 100%;
-  margin: 20vh auto 0 auto;
+.titleWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  width: 95%;
+  border-radius: 1rem;
+  margin: 0 auto 5vh auto;
 }
 
-.similarProductsWrapper h1 {
-  margin: 0 0 10vh 0;
-  text-align: center;
-  font-weight: 300;
-  font-style: lighter;
+.title {
+  font-size: 1.4rem;
+  white-space: nowrap;
+}
+
+.line {
+  background-color: var(--light-grey);
+  height: 2px;
+  width: 100%;
+}
+
+.similarProductsWrapper {
+  width: 100%;
+  margin: 0 auto 10vh auto;
 }
 
 .similarProductsContainer {
@@ -104,13 +137,20 @@
   overflow-x: scroll;
 }
 
+.similarProductsContainer::webkit-scrollbar {
+  display: none;
+}
 
+@media only screen and (max-width: 1024px) {
+  .mainContent {
+    width: 90vw;
+  }
+}
 
 @media only screen and (max-width: 767px) {
   .mainContent {
     flex-direction: column;
     width: 85vw;
-    /* border: 2px solid red; */
   }
 
   .productCarousel {
@@ -120,6 +160,16 @@
 
   .productInfos {
     width: 100%;
+  }
+
+  .productInfosName {
+    font-size: 1.3rem;
+    font-family: inherit;
+  }
+
+  .productInfosDescription {
+    font-size: 1.1rem;
+    text-align: justify;
   }
 
   .productInfosBottomBlock {

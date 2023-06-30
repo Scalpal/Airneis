@@ -8,5 +8,5 @@ const About = () => {
     </>
   );
 };
-About.isPublic = true;
+
 export default About;

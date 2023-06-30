@@ -24,7 +24,7 @@ const MailConfirmation = ({ error,answer }) => {
     </div>
   );
 };
-MailConfirmation.isPublic = true;
+
 MailConfirmation.getLayout = function (page) {
   return (
     <BackofficeLoginLayout>
@@ -36,35 +36,14 @@ MailConfirmation.getLayout = function (page) {
 export default MailConfirmation;
 
 export async function getServerSideProps(context) {
-  const cryptoId = decodeURIComponent(context.query.key);
-
-  const crypt = async (CryptoValues) => {
-    try {
-      const {
-        data: { CryptoKey },
-      } = await axios.post(`${config.baseURL}/api/${routes.api.crypt()}`,{
-        CryptoValues,
-      });
-
-      return CryptoKey;
-    } catch (err) {
-      const error = err.response?.data?.error || "Oops. Something went wrong";
-
-      return {
-        props: {
-          error: true,
-          answer: [Array.isArray(error) ? error : [error]]
-        }
-      };
-    }
-  };
-  const [{ getCryptoId }] = await crypt([{ cryptoId }]);
+  const { id } = context.query;
 
   try {
-    await axios.patch(`${config.baseURL}/api/${routes.api.activate()}`,{
-      id: getCryptoId
-    });
-    return {
+    await axios.put(`
+    ${process.env.API_URL}/api/mail/confirmation?id=${id}`);
+
+    
+return {
       props: {
         error: false
       }

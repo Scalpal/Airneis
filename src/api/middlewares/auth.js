@@ -4,9 +4,9 @@ import UserModel from "../db/models/UserModel";
 import * as yup from "yup"; 
 
 const auth = () => {
-
   return async (ctx) => {
     const { req, res, next, logger, locals } = ctx;
+
     if (!req.headers.authorization) {
       res.status(401).json({ message: "No token provided" }); 
 
@@ -17,6 +17,15 @@ const auth = () => {
 
     if (!jwt) {
       return res.status(401).json({ message: "No token provided" });
+    }
+
+    const decodedToken = jsonwebtoken.decode(jwt);
+    const isTokenExpired = Date.now() >= decodedToken.exp * 1000;
+
+    if (isTokenExpired) {
+      res.status(500).send({ error: "Token expired" }); 
+
+      return;
     }
 
     const { payload: { user: { id } } } = jsonwebtoken.verify(jwt, config.security.jwt.secret);
@@ -30,6 +39,8 @@ const auth = () => {
 
         return;
       }
+
+      locals.user = user;
 
       next();
     } catch (error) {

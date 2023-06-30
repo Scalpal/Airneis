@@ -4,7 +4,7 @@ import { classnames } from "@/pages/_app";
 import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon, ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 
 const Pagination = (props) => {
-  const { dataCount, queryParams, handleQueryParams } = props; 
+  const { dataCount, page, limit, setPage, nextPage, previousPage, firstPage, lastPage } = props; 
 
   const [totalPages, setTotalPages] = useState([[]]);
   const [activeChunk, setActiveChunk] = useState(0); 
@@ -12,7 +12,7 @@ const Pagination = (props) => {
   useEffect(() => {
     const pages = []; 
     const chunkSize = 5; // We want to see pages 5 by 5, but we can change it to see pages X by X
-    const pagesCount = Math.ceil(dataCount / queryParams.limit);
+    const pagesCount = Math.ceil(dataCount / limit);
 
     for (let i = 1; i <= pagesCount; i++) {
       pages.push(i); 
@@ -27,42 +27,22 @@ const Pagination = (props) => {
       }
 
       acc[chunkIndex].push(curr);
+
       return acc;
     }, []);
 
     setTotalPages(chunkedPages);
-  }, [dataCount, queryParams]);
-
-  // Handle pagination
-  const firstPage = useCallback(() => {
-    handleQueryParams("page", 1);
-  }, [handleQueryParams]);
-
-  const lastPage = useCallback(() => {
-    handleQueryParams("page", Math.ceil(dataCount / queryParams.limit));
-  }, [handleQueryParams, dataCount, queryParams.limit]);
-
-  const nextPage = useCallback(() => {
-    if (queryParams.page !== Math.ceil(dataCount / queryParams.limit)) {
-      handleQueryParams("page", queryParams.page + 1);
-    }
-  }, [handleQueryParams, dataCount, queryParams.limit, queryParams.page]);
-
-  const previousPage = useCallback(() => {
-    if (queryParams.page !== 1) {
-      handleQueryParams("page", queryParams.page - 1);
-    }
-  }, [handleQueryParams, queryParams.page]); 
+  }, [dataCount, limit]);
 
   const findActiveChunk = useCallback(() => {
     totalPages.map((chunk, index) => {
-      if (chunk.includes(queryParams.page)) {
+      if (chunk.includes(page)) {
         setActiveChunk(index);
 
         return;
       }
     });
-  }, [totalPages, queryParams.page]);
+  }, [totalPages, page]);
 
   useEffect(() => {
     findActiveChunk();
@@ -74,29 +54,29 @@ const Pagination = (props) => {
       <div className={styles.chevronWrapper}>
         <button
           className={styles.chevronButton}
-          disabled={queryParams.page === 1 ? true : false}
+          disabled={page === 1 ? true : false}
           onClick={() => firstPage()}
         >
           <ChevronDoubleLeftIcon className={styles.icon} />
         </button>
         <button
           className={styles.chevronButton}
-          disabled={queryParams.page === 1 ? true : false}
+          disabled={page === 1 ? true : false}
           onClick={() => previousPage()}
         >
           <ChevronLeftIcon className={styles.icon} />
         </button>
       </div>
 
-      <div>
+      <div className={styles.buttonWrapper}>
         {totalPages[activeChunk].map((value, index) => (
           <button
             key={index}
             className={classnames(
               styles.button, 
-              queryParams.page === value ? styles.activeButton : ""
+              page === value ? styles.activeButton : ""
             )}
-            onClick={() => handleQueryParams("page", value)}
+            onClick={() => setPage(value)}
           >
             {value}
           </button>
@@ -106,21 +86,21 @@ const Pagination = (props) => {
       <div className={styles.chevronWrapper}>
         <button
           className={styles.chevronButton}
-          disabled={queryParams.page === Math.ceil(dataCount / queryParams.limit) ? true : false}          
+          disabled={page === Math.ceil(dataCount / limit) ? true : false}          
           onClick={() => nextPage()}
         >
           <ChevronRightIcon className={styles.icon} />
         </button>
         <button
           className={styles.chevronButton}
-          disabled={queryParams.page === Math.ceil(dataCount / queryParams.limit) ? true : false}          
+          disabled={page === Math.ceil(dataCount / limit) ? true : false}          
           onClick={() => lastPage()}
         >
           <ChevronDoubleRightIcon className={styles.icon} />
         </button>
       </div>
       
-      <p className={styles.bottomText}>Page {queryParams.page} of {Math.ceil(dataCount / queryParams.limit)}</p>
+      <p className={styles.bottomText}>Page {page} of {Math.ceil(dataCount / limit)}</p>
     </div>
   );
 };

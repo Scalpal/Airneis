@@ -18,6 +18,7 @@ export const seed = async (knex) => {
   uniqueCategories = uniqueCategories.filter(
     (category) => !existingCategoriesNames.includes(category.name)
   );
+
   if (uniqueCategories.length !== 0) {
     await knex("categories").insert(uniqueCategories);
   }

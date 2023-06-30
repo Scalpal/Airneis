@@ -13,7 +13,7 @@
   background-color: var(--secondary);  
   border: none;
   z-index: 999;
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 600;
   border-bottom: 1px solid rgb(203, 203, 203);
 }
@@ -34,8 +34,8 @@
   flex-direction: column;
   gap: 0.5rem; 
   font-size: 0.9rem;
-  overflow-y: hidden;
-  max-height: 100vh;
+  overflow-y: scroll;
+  max-height: 250px;
   transition-duration: 500ms;
   opacity: 0;
 }
@@ -52,6 +52,22 @@
   padding: 0rem;
 }
 
+/* Size styles */
+.collapsed.small {
+  max-height: 250px;
+}
+
+.collapsed.medium {
+  max-height: 350px;
+}
+
+.collapsed.large {
+  max-height: 500px;
+}
+
+.collapsed.fitToParent {
+  max-height: 100%;
+}
 
 
 

@@ -4,6 +4,8 @@
   align-items: center; 
   gap: 0.5rem;
   transition-duration: 1s;
+  font-size: 0.8rem;
+  white-space: nowrap;
 }
 
 .checkboxItem input {
@@ -23,6 +25,14 @@
 .checked {
   background-color: black;
   color: white;
+}
+
+.disabled {
+  opacity: 0.5;
+}
+
+.disabled:hover {
+  cursor: not-allowed;
 }
 
 .icon {
