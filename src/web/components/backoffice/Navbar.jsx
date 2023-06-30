@@ -83,13 +83,13 @@ const Navbar = () => {
 
       <div
         className={styles.bottomBlock}
-        onClick={() => router.push("/")}
       >
         <ArrowRightOnRectangleIcon
           className={classnames(
             styles.linksIcon,
             styles.logoutIcon
           )}
+          onClick={() => router.push("/")}
         />
       </div>
     </nav>

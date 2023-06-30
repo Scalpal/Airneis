@@ -21,9 +21,13 @@ const Carousel = (props) => {
 
   useEffect(() => {
     if (autoplay) {
-      setTimeout(() => {
+      const timeoutId = setTimeout(() => {
         nextSlide();
       }, 5000);
+
+      return () => {
+        clearTimeout(timeoutId);
+      };
     }
   });
 
