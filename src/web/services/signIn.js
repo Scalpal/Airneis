@@ -13,7 +13,7 @@ const signIn = ({ api, setSession, setJWT }) =>
       // Stock the token in cookies for 30 days 
       setCookie(null, "token", jwt, {
         maxAge: 30 * 24 * 60 * 60,
-        path: "/",
+        path: "/"
       });
       
       return [null, true];

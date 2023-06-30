@@ -11,9 +11,9 @@ class AddressModel extends BaseModel {
         modelClass: UserModel,
         join: {
           from: "addresses.userId",
-          to: "users.id",
-        },
-      },
+          to: "users.id"
+        }
+      }
     };
   }
 }

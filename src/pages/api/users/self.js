@@ -32,7 +32,7 @@ const handler = mw({
         res.status(500).send({ error: error });
       }
     }
-  ],
+  ]
 });
 
 export default handler; 

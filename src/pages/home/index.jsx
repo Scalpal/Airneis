@@ -15,7 +15,7 @@ const products = [
     type: "Wood",
     price: "$145",
     stock: 25,
-    imageSrc: "/meuble-2.jpeg",
+    imageSrc: "/meuble-2.jpeg"
   },
   {
     id: 2,
@@ -23,7 +23,7 @@ const products = [
     type: "Wood",
     price: "$145",
     stock: 25,
-    imageSrc: "/meuble-2.jpeg",
+    imageSrc: "/meuble-2.jpeg"
   },
   {
     id: 3,
@@ -31,7 +31,7 @@ const products = [
     type: "Wood",
     price: "$145",
     stock: 25,
-    imageSrc: "/meuble-2.jpeg",
+    imageSrc: "/meuble-2.jpeg"
   },
   {
     id: 4,
@@ -39,7 +39,7 @@ const products = [
     type: "Wood",
     price: "$145",
     stock: 25,
-    imageSrc: "/meuble-2.jpeg",
+    imageSrc: "/meuble-2.jpeg"
   },
   {
     id: 5,
@@ -47,7 +47,7 @@ const products = [
     type: "Wood",
     price: "$145",
     stock: 25,
-    imageSrc: "/meuble-2.jpeg",
+    imageSrc: "/meuble-2.jpeg"
   },
   {
     id: 6,
@@ -55,16 +55,16 @@ const products = [
     type: "Wood",
     price: "$145",
     stock: 25,
-    imageSrc: "/meuble-2.jpeg",
-  },
+    imageSrc: "/meuble-2.jpeg"
+  }
 ];
 
 const reviews = [
   {
     review:
       "My experience with Mark is a complete sucess, from customer service, wide range of products, clean store, purchasing experience, the newsletter. Thank you.",
-    customerName: "Leona Paul",
-  },
+    customerName: "Leona Paul"
+  }
 ];
 
 const categories = [
@@ -73,7 +73,7 @@ const categories = [
   { name: "Chair" },
   { name: "Contemporary" },
   { name: "Artisanal" },
-  { name: "Wood" },
+  { name: "Wood" }
 ];
 
 const Home = () => {

@@ -13,7 +13,7 @@ const Table = (props) => {
     sortColumn,
     visibleColumns,
     showSpecificRowFunction,
-    deleteRowFunction,
+    deleteRowFunction
   } = props;
   // safeArray is the array coming from getServerSideProps, it is always not empty so in case array is empty
   // we still have the table headers
@@ -82,7 +82,7 @@ const Table = (props) => {
 
   return (
     <table className={classnames(
-      styles.table,
+      styles.table
     )}
     >
       <thead>     

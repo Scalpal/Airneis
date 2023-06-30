@@ -9,7 +9,7 @@ export const seed = async (knex) => {
     "Office",
     "Dining",
     "Kids",
-    "Lighting",
+    "Lighting"
   ];
 
   const loop = genericCategories.length;

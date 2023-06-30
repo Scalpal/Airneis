@@ -15,7 +15,7 @@ const handler = mw({
     slowDown(500),
     validate({
       query: {
-        productId: idValidator.required(),
+        productId: idValidator.required()
       }
     }),
     async({
@@ -120,7 +120,7 @@ const handler = mw({
             ...(description ? { description } : {}),
             ...(price ? { price } : {}),
             ...(stock ? { stock } : {}),
-            ...(categoryId ? { categoryId } : {}),
+            ...(categoryId ? { categoryId } : {})
           })
           .where("id", id)
           .returning("*")

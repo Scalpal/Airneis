@@ -12,14 +12,14 @@ const handler = mw({
     validate({
       body: {
         email: emailValidator.required(),
-        password: stringValidator.required(),
-      },
+        password: stringValidator.required()
+      }
     }),
     async ({
       locals: {
-        body: { email, password },
+        body: { email, password }
       },
-      res,
+      res
     }) => {
       try {
         const user = await UserModel.query()
@@ -46,9 +46,9 @@ const handler = mw({
         const jwt = jsonwebtoken.sign({
           payload: {
             user: {
-              id: user.id,
-            },
-          },
+              id: user.id
+            }
+          }
         },
         config.security.jwt.secret,
         { expiresIn: config.security.jwt.expiresIn }
@@ -58,8 +58,8 @@ const handler = mw({
       } catch (error) {
         res.status(500).send({ error: error });
       }
-    },
-  ],
+    }
+  ]
 });
 
 export default handler;

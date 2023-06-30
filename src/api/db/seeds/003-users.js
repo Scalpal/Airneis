@@ -15,7 +15,7 @@ export const seed = async (knex) => {
       email: faker.internet.email(),
       phoneNumber: faker.phone.number(),
       passwordHash,
-      passwordSalt,
+      passwordSalt
     };
     users.push(user);
   }
@@ -34,7 +34,7 @@ export const seed = async (knex) => {
       region: faker.location.state(),
       postalCode: faker.location.zipCode(),
       country: faker.location.country(),
-      userId: userIds[i],
+      userId: userIds[i]
     };
     addresses.push(address);
   }
@@ -56,7 +56,7 @@ export const seed = async (knex) => {
         content: faker.lorem.text(),
         stars: randomStars,
         productId: productIds[i],
-        userId: userIds[i],
+        userId: userIds[i]
       };
       reviews.push(review);
     }
@@ -68,12 +68,12 @@ export const seed = async (knex) => {
     const randomStatus = faker.helpers.arrayElement([
       "cancelled",
       "on standby",
-      "delivered",
+      "delivered"
     ]);
     const order = {
       status: randomStatus,
       deliveryAddress: addressIds[i],
-      userId: userIds[i],
+      userId: userIds[i]
     };
     orders.push(order);
   }

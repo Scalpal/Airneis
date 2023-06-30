@@ -7,7 +7,7 @@ import {
   TagIcon, 
   ChartBarIcon,
   ArrowRightOnRectangleIcon,
-  ReceiptPercentIcon,
+  ReceiptPercentIcon
 } from "@heroicons/react/24/outline";
 import { nunito } from "@/pages/_app";
 import { classnames } from "@/pages/_app";
@@ -43,7 +43,7 @@ const navLinks = [
     route: "/backoffice/shop",
     text: "Shop",
     icon: <BuildingStorefrontIcon className={styles.linksIcon} />
-  },
+  }
 ];
 
 const Navbar = () => {
@@ -67,7 +67,7 @@ const Navbar = () => {
           return (
             <Link
               key={index}
-              href={link.route}
+              passHref={link.route}
               className={styles.links}
             >
               {link.icon}

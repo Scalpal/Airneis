@@ -14,7 +14,7 @@ const routes = {
   login: () => "/login",
   products: {
     base: () => `/products`,
-    single: (productId) => `/products/${productId}`,
+    single: (productId) => `/products/${productId}`
   },
   categories: {
     base: () => "/category",
@@ -56,7 +56,7 @@ const routes = {
       patch: (userId) => createRouteWithQueryParams(`/users/${userId}`),
       delete: (userId) => createRouteWithQueryParams(`/users/${userId}`)
     }
-  },
+  }
 };
 
 export default routes;

@@ -17,7 +17,7 @@ const hashPassword = async (
       config.security.password.digest
     )
   ).toString("hex"),
-  salt,
+  salt
 ];
 
 export default hashPassword;

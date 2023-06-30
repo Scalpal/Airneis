@@ -9,7 +9,7 @@ export const seed = async (knex) => {
     "Wicker/Rattan",
     "Upholstery",
     "Stone/Marble",
-    "Composite materials",
+    "Composite materials"
   ];
 
   const loop = genericMaterials.length;

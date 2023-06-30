@@ -10,17 +10,17 @@ const config = {
   security: {
     jwt: {
       secret: process.env.SECURITY_JWT_SECRET,
-      expiresIn: "2 days",
+      expiresIn: "2 days"
     },
     password: {
       saltlen: 512,
       keylen: 512,
       iterations: 100000,
       digest: "sha512",
-      pepper: process.env.SECURITY_PASSWORD_PEPPER,
+      pepper: process.env.SECURITY_PASSWORD_PEPPER
     },
-    sendgrid: process.env.SENDGRID_KEY,
-  },
+    sendgrid: process.env.SENDGRID_KEY
+  }
 };
 
 export default config;

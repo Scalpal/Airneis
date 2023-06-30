@@ -69,7 +69,7 @@ const ProductSearchBar = (props) => {
           .map((product, index) => (
             <Link
               key={index}
-              href={routes.products.single(product.id)}
+              passHref={routes.products.single(product.id)}
               onClick={() => closeOverlay()}
               className={styles.productLink}
             >

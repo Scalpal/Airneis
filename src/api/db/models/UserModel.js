@@ -8,7 +8,7 @@ class UserModel extends BaseModel {
 
   static modifiers = {
     paginate: (query, limit, page) =>
-      query.limit(limit).offset((page - 1) * limit),
+      query.limit(limit).offset((page - 1) * limit)
   };
 
   static relationMappings() {
@@ -19,7 +19,7 @@ class UserModel extends BaseModel {
         join: {
           from: "users.id",
           to: "addresses.userId"
-        },
+        }
       },
       orders: {
         relation: BaseModel.ManyToManyRelation,
@@ -37,7 +37,7 @@ class UserModel extends BaseModel {
         "phoneNumber",
         "active",
         "isAdmin"
-      ),
+      )
     };
   }
 

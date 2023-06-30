@@ -20,7 +20,7 @@ const validationSchema = createValidator({
   city: stringValidator,
   region: stringValidator,
   postalCode: stringValidator,
-  country: stringValidator, 
+  country: stringValidator 
 });
 
 const initialValues = {
@@ -33,7 +33,7 @@ const initialValues = {
   city: "",
   region: "",
   postalCode: "",
-  country: "", 
+  country: "" 
 }; 
 
 const Register = () => {
