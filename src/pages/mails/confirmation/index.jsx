@@ -1,15 +1,12 @@
 import { useRouter } from "next/router";
 import BackofficeLoginLayout from "@/web/components/backoffice/LoginLayout";
 import routes from "@/web/routes";
-import config from "@/api/config.js";
 import axios from "axios";
 import styles from "@/styles/mails/confirmation.module.css";
 
-const MailConfirmation = ({ error,answer }) => {
-  if (error) {
-    console.log(answer);
-  }
+const MailConfirmation = ({ error }) => {
   const router = useRouter();
+  
   const handleclick = () => {
     router.push(routes.home());
   };
@@ -45,16 +42,13 @@ export async function getServerSideProps(context) {
     
 return {
       props: {
-        error: false
+        error: null
       }
     };
-  } catch (err) {
-    const error = err.response?.data?.error || "Oops. Something went wrong";
-
+  } catch (error) {
     return {
       props: {
-        error: true,
-        answer: [Array.isArray(error) ? error : [error]]
+        error: true
       }
     };
   }

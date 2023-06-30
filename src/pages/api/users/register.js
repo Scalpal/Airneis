@@ -4,13 +4,7 @@ import UserModel from "@/api/db/models/UserModel.js";
 import slowDown from "@/api/middlewares/slowDown.js";
 import validate from "@/api/middlewares/validate.js";
 import mw from "@/api/mw.js";
-import { AES } from "crypto-js";
-import {
-  emailValidator,
-  phoneValidator,
-  stringValidator,
-  passwordValidator,
-} from "@/validator";
+import { emailValidator, phoneValidator, stringValidator, passwordValidator } from "@/validator";
 import sgMail from "@sendgrid/mail";
 import config from "@/api/config.js";
 
@@ -28,23 +22,12 @@ const handler = mw({
         city: stringValidator,
         region: stringValidator,
         postalCode: stringValidator,
-        country: stringValidator,
+        country: stringValidator, 
       },
     }),
     async ({
       locals: {
-        body: {
-          firstName,
-          lastName,
-          phoneNumber,
-          email,
-          password,
-          address,
-          city,
-          region,
-          postalCode,
-          country,
-        },
+        body: { firstName, lastName, phoneNumber, email, password, address, city, region, postalCode, country },
       },
       res,
     }) => {
@@ -58,7 +41,6 @@ const handler = mw({
         }
 
         const [passwordHash, passwordSalt] = await hashPassword(password);
-   userId: addedUser.id,
         const addedUser = await UserModel.query()
           .insert({
             email,
@@ -69,6 +51,7 @@ const handler = mw({
             phoneNumber,
           })
           .returning("*");
+
         if (address !== "" && city !== "" && region !== "" && postalCode !== "" && country !== "") {
           await AddressModel.query()
             .insert({
@@ -95,7 +78,6 @@ const handler = mw({
             url: `${process.env.API_URL}/mails/confirmation?id=${addedUser.id}`,
           },
         };
-
         sgMail.send(msg);
         res.send({ success: true });
       } catch (error) {

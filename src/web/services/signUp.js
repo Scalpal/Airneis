@@ -3,7 +3,7 @@ import routes from "@/web/routes";
 const signUp = ({ api }) =>
   async (values) => {
     try {
-      const { data } = await api.post(routes.api.signUp(), values);
+      const { data } = await api.post(routes.api.register(), values);
 
       return [null, data];
     } catch (error) {

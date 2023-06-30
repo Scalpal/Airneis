@@ -4,27 +4,27 @@ import mw from "@/api/mw.js";
 import { idValidator } from "@/validator";
 
 const handler = mw({
-  PATCH: [
+  PUT: [
     validate({
-      body: {
+      query: {
         id: idValidator.required(),
       },
     }),
     async ({
       locals: {
-        body: { id },
+        query: { id },
       },
       res,
     }) => {
       const user = await UserModel.query().findOne({ id });
 
       if (!user) {
-        res.status(404).send({ result: "User undefined." });
+        res.status(404).send({ result: "User undefined" });
 
         return;
       }
 
-      await UserModel.query().findOne({ id }).update({ active: true });
+      await UserModel.query().findOne({ id }).update({ activate: true });
 
       res.send({ success: true });
     },

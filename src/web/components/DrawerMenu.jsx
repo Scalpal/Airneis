@@ -36,7 +36,8 @@ const DrawerMenu = (props) => {
           styles.overlay,
           isDrawerToggled ? styles.overlayActive : styles.overlayInactive
         )}
-      ></div>
+      >
+      </div>
 
       <div
         className={classnames(
@@ -60,4 +61,4 @@ const DrawerMenu = (props) => {
   );
 };
 
-export default DrawerMenu;
+export default DrawerMenu; 

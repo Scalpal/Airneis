@@ -5,9 +5,7 @@ import { setCookie } from "nookies";
 const signIn = ({ api, setSession, setJWT }) =>
   async (values) => {
     try {
-      const {
-        data: { result: jwt },
-      } = await api.post(routes.api.signIn(), values);
+      const { data: { result: jwt } } = await api.post(routes.api.login(), values);
       
       setSession(parseSession(jwt));
       setJWT(jwt);
