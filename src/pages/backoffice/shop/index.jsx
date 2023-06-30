@@ -7,6 +7,7 @@ import { classnames, nunito } from "@/pages/_app";
 import HomeCarouselContent from "@/web/components/backoffice/HomeCarouselContent";
 import CategoriesContent from "@/web/components/backoffice/CategoriesContent";
 import PopularProductsContent from "@/web/components/backoffice/PopularProductsContent";
+import Head from "next/head";
 
 
 export const getServerSideProps = async (context) => {
@@ -31,6 +32,10 @@ const BackofficeShop = () => {
       styles.container,
       nunito.className
     )}>
+      <Head>
+        <title>Airneis - Backoffice : Content management</title>
+      </Head>  
+
       <p className={styles.title}>Website content management</p>
 
       <HomeCarouselContent />

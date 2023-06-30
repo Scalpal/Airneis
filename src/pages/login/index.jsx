@@ -8,6 +8,7 @@ import useAppContext from "@/web/hooks/useAppContext";
 import LoginLayout from "@/web/components/LoginLayout";
 import LoginField from "@/web/components/LoginField";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
+import Head from "next/head";
 
 const validationSchema = createValidator({
   email: emailValidator.required(),
@@ -38,6 +39,10 @@ const Login = () => {
 
   return (
     <main className={styles.container}>
+      <Head>
+        <title>Airneis - Login</title>
+      </Head>  
+
       <Formik
         onSubmit={handleSubmit}
         validationSchema={validationSchema}

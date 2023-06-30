@@ -7,6 +7,7 @@ import routes from "@/web/routes";
 import SeeMoreButton from "@/web/components/SeeMoreButton";
 import { createQueryString } from "@/web/services/createQueryString";
 import Axios from "axios";
+import Head from "next/head";
 
 const reviews = [
   {
@@ -54,6 +55,10 @@ const Home = (props) => {
 
   return (
     <>
+       <Head>
+        <title>Airneis - Home</title>
+      </Head>     
+
       <header className="fullWidthCarousel" id="carousel">
         <Carousel images={carouselImages} Autoplay={true} controls={false} />
       </header>
