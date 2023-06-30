@@ -44,8 +44,7 @@ const DrawerMenu = (props) => {
           styles.overlay,
           isDrawerToggled ? styles.overlayActive : styles.overlayInactive
         )}
-      >
-      </div>
+      ></div>
 
       <div
         className={classnames(
@@ -61,7 +60,7 @@ const DrawerMenu = (props) => {
         {session ? <a onClick={logout}>Logout</a> : <Link href={routes.register()}>Register</Link>}
         {(!userIsLoading && user.isAdmin) && <Link href={routes.backoffice.users()}>Backoffice</Link>}
         <Link href="">CGU</Link>
-        <Link href="">Legal mentions</Link>
+        <Link href={routes.legalMentions()}>Legal mentions</Link>
         <Link href="">Contact</Link>
         <Link href="">About us</Link>
       </div>
