@@ -18,7 +18,7 @@ class UserModel extends BaseModel {
         modelClass: AddressModel,
         join: {
           from: "users.id",
-          to: "addresses.userId",
+          to: "addresses.userId"
         },
       },
       orders: {
@@ -26,19 +26,18 @@ class UserModel extends BaseModel {
         modelClass: OrderModel,
         join: {
           from: "users.id",
-          to: "orders.userId",
-        },
+          to: "orders.userId"
+        }
       },
-      modify: (query) =>
-        query.select(
-          "id",
-          "email",
-          "firstName",
-          "lastName",
-          "phoneNumber",
-          "active",
-          "isAdmin"
-        ),
+      modify: (query) => query.select(
+        "id",
+        "email",
+        "firstName",
+        "lastName",
+        "phoneNumber",
+        "active",
+        "isAdmin"
+      ),
     };
   }
 

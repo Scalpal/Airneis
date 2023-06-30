@@ -20,13 +20,15 @@ const CategoriesBlocks = (props) => {
             <Image
               src={"/meuble-2.jpeg"}
               alt="Image de la catégorie"
-              fill
+              fill 
               className={styles.categoriesContainerImage}
             />
           </div>
         );
-      })}
+      })}          
     </div>
   );
 };
-export default CategoriesBlocks;
+
+
+export default CategoriesBlocks; 

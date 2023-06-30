@@ -1,8 +1,0 @@
-{
-  "paymentTitle": "Paiement",
-  "cartNumber": "Numéro de carte*",
-  "cardName": "Nom sur la carte*",
-  "expirationDate": "Date d'expiration*",
-  "cvv": "CVV*",
-  "paymentButton": "Payer"
-}

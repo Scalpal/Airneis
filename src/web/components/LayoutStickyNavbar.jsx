@@ -24,4 +24,4 @@ const LayoutStickyNavbar = ({ children }) => {
   );
 };
 
-export default LayoutStickyNavbar;
+export default LayoutStickyNavbar; 

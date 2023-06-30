@@ -44,42 +44,41 @@ const Table = (props) => {
     }
 
     if (typeof value === "boolean") {
-      return value ? (
-        <CheckIcon className={styles.tableIcon} />
-      ) : (
-        <XMarkIcon className={styles.tableIcon} />
-      );
+      return value ?
+        <CheckIcon className={styles.tableIcon} /> :
+        <XMarkIcon className={styles.tableIcon} />;
     }
 
     return <p key={i}>{value && value.toString()}</p>
   },[]);
 
-  const showActionsButtons = useCallback(
-    (itemId) => {
-      return (
-        <>
-          {showSpecificRowFunction && (
-            <td onClick={() => showSpecificRowFunction(itemId)}>
-              <InformationCircleIcon className={styles.tableIcon} />
-            </td>
-          )}
+  const showActionsButtons = useCallback((itemId) => {
+    return (
+      <>
+        {showSpecificRowFunction && (
+          <td
+            onClick={() => showSpecificRowFunction(itemId)}
+          >
+            <InformationCircleIcon className={styles.tableIcon} />
+          </td>
+        )}
 
-          {/* {editRowFunction && (
+        {/* {editRowFunction && (
           <td>
             <PencilSquareIcon className={styles.tableIcon} />
           </td>
         )} */}
 
-          {deleteRowFunction && (
-            <td onClick={() => deleteRowFunction(itemId)}>
-              <TrashIcon className={styles.tableIcon} />
-            </td>
-          )}
-        </>
-      );
-    },
-    [deleteRowFunction,showSpecificRowFunction]
-  );
+        {deleteRowFunction &&
+          <td
+            onClick={() => deleteRowFunction(itemId)}
+          >
+            <TrashIcon className={styles.tableIcon} />
+          </td>
+        }
+      </>
+    );
+  }, [deleteRowFunction, showSpecificRowFunction]);
 
   return (
     <table className={classnames(styles.table)}>
@@ -165,5 +164,6 @@ const Table = (props) => {
     </table>
   );
 };
+
 
 export default Table; 

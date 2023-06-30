@@ -18,6 +18,7 @@ const LoginField = (props) => {
               name={label}
               className={classnames(
                 styles.label,
+                disabled ? styles.labelDisabled : "",
                 meta.error ? styles.labelError : ""
               )}
               htmlFor={label}
@@ -45,16 +46,21 @@ const LoginField = (props) => {
                   className={styles.inputIcon}
                   onClick={() => setIsPasswordVisible(false)}
                 />
-              ) : (
+              ): (
                 <EyeIcon
                   className={styles.inputIcon}
                   onClick={() => setIsPasswordVisible(true)}
                 />
-              ))}
+              )
+            )}
 
             {showError && meta.touched && meta.error ? (
-              <span className={styles.errorText}>{meta.error}</span>
-            ) : null}
+              <span className={styles.errorText}>
+                {meta.error}
+              </span>
+            )
+              : null
+            }
           </div>
         );
       }}

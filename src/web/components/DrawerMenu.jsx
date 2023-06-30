@@ -6,11 +6,8 @@ import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/router";
 import routes from "../routes";
 import { useEffect } from "react";
-import { useTranslation } from "next-i18next";
-import LanguageSelect from "./LanguageSelect";
 
 const DrawerMenu = (props) => {
-  const { t } = useTranslation(["drawerMenu"]);
   const { isDrawerToggledState, actions } = props;
   const [isDrawerToggled, setIsDrawerToggled] = isDrawerToggledState;
 
@@ -25,12 +22,12 @@ const DrawerMenu = (props) => {
       return;
     }
 
-    document.body.style.overflow = "";
+    document.body.style.overflow = ""; 
   }, [isDrawerToggled]);
 
   const logout = () => {
     signOut();
-    router.push(routes.pages.home());
+    router.push("/home");
   };
 
   return (
@@ -40,7 +37,8 @@ const DrawerMenu = (props) => {
           styles.overlay,
           isDrawerToggled ? styles.overlayActive : styles.overlayInactive
         )}
-      ></div>
+      >
+      </div>
 
       <div
         className={classnames(
@@ -52,27 +50,16 @@ const DrawerMenu = (props) => {
           className={styles.drawerMenuIcon}
           onClick={() => setIsDrawerToggled(!isDrawerToggled)}
         />
-        {session ? (
-          <Link href="/profil">{t("myProfil")}</Link>
-        ) : (
-          <Link href={routes.login()}>{t("login")}</Link>
-        )}
-        {session ? (
-          <a onClick={logout}>{t("logout")}</a>
-        ) : (
-          <Link href={routes.register()}>{t("register")}</Link>
-        )}
-        {session && (
-          <Link href={routes.backoffice.base()}>{t("backoffice")}</Link>
-        )}
-        <Link href={routes.cgu()}>{t("termsOfUse")}</Link>
-        <Link href={routes.legalMentions()}>{t("legalMentions")}</Link>
-        <Link href="/contact">{t("contact")}</Link>
-        <Link href="/about-us">{t("aboutUs")}</Link>
-        <LanguageSelect />
+        {session ? <Link href="/profil">My profil</Link> : <Link href={routes.login()}>Login</Link>}
+        {session ? <a onClick={logout}>Logout</a> : <Link href={routes.register()}>Register</Link>}
+        {session && <Link href={routes.backoffice.base()}>Backoffice</Link>}
+        <Link href="">CGU</Link>
+        <Link href="">Legal mentions</Link>
+        <Link href="">Contact</Link>
+        <Link href="">About us</Link>
       </div>
     </>
   );
 };
 
-export default DrawerMenu;
+export default DrawerMenu; 

@@ -5,9 +5,9 @@ const checkToken = async (token) => {
     return {
       redirect: {
         destination: "/home",
-        permanent: false,
-      },
-    }
+        permanent: false
+      }
+    };
   }
 
   const decodedToken = jsonwebtoken.decode(token)
@@ -17,10 +17,10 @@ const checkToken = async (token) => {
     return {
       redirect: {
         destination: "/home",
-        permanent: false,
-      },
-    }
+        permanent: false
+      }
+    };
   }
 }
 
-export default checkToken
+export default checkToken;

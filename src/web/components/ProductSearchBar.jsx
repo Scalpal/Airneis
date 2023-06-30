@@ -1,5 +1,5 @@
 import { classnames } from "@/pages/_app";
-import styles from "@/styles/components/ProductSearchBar.module.css";
+import styles from "@/styles/components/ProductSearchBar.module.css"; 
 import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
 import useSearchProducts from "../hooks/useSearchProducts";
@@ -9,35 +9,31 @@ import Link from "next/link";
 import Loader from "./Loader";
 
 const ProductSearchBar = (props) => {
-  const { id, placeholder, showSuggestions, closeOverlay, ...otherProps } =
-    props;
+  const { id, placeholder, showSuggestions, closeOverlay, ...otherProps } = props;
 
   const [inputFocused, setInputFocused] = useState(false);
   const [searchValue, setSearchValue] = useState("");
 
   const { searchData, searchLoading } = useSearchProducts(searchValue);
-  const products =
-    !searchLoading && searchData !== null ? searchData.products : [];
-
+  const products = !searchLoading ? searchData.products : [];
+  
   return (
     <div className={styles.container}>
-      <div
-        className={classnames(
-          styles.wrapper,
-          inputFocused ? styles.inputFocused : ""
-        )}
-      >
+      <div className={classnames(
+        styles.wrapper,
+        inputFocused ? styles.inputFocused : ""
+      )}>
         <button className={styles.button}>
           <MagnifyingGlassIcon className={styles.icons} />
         </button>
-
+        
         <input
           id={id}
           type="text"
           value={searchValue}
           className={classnames(
             styles.input,
-            inputFocused && showSuggestions === true ? styles.inputFocused : ""
+            (inputFocused && showSuggestions === true) ? styles.inputFocused : ""
           )}
           placeholder={placeholder}
           onFocus={() => setInputFocused(true)}
@@ -60,18 +56,17 @@ const ProductSearchBar = (props) => {
       <div
         className={classnames(
           styles.suggestionsContainer,
-          inputFocused && showSuggestions === true
-            ? styles.visible
-            : styles.hidden,
+          (inputFocused && showSuggestions === true) ? styles.visible : styles.hidden,
           searchLoading ? styles.loading : ""
         )}
       >
         <p className={styles.suggestionsTitle}>
-          {searchValue.length === 0 ? "Suggested searches" : "Matching results"}
+          {searchValue.length === 0 ?
+            "Suggested searches" : "Matching results"}
         </p>
 
-        {!searchLoading ? (
-          products.map((product, index) => (
+        {!searchLoading ? (products
+          .map((product, index) => (
             <Link
               key={index}
               href={routes.products.single(product.id)}
@@ -84,12 +79,13 @@ const ProductSearchBar = (props) => {
                 highlight={searchValue.toLowerCase()}
               />
             </Link>
-          ))
-        ) : (
+          )
+        )) : (
           <Loader />
         )}
       </div>
     </div>
+
   );
 };
 

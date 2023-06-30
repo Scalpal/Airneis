@@ -6,8 +6,6 @@ import { ShoppingCartIcon } from "@heroicons/react/24/outline";
 import LayoutStickyNavbar from "@/web/components/LayoutStickyNavbar";
 import styles from "@/styles/cart.module.css";
 import useAppContext from "@/web/hooks/useAppContext";
-import { useTranslation } from "next-i18next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 // const products = [
 //   {
@@ -39,18 +37,16 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 //   },
 // ];
 
+
 const Cart = () => {
-  const { t } = useTranslation("cart");
   const router = useRouter();
-  const {
-    state: { cart },
-  } = useAppContext();
+  const { state: { cart } } = useAppContext(); 
 
   const [productsList, setProductsList] = useState([]);
   const [totalSum, setTotalSum] = useState(0);
-
+  
   useEffect(() => {
-    setProductsList(cart);
+    setProductsList(cart); 
   }, [cart]);
 
   useEffect(() => {
@@ -58,8 +54,7 @@ const Cart = () => {
       productsList.reduce(
         (sum, product) => sum + product.price * product.quantity,
         0.0
-      )
-    );
+      ));
   }, [productsList]);
 
   const handleSubmit = useCallback(() => {
@@ -67,7 +62,7 @@ const Cart = () => {
   }, [router]);
 
   const redirectToHomePage = useCallback(() => {
-    router.push("/");
+    router.push("/home");
   }, [router]);
 
   // console.log("Products list : ",productsList);
@@ -80,16 +75,18 @@ const Cart = () => {
             <section className={styles.emptyCartContainer}>
               <ShoppingCartIcon className={styles.emptyCartIcon} />
 
-              <p className={styles.emptyCartTitle}>{t("emptyCartTitle")}</p>
+              <p className={styles.emptyCartTitle}>Your cart is currently empty </p>
 
               <div className={styles.emptyCartText}>
-                <p>{t("emptyCartText")}</p>
-                <p>{t("emptyCartTextSeconde")}</p>
+                <p>Before proceed to checkout, you must add some products to your cart.</p>
+                <p>Won&apos;t you come here without buying anything...</p>
               </div>
 
               <div>
-                <Button onClick={() => redirectToHomePage()}>
-                  {t("cartReturnButton")}
+                <Button
+                  onClick={() => redirectToHomePage()}
+                >
+                  Return to shop
                 </Button>
               </div>
             </section>
@@ -112,24 +109,31 @@ const Cart = () => {
             </section>
 
             <section className={styles.recapContainer}>
+
               <div className={styles.recapTopRows}>
                 <div className={styles.recapRow}>
-                  <p>{t("subtotal")}</p>
-                  <p>{totalSum.toFixed(2)}$</p>
+                  <p>Subtotal</p>
+                  <p>{totalSum.toFixed(2)}€</p>
                 </div>
 
                 <div className={styles.recapRow}>
-                  <p>{t("tax")}</p>
-                  <p>{(totalSum * 0.2).toFixed(2)}$</p>
+                  <p>TAX (20%)</p>
+                  <p>{(totalSum * 0.2).toFixed(2)}€</p>
                 </div>
               </div>
 
               <div className={styles.recapTotalRow}>
-                <p>{t("total")}</p>
-                <p>{(totalSum * 1.2).toFixed(2)}$</p>
+                <p>TOTAL</p>
+                <p>
+                  {(totalSum * 1.2).toFixed(2)}€
+                </p>
               </div>
 
-              <Button onClick={() => handleSubmit()}>{t("order")}</Button>
+              <Button
+                onClick={() => handleSubmit()}
+              >
+                Order
+              </Button>
             </section>
           </>
         )}
@@ -138,16 +142,12 @@ const Cart = () => {
   );
 };
 
-export async function getStaticProps({ locale }) {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ["cart", "footer", "navbar","drawerMenu"])),
-    },
-  };
-}
-
 Cart.getLayout = function (page) {
-  return <LayoutStickyNavbar>{page}</LayoutStickyNavbar>;
+  return (
+    <LayoutStickyNavbar>
+      {page}
+    </LayoutStickyNavbar>
+  );
 };
 
 export default Cart;

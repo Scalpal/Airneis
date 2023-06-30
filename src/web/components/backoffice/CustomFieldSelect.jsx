@@ -8,7 +8,10 @@ const CustomField = (props) => {
     <Field name={name}>
       {({ field, meta }) => {
         return (
-          <div name={label} className={styles.div}>
+          <div
+            name={label}
+            className={styles.div}
+          >
             <select
               className={styles.select}
               {...field}
@@ -16,19 +19,24 @@ const CustomField = (props) => {
               id={label}>
               <option value="" selected hidden></option>
               {options.map((states, index) => (
-                <option key={index} value={states}>
-                  {states}
-                </option>
+                <option key={index} value={states}>{states}</option>
               ))}
+
             </select>
 
-            <label name={label} className={styles.label} htmlFor={label}>
-              {label}
-            </label>
+            <label
+              name={label}
+              className={styles.label}
+              htmlFor={label}
+            >{label}</label>
 
             {showError && meta.touched && meta.error ? (
-              <span className={styles.errorText}>{meta.error}</span>
-            ) : null}
+              <span className={styles.errorText}>
+                {meta.error}
+              </span>
+            )
+              : null
+            }
           </div>
         );
       }}

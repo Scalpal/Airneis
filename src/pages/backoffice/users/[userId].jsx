@@ -1,27 +1,24 @@
-import Layout from "@/web/components/backoffice/Layout"
-import { parseCookies } from "nookies"
-// import routes from "@/web/routes"
-import { useCallback, useState } from "react"
-import styles from "@/styles/backoffice/userPage.module.css"
-import { classnames, nunito } from "@/pages/_app"
-import { CheckIcon } from "@heroicons/react/24/outline"
-import LoginField from "@/web/components/LoginField"
-import { Field, Form, Formik } from "formik"
-import { PencilSquareIcon } from "@heroicons/react/24/solid"
-import Button from "@/web/components/Button"
-import AddressCard from "@/web/components/AddressCard"
-import {
-  boolValidator,
-  createValidator,
-  phoneValidator,
-  stringValidator,
-  emailValidator,
-} from "@/validator"
-// import useAppContext from "@/web/hooks/useAppContext"
-import CustomAlert from "@/web/components/CustomAlert"
-import checkToken from "@/web/services/checkToken"
-// import getApiClient from "@/web/services/getApiClient"
-import checkIsAdmin from "@/web/services/checkIsAdmin"
+import Layout from "@/web/components/backoffice/Layout";
+import { AxiosError } from "axios";
+import { parseCookies } from "nookies";
+import routes from "@/web/routes";
+import { useCallback, useState } from "react";
+import styles from "@/styles/backoffice/userPage.module.css";
+import { classnames, nunito } from "@/pages/_app";
+import { CheckIcon } from "@heroicons/react/24/outline";
+import LoginField from "@/web/components/LoginField";
+import { Field, Form, Formik } from "formik";
+import { PencilSquareIcon } from "@heroicons/react/24/solid";
+import Button from "@/web/components/Button";
+import AddressCard from "@/web/components/AddressCard";
+import { boolValidator, createValidator, phoneValidator } from "@/validator";
+import { stringValidator } from "@/validator";
+import { emailValidator } from "@/validator";
+import useAppContext from "@/web/hooks/useAppContext";
+import CustomAlert from "@/web/components/CustomAlert";
+import checkToken from "@/web/services/checkToken";
+import getApiClient from "@/web/services/getApiClient";
+import checkIsAdmin from "@/web/services/checkIsAdmin";
 
 const validationSchema = createValidator({
   firstName: stringValidator.required(),
@@ -81,27 +78,6 @@ const BackofficeUserPage = (props) => {
     },
     [api, user.id]
   );
-
-  // const handleSubmit = useCallback(
-  //   async (values) => {
-  //     try {
-  //       const { data } = await api.patch(
-  //         routes.api.users.patch(user.id),
-  //         values
-  //       )
-
-  //       setEditMode({ type: "", editing: false })
-  //       setCurrentUser(data.user)
-  //       setShowAlert(true)
-  //       setAlert({ status: data.status, message: data.message })
-  //     } catch (error) {
-  //       if (error instanceof AxiosError) {
-  //         console.log(error.response)
-  //       }
-  //     }
-  //   },
-  //   [api, user.id]
-  // )
 
   return (
     <main className={classnames(styles.mainContainer, nunito.className)}>
@@ -320,8 +296,8 @@ export const getServerSideProps = async (context) => {
       return {
         redirect: {
           destination: "/backoffice/users",
-          permanent: false,
-        }
+          permanent: false
+        },
       };
     }
   }
