@@ -86,3 +86,8 @@
   text-overflow: '';
   margin: 0 0.2rem;
 }
+
+.pageSelect:focus {
+  border-bottom: 1px solid rgb(109, 109, 109);
+  outline: none;
+}
