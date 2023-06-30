@@ -1,8 +1,0 @@
-{
-  "paymentTitle": "Payment",
-  "cartNumber": "Card number*",
-  "cardName": "Card name*",
-  "expirationDate": "Expiration date*",
-  "cvv": "CVV*",
-  "paymentButton": "Pay"
-}

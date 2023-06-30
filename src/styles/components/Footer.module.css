@@ -1,28 +1,31 @@
 .footer {
   display: flex;
-  /*flex-direction: column;*/
-  /*justify-content: space-between;*/
-  /*align-items: flex-start;*/
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
   gap: 3rem;
-  padding: 3rem 0 1.5rem 0;
-  background-color: var(--secondary);
+  padding: 3rem 0 1.5rem 0; 
+  background-color: var(--primary);
   font-size: 1rem;
   font-weight: 300;
   margin: 20vh 0 0 0;
 }
 
 .footerInfos {
-  /*display: flex;*/
+  display: flex;
+  justify-content: space-between;
   width: 80%;
   margin: 0 auto;
   font-weight: 300;
 }
 
-.footerInfosLink {
-  display: flex;
+.footerInfosBrandTitle {
+  font-size: 1.7rem; 
 }
-.footerLink {
-  margin-left: 0.25rem;
-  margin-right: 0.25rem;
-  justify-items: center;
+
+.copyrightText {
+  width: 80%;
+  margin: 0 auto;
+  font-size: 1rem;
+  font-weight: 300;
 }

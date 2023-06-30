@@ -44,7 +44,7 @@ const ActionBar = (props) => {
         setQueryParams({
           ...queryParams,
           page: 1,
-          search: searchValue,
+          search: searchValue
         });
       }
     };
@@ -55,18 +55,14 @@ const ActionBar = (props) => {
     };
   }, [searchValue, queryParams, setQueryParams]);
 
+
   return (
     <div className={styles.actionBar}>
       <div>
         <p>{label}</p>
 
         <div className={styles.customSearchInput}>
-          <input
-            type="text"
-            id="searchInput"
-            placeholder="Search"
-            onChange={(e) => setSearchValue(e.target.value)}
-          />
+          <input type="text" id="searchInput" placeholder="Search" onChange={(e) => setSearchValue(e.target.value)} />
           <MagnifyingGlassIcon className={styles.actionBarIcon} />
         </div>
 
@@ -101,6 +97,7 @@ const ActionBar = (props) => {
           previousPage={previousPage}
         />
       )}
+
     </div>
   );
 };
