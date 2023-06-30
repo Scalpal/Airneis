@@ -13,7 +13,9 @@ const DetailedProductCard = (props) => {
   const { actions: { addToCart } } = useAppContext();
   
   return (
-    <div className={styles.productCard}>
+    <div
+      className={styles.productCard}
+    >
       <div
         className={styles.productCardImageContainer}
         onClick={() => router.push(routes.products.single(product.id))}
@@ -26,7 +28,9 @@ const DetailedProductCard = (props) => {
         />
       </div>
 
-      <div className={styles.productCardInfos}>
+      <div
+        className={styles.productCardInfos}
+      >        
         <p className={styles.productCardInfoName}> {product.name} </p>
 
         <div className={styles.descriptionWrapper}>
@@ -42,14 +46,11 @@ const DetailedProductCard = (props) => {
         </div>
 
         <div className={styles.productMaterialWrapper}>
-          <p>
-            Materials :{" "}
-            {product.materials.map(({ name }, index) => {
-              const comma = index === product.materials.length - 1 ? " " : ", ";
+          <p>Materials : {product.materials.map(({ name }, index) => {
+            const comma = (index === product.materials.length - 1) ? " " : ", ";
 
-              return name + comma;
-            })}
-          </p>
+            return name + comma;
+          })}</p>
         </div>
 
         <ProductRating
@@ -59,9 +60,7 @@ const DetailedProductCard = (props) => {
 
         <div className={styles.priceStockWrapper}>
           <p className={styles.productCardInfoPrice}> {product.price}$ </p>
-          <span className={styles.productCardInfoStock}>
-            {product.stock} available
-          </span>
+          <span className={styles.productCardInfoStock}>{product.stock} available</span>
         </div>
 
         <div className={styles.productCardInfoBtnWrapper}>
@@ -77,4 +76,4 @@ const DetailedProductCard = (props) => {
   );
 };
 
-export default DetailedProductCard;
+export default DetailedProductCard; 

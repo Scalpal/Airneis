@@ -41,6 +41,9 @@ export const passwordValidator = yup
 export const materialsValidator = yup.mixed().oneOf([arrayValidator, stringValidator]);
 export const categoriesValidator = yup.mixed().oneOf([arrayValidator, stringValidator]);
 
+
+
+
 export const createValidator = (object) => yup.object().shape(object);
 
 // collection (pagination, order, etc.)

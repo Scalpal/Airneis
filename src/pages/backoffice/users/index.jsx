@@ -68,7 +68,7 @@ const BackofficeUsers = (props) => {
   const [users, setUsers] = useState({ users: usersProps, count: count });
   const [activeUser, setActiveUser] = useState(null);
   const [showModal, setShowModal] = useState(false);
-  const [activeTab, setActiveTab] = useState("");
+  const [activeTab, setActiveTab] = useState(""); 
   const [queryParams, setQueryParams] = useState({
     limit: 10,
     page: 1,
@@ -77,56 +77,47 @@ const BackofficeUsers = (props) => {
     search: ""
   });
 
-  const handleQueryParams = useCallback(
-    (key, value) => {
-      setQueryParams({
-        ...queryParams,
-        [key]: value
-      });
-    },
-    [queryParams]
-  );
+  const handleQueryParams = useCallback((key, value) => {
+    setQueryParams({
+      ...queryParams,
+      [key]: value
+    });
+  }, [queryParams]);
 
-  const sortColumn = useCallback(
-    (column) => {
-      const notSortableKeys = ["email", "phoneNumber", "active", "isAdmin"];
+  const sortColumn = useCallback((column) => {
+    const notSortableKeys = ["email", "phoneNumber", "active", "isAdmin"];
 
-      if (notSortableKeys.includes(column)) {
-        return false;
-      }
-
-      // By default, when we sort a column, we set it to ASC
-      if (column !== queryParams["orderField"]) {
-        setQueryParams({
-          ...queryParams,
-          page: 1,
-          orderField: column,
-          order: "asc"
-        });
-
-        return;
-      }
-
+    if (notSortableKeys.includes(column)) {
+      return false; 
+    }
+    
+    // By default, when we sort a column, we set it to ASC
+    if (column !== queryParams["orderField"]) {
       setQueryParams({
         ...queryParams,
         page: 1,
         orderField: column,
-        order: queryParams["order"] === "asc" ? "desc" : "asc"
-      });
-    },
-    [queryParams]
-  );
+        order: "asc"
+      }); 
+      
+      return;
+    }
 
-  const handleLimit = useCallback(
-    (value) => {
-      setQueryParams({
-        ...queryParams,
-        page: 1,
-        limit: value
-      });
-    },
-    [queryParams]
-  );
+    setQueryParams({
+      ...queryParams,
+      page: 1,
+      orderField: column,
+      order: queryParams["order"] === "asc" ? "desc" : "asc"
+    }); 
+  }, [queryParams]); 
+
+  const handleLimit = useCallback((value) => {
+    setQueryParams({
+      ...queryParams,
+      page: 1,
+      limit: value
+    });
+  }, [queryParams]); 
 
   const updateUsers = useCallback(async () => {
     const reqInstance = getApiClient();
@@ -154,40 +145,37 @@ const BackofficeUsers = (props) => {
     (id) => {
       const user = users.users.find((elt) => elt.id === id);
 
-      setShowModal(true);
-      setActiveTab(userInfoTab);
-      setActiveUser(user);
-    },
-    [users]
-  );
+    setShowModal(true);
+    setActiveTab(userInfoTab);
+    setActiveUser(user);
+  }, [users]);
 
-  const desactivateUser = useCallback(
-    async (userId) => {
-      try {
-        const { data } = await api.delete(routes.api.users.delete(userId));
+  const desactivateUser = useCallback(async (userId) => {
+    try {
+      const { data } = await api.delete(routes.api.users.delete(userId));
 
-        updateUsers();
+      updateUsers();
+      setShowAlert(true);
+      setAlert({ status: data.status, message: data.message });
+    } catch (error) {
+      if (error instanceof AxiosError) {
         setShowAlert(true);
-        setAlert({ status: data.status, message: data.message });
-      } catch (error) {
-        if (error instanceof AxiosError) {
-          setShowAlert(true);
-          setAlert({
-            status: error.response.status,
-            message: error.response.message
-          });
-        }
+        setAlert({ status: error.response.status, message: error.response.message });
       }
-    },
-    [api, updateUsers]
-  );
+    }
+  }, [api, updateUsers]);
 
   useEffect(() => {
     updateUsers();
   }, [queryParams, updateUsers]);
 
   return (
-    <main className={classnames(styles.mainContainer, nunito.className)}>
+    <main
+      className={classnames(
+        styles.mainContainer,
+        nunito.className
+      )}
+    >
       <div className={styles.topStats}>
         <div>
           <p>Total of users</p>
@@ -261,7 +249,11 @@ const BackofficeUsers = (props) => {
 };
 
 BackofficeUsers.getLayout = function (page) {
-  return <Layout>{page}</Layout>;
+  return (
+    <Layout>
+      {page}
+    </Layout>
+  );
 };
 
-export default BackofficeUsers;
+export default BackofficeUsers; 

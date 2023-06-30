@@ -1,20 +1,13 @@
-import styles from "@/styles/backoffice/ActionBar.module.css";
+import styles from "@/styles/backoffice/ActionBar.module.css"; 
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import Select from "../Select";
 import Pagination from "./Pagination";
 import { useCallback, useEffect, useState } from "react";
 import Button from "../Button";
 
+
 const ActionBar = (props) => {
-  const {
-    label,
-    handleLimit,
-    dataCount,
-    queryParams,
-    setQueryParams,
-    handleQueryParams,
-    addRowFunction
-  } = props;
+  const { label, handleLimit, dataCount, queryParams, setQueryParams, handleQueryParams, addRowFunction } = props;
 
   const [searchValue, setSearchValue] = useState("");
 
@@ -65,18 +58,14 @@ const ActionBar = (props) => {
     };
   }, [searchValue, queryParams, setQueryParams]);
 
+
   return (
     <div className={styles.actionBar}>
       <div>
         <p>{label}</p>
 
         <div className={styles.customSearchInput}>
-          <input
-            type="text"
-            id="searchInput"
-            placeholder="Search"
-            onChange={(e) => setSearchValue(e.target.value)}
-          />
+          <input type="text" id="searchInput" placeholder="Search" onChange={(e) => setSearchValue(e.target.value)} />
           <MagnifyingGlassIcon className={styles.actionBarIcon} />
         </div>
 
@@ -108,6 +97,7 @@ const ActionBar = (props) => {
           previousPage={previousPage}
         />
       )}
+
     </div>
   );
 };

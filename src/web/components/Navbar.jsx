@@ -7,24 +7,21 @@ import CartButton from "./CartButton";
 import SearchProductOverlay from "./SearchProductOverlay";
 
 const Navbar = (props) => {
-  const { fixed, isDrawerToggledState } = props;
+  const { fixed, isDrawerToggledState } = props; 
 
-  const [isDrawerToggled, setIsDrawerToggled] = isDrawerToggledState;
-
+  const [isDrawerToggled, setIsDrawerToggled] = isDrawerToggledState; 
+  
   useEffect(() => {
     const navbar = document.querySelector("#navbar");
 
     if (fixed) {
-      const carouselObserver = new IntersectionObserver(
-        (entries) => {
-          if (entries[0].isIntersecting === true || isDrawerToggled === true) {
-            navbar.classList.remove("navbarBackground");
-          } else {
-            navbar.classList.add("navbarBackground");
-          }
-        },
-        { threshold: [0.1] }
-      );
+      const carouselObserver = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting === true || isDrawerToggled === true) {
+          navbar.classList.remove("navbarBackground");
+        } else {
+          navbar.classList.add("navbarBackground");
+        }
+      }, { threshold: [0.1] });
 
       carouselObserver.observe(document.querySelector("#carousel"));
     } else {
@@ -34,17 +31,25 @@ const Navbar = (props) => {
 
   return (
     <nav
-      className={classnames(fixed ? styles.navbar : styles.navbarNotFixed)}
+      className={classnames(
+        fixed ? styles.navbar : styles.navbarNotFixed)
+      }
       id="navbar"
     >
       <Link
         href="/home"
-        className={classnames("navbarLogo", styles.navbarLogo)}
+        className={classnames(
+          "navbarLogo",
+          styles.navbarLogo
+        )}
       >
         Airneis
       </Link>
 
-      <ul className={classnames(styles.navbarList, styles.midLinks)}>
+      <ul className={classnames(
+        styles.navbarList,
+        styles.midLinks
+      )}>
         <li>
           <Link href="/home" className={styles.navbarLink}>
             Home

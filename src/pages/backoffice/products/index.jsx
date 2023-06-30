@@ -99,31 +99,29 @@ const BackofficeProducts = (props) => {
     (column) => {
       const notSortableKeys = ["description", "category", "materials"];
 
-      if (notSortableKeys.includes(column)) {
-        return false;
-      }
-
-      // By default, when we sort a column, we set it to ASC
-      if (column !== queryParams["orderField"]) {
-        setQueryParams({
-          ...queryParams,
-          page: 1,
-          orderField: column,
-          order: "asc"
-        });
-
-        return;
-      }
-
+    if (notSortableKeys.includes(column)) {
+      return false; 
+    }
+    
+    // By default, when we sort a column, we set it to ASC
+    if (column !== queryParams["orderField"]) {
       setQueryParams({
         ...queryParams,
         page: 1,
         orderField: column,
-        order: queryParams["order"] === "asc" ? "desc" : "asc"
-      });
-    },
-    [queryParams]
-  );
+        order: "asc"
+      }); 
+      
+      return;
+    }
+
+    setQueryParams({
+      ...queryParams,
+      page: 1,
+      orderField: column,
+      order: queryParams["order"] === "asc" ? "desc" : "asc"
+    }); 
+  }, [queryParams]);
 
   const sumTotalProducts = () => {
     const sumTotalProducts = productsProps.reduce(

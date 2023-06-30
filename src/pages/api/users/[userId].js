@@ -4,12 +4,7 @@ import checkIsAdmin from "@/api/middlewares/checkIsAdmin";
 import slowDown from "@/api/middlewares/slowDown";
 import validate from "@/api/middlewares/validate";
 import mw from "@/api/mw.js";
-import {
-  boolValidator,
-  emailValidator,
-  phoneValidator,
-  stringValidator
-} from "@/validator";
+import { boolValidator, emailValidator, phoneValidator, stringValidator } from "@/validator";
 import { idValidator } from "@/validator";
 
 const handler = mw({
@@ -60,14 +55,14 @@ const handler = mw({
     slowDown(500),
     auth(),
     checkIsAdmin(),
-    validate({
+    validate({ 
       query: {
         userId: idValidator.required()
       }
     }),
-    async ({
+    async({
       locals: {
-        query: { userId }
+        query: { userId } 
       },
       res
     }) => {
@@ -93,7 +88,7 @@ const handler = mw({
         res.status(500).send({ error: error });
       }
     }
-  ],
+  ], 
   PATCH: [
     slowDown(500),
     auth(),
@@ -104,14 +99,14 @@ const handler = mw({
       },
       body: {
         firstName: stringValidator,
-        lastName: stringValidator,
+        lastName: stringValidator, 
         email: emailValidator,
         phoneNumber: phoneValidator,
         active: boolValidator,
         isAdmin: boolValidator
       }
     }),
-    async ({
+    async({
       locals: {
         query: { userId },
         body: { firstName, lastName, email, phoneNumber, active, isAdmin }
@@ -151,4 +146,4 @@ const handler = mw({
   ]
 });
 
-export default handler;
+export default handler; 

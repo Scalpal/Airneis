@@ -24,7 +24,11 @@ export default function App({ Component, pageProps }) {
   const renderWithLayout =
     Component.getLayout ||
     ((page) => {
-      return <Layout>{page}</Layout>;
+      return (
+        <Layout>
+          {page}
+        </Layout>
+      );
     });
 
   return (
@@ -35,7 +39,9 @@ export default function App({ Component, pageProps }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      {renderWithLayout(<Component {...pageProps} />)}
+      {renderWithLayout(
+        <Component {...pageProps} />
+      )}
     </AppContextProvider>
   );
 }

@@ -13,6 +13,7 @@ const CartProduct = (props) => {
 
   return (
     <div className={styles.cartProduct}>
+
       <div className={styles.cartProductImageContainer}>
         <Image
           src={product.picture}
@@ -21,7 +22,7 @@ const CartProduct = (props) => {
           className={styles.cartProductImage}
         />
       </div>
-
+      
       <div className={styles.cartProductInfo}>
         <div className={styles.cartProductInfoNameWrapper}>
           <p className={styles.cartProductInfoName}>{product.name}</p>
@@ -33,35 +34,22 @@ const CartProduct = (props) => {
       </div>
 
       <div className={styles.cartProductControls}>
-        <p>{productsList[index].price * productsList[index].quantity}€</p>
 
+        <p>{productsList[index].price * productsList[index].quantity}€</p>
+        
         <div className={styles.cartProductControlsQuantity}>
-          <button
-            onClick={() => {
-              removeProductFromCart(product);
-            }}
-          >
-            -
-          </button>
+          <button onClick={() => { removeProductFromCart(product); }}>-</button>
           <p>{product.quantity}</p>
-          <button
-            onClick={() => {
-              addToCart(product);
-            }}
-          >
-            +
-          </button>
+          <button onClick={() => { addToCart(product);  }}>+</button>
         </div>
 
         <TrashIcon
           className={styles.cartProductControlIcon}
-          onClick={() => {
-            deleteProductFromCart(product);
-          }}
+          onClick={() => { deleteProductFromCart(product); }}
         />
       </div>
     </div>
   );
-};
+}; 
 
-export default CartProduct;
+export default CartProduct; 

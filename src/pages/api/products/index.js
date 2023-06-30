@@ -20,30 +20,14 @@ const handler = mw({
         categories: arrayOrStringValidator,
         limit: limitValidator.default(10),
         page: pageValidator,
-        orderField: orderFieldValidator([
-          "id",
-          "name",
-          "price",
-          "stock"
-        ]).default("id"),
+        orderField: orderFieldValidator(["id", "name", "price", "stock"]).default("id"),
         order: orderValidator.default("asc"),
         search: searchValidator
       }
     }),
     async ({
       locals: {
-        query: {
-          priceMin,
-          priceMax,
-          materials,
-          onlyInStock,
-          categories,
-          limit,
-          page,
-          orderField,
-          order,
-          search
-        }
+        query: { priceMin, priceMax, materials, onlyInStock, categories, limit, page, orderField, order, search}
       },
       res
     }) => {

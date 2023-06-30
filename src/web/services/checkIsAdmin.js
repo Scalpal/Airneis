@@ -2,7 +2,7 @@ import { AxiosError } from "axios";
 import getApiClient from "./getApiClient";
 import routes from "../routes";
 
-const checkIsAdmin = async (context) => {
+const checkIsAdmin = async(context) => {
   const reqInstance = getApiClient(context);
 
   try {
@@ -32,4 +32,4 @@ const checkIsAdmin = async (context) => {
   }
 };
 
-export default checkIsAdmin;
+export default checkIsAdmin; 

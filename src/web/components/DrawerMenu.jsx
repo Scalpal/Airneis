@@ -26,7 +26,7 @@ const DrawerMenu = (props) => {
 
   const logout = () => {
     signOut();
-    router.push("/home");
+    router.push("/");
   };
 
   return (
@@ -60,7 +60,7 @@ const DrawerMenu = (props) => {
         )}
         {session && <Link href={routes.backoffice.base()}>Backoffice</Link>}
         <Link href="">CGU</Link>
-        <Link href="">Legal mentions</Link>
+        <Link href={routes.legalMentions()}>Legal mentions</Link>
         <Link href="">Contact</Link>
         <Link href="">About us</Link>
       </div>
@@ -68,4 +68,4 @@ const DrawerMenu = (props) => {
   );
 };
 
-export default DrawerMenu;
+export default DrawerMenu; 

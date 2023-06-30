@@ -5,9 +5,10 @@ import DrawerMenu from "./DrawerMenu";
 import { useState } from "react";
 
 const LayoutStickyNavbar = ({ children }) => {
-  const [isDrawerToggled, setIsDrawerToggled] = useState(false);
+  const [isDrawerToggled, setIsDrawerToggled] = useState(false); 
 
-  return (
+
+  return ( 
     <div className={nunito.className}>
       <Navbar
         fixed={false}
@@ -24,4 +25,4 @@ const LayoutStickyNavbar = ({ children }) => {
   );
 };
 
-export default LayoutStickyNavbar;
+export default LayoutStickyNavbar; 

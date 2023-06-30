@@ -4,7 +4,7 @@ import { useState } from "react";
 import { classnames } from "@/pages/_app";
 
 const EditModal = () => {
-  const [showEditModal, setShowEditModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false); 
 
   return (
     <>
@@ -12,16 +12,17 @@ const EditModal = () => {
         <PencilSquareIcon className={styles.icon} />
       </td>
 
-      <div
-        className={classnames(
-          styles.overlay,
-          showEditModal ? styles.overlayActive : styles.overlayInactive
-        )}
-      >
-        <div className={styles.modal}>
+      <div className={classnames(
+        styles.overlay,
+        showEditModal ? styles.overlayActive : styles.overlayInactive
+      )}>
+        <div
+          className={styles.modal}
+        >
           <button onClick={() => setShowEditModal(false)}> haha</button>
         </div>
       </div>
+
     </>
   );
 };

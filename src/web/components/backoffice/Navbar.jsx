@@ -4,7 +4,7 @@ import {
   HomeIcon,
   UserIcon,
   BuildingStorefrontIcon,
-  TagIcon,
+  TagIcon, 
   ChartBarIcon,
   ArrowRightOnRectangleIcon,
   ReceiptPercentIcon
@@ -47,31 +47,42 @@ const navLinks = [
 ];
 
 const Navbar = () => {
-  const { data } = useUser();
+  const { data } = useUser(); 
 
   return (
-    <nav className={classnames(styles.navbar, nunito.className)}>
+    <nav
+      className={classnames(
+        styles.navbar,
+        nunito.className
+      )}
+    > 
       <div className={styles.adminInfosBlock}>
         <p>Hello administrator </p>
-        <p>
-          {data ? data.lastName : ""} {data ? data.firstName : ""}
-        </p>
+        <p>{data ? data.lastName : ""} {data ? data.firstName : ""}</p>
       </div>
 
+
       <div className={styles.midBlock}>
-        {navLinks.map((link, index) => {
+        {navLinks.map((link,index) => {
           return (
-            <Link key={index} href={link.route} className={styles.links}>
+            <Link
+              key={index}
+              href={link.route}
+              className={styles.links}
+            >
               {link.icon}
               <p className={styles.linksText}>{link.text}</p>
             </Link>
-          );
+          ); 
         })}
       </div>
 
       <div className={styles.bottomBlock}>
         <ArrowRightOnRectangleIcon
-          className={classnames(styles.linksIcon, styles.logoutIcon)}
+          className={classnames(
+            styles.linksIcon,
+            styles.logoutIcon
+          )}
         />
       </div>
     </nav>

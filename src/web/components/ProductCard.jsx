@@ -1,16 +1,16 @@
 import styles from "@/styles/components/ProductCard.module.css";
 import { useRouter } from "next/router";
 import Image from "next/image";
-import routes from "@/web/routes";
 
 const ProductCard = (props) => {
-  const { product } = props;
-  const router = useRouter();
+  const { product } = props; 
+  const router = useRouter(); 
 
   return (
+
     <div
       className={styles.productCard}
-      onClick={() => router.push(routes.queryPage.products(product.id))}
+      onClick={() => router.push("/products/" + product.id)}
     >
       <div className={styles.productCardImageContainer}>
         <Image

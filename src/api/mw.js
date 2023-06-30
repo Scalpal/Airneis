@@ -13,12 +13,10 @@ const logger = winston.createLogger({
       format: winston.format.combine(
         winston.format.json(),
         winston.format((info) => {
-          info[Symbol.for("message")] = `${chalk[
-            info.level === "sql" ? "blueBright" : "yellow"
-          ]("-".repeat(process.stdout.columns))} [${chalk[
-            info.level === "sql" ? "whiteBright" : "red"
+          info[Symbol.for("message")] = `[${chalk[
+            info.level === "sql" ? "blue" : "magenta"
           ](info.level)}] ${chalk[
-            info.level === "sql" ? "cyanBright" : "blueBright"
+            info.level === "sql" ? "blueBright" : "yellow"
           ](info.message)}`;
 
           return info;
@@ -41,10 +39,8 @@ const mw = (methodHandlers) => async (req, res) => {
     return;
   }
 
-  const handlers = Array.isArray(methodHandler)
-    ? methodHandler
-    : [methodHandler];
-
+  const handlers = Array.isArray(methodHandler) ? methodHandler : [methodHandler];
+  
   let handlerIndex = 0;
   const locals = {};
   const ctx = {

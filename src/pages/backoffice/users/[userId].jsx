@@ -30,22 +30,19 @@ const validationSchema = createValidator({
 });
 
 const BackofficeUserPage = (props) => {
-  const { user } = props;
-  const {
-    actions: { api }
-  } = useAppContext();
+  const { user } = props; 
+  const { actions: { api } } = useAppContext();
 
   const [currentUser, setCurrentUser] = useState(user);
   const [editMode, setEditMode] = useState({ type: "", editing: false });
   const [alert, setAlert] = useState({ status: "", message: "" });
   const [showAlert, setShowAlert] = useState(false);
 
-  const handleEditMode = useCallback(
-    (type, handleReset) => {
-      setEditMode({
-        type: editMode.type !== type ? type : "",
-        editing: !editMode.editing
-      });
+  const handleEditMode = useCallback((type, handleReset) => {
+    setEditMode({
+      type: editMode.type !== type ? type : "",
+      editing: !editMode.editing
+    });
 
       if (editMode.type === type) {
         handleReset();
@@ -62,28 +59,26 @@ const BackofficeUserPage = (props) => {
           values
         );
 
-        setEditMode({ type: "", editing: false });
-        setCurrentUser(data.user);
+      setEditMode({ type: "", editing: false });
+      setCurrentUser(data.user);
+      setShowAlert(true);
+      setAlert({ status: data.status, message: data.message });
+    } catch (error) {
+      if (error instanceof AxiosError) {
         setShowAlert(true);
-        setAlert({ status: data.status, message: data.message });
-      } catch (error) {
-        if (error instanceof AxiosError) {
-          setShowAlert(true);
-          setAlert({
-            status: error.response.status,
-            message: error.response.message
-          });
-        }
+        setAlert({ status: error.response.status, message: error.response.message });
       }
-    },
-    [api, user.id]
-  );
+    }
+  }, [api, user.id]); 
 
   return (
-    <main className={classnames(styles.mainContainer, nunito.className)}>
-      <p className={styles.title}>
-        User {currentUser.id} : {currentUser.lastName} {currentUser.firstName}
-      </p>
+    <main
+      className={classnames(
+        styles.mainContainer,
+        nunito.className
+      )}
+    >
+      <p className={styles.title}>User {currentUser.id} : {currentUser.lastName} {currentUser.firstName}</p>
 
       <div className={styles.contentWrapper}>
         <Formik
@@ -109,12 +104,7 @@ const BackofficeUserPage = (props) => {
                   type="text"
                   label="First name"
                   showError={false}
-                  disabled={
-                    editMode.editing === true &&
-                    editMode.type === "informations"
-                      ? !editMode.editing
-                      : true
-                  }
+                  disabled={(editMode.editing === true && editMode.type === "informations") ? !editMode.editing : true}
                 />
 
                 <LoginField
@@ -122,12 +112,7 @@ const BackofficeUserPage = (props) => {
                   type="text"
                   label="Last name"
                   showError={false}
-                  disabled={
-                    editMode.editing === true &&
-                    editMode.type === "informations"
-                      ? !editMode.editing
-                      : true
-                  }
+                  disabled={(editMode.editing === true && editMode.type === "informations") ? !editMode.editing : true}
                 />
 
                 <LoginField
@@ -135,12 +120,7 @@ const BackofficeUserPage = (props) => {
                   type="text"
                   label="E-mail"
                   showError={false}
-                  disabled={
-                    editMode.editing === true &&
-                    editMode.type === "informations"
-                      ? !editMode.editing
-                      : true
-                  }
+                  disabled={(editMode.editing === true && editMode.type === "informations") ? !editMode.editing : true}
                 />
 
                 <LoginField
@@ -148,68 +128,52 @@ const BackofficeUserPage = (props) => {
                   type="text"
                   label="Phone number"
                   showError={false}
-                  disabled={
-                    editMode.editing === true &&
-                    editMode.type === "informations"
-                      ? !editMode.editing
-                      : true
-                  }
+                  disabled={(editMode.editing === true && editMode.type === "informations") ? !editMode.editing : true}
                 />
 
-                <div className={styles.checkboxItem}>
+                <div
+                  className={styles.checkboxItem}
+                >
                   <p>Active </p>
                   <Field
                     type="checkbox"
                     name="active"
                     id="active"
-                    disabled={
-                      editMode.editing === true &&
-                      editMode.type === "informations"
-                        ? !editMode.editing
-                        : true
-                    }
+                    disabled={(editMode.editing === true && editMode.type === "informations") ? !editMode.editing : true}
                   />
                   <label
                     htmlFor="active"
                     className={classnames(
                       values.active ? styles.checked : "",
-                      editMode.editing !== true &&
-                        editMode.type !== "informations"
-                        ? styles.checkboxDisabled
-                        : ""
+                      (editMode.editing !== true && editMode.type !== "informations") ? styles.checkboxDisabled : ""
                     )}
                   >
                     {values.active && <CheckIcon className={styles.icon} />}
                   </label>
                 </div>
 
-                <div className={styles.checkboxItem}>
+                <div
+                  className={styles.checkboxItem}
+                >
                   <p>Admin </p>
                   <Field
                     type="checkbox"
                     name="isAdmin"
                     id="isAdmin"
-                    disabled={
-                      editMode.editing === true &&
-                      editMode.type === "informations"
-                        ? !editMode.editing
-                        : true
-                    }
+                    disabled={(editMode.editing === true && editMode.type === "informations") ? !editMode.editing : true}
                   />
                   <label
                     htmlFor="isAdmin"
                     className={classnames(
                       values.isAdmin ? styles.checked : "",
-                      editMode.editing !== true &&
-                        editMode.type !== "informations"
-                        ? styles.checkboxDisabled
-                        : ""
+                      (editMode.editing !== true && editMode.type !== "informations") ? styles.checkboxDisabled : ""
                     )}
                   >
                     {values.isAdmin && <CheckIcon className={styles.icon} />}
                   </label>
-                </div>
-
+                </div>  
+             
+              
                 {editMode.type === "informations" && editMode.editing && (
                   <Button
                     type={"submit"}
@@ -232,17 +196,14 @@ const BackofficeUserPage = (props) => {
             {Array.isArray(user.address) ? (
               user.address.map((address, index) => {
                 return (
-                  <AddressCard
-                    address={address}
-                    key={index}
-                    index={index + 1}
-                  />
+                  <AddressCard address={address} key={index} index={index + 1} />
                 );
               })
-            ) : (
-              <AddressCard address={user.address} index={1} />
+            ): (
+              <AddressCard address={user.address} index={1} /> 
             )}
           </div>
+
         </div>
       </div>
 
@@ -255,13 +216,13 @@ const BackofficeUserPage = (props) => {
   );
 };
 
-export const getServerSideProps = async (context) => {
+export const getServerSideProps = async(context) => {
   const id = context.params.userId;
   const { token } = parseCookies(context);
   const badTokenRedirect = await checkToken(token);
 
   if (badTokenRedirect) {
-    return badTokenRedirect;
+    return badTokenRedirect; 
   }
 
   const notAdminRedirect = await checkIsAdmin(context);
@@ -273,9 +234,7 @@ export const getServerSideProps = async (context) => {
   const reqInstance = getApiClient(context);
 
   try {
-    const result = await reqInstance.get(
-      `${process.env.API_URL}/${routes.api.users.single(id)}`
-    );
+    const result = await reqInstance.get(`${process.env.API_URL}/${routes.api.users.single(id)}`);
 
     if (!result.data.user) {
       return {
@@ -303,8 +262,13 @@ export const getServerSideProps = async (context) => {
   }
 };
 
+
 BackofficeUserPage.getLayout = function (page) {
-  return <Layout>{page}</Layout>;
+  return (
+    <Layout>
+      {page}
+    </Layout>
+  );
 };
 
 export default BackofficeUserPage;

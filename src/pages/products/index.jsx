@@ -13,7 +13,7 @@ import {
   XMarkIcon
 } from "@heroicons/react/24/outline";
 
-const limit = 10;
+const limit = 10; 
 
 const Products = () => {
   const [queryParams, setQueryParams] = useState({
@@ -177,6 +177,7 @@ const Products = () => {
       <Banner />
 
       <main className={styles.main}>
+        
         <div className={styles.customInputWrapper}>
           <button className={styles.button}>
             <MagnifyingGlassIcon className={styles.icons} />
@@ -315,5 +316,6 @@ const Products = () => {
     </>
   );
 };
+
 
 export default Products;
