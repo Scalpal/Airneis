@@ -21,7 +21,10 @@ const CustomField = (props) => {
     if (passwordVisibility) {
       return (
         <EyeSlashIcon
-          className={classnames(styles.inputIcon, styles.eyeIcon)}
+          className={classnames(
+            styles.inputIcon,
+            styles.eyeIcon
+          )}
           onClick={() => setPasswordVisibility(false)}
         />
       );
@@ -40,7 +43,10 @@ const CustomField = (props) => {
     <Field name={name}>
       {({ field, meta }) => {
         return (
-          <div name={label} className={styles.div}>
+          <div
+            name={label}
+            className={styles.div}
+          >
             <input
               {...field}
               {...otherProps}
@@ -51,15 +57,25 @@ const CustomField = (props) => {
                 name === "password" ? styles.inputPassword : null
               )}
             />
-            <label name={label} className={styles.label} htmlFor={label}>
-              {label}
-            </label>
+            <label
+              name={label}
+              className={styles.label}
+              htmlFor={label}
+            >{label}</label>
 
-            {name === "password" ? passwordIcon() : null}
+            {name === "password" ?
+              passwordIcon()
+              :
+              null
+            }
 
             {showError && meta.touched && meta.error ? (
-              <span className={styles.errorText}>{meta.error}</span>
-            ) : null}
+              <span className={styles.errorText}>
+                {meta.error}
+              </span>
+            )
+              : null
+            }
           </div>
         );
       }}

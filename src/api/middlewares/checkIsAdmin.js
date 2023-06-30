@@ -27,4 +27,4 @@ const checkIsAdmin = () => {
   };
 };
 
-export default checkIsAdmin;
+export default checkIsAdmin; 

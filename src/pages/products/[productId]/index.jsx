@@ -8,51 +8,31 @@ import routes from "@/web/routes";
 import useAppContext from "@/web/hooks/useAppContext";
 import SeeMoreButton from "@/web/components/SeeMoreButton";
 import ProductReviews from "@/web/components/ProductReviews";
-import { useState } from "react";
-import { useTranslation } from "next-i18next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useState } from "react"; 
 
 export const getServerSideProps = async (context) => {
-  const { productId } = context.query;
-  const locale = context.locale;
+  const { productId } = context.query;  
 
-  const {
-    data: { product },
-  } = await Axios.get(
-    `${process.env.API_URL}${routes.api.products.single(productId)}`
-  );
+  const { data: { product } } = await Axios.get(`${process.env.API_URL}${routes.api.products.single(productId)}`); 
 
-  const specificCategory = `?categories=${Number.parseInt(
-    product.category.id
-  )}&`;
+  const specificCategory = `?categories=${Number.parseInt(product.category.id)}&`;
+  const { data: { products } } = await Axios.get(`${process.env.API_URL}${routes.api.products.collection(specificCategory, 1)}`);
 
-  const {
-    data: { products },
-  } = await Axios.get(
-    `${process.env.API_URL}${routes.api.products.collection(
-      specificCategory,
-      1
-    )}`
-  );
-
-  return {
+  return ({
     props: {
       product: product,
-      categoryProducts: products,
-      ...(await serverSideTranslations(locale, ["productPage", "footer", "drawerMenu", "navbar"])),
-    },
-  };
+      categoryProducts: products
+    }
+  }); 
 };
 
 const ProductPage = (props) => {
-  const { t } = useTranslation("productPage");
   const { product, categoryProducts } = props;
 
-  const {
-    actions: { addToCart },
-  } = useAppContext();
+  const { actions: { addToCart } } = useAppContext(); 
   const [limit] = useState(4);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(1); 
+
 
   return (
     <>
@@ -71,17 +51,15 @@ const ProductPage = (props) => {
           <div className={styles.productInfos}>
             <div className={styles.productInfosTopBlock}>
               <h1 className={styles.productInfosName}>{product.name}</h1>
-              <p className={styles.productInfosDescription}>
-                {product.description}
-              </p>
+              <p className={styles.productInfosDescription}>{product.description}</p>
             </div>
+
 
             <div className={styles.productInfosBottomBlock}>
               <p className={styles.productInfosMaterials}>
-                Materials :{" "}
-                {product.materials.map(({ name }, index) => {
+                Materials : {product.materials.map(({ name }, index) => {
                   const dash = index < product.materials.length - 1 ? "-" : "";
-
+                  
                   return name + " " + dash + " ";
                 })}
               </p>
@@ -89,18 +67,19 @@ const ProductPage = (props) => {
               <div className={styles.productInfosStockPrice}>
                 <p className={styles.productInfosPrice}>{product.price}€</p>
                 <p>
-                  {product.stock > 0
-                    ? "Stocks : " + product.stock + " available"
-                    : "Out of stock"}
+                  {product.stock > 0 ? ("Stocks : " + product.stock + " available") : ("Out of stock")}
                 </p>
               </div>
             </div>
+
           </div>
         </section>
 
         <div className={styles.addToCartBtnWrapper} id="productReviewAnchor">
-          <Button onClick={() => addToCart(product)}>
-            {t("addToCartButton")}
+          <Button
+            onClick={() => addToCart(product)}
+          >
+            Add to cart
           </Button>
         </div>
 
@@ -113,11 +92,12 @@ const ProductPage = (props) => {
 
         <div className={styles.titleWrapper}>
           <div className={styles.line}></div>
-          <p className={styles.title}>{t("similarProductTitle")}</p>
+          <p className={styles.title}>Similar products</p>
           <div className={styles.line}></div>
         </div>
 
         <section className={styles.similarProductsWrapper}>
+
           <div className={styles.similarProductsContainer}>
             {categoryProducts.map((product, index) => {
               return <ProductCard key={index} product={product} />;
@@ -125,12 +105,15 @@ const ProductPage = (props) => {
           </div>
 
           <SeeMoreButton route={routes.products.base()}>
-            {t("viewAllProductButton")}
+            View all products
           </SeeMoreButton>
+
         </section>
+
       </main>
     </>
   );
 };
+
 
 export default ProductPage;

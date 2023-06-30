@@ -5,7 +5,6 @@ import Head from "next/head";
 import { Montserrat } from "@next/font/google";
 import { Nunito } from "@next/font/google";
 import { AppContextProvider } from "@/web/hooks/useAppContext.jsx";
-import { appWithTranslation } from "next-i18next";
 
 export const classnames = require("classnames");
 
@@ -21,11 +20,15 @@ export const nunito = Nunito({
   subsets: ["latin"],
 });
 
-function App({ Component, pageProps }) {
+export default function App({ Component, pageProps }) {
   const renderWithLayout =
     Component.getLayout ||
     ((page) => {
-      return <Layout>{page}</Layout>;
+      return (
+        <Layout>
+          {page}
+        </Layout>
+      );
     });
 
   return (
@@ -36,9 +39,9 @@ function App({ Component, pageProps }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      {renderWithLayout(<Component {...pageProps} />)}
+      {renderWithLayout(
+        <Component {...pageProps} />
+      )}
     </AppContextProvider>
   );
 }
-
-export default appWithTranslation(App);

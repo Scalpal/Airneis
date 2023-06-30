@@ -46,37 +46,6 @@
   font-size: 0.8rem;
 }
 
-.moreTextCompartiment {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 0.2rem;
-  font-size: 0.7rem;
-}
-
-.moreTextCompartiment p {
-  color: grey;
-  white-space: nowrap;
-}
-
-.moreTextCompartiment p:hover {
-  cursor: default;
-}
-
-.moreTextCompartiment p > span {
-  font-weight: 600;
-  color: black;
-}
-
-.moreTextCompartiment p > span:hover {
-  cursor: pointer;
-}
-
-.moreTextCompartiment a:hover {
-  text-decoration: underline;
-}
-
 @media only screen and (max-width: 767px) {
   .formContainer {
     width: 70%;
@@ -84,18 +53,6 @@
 
   .formTitle {
     font-size: 1.4rem;
-  }
-
-  .moreTextCompartiment {
-    font-size: 0.9rem;
-  }
-
-  .moreTextCompartiment p {
-    color: rgb(79, 79, 79);
-  }
-
-  .moreTextCompartiment p > span {
-    font-size: 1rem;
   }
 }
 

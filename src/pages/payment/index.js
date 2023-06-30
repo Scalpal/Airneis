@@ -1,19 +1,14 @@
-import { useTranslation } from "next-i18next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-
 const Payment = () => {
-  const { t } = useTranslation("payment");
-
   return (
     <>
-      <h1 className="cartTitle">{t("paymentTitle")}</h1>
+      <h1 className="cartTitle">Payment</h1>
       <form>
         <div className="cartContainer">
           <section className="cartPaymentSummary">
             <div className="cartDeliveryForm">
               <div className="cartDeliveryRow">
                 <label htmlFor="cardNumber">
-                  <span className="">{t("cartNumber")}</span>
+                  <span className="">Card number*</span>
                   <input
                     name="cardNumber"
                     type="text"
@@ -24,17 +19,17 @@ const Payment = () => {
               </div>
               <div className="cartDeliveryRow">
                 <label htmlFor="cardName">
-                  <span>{t("cardName")}</span>
+                  <span>Card name*</span>
                   <input name="cardName" type="text" required />
                 </label>
               </div>
               <div className="cartDeliveryRow">
                 <label htmlFor="expDate">
-                  <span>{t("expirationDate")}</span>
+                  <span>Expiration date*</span>
                   <input name="expDate" type="date" required />
                 </label>
                 <label htmlFor="cvv">
-                  <span>{t("cvv")}</span>
+                  <span>CVV*</span>
                   <input name="cvv" type="text" maxLength="3" required />
                 </label>
               </div>
@@ -42,7 +37,7 @@ const Payment = () => {
           </section>
           <section className="cartTotal">
             <button type="submit" className="cartButtonSubmit">
-              {t("paymentButton")}
+              Proceed to payment
             </button>
           </section>
         </div>
@@ -50,13 +45,5 @@ const Payment = () => {
     </>
   );
 };
-
-export async function getStaticProps({ locale }) {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ["payment"])),
-    },
-  };
-}
 
 export default Payment;

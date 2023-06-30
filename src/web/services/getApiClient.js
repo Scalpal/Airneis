@@ -1,5 +1,5 @@
 import { parseCookies } from "nookies";
-import Axios from "axios";
+import Axios from "axios"; 
 
 const getApiClient = (context) => {
   const { token } = parseCookies(context);
@@ -7,10 +7,10 @@ const getApiClient = (context) => {
   const reqInstance = Axios.create({
     headers: {
       Authorization: `Bearer ${token}`,
-    },
+    }
   });
 
   return reqInstance;
 };
 
-export default getApiClient;
+export default getApiClient; 
