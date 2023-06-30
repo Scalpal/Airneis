@@ -5,7 +5,7 @@ module.exports = {
     "prettier",
     "next",
     "plugin:react/recommended",
-    "plugin:react/jsx-runtime"
+    "plugin:react/jsx-runtime",
   ],
   plugins: ["react", "react-hooks"],
   env: {
@@ -76,4 +76,3 @@ module.exports = {
   },
   settings: { react: { version: "detect" } },
 };
-

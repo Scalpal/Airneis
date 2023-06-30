@@ -1,13 +1,10 @@
-import styles from "@/styles/components/Select.module.css"; 
+import styles from "@/styles/components/Select.module.css";
 
 const Select = (props) => {
-  const { children, ...otherProps } = props; 
-  
+  const { children, ...otherProps } = props;
+
   return (
-    <select
-      className={styles.select}
-      {...otherProps}
-    >
+    <select className={styles.select} {...otherProps}>
       {children}
     </select>
   );

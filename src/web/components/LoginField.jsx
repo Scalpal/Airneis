@@ -13,15 +13,12 @@ const LoginField = (props) => {
     <Field name={name}>
       {({ field, meta }) => {
         return (
-          <div
-            name={label}
-            className={styles.wrapper}
-          >
+          <div name={label} className={styles.wrapper}>
             <label
               name={label}
               className={classnames(
                 styles.label,
-                disabled ? styles.labelDisabled : "", 
+                disabled ? styles.labelDisabled : "",
                 meta.error ? styles.labelError : ""
               )}
               htmlFor={label}
@@ -33,7 +30,13 @@ const LoginField = (props) => {
             <input
               {...field}
               {...otherProps}
-              type={type === "password" ? (isPasswordVisible ? "text" : "password" ) : "text"}
+              type={
+                type === "password"
+                  ? isPasswordVisible
+                    ? "text"
+                    : "password"
+                  : "text"
+              }
               id={label}
               disabled={disabled}
               className={classnames(
@@ -49,21 +52,16 @@ const LoginField = (props) => {
                   className={styles.inputIcon}
                   onClick={() => setIsPasswordVisible(false)}
                 />
-              ): (
+              ) : (
                 <EyeIcon
                   className={styles.inputIcon}
                   onClick={() => setIsPasswordVisible(true)}
                 />
-              )
-            )}
+              ))}
 
             {showError && meta.touched && meta.error ? (
-              <span className={styles.errorText}>
-                {meta.error}
-              </span>
-            )
-              : null
-            }
+              <span className={styles.errorText}>{meta.error}</span>
+            ) : null}
           </div>
         );
       }}

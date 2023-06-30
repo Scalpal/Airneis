@@ -1,27 +1,32 @@
 import Link from "next/link";
-import { Bars3Icon} from "@heroicons/react/24/solid";
+import { Bars3Icon } from "@heroicons/react/24/solid";
 import styles from "@/styles/components/Navbar.module.css";
 import { useEffect } from "react";
 import { classnames } from "@/pages/_app";
 import CartButton from "./CartButton";
 import SearchProductOverlay from "./SearchProductOverlay";
+import { useTranslation } from "next-i18next";
 
 const Navbar = (props) => {
-  const { fixed, isDrawerToggledState } = props; 
+  const { t } = useTranslation(["navbar"]);
+  const { fixed, isDrawerToggledState } = props;
 
-  const [isDrawerToggled, setIsDrawerToggled] = isDrawerToggledState; 
-  
+  const [isDrawerToggled, setIsDrawerToggled] = isDrawerToggledState;
+
   useEffect(() => {
     const navbar = document.querySelector("#navbar");
 
     if (fixed) {
-      const carouselObserver = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting === true || isDrawerToggled === true) {
-          navbar.classList.remove("navbarBackground");
-        } else {
-          navbar.classList.add("navbarBackground");
-        }
-      }, { threshold: [0.1] });
+      const carouselObserver = new IntersectionObserver(
+        (entries) => {
+          if (entries[0].isIntersecting === true || isDrawerToggled === true) {
+            navbar.classList.remove("navbarBackground");
+          } else {
+            navbar.classList.add("navbarBackground");
+          }
+        },
+        { threshold: [0.1] }
+      );
 
       carouselObserver.observe(document.querySelector("#carousel"));
     } else {
@@ -31,40 +36,29 @@ const Navbar = (props) => {
 
   return (
     <nav
-      className={classnames(
-        fixed ? styles.navbar : styles.navbarNotFixed)
-      }
+      className={classnames(fixed ? styles.navbar : styles.navbarNotFixed)}
       id="navbar"
     >
-      <Link
-        href="/home"
-        className={classnames(
-          "navbarLogo",
-          styles.navbarLogo
-        )}
-      >
-        Airneis
+      <Link href="/" className={classnames("navbarLogo", styles.navbarLogo)}>
+        {t("airneis")} 
       </Link>
 
-      <ul className={classnames(
-        styles.navbarList,
-        styles.midLinks
-      )}>
+      <ul className={classnames(styles.navbarList, styles.midLinks)}>
         <li>
-          <Link href="/home" className={styles.navbarLink}>
-            Home
+          <Link href="/" className={styles.navbarLink}>
+            {t("home")}
           </Link>
         </li>
 
         <li>
           <Link href="/products" className={styles.navbarLink}>
-            Products
+            {t("product")}
           </Link>
         </li>
 
         <li>
           <Link href="/category" className={styles.navbarLink}>
-            Categories
+            {t("categories")}
           </Link>
         </li>
       </ul>

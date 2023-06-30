@@ -1,13 +1,18 @@
 import { useCallback, useEffect, useState } from "react";
 import styles from "@/styles/backoffice/Pagination.module.css";
 import { classnames } from "@/pages/_app";
-import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon, ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
+import {
+  ChevronDoubleLeftIcon,
+  ChevronDoubleRightIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+} from "@heroicons/react/24/solid";
 
 const Pagination = (props) => {
   const { dataCount, page, limit, setPage, nextPage, previousPage, firstPage, lastPage } = props; 
 
   const [totalPages, setTotalPages] = useState([[]]);
-  const [activeChunk, setActiveChunk] = useState(0); 
+  const [activeChunk, setActiveChunk] = useState(0);
 
   useEffect(() => {
     const pages = []; 
@@ -15,10 +20,10 @@ const Pagination = (props) => {
     const pagesCount = Math.ceil(dataCount / limit);
 
     for (let i = 1; i <= pagesCount; i++) {
-      pages.push(i); 
+      pages.push(i);
     }
 
-    // Chunked pages 5 by 5 
+    // Chunked pages 5 by 5
     const chunkedPages = pages.reduce((acc, curr, i) => {
       const chunkIndex = Math.floor(i / chunkSize);
 
@@ -50,7 +55,6 @@ const Pagination = (props) => {
 
   return (
     <div className={styles.container}>
-
       <div className={styles.chevronWrapper}>
         <button
           className={styles.chevronButton}

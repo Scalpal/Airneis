@@ -91,6 +91,26 @@
   font-size: 1.2em;
   font-weight: 600;
 }
+.productCardInfoBtnWrapper{
+  position: relative;
+}
+.hide{
+  opacity: 0;
+}
+
+.bubble {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 100;
+  transform: translate(-50%, -50%);
+  width: 1.8em;
+  height: 1.8em;
+  border-radius: 50%;
+  background-color: #000000;
+  animation: bubbleAnimation 0.75s ease-out;
+}
+
 
 /* For laptops and bigger screens */
 @media only screen and (min-width: 768px) {
@@ -115,7 +135,7 @@
   .productCard:hover .productCardInfos {
     opacity: 1 !important;
     color: black;
-    cursor: pointer;
+    cursor: default;
     transform: translate(0, 0);
   }
 }

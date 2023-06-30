@@ -5,13 +5,11 @@ import { useState } from "react";
 import { nunito } from "@/pages/_app";
 import useAppContext from "@/web/hooks/useAppContext";
 
-
 const Layout = ({ children }) => {
   const {
     actions: { signOut },
-    state: { session }
+    state: { session },
   } = useAppContext();
-
 
   const [isDrawerToggled, setIsDrawerToggled] = useState(false);
 
@@ -29,9 +27,10 @@ const Layout = ({ children }) => {
         actions={[signOut, session]}
       />
 
-      <Footer />
+      <Footer actions={[signOut, session]} />
     </div>
   );
 };
+
 
 export default Layout;

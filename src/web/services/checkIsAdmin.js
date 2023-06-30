@@ -2,18 +2,22 @@ import { AxiosError } from "axios";
 import getApiClient from "./getApiClient";
 import routes from "../routes";
 
-const checkIsAdmin = async(context) => {
+const checkIsAdmin = async (context) => {
   const reqInstance = getApiClient(context);
 
   try {
-    const { data: { user } } = await reqInstance.get(`${process.env.API_URL}/${routes.api.users.self()}`);
-   
+    const {
+      data: { user },
+    } = await reqInstance.get(
+      `${process.env.API_URL}/${routes.api.users.self()}`
+    );
+
     if (!user.isAdmin) {
       return {
         redirect: {
           destination: "/home",
-          permanent: false
-        }
+          permanent: false,
+        },
       };
     }
   } catch (error) {
@@ -21,11 +25,11 @@ const checkIsAdmin = async(context) => {
       return {
         redirect: {
           destination: "/home",
-          permanent: false
-        }
+          permanent: false,
+        },
       };
     }
   }
 };
 
-export default checkIsAdmin; 
+export default checkIsAdmin;
