@@ -1,9 +1,10 @@
 import styles from "@/styles/backoffice/ProductImageList.module.css";
-import Image from "next/image";
-import ProductImageInput from "../ProductImageInput";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import { useCallback } from "react";
 import deleteProductImage from "@/web/services/products/deleteProductImage";
+import ImageCard from "./ImageCard";
+import ImageInput from "./ImageInput";
+import IconButton from "../IconButton";
 
 
 const ProductImageList = (props) => {
@@ -13,7 +14,8 @@ const ProductImageList = (props) => {
     setCurrentProductImages,
     setAlert,
     setShowAlert,
-    setCurrentProduct
+    setCurrentProduct,
+    editMode
   } = props; 
 
   const deleteImage = useCallback(async(imageName) => {
@@ -37,35 +39,29 @@ const ProductImageList = (props) => {
         {currentProductImages.map((image, index) => {
           if (!(image instanceof File)) {
             return (
-              <div
+              <ImageCard
                 key={index}
-                className={styles.imageWrapper}
-              > 
-                <Image
-                  className={styles.image}
-                  alt={"Product image"}
-                  src={image.imageUrl ? image.imageUrl : `${process.env.AWS_BUCKET_URL}${image.imageSrc}`}
-                  fill
-                />
-
-                <div className={styles.imageOverlay}>
-                  <XMarkIcon
-                    onClick={() => deleteImage(image.imageSrc)}
-                    className={styles.imageOverlayIcon}
+                image={image}
+                deleteButton={
+                  <IconButton 
+                    Icon={XMarkIcon}
+                    tooltip={"Delete"}
+                    onPress={() => deleteImage(image.imageSrc)}
                   />
-                </div>
-              </div>
+                }
+              />
             );
           }
         })}
 
-        <ProductImageInput
-          images={currentProductImages}
-          onChangeEvent={setCurrentProductImages}
+        <ImageInput
+          id={"productImageInput"}
+          text={"Add a product image"}
+          disabled={!editMode}
+          onChangeEvent={(e) => setCurrentProductImages([...currentProductImages, e.target.files[0]])}
         />
       </div>
 
-      
       <div className={styles.newProductImagesWrapper}> 
         {currentProductImages.filter(elt => elt instanceof File).length > 0 && (
           <p

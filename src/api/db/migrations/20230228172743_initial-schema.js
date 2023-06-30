@@ -28,6 +28,9 @@ module.exports.up = async (knex) => {
   await knex.schema.createTable("categories", (table) => {
     table.increments("id");
     table.text("name").notNullable();
+    table.text("imageSrc").notNullable().defaultTo("/meuble-1.jpeg");
+    table.boolean("visible").notNullable().defaultTo(true);
+    table.boolean("visibleInHome").notNullable().defaultTo(false);
   });
 
   await knex.schema.createTable("materials", (table) => {
@@ -41,36 +44,21 @@ module.exports.up = async (knex) => {
     table.text("description").notNullable();
     table.integer("price").notNullable();
     table.integer("stock").notNullable().defaultTo(1);
-    table
-      .integer("categoryId")
-      .notNullable()
-      .references("id")
-      .inTable("categories");
+    table.integer("categoryId").notNullable().references("id").inTable("categories");
+    table.boolean("showInHome").notNullable().defaultTo(false);
     table.timestamps(true, true, true);
   });
 
   await knex.schema.createTable("products_images", (table) => {
     table.increments("id");
-    table
-      .integer("productId")
-      .references("id")
-      .inTable("products")
-      .notNullable();
+    table.integer("productId").references("id").inTable("products").notNullable();
     table.string("imageSrc").notNullable();
     table.timestamps(true, true, true);
   });
 
   await knex.schema.createTable("products_materials_relation", (table) => {
-    table
-      .integer("productId")
-      .notNullable()
-      .references("id")
-      .inTable("products");
-    table
-      .integer("materialId")
-      .notNullable()
-      .references("id")
-      .inTable("materials");
+    table.integer("productId").notNullable().references("id").inTable("products");
+    table.integer("materialId").notNullable().references("id").inTable("materials");
     table.primary(["productId", "materialId"]);
   });
 
@@ -109,7 +97,7 @@ module.exports.up = async (knex) => {
 
   await knex.schema.createTable("image_home_carousel", (table) => {
     table.increments("id");
-    table.text("src").notNullable().unique();
+    table.text("imageSrc").notNullable().unique();
     table.boolean("visible").notNullable().defaultTo(true);
     table.integer("rank").unique();
   });

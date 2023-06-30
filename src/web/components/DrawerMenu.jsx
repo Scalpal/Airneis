@@ -5,12 +5,20 @@ import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/router";
 import routes from "../routes";
 import { useEffect } from "react";
+import { useUser } from "../hooks/useUser";
+import useAppContext from "../hooks/useAppContext";
 
 const DrawerMenu = (props) => {
-  const { isDrawerToggledState, actions } = props;
+  const { isDrawerToggledState } = props;
   const [isDrawerToggled, setIsDrawerToggled] = isDrawerToggledState;
 
-  const [signOut, session] = actions ? actions : [null, null];
+  const {
+    actions: { signOut },
+    state: { session }
+  } = useAppContext();
+
+  const { userData, userError, userIsLoading } = useUser();
+  const user = (!userError && !userIsLoading) ? userData : {};
 
   const router = useRouter();
 
@@ -48,17 +56,9 @@ const DrawerMenu = (props) => {
           className={styles.drawerMenuIcon}
           onClick={() => setIsDrawerToggled(!isDrawerToggled)}
         />
-        {session ? (
-          <Link href="/profil">My profil</Link>
-        ) : (
-          <Link href={routes.login()}>Login</Link>
-        )}
-        {session ? (
-          <a onClick={logout}>Logout</a>
-        ) : (
-          <Link href={routes.register()}>Register</Link>
-        )}
-        {session && <Link href={routes.backoffice.base()}>Backoffice</Link>}
+        {session ? <Link href="/profil">My profil</Link> : <Link href={routes.login()}>Login</Link>}
+        {session ? <a onClick={logout}>Logout</a> : <Link href={routes.register()}>Register</Link>}
+        {(!userIsLoading && user.isAdmin) && <Link href={routes.backoffice.users()}>Backoffice</Link>}
         <Link href="">CGU</Link>
         <Link href={routes.legalMentions()}>Legal mentions</Link>
         <Link href="">Contact</Link>

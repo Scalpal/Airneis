@@ -62,7 +62,7 @@ const Cart = () => {
   }, [router]);
 
   const redirectToHomePage = useCallback(() => {
-    router.push("/home");
+    router.push("/");
   }, [router]);
 
   // console.log("Products list : ",productsList);

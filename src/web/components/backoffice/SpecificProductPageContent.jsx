@@ -32,14 +32,15 @@ const mappableKeys = ["name", "description", "price", "stock"];
 const SpecificProductPageContent = (props) => {
   const { product, setActiveProduct, refreshProducts, showModal, setShowModal } = props;
   const { actions: { api } } = useAppContext();
-  const { materialsData, materialsError, materialsIsLoading } = useGetMaterials(); 
-  const materials = (!materialsIsLoading && !materialsError) ? materialsData : [];
 
   const [currentProduct, setCurrentProduct] = useState(product);
   const [currentProductImages, setCurrentProductImages] = useState(product.productImages);
   const [editMode, setEditMode] = useState(false);
   const [alert, setAlert] = useState({ status: "", message: "" });
   const [showAlert, setShowAlert] = useState(false);
+
+  const { materialsData, materialsError, materialsIsLoading } = useGetMaterials(); 
+  const materials = (!materialsIsLoading && !materialsError) ? materialsData : [];
 
   const { categoriesData, categoriesError, categoriesIsLoading } = useGetCategories();
   const categories = (!categoriesIsLoading && !categoriesError) ? categoriesData : [];
@@ -147,7 +148,7 @@ const SpecificProductPageContent = (props) => {
         enableReinitialize={true}
         initialValues={initialValues}
       >
-      {({ values, isValid, dirty, isSubmitting, handleReset }) => {
+        {({ values, isSubmitting, handleReset }) => {          
           return (
             <Form className={styles.contentContainer}>
               <div className={styles.contentWrapper}> 
@@ -203,6 +204,7 @@ const SpecificProductPageContent = (props) => {
                       setAlert={setAlert}
                       setShowAlert={setShowAlert}
                       setCurrentProduct={setCurrentProduct}
+                      editMode={editMode}
                     />
                   </div>
           
@@ -210,16 +212,15 @@ const SpecificProductPageContent = (props) => {
                     {({ push, remove }) => (
                       <CollapseMenu title="Materials" defaultCollapsed={true} size="small">
                         {materials.map(({ id, name }, index) => (
-                            <CheckboxItem
-                              key={index}
-                              name={name}
-                              value={id}
-                              onClick={() => !isMaterialChecked(values.materials, id) ? push({ id: id, name: name }) : remove(values.materials.findIndex(elt => elt.id === id))}
-                              checked={isMaterialChecked(values.materials, id)}
-                              disabled={!editMode}
-                            />
-                          ))
-                        }
+                          <CheckboxItem
+                            key={index}
+                            name={name}
+                            value={id}
+                            onChange={() => !isMaterialChecked(values.materials, id) ? push({ id: id, name: name }) : remove(values.materials.findIndex(elt => elt.id === id))}
+                            checked={isMaterialChecked(values.materials, id)}
+                            disabled={!editMode}
+                          />
+                        ))}
                       </CollapseMenu>
                     )}
                   </FieldArray>
@@ -229,7 +230,7 @@ const SpecificProductPageContent = (props) => {
               {editMode && (
                 <Button
                   type={"submit"}
-                  disabled={!(dirty && isValid) || isSubmitting}
+                  disabled={isSubmitting}
                 >
                   Save
                 </Button>
