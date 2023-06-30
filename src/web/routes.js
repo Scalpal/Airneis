@@ -13,7 +13,7 @@ const routes = {
   register: () => "/register",
   login: () => "/login",
   cgu: () => "/terms-and-conditions",
-  legalMention: () => "/legal-mention",
+  legalMention: () => "/legal-mentions",
   contact: () => "/contact",
   aboutUs: () => "/about-us",
   products: {

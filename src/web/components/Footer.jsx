@@ -19,7 +19,7 @@ const Footer = () => {
             <Link href={routes.cgu()}>{t("termsOfUse")}</Link>
           </div>
           <div className={styles.footerLink}>
-            <Link href="">{t("legalMentions")}</Link>
+            <Link href={routes.legalMention()}>{t("legalMentions")}</Link>
           </div>
           <div className={styles.footerLink}>
             <Link href={routes.contact()}>{t("contact")}</Link>
