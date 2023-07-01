@@ -12,6 +12,7 @@ const routes = {
   home: () => "/",
   register: () => "/register",
   login: () => "/login",
+  cgu: () => "terms-of-use",
   legalMentions: () => "/legal-mentions",
   products: {
     base: () => `/products`,
@@ -44,19 +45,22 @@ const routes = {
       update: (productId) => `/products/${productId}`,
       materials: () => "/api/products/materials",
       add: () => "/api/products",
-      reviews: (productId, limit, page) => `/api/products/${productId}/reviews?limit=${limit}&page=${page}`,
+      reviews: (productId, limit, page) =>
+        `/api/products/${productId}/reviews?limit=${limit}&page=${page}`,
       productImage: (productId) => `/api/products/${productId}/images`,
       deleteImage: (productId) => `/api/products/${productId}/deleteImage`,
     },
     images: {
       homeCarousel: {
-        base: (queryString) => `/api/images/homeCarousel${queryString ? queryString : ""}`,
+        base: (queryString) =>
+          `/api/images/homeCarousel${queryString ? queryString : ""}`,
         single: (imageId) => `/api/images/homeCarousel/${imageId}`,
         upload: () => "/api/images/homeCarousel/upload",
-      }
+      },
     },
     categories: {
-      base: (queryString) => `/api/products/categories${queryString ? queryString : ""}`,
+      base: (queryString) =>
+        `/api/products/categories${queryString ? queryString : ""}`,
       single: (categoryId) => `/api/products/categories/${categoryId}`,
       upload: (categoryId) => `/api/products/categories/${categoryId}/upload`,
       products: (categoryId) => `/api/products?categories=${categoryId}`,
