@@ -24,8 +24,8 @@ export const useUser = () => {
   const { data, error, isLoading } = useSWR(`${process.env.API_URL}${routes.api.users.self()}`,fetcher, config);
 
   return {
-    data: data,
-    error: error,
-    isLoading: isLoading
+    userData: data,
+    userError: error,
+    userIsLoading: isLoading
   };
 };

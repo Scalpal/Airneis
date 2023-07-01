@@ -6,7 +6,7 @@ import checkIsAdmin from "@/api/middlewares/checkIsAdmin";
 import slowDown from "@/api/middlewares/slowDown";
 import validate from "@/api/middlewares/validate";
 import mw from "@/api/mw";
-import { arrayValidator, idValidator, numberValidator, stringValidator } from "@/validator";
+import { arrayValidator, boolValidator, idValidator, numberValidator, stringValidator } from "@/validator";
 import getProductsAverageRating from "@/web/services/products/getProductsAverageRating";
 import getProductsImagesWithSignedUrls from "@/web/services/products/getProductsImagesWithSignedUrl";
 
@@ -67,13 +67,14 @@ const handler = mw({
         price: numberValidator,
         stock: numberValidator,
         categoryId: numberValidator,
-        materials: arrayValidator
+        materials: arrayValidator,
+        showInHome: boolValidator
       }
     }), 
     async({
       locals: {
         query: { productId },
-        body: { name, description, price, stock, categoryId, materials }
+        body: { name, description, price, stock, categoryId, materials, showInHome }
       }, 
       res
     }) => {
@@ -88,39 +89,49 @@ const handler = mw({
           return;
         }
 
-        const productMaterialIds = product.materials.reduce((acc, { id }) => [...acc, id], []);
-        const materialsToAdd = materials.map((id) => {
-          const materialId = Number.parseInt(id);
+        if (materials) {
+          const productMaterialIds = product.materials.reduce((acc, { id }) => [...acc, id], []);
+          
+          // Add new materials
+          const materialsToAdd = materials.map((id) => {
+            const materialId = Number.parseInt(id);
 
-          if (!productMaterialIds.includes(materialId)) {
-            return { productId: Number.parseInt(productId), materialId: materialId };
+            if (!productMaterialIds.includes(materialId)) {
+              return { productId: Number.parseInt(productId), materialId: materialId };
+            } 
+          }).filter(elt => elt !== undefined);
+
+          if (materialsToAdd.length > 0) {
+            await ProductMaterialRelationModel.query().insert(materialsToAdd).returning("*");
           }
-        }).filter(elt => elt !== undefined);
 
-        if (materialsToAdd.length > 0) {
-          await ProductMaterialRelationModel.query().insert(materialsToAdd).returning("*");
+          // Delete materials
+          const materialsToDelete = productMaterialIds.map((id) => {
+            const materialsIdsInt = materials.reduce((acc, id) => [...acc, Number.parseInt(id)], []);
+            const materialId = Number.parseInt(id);
+
+            if (!materialsIdsInt.includes(materialId)) {
+              return materialId;
+            }
+          }).filter(elt => elt !== undefined);
+
+          if (materialsToDelete.length > 0) {
+            await ProductMaterialRelationModel.query()
+              .delete()
+              .whereIn("materialId", materialsToDelete)
+              .andWhere("productId", id)
+              .returning("*");
+          }
         }
 
-        const materialsToDelete = productMaterialIds.map((id) => {
-          const materialsIdsInt = materials.reduce((acc, id) => [...acc, Number.parseInt(id)], []);
-          const materialId = Number.parseInt(id);
-
-          if (!materialsIdsInt.includes(materialId)) {
-            return materialId;
-          }
-        }).filter(elt => elt !== undefined);
-
-        if (materialsToDelete.length > 0) {
-          await ProductMaterialRelationModel.query().delete().whereIn("materialId", materialsToDelete).andWhere("productId", id).returning("*");
-        }
-        
         const updatedProduct = await ProductModel.query()
           .patch({
             ...(name ? { name } : {}),
             ...(description ? { description } : {}),
             ...(price ? { price } : {}),
             ...(stock ? { stock } : {}),
-            ...(categoryId ? { categoryId } : {})
+            ...(categoryId ? { categoryId } : {}),
+            ...(showInHome !== null ? { showInHome } : {})
           })
           .where("id", id)
           .returning("*")
@@ -128,7 +139,7 @@ const handler = mw({
           .withGraphFetched("category")
           .withGraphFetched("reviews")
           .withGraphFetched("productImages");
-                
+                        
         // Products with average rating
         const productWithAverageRating = getProductsAverageRating([updatedProduct[0]]); 
         

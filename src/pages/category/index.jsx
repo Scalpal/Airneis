@@ -2,6 +2,7 @@ import Banner from "@/web/components/Banner";
 import CategoriesBlocks from "@/web/components/CategoriesBlocks";
 import Axios from "axios";
 import routes from "@/web/routes";
+import Head from "next/head";
 
 export const getServerSideProps = async () => {
   try {
@@ -26,6 +27,10 @@ const Categories = (props) => {
 
   return (
     <>
+      <Head>
+        <title>Airneis - Categories</title>
+      </Head>        
+
       <Banner title={"Categories"} />
 
       <main>

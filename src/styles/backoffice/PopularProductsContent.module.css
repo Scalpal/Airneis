@@ -1,0 +1,39 @@
+.container {
+  display: grid;
+  justify-content: flex-start;
+  grid-template-rows: auto;
+  grid-template-columns: repeat(auto-fit,minmax(200px, 1fr));
+  grid-gap: 1rem;
+}
+
+.container > div, 
+.container > button {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 9/16;
+}
+
+.addProductButton {
+  display:flex;
+  flex-direction: column;
+  justify-content: center; 
+  align-items: center;
+  gap: 2rem;
+  background: none;
+  border: 1px solid var(--light-grey);
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 300;
+  transition-duration: 300ms;
+}
+
+.addProductIcon {
+  width: 50px;
+  height: 50px;
+}
+
+.addProductButton:hover {
+  background-color: var(--light-grey);
+  cursor: pointer;
+}
+

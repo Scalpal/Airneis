@@ -13,7 +13,7 @@ const LoginLayout = ({children}) => {
     >
       <div className={styles.left}>
         <div className={styles.leftBackground}></div>
-        <Link href="/home">Airneis </Link>
+        <Link href="/">Airneis </Link>
         <p>A reference in the world of furniture.</p>
       </div>
 
