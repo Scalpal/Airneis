@@ -1,0 +1,39 @@
+.editForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  min-width: 200px;
+}
+
+.editFormTitle {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.editFormInput {
+  padding: 0.5rem;
+  border: 0;
+  outline: 0;
+  border-bottom: 1px solid var(--primary);
+  font-size: 0.9rem;
+  transition-duration: 100ms;
+  transition-timing-function: linear;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+}
+
+.toggleWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+}
+
+
+/* Hover effects */
+.editFormInput:focus {
+  border-bottom: 1px solid var(--primary);
+}

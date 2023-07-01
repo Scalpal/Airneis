@@ -30,7 +30,7 @@ const handler = mw({
           return;
         } 
 
-        const slug = parseInt(req.query.categorySlug); 
+        const slug = req.query.categorySlug;
 
         const category = await CategoryModel.query().findOne({ slug });
 
