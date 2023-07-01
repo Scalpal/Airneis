@@ -4,6 +4,7 @@
   margin-bottom: 20vh;
   position: relative;
   display: block ;
+  transition-duration: 300ms;
 }
 
 .bannerTitle {
@@ -12,9 +13,10 @@
   left: 50%;
   transform: translate(-50%, -50%); 
   z-index: 10;
-  color: white;
-  font-size: 3rem;
-  font-weight: 300;
+  color: var(--secondary);
+  font-size: 3.5rem;
+  font-weight: 500;
+  font-style: regular;
   letter-spacing: 14px;
   text-align: center;
   width: fit-content;
@@ -25,6 +27,7 @@
   height: 100%;
   object-fit: cover;
   object-position: center;
+  transition-duration: 300ms;
 }
 
 .anchorButton {

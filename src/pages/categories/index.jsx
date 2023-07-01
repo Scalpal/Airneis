@@ -29,6 +29,7 @@ const Categories = (props) => {
     <>
       <Head>
         <title>Airneis - Categories</title>
+        <meta key={"Categories head"} />
       </Head>        
 
       <Banner title={"Categories"} />

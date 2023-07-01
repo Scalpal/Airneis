@@ -34,6 +34,9 @@ const handler = mw({
           return;
         }
 
+        const imageSignedUrl = await getImageWithSignedUrl(category.imageSrc);
+        category.imageUrl = imageSignedUrl;
+
         res.send({ category: category });
       } catch (error) {
         res.status(500).send({ error: error });
@@ -83,7 +86,6 @@ const handler = mw({
           .returning("*");
 
         const imageSignedUrl = await getImageWithSignedUrl(updatedCategory.imageSrc);
-
         updatedCategory.imageUrl = imageSignedUrl;
 
         res.send({ category: updatedCategory, status: "success", message: "Category updated successfully." });

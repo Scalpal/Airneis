@@ -1,6 +1,5 @@
 import Banner from "@/web/components/Banner";
 import DetailedProductCard from "@/web/components/DetailedProductCard";
-import { useRouter } from "next/router";
 import styles from "@/styles/categoryPage.module.css";
 import useGetProducts from "@/web/hooks/useGetProducts";
 import { useCallback } from "react";
@@ -20,7 +19,7 @@ export const getServerSideProps = async (context) => {
     
     return {
       props: {
-        category: data
+        categoryProps: data
       }
     };
   } catch (error) {
@@ -33,8 +32,7 @@ export const getServerSideProps = async (context) => {
 };
 
 const Category = (props) => {
-  const { category } = props;
-  const router = useRouter();
+  const { categoryProps: { category } } = props;
 
   const { data, isLoading, isValidating, size, setSize } = useGetProducts({ categories: category.id, limit: 3 });
   const products = data ? data.reduce((acc, { products }) => [...acc, ...products], []) : [];
@@ -48,10 +46,11 @@ const Category = (props) => {
   return (
     <>
       <Head>
-        <title>Airneis - Category</title>
+        <title>Airneis - {category.name}</title>
+        <meta key={"Specific category head"} />
       </Head>        
 
-      <Banner title={router.query.categoryName} />
+      <Banner title={category.name} image={category.imageUrl} />
 
       <main>
         <p className={styles.descriptionText}>
