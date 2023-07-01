@@ -12,9 +12,9 @@ import { useState } from "react";
 import Head from "next/head";
 
 export const getServerSideProps = async (context) => {
-  const { productId } = context.query;  
+  const { productSlug } = context.query;  
 
-  const { data: { product } } = await Axios.get(`${process.env.API_URL}${routes.api.products.single(productId)}`); 
+  const { data: { product } } = await Axios.get(`${process.env.API_URL}${routes.api.products.single(productSlug)}`); 
 
   const specificCategory = `?categories=${Number.parseInt(product.category.id)}&`;
   const { data: { products } } = await Axios.get(`${process.env.API_URL}${routes.api.products.collection(specificCategory, 1)}`);
@@ -34,11 +34,10 @@ const ProductPage = (props) => {
   const [limit] = useState(4);
   const [page, setPage] = useState(1); 
 
-
   return (
     <>
       <Head>
-        <title>Airneis - </title>
+        <title>Airneis - {product.name}</title>
       </Head>  
       
       <Banner title={product.name} />
@@ -89,7 +88,7 @@ const ProductPage = (props) => {
         </div>
 
         <ProductReviews
-          productId={product.id}
+          productSlug={product.slug}
           page={page}
           setPage={setPage}
           limit={limit}

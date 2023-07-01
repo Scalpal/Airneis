@@ -17,7 +17,16 @@ const nextConfig = {
 				hostname:	"airneis-ecommerce-shop.s3.eu-north-1.amazonaws.com",
 			},
 		],
-	},
+  },
+  async redirects() {
+    return [
+      {
+        source: "/_error",
+        destination: "/",
+        permanent: false
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;
