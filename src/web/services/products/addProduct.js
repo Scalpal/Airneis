@@ -3,7 +3,7 @@ import getApiClient from "../getApiClient";
 
 const addProduct = async(values) => {
   const reqInstance = getApiClient();
-  const url = routes.api.products.add();
+  const url = routes.api.products.base();
 
   try {
     const { data } = await reqInstance.post(url, values);
