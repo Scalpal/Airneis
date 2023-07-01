@@ -1,15 +1,22 @@
 import { faker } from "@faker-js/faker";
 
 export const seed = async (knex) => {
-  const loop = 100;
+  const loop = 30;
+
+  const createSlug = (string) => string.split(" ").join("-").toLowerCase();
 
   const categoryIds = await knex("categories").pluck("id");
   const products = [];
   for (let i = 0; i < loop; i++) {
     const randomCategoryId = faker.helpers.arrayElement(categoryIds);
+
+    const productName = faker.commerce.productName();
+    const slug = createSlug(productName);
+
     products.push({
-      name: faker.commerce.productName(),
+      name: productName,
       description: faker.commerce.productDescription(),
+      slug: slug,
       price: faker.commerce.price({ min: 10, max: 1000, dec: 0 }),
       stock: faker.number.int(100),
       categoryId: randomCategoryId,

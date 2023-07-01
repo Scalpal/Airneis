@@ -42,6 +42,7 @@ module.exports.up = async (knex) => {
     table.increments("id");
     table.text("name").notNullable();
     table.text("description").notNullable();
+    table.text("slug").notNullable().unique();
     table.integer("price").notNullable();
     table.integer("stock").notNullable().defaultTo(1);
     table.integer("categoryId").notNullable().references("id").inTable("categories");
