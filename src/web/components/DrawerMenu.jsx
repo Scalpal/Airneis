@@ -3,14 +3,34 @@ import Link from "next/link";
 import { classnames } from "@/pages/_app";
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/router";
+import routes from "../routes";
+import { useEffect } from "react";
+import { useUser } from "../hooks/useUser";
+import useAppContext from "../hooks/useAppContext";
 
 const DrawerMenu = (props) => {
-  const { isDrawerToggledState, actions } = props;
+  const { isDrawerToggledState } = props;
   const [isDrawerToggled, setIsDrawerToggled] = isDrawerToggledState;
 
-  const [signOut, session] = actions ? actions : [null, null];
+  const {
+    actions: { signOut },
+    state: { session },
+  } = useAppContext();
+
+  const { userData, userError, userIsLoading } = useUser();
+  const user = !userError && !userIsLoading ? userData : {};
 
   const router = useRouter();
+  useEffect(() => {
+    if (isDrawerToggled === true) {
+      document.body.style.overflow = "hidden";
+
+      return;
+    }
+
+    document.body.style.overflow = "";
+  }, [isDrawerToggled]);
+
   const logout = () => {
     signOut();
     router.push("/");
@@ -57,5 +77,4 @@ const DrawerMenu = (props) => {
   );
 };
 
-
-export default DrawerMenu; 
+export default DrawerMenu;

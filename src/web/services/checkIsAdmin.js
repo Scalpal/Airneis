@@ -18,12 +18,12 @@ const checkIsAdmin = async(context) => {
     }
   } catch (error) {
     if (error instanceof AxiosError) {
- return {
-   redirect: {
-     destination: "/",
-     permanent: false,
-   },
- };
+      return {
+        redirect: {
+          destination: "/",
+          permanent: false
+        }
+      };
     }
   }
 };

@@ -8,6 +8,23 @@ const Pagination = (props) => {
 
   const [totalPages, setTotalPages] = useState([[]]);
   const [activeChunk, setActiveChunk] = useState(0); 
+  const [pagesArray, setPagesArray] = useState([]);
+
+  const findActiveChunk = useCallback(() => {
+    totalPages.map((chunk, index) => {
+      if (chunk.includes(page)) {
+        setActiveChunk(index);
+
+        return;
+      }
+    });
+  }, [totalPages, page]); 
+
+  const handleSelect = useCallback((e) => {
+    const value = Number.parseInt(e.target.value);
+
+    setPage(value);
+  }, [setPage]);
 
   useEffect(() => {
     const pages = []; 
@@ -32,17 +49,8 @@ const Pagination = (props) => {
     }, []);
 
     setTotalPages(chunkedPages);
+    setPagesArray(new Array(pagesCount).fill("").map((_, i) => i + 1));
   }, [dataCount, limit]);
-
-  const findActiveChunk = useCallback(() => {
-    totalPages.map((chunk, index) => {
-      if (chunk.includes(page)) {
-        setActiveChunk(index);
-
-        return;
-      }
-    });
-  }, [totalPages, page]);
 
   useEffect(() => {
     findActiveChunk();
@@ -100,7 +108,26 @@ const Pagination = (props) => {
         </button>
       </div>
       
-      <p className={styles.bottomText}>Page {page} of {Math.ceil(dataCount / limit)}</p>
+      <div className={styles.bottomTextWrapper}>
+        <p className={styles.bottomText}>
+          Page 
+          <select
+              className={styles.pageSelect}
+              onChange={(e) => handleSelect(e)}
+            >
+              {pagesArray.map((pageItem) => (
+                <option
+                  key={pageItem}
+                  value={pageItem}
+                  selected={pageItem  === page ? true : false}
+                >
+                  {pageItem}
+                </option>
+              ))}
+            </select>
+          of {Math.ceil(dataCount / limit)}
+        </p>
+      </div>
     </div>
   );
 };

@@ -21,14 +21,26 @@
 .overlayActive {
   opacity: 1;
   transition-delay: 100ms;
-  z-index: 9998;
+  z-index: 9999999;
 }
 
 .modal {
-  width: 90vw;
-  height: 90vh;
+  /* width: 90vw;
+  height: 90vh; */
   overflow: scroll;
   border-radius: 1rem;
   background-color: var(--secondary);
   overscroll-behavior: contain;
+}
+
+/* Modal sizes */
+.screen {
+  width: 90vw;
+  height: 90vh;
+}
+
+.fitContent {
+  width: fit-content;
+  height: fit-content;
+  padding: 1rem;
 }

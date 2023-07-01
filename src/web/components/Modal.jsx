@@ -3,7 +3,17 @@ import styles from "@/styles/components/Modal.module.css";
 import { useEffect } from "react";
 
 const Modal = (props) => {
-  const { showModal, setShowModal, children } = props;
+  const { showModal, setShowModal, size, children } = props;
+
+  const modalSize = () => {
+    switch (size) {
+      case "screen": return styles.screen;
+
+      case "fit-to-content": return styles.fitContent;
+
+      default: return styles.screen;
+    }
+  };
 
   useEffect(() => {
     if (showModal === true) {
@@ -34,7 +44,10 @@ const Modal = (props) => {
       showModal ? styles.overlayActive : styles.overlayInactive
     )}>
       <div
-        className={styles.modal}
+        className={classnames(
+          styles.modal,
+          modalSize()
+        )}
       >
         {children}
       </div>

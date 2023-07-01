@@ -1,0 +1,66 @@
+.container {
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-gap: 0.5rem;
+}
+
+.container > div {
+  width: 100%;
+  aspect-ratio: 16/9;
+}
+
+.notVisible {
+  opacity: 0.5;
+}
+
+.visibleInHome:before {
+  content: "Visible in home";
+  z-index: 9999999;
+  font-size: 0.7rem;
+  background-color: var(--primary);
+  color: var(--secondary);
+  padding: 0.3rem;
+  position: absolute;
+  border-bottom-right-radius: 10px;
+}
+
+.editForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  min-width: 200px;
+}
+
+.editFormTitle {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.editFormInput {
+  padding: 0.5rem;
+  border: 0;
+  outline: 0;
+  border-bottom: 1px solid var(--primary);
+  font-size: 0.9rem;
+  transition-duration: 100ms;
+  transition-timing-function: linear;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+}
+
+.toggleWrapper {
+  display: flex; 
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+}
+
+
+/* Hover effects */
+.editFormInput:focus {
+  border-bottom: 1px solid var(--primary);
+}

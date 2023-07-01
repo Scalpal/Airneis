@@ -11,8 +11,8 @@ import {
   useState,
 } from "react";
 import { parseCookies } from "nookies";
-import Axios from "axios";
 import routes from "../routes";
+import getApiClient from "../services/getApiClient";
 
 const AppContext = createContext();
 
@@ -34,10 +34,13 @@ export const AppContextProvider = (props) => {
       return; 
     }
 
-    try {
-      const { data: { user } } = await Axios.get(routes.api.users.single(session.user.id));
+    const reqInstance = getApiClient();
+    const url = `${process.env.API_URL}${routes.api.users.self()}`;
 
-      return user;
+    try {
+      const { data } = await reqInstance.get(url);
+
+      return data;
     } catch (error) {
       return error;
     }
