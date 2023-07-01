@@ -112,14 +112,14 @@ const Pagination = (props) => {
         <p className={styles.bottomText}>
           Page 
           <select
-              className={styles.pageSelect}
-              onChange={(e) => handleSelect(e)}
-            >
+            className={styles.pageSelect}
+            onChange={(e) => handleSelect(e)}
+            value={page}
+          >
               {pagesArray.map((pageItem) => (
                 <option
                   key={pageItem}
                   value={pageItem}
-                  selected={pageItem  === page ? true : false}
                 >
                   {pageItem}
                 </option>
