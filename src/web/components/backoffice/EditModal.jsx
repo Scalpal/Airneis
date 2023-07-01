@@ -12,16 +12,17 @@ const EditModal = () => {
         <PencilSquareIcon className={styles.icon} />
       </td>
 
-      <div
-        className={classnames(
-          styles.overlay,
-          showEditModal ? styles.overlayActive : styles.overlayInactive
-        )}
-      >
-        <div className={styles.modal}>
+      <div className={classnames(
+        styles.overlay,
+        showEditModal ? styles.overlayActive : styles.overlayInactive
+      )}>
+        <div
+          className={styles.modal}
+        >
           <button onClick={() => setShowEditModal(false)}> haha</button>
         </div>
       </div>
+
     </>
   );
 };

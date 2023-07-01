@@ -4,40 +4,31 @@ import LoginLayout from "@/web/components/LoginLayout";
 import { Form, Formik } from "formik";
 import styles from "@/styles/register.module.css";
 import { useCallback, useState } from "react";
-import {
-  createValidator,
-  emailValidator,
-  passwordValidator,
-  phoneValidator,
-  stringValidator,
-} from "@/validator";
+import { createValidator, emailValidator, passwordValidator, phoneValidator, stringValidator } from "@/validator";
 import { useRouter } from "next/router";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/solid";
 import CollapseMenu from "@/web/components/CollapseMenu";
 import useAppContext from "@/web/hooks/useAppContext";
+import Head from "next/head";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 const validationSchema = createValidator({
-  firstName: stringValidator
-    .required("First name is a required field.")
-    .min(2, "Your firstname should be 2 characters long at least"),
-  lastName: stringValidator
-    .required("Last name is a required field.")
-    .min(2, "Your lastname should be 2 characters long at least"),
-  phoneNumber: phoneValidator.required("The phone number is a required field."),
+  firstName: stringValidator.required("First name is a required field.").min(2, "Your firstname should be 2 characters long at least"),
+  lastName: stringValidator.required("Last name is a required field.").min(2, "Your lastname should be 2 characters long at least"),
+  phoneNumber: phoneValidator.required("The phone number is a required field."),  
   email: emailValidator.required("The email is a required field."),
   password: passwordValidator.required("The password is  a required field."),
   address: stringValidator,
   city: stringValidator,
   region: stringValidator,
   postalCode: stringValidator,
-  country: stringValidator,
+  country: stringValidator, 
 });
 
 const initialValues = {
   firstName: "",
-  lastName: "",
+  lastName: "", 
   phoneNumber: "",
   email: "",
   password: "",
@@ -45,40 +36,39 @@ const initialValues = {
   city: "",
   region: "",
   postalCode: "",
-  country: "",
-};
+  country: "", 
+}; 
 
 const Register = () => {
   const { t } = useTranslation(["register"]);
   const router = useRouter();
-  const {
-    actions: { signUp },
-  } = useAppContext();
+  const { actions: { signUp } } = useAppContext();
   const [error, setError] = useState(null);
 
-  const handleSubmit = useCallback(
-    async (values) => {
-      const [error] = await signUp(values);
+  const handleSubmit = useCallback(async (values) => {
+    const [error] = await signUp(values); 
 
-      if (error) {
-        if (error[0].response.status === 409) {
-          setError("E-mail already used.");
+    if (error) {
+      if (error[0].response.status === 409) {
+        setError("E-mail already used.");
 
-          return;
-        } else {
-          setError("Oops, something went wrong.");
-
-          return;
-        }
+        return;
+      } else {
+        setError("Oops, something went wrong.");
+ 
+        return;
       }
+    }
 
-      router.push("/login");
-    },
-    [router, signUp]
-  );
+    router.push("/login"); 
+  }, [router, signUp]); 
 
   return (
     <main className={styles.container}>
+      <Head>
+        <title>Airneis - Register</title>
+      </Head>  
+
       <Formik
         onSubmit={handleSubmit}
         validationSchema={validationSchema}
@@ -95,7 +85,6 @@ const Register = () => {
                 {error}
               </p>
             )}
-
             <LoginField
               name="firstName"
               type="text"
@@ -119,7 +108,7 @@ const Register = () => {
               showError={true}
               required={true}
             />
-
+            
             <LoginField
               name="email"
               type="text"
@@ -164,7 +153,7 @@ const Register = () => {
                 label={t("postalCode")}
                 showError={true}
               />
-
+              
               <LoginField
                 name="country"
                 type="text"
@@ -201,7 +190,11 @@ export async function getStaticProps({ locale }) {
 }
 
 Register.getLayout = function (page) {
-  return <LoginLayout>{page}</LoginLayout>;
+  return (
+    <LoginLayout>
+      {page}
+    </LoginLayout>
+  );
 };
 
 export default Register;

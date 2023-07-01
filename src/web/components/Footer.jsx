@@ -9,20 +9,24 @@ const Footer = () => {
   return (
     <footer className={styles.footer}>
       <div className={styles.footerInfos}>
-        {/* Social network icons */}
-        {/* <div>
+        <div>
+          <p className={styles.footerInfosBrandTitle}>Airneis</p>
+
+          {/* Social network icons */}
+          {/* <div>
 
           </div> */}
 
-        <div className={styles.footerInfosLink}>
-          <div className={styles.footerLink}>
-            <Link href={routes.cgu()}>{t("termsOfUse")}</Link>
-          </div>
-          <div className={styles.footerLink}>
-            <Link href={routes.legalMention()}>{t("legalMentions")}</Link>
-          </div>
-          <div className={styles.footerLink}>
-            <Link href={routes.contact()}>{t("contact")}</Link>
+          <div className={styles.footerInfosLink}>
+            <div className={styles.footerLink}>
+              <Link href={routes.cgu()}>{t("termsOfUse")}</Link>
+            </div>
+            <div className={styles.footerLink}>
+              <Link href={routes.legalMention()}>{t("legalMentions")}</Link>
+            </div>
+            <div className={styles.footerLink}>
+              <Link href={routes.contact()}>{t("contact")}</Link>
+            </div>
           </div>
         </div>
       </div>

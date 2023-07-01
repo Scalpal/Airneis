@@ -8,6 +8,7 @@ import useAppContext from "@/web/hooks/useAppContext";
 import LoginLayout from "@/web/components/LoginLayout";
 import LoginField from "@/web/components/LoginField";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
+import Head from "next/head";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
@@ -24,28 +25,27 @@ const initialValues = {
 const Login = () => {
   const { t } = useTranslation("login");
   const router = useRouter();
-  const {
-    actions: { signIn },
-  } = useAppContext();
+  const { actions: { signIn } } = useAppContext();
   const [error, setError] = useState(null);
 
-  const handleSubmit = useCallback(
-    async (values) => {
-      const [err] = await signIn(values);
+  const handleSubmit = useCallback(async (values) => {
+    const [err] = await signIn(values);
 
-      if (err) {
-        setError(err[0].response.data.error);
+    if (err) {
+      setError(err[0].response.data.error);
 
-        return;
-      }
+      return;
+    }
 
-      router.push("/");
-    },
-    [signIn, router]
-  );
+    router.push("/");
+  },[signIn, router]);
 
   return (
     <main className={styles.container}>
+      <Head>
+        <title>Airneis - Login</title>
+      </Head>  
+
       <Formik
         onSubmit={handleSubmit}
         validationSchema={validationSchema}
@@ -94,6 +94,7 @@ const Login = () => {
                 </span>
               </p>
             </div>
+
           </Form>
         )}
       </Formik>
@@ -113,4 +114,5 @@ Login.getLayout = function (page) {
   return <LoginLayout>{page}</LoginLayout>;
 };
 
-export default Login;
+
+export default Login; 

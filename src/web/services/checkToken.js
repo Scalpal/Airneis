@@ -4,9 +4,9 @@ const checkToken = async (token) => {
   if (!token) {
     return {
       redirect: {
-        destination: "/home",
-        permanent: false,
-      },
+        destination: "/",
+        permanent: false
+      }
     };
   }
 
@@ -16,9 +16,9 @@ const checkToken = async (token) => {
   if (isTokenExpired) {
     return {
       redirect: {
-        destination: "/home",
-        permanent: false,
-      },
+        destination: "/",
+        permanent: false
+      }
     };
   }
 };

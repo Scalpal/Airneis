@@ -1,23 +1,24 @@
 import styles from "@/styles/components/ProductCard.module.css";
 import { useRouter } from "next/router";
-import routes from "@/web/routes";
-import Image from "next/image";
+import ImageWithFallback from "./ImageWithFallback";
 
 const ProductCard = (props) => {
-  const { product } = props;
-  const router = useRouter();
+  const { product } = props; 
+  const router = useRouter(); 
 
   return (
+
     <div
       className={styles.productCard}
-      onClick={() => router.push(routes.queryPage.products(product.id))}
+      onClick={() => router.push("/products/" + product.id)}
     >
       <div className={styles.productCardImageContainer}>
-        <Image
-          className={styles.productCardImage}
-          // src={typeof product.productImages[0] !== "undefined" ?  product.productImages[0].imageUrl : "/product-image-placeholder.jpg"}
-          src="/meuble-2.jpeg"
-          alt={"Image du produit"}
+
+        <ImageWithFallback
+          className={styles.productImage}
+          alt={"Product image"}
+          src={typeof product.productImages[0] !== "undefined" ?  product.productImages[0].imageUrl : "/product-image-placeholder.jpg"}
+          fallbackSrc={`/placeholder-image.png`}
           fill
         />
       </div>

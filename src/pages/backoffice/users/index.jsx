@@ -15,21 +15,18 @@ import getApiClient from "@/web/services/getApiClient";
 import checkIsAdmin from "@/web/services/checkIsAdmin";
 import Modal from "@/web/components/Modal";
 import SpecificUserPageContent from "@/web/components/backoffice/SpecificUserPageContent";
+import Head from "next/head";
 
 export const getServerSideProps = async (context) => {
   const { token } = parseCookies(context);
   const badTokenRedirect = await checkToken(token);
-
-  if (badTokenRedirect) {
-    return badTokenRedirect;
-  }
-
   const notAdminRedirect = await checkIsAdmin(context);
 
-  if (notAdminRedirect) {
-    return notAdminRedirect;
-  }
 
+  if (badTokenRedirect || notAdminRedirect) {
+    return badTokenRedirect || notAdminRedirect; 
+  }
+  
   const reqInstance = getApiClient(context);
 
   try {
@@ -48,9 +45,9 @@ export const getServerSideProps = async (context) => {
   } catch (error) {
     return {
       redirect: {
-        destination: "/home",
-        permanent: false,
-      },
+        destination: "/",
+        permanent: false
+      }
     };
   }
 };
@@ -58,23 +55,21 @@ export const getServerSideProps = async (context) => {
 const userInfoTab = "user-info";
 
 const BackofficeUsers = (props) => {
-  const { usersProps, count } = props;
-  const {
-    actions: { api },
-  } = useAppContext();
+  const { usersProps, count } = props; 
+  const { actions: { api } } = useAppContext(); 
 
-  const [alert, setAlert] = useState({ status: "", message: "" });
-  const [showAlert, setShowAlert] = useState(false);
+  const [alert, setAlert] = useState({ status: "", message: ""}); 
+  const [showAlert, setShowAlert] = useState(false); 
   const [users, setUsers] = useState({ users: usersProps, count: count });
-  const [activeUser, setActiveUser] = useState(null);
+  const [activeUser, setActiveUser] = useState(null); 
   const [showModal, setShowModal] = useState(false);
-  const [activeTab, setActiveTab] = useState("");
+  const [activeTab, setActiveTab] = useState(""); 
   const [queryParams, setQueryParams] = useState({
     limit: 10,
     page: 1,
     order: "asc",
     orderField: "id",
-    search: "",
+    search: ""
   });
 
   const handleQueryParams = useCallback(
@@ -187,7 +182,16 @@ const BackofficeUsers = (props) => {
   }, [queryParams, updateUsers]);
 
   return (
-    <main className={classnames(styles.mainContainer, nunito.className)}>
+    <main
+      className={classnames(
+        styles.mainContainer,
+        nunito.className
+      )}
+    >
+      <Head>
+        <title>Airneis - Backoffice : Users</title>
+      </Head>  
+
       <div className={styles.topStats}>
         <div>
           <p>Total of users</p>
@@ -239,7 +243,6 @@ const BackofficeUsers = (props) => {
           deleteRowFunction={desactivateUser}
         />
       </div>
-
       <Modal showModal={showModal} setShowModal={setShowModal}>
         {activeTab === userInfoTab && (
           <SpecificUserPageContent

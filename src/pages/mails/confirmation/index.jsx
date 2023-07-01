@@ -9,7 +9,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 const MailConfirmation = ({ error }) => {
   const { t } = useTranslation("confirmationMail");
   const router = useRouter();
-
+  
   const handleclick = () => {
     router.push(routes.home());
   };
@@ -42,10 +42,11 @@ export async function getServerSideProps(context) {
     await axios.put(`
     ${process.env.API_URL}/api/mail/confirmation?id=${id}`);
 
-    return {
+    
+return {
       props: {
-        error: null,
-      },
+        error: null
+      }
     };
   } catch (error) {
     return {

@@ -1,9 +1,9 @@
-const createRouteWithQueryParams = (route, params) => {
-  if (!params) {
+const createRouteWithQueryParams = (route, query) => {
+  if (!query) {
     return route;
   }
 
-  const qs = new URLSearchParams(params).toString();
+  const qs = new URLSearchParams(query).toString();
 
   return `${route}?${qs}`;
 };
@@ -12,10 +12,9 @@ const routes = {
   home: () => "/",
   register: () => "/register",
   login: () => "/login",
-  cgu: () => "/terms-and-conditions",
-  legalMention: () => "/legal-mentions",
+  cgu: () => "terms-of-use",
+  legalMentions: () => "/legal-mentions",
   contact: () => "/contact",
-  aboutUs: () => "/about-us",
   products: {
     base: () => `/products`,
     single: (productId) => `/products/${productId}`,
@@ -26,15 +25,9 @@ const routes = {
   },
   backoffice: {
     base: () => "/backoffice",
-    users: {
-      single: (userId) =>
-        createRouteWithQueryParams(`/backoffice/users/${userId}`),
-    },
-    products: {
-      add: () => "/backoffice/products/add",
-      single: (productId) =>
-        createRouteWithQueryParams(`/backoffice/products/${productId}`),
-    },
+    users: () => "backoffice/users",
+    products: () => "backoffice/products",
+    shop: () => "backoffice/shop",
   },
   api: {
     register: () => "/users/register",
@@ -52,14 +45,25 @@ const routes = {
         }`,
       update: (productId) => `/products/${productId}`,
       materials: () => "/api/products/materials",
-      add: () => "/products",
+      add: () => "/api/products",
       reviews: (productId, limit, page) =>
         `/api/products/${productId}/reviews?limit=${limit}&page=${page}`,
       productImage: (productId) => `/api/products/${productId}/images`,
       deleteImage: (productId) => `/api/products/${productId}/deleteImage`,
     },
+    images: {
+      homeCarousel: {
+        base: (queryString) =>
+          `/api/images/homeCarousel${queryString ? queryString : ""}`,
+        single: (imageId) => `/api/images/homeCarousel/${imageId}`,
+        upload: () => "/api/images/homeCarousel/upload",
+      },
+    },
     categories: {
-      base: () => "/api/products/categories",
+      base: (queryString) =>
+        `/api/products/categories${queryString ? queryString : ""}`,
+      single: (categoryId) => `/api/products/categories/${categoryId}`,
+      upload: (categoryId) => `/api/products/categories/${categoryId}/upload`,
       products: (categoryId) => `/api/products?categories=${categoryId}`,
     },
     users: {

@@ -12,7 +12,7 @@ const auth = () => {
 
       return;
     }
-
+   
     const jwt = req.headers.authorization.slice(7);
 
     if (!jwt) {
@@ -54,5 +54,4 @@ const auth = () => {
     }
   };
 };
-
 export default auth;

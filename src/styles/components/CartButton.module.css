@@ -13,28 +13,29 @@
   cursor: pointer;
 }
 
-.navbarButtonIcon.black {
-  color: black;
+.navbar .navbarButtonIcon {
+  color: white;
+}
+
+.navbarNotFixed .navbarButtonIcon {
+  color: white;
 }
 
 .navbarButtonCartCount {
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  align-items: center;
+  justify-content:center; 
+  align-items:center;
+  justify-content:center; 
+  align-items:center;
   position: absolute;
   top: -8px;
   right: -8px;
   border-radius: 50%;
-  width: 1.35vw;
-  height: 1.35vw;
-  font-size: 0.8vw;
+  width: 18px;
+  height: 18px;
+  padding: 2px;
   background-color: var(--primary);
   color: white;
   font-weight: 600;
-  cursor: pointer;
-}
-.CartCountMax{
-font-size: 0.65vw;
- cursor: pointer;
 }

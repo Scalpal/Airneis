@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Bars3Icon } from "@heroicons/react/24/solid";
+import { Bars3Icon} from "@heroicons/react/24/solid";
 import styles from "@/styles/components/Navbar.module.css";
 import { useEffect } from "react";
 import { classnames } from "@/pages/_app";
@@ -11,22 +11,19 @@ const Navbar = (props) => {
   const { t } = useTranslation(["navbar"]);
   const { fixed, isDrawerToggledState } = props;
 
-  const [isDrawerToggled, setIsDrawerToggled] = isDrawerToggledState;
-
+  const [isDrawerToggled, setIsDrawerToggled] = isDrawerToggledState; 
+  
   useEffect(() => {
     const navbar = document.querySelector("#navbar");
 
     if (fixed) {
-      const carouselObserver = new IntersectionObserver(
-        (entries) => {
-          if (entries[0].isIntersecting === true || isDrawerToggled === true) {
-            navbar.classList.remove("navbarBackground");
-          } else {
-            navbar.classList.add("navbarBackground");
-          }
-        },
-        { threshold: [0.1] }
-      );
+      const carouselObserver = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting === true || isDrawerToggled === true) {
+          navbar.classList.remove("navbarBackground");
+        } else {
+          navbar.classList.add("navbarBackground");
+        }
+      }, { threshold: [0.1] });
 
       carouselObserver.observe(document.querySelector("#carousel"));
     } else {
@@ -36,14 +33,19 @@ const Navbar = (props) => {
 
   return (
     <nav
-      className={classnames(fixed ? styles.navbar : styles.navbarNotFixed)}
+      className={classnames(
+        fixed ? styles.navbar : styles.navbarNotFixed)
+      }
       id="navbar"
     >
       <Link href="/" className={classnames("navbarLogo", styles.navbarLogo)}>
         {t("airneis")} 
       </Link>
 
-      <ul className={classnames(styles.navbarList, styles.midLinks)}>
+      <ul className={classnames(
+        styles.navbarList,
+        styles.midLinks
+      )}>
         <li>
           <Link href="/" className={styles.navbarLink}>
             {t("home")}

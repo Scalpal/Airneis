@@ -5,18 +5,26 @@ import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/router";
 import routes from "../routes";
 import { useEffect } from "react";
+import { useUser } from "../hooks/useUser";
+import useAppContext from "../hooks/useAppContext";
 import { useTranslation } from "next-i18next";
 import LanguageSelect from "./LanguageSelect";
 
+
 const DrawerMenu = (props) => {
   const { t } = useTranslation(["drawerMenu"]);
-  const { isDrawerToggledState, actions } = props;
+  const { isDrawerToggledState } = props;
   const [isDrawerToggled, setIsDrawerToggled] = isDrawerToggledState;
 
-  const [signOut, session] = actions ? actions : [null, null];
+  const {
+    actions: { signOut },
+    state: { session },
+  } = useAppContext();
+
+  const { userData, userError, userIsLoading } = useUser();
+  const user = !userError && !userIsLoading ? userData : {};
 
   const router = useRouter();
-
   useEffect(() => {
     if (isDrawerToggled === true) {
       document.body.style.overflow = "hidden";
@@ -29,7 +37,7 @@ const DrawerMenu = (props) => {
 
   const logout = () => {
     signOut();
-    router.push(routes.pages.home());
+    router.push("/");
   };
 
   return (
@@ -61,8 +69,8 @@ const DrawerMenu = (props) => {
         ) : (
           <Link href={routes.register()}>{t("register")}</Link>
         )}
-        {session && (
-          <Link href={routes.backoffice.base()}>{t("backoffice")}</Link>
+        {!userIsLoading && user.isAdmin && (
+          <Link href={routes.backoffice.users()}>{t("backoffice")}</Link>
         )}
         <Link href={routes.cgu()}>{t("termsOfUse")}</Link>
         <Link href={routes.legalMention()}>{t("legalMentions")}</Link>

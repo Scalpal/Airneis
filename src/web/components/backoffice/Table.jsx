@@ -1,8 +1,13 @@
 import styles from "@/styles/backoffice/Table.module.css";
 import { classnames } from "@/pages/_app";
-import { TrashIcon, InformationCircleIcon} from "@heroicons/react/24/outline";
+import { TrashIcon, InformationCircleIcon } from "@heroicons/react/24/outline";
 import { useCallback } from "react";
-import { ChevronUpIcon, ChevronDownIcon, CheckIcon, XMarkIcon } from "@heroicons/react/24/solid";
+import {
+  ChevronUpIcon,
+  ChevronDownIcon,
+  CheckIcon,
+  XMarkIcon,
+} from "@heroicons/react/24/solid";
 import { splitCamelCase } from "@/web/services/SplitCamelCase";
 
 const Table = (props) => {
@@ -20,27 +25,24 @@ const Table = (props) => {
 
   const showValue = useCallback((key, value, i) => {
     if (Array.isArray(value)) {
-      return (
-        value.map((obj, index) => (
-          <p key={index}>
-            {Object.entries(obj).map(([objKey, objValue]) => {   
+      return value.map((obj, index) => (
+        <p key={index}>
+          {Object.entries(obj)
+            .map(([objKey, objValue]) => {
               // This is adapted for object with this structure : { id: 1, name: "XXXX" }
               // Not fully adapted to all use cases
               if (objKey === "name") {
                 return objValue;
               }
-            }).join("- ").replaceAll(",", "")}
-          </p>
-        ))
-      );
+            })
+            .join("- ")
+            .replaceAll(",", "")}
+        </p>
+      ));
     }
 
     if (typeof value === "object") {
-      return (
-        <p>
-          {value.name}
-        </p>
-      );
+      return <p>{value.name}</p>;
     }
 
     if (typeof value === "boolean") {
@@ -51,7 +53,7 @@ const Table = (props) => {
       );
     }
 
-    return <p key={i}>{value && value.toString()}</p>;
+     return <p key={i}>{value && value.toString()}</p>;
   }, []);
 
   const showActionsButtons = useCallback(
@@ -85,44 +87,47 @@ const Table = (props) => {
     <table className={classnames(styles.table)}>
       <thead>
         <tr>
-          {Object.keys(safeArray[0]).map((key, index) => (
+          {Object.keys(safeArray[0]).map((key, index) =>
             visibleColumns ? (
-              visibleColumns.includes(key)) && (
+              visibleColumns.includes(key) && (
                 <th
                   key={index}
-                  onClick={() => { sortColumn(key); }}
+                  onClick={() => {
+                    sortColumn(key);
+                  }}
                 >
                   <p>
                     <span>{splitCamelCase(key)}</span>
 
-                    {queryParams["orderField"] === key && (
-                      queryParams["order"] === "asc" ? (
+                    {queryParams["orderField"] === key &&
+                      (queryParams["order"] === "asc" ? (
                         <ChevronUpIcon className={styles.headerIcon} />
-                      ): (
+                      ) : (
                         <ChevronDownIcon className={styles.headerIcon} />
-                      )
-                    )}
+                      ))}
                   </p>
                 </th>
+              )
             ) : (
               <th
                 key={index}
-                onClick={() => { sortColumn(key); }}
+                onClick={() => {
+                  sortColumn(key);
+                }}
               >
                 <p>
                   <span>{splitCamelCase(key)}</span>
 
-                  {queryParams["orderField"] === key && (
-                    queryParams["order"] === "asc" ? (
+                  {queryParams["orderField"] === key &&
+                    (queryParams["order"] === "asc" ? (
                       <ChevronUpIcon className={styles.headerIcon} />
-                    ): (
+                    ) : (
                       <ChevronDownIcon className={styles.headerIcon} />
-                    )
-                  )}
+                    ))}
                 </p>
-              </th>   
+              </th>
             )
-          ))}
+          )}
           <th colSpan={2}>Actions</th>
         </tr>
       </thead>
@@ -134,18 +139,12 @@ const Table = (props) => {
               <tr key={rowIndex}>
                 {/* Loop on the objects keys */}
                 {Object.entries(item).map(([key, value], i) => {
-                  return (
-                    visibleColumns ? (
-                      visibleColumns.includes(key) && (
-                        <td key={i}>
-                          {showValue(key, value, i)}
-                        </td>
-                      )
-                    ): (
-                      <td key={i}>
-                        {showValue(key, value, i)}
-                      </td>
+                  return visibleColumns ? (
+                    visibleColumns.includes(key) && (
+                      <td key={i}>{showValue(key, value, i)}</td>
                     )
+                  ) : (
+                    <td key={i}>{showValue(key, value, i)}</td>
                   );
                 })}
 
