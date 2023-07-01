@@ -1,17 +1,12 @@
-import hashPassword from "@/api/db/hashPassword"
-import AddressModel from "@/api/db/models/AddressModel"
-import UserModel from "@/api/db/models/UserModel.js"
-import validate from "@/api/middlewares/validate.js"
-import mw from "@/api/mw.js"
-import { AES } from "crypto-js"
-import {
-  emailValidator,
-  phoneValidator,
-  stringValidator,
-  passwordValidator,
-} from "@/validator"
-import sgMail from "@sendgrid/mail"
-import config from "@/api/config.js"
+import hashPassword from "@/api/db/hashPassword";
+import AddressModel from "@/api/db/models/AddressModel";
+import UserModel from "@/api/db/models/UserModel.js";
+import slowDown from "@/api/middlewares/slowDown.js";
+import validate from "@/api/middlewares/validate.js";
+import mw from "@/api/mw.js";
+import { emailValidator, phoneValidator, stringValidator, passwordValidator } from "@/validator";
+import sgMail from "@sendgrid/mail";
+import config from "@/api/config.js";
 
 const handler = mw({
   POST: [
@@ -26,23 +21,12 @@ const handler = mw({
         city: stringValidator,
         region: stringValidator,
         postalCode: stringValidator,
-        country: stringValidator,
+        country: stringValidator, 
       },
     }),
     async ({
       locals: {
-        body: {
-          firstName,
-          lastName,
-          phoneNumber,
-          email,
-          password,
-          address,
-          city,
-          region,
-          postalCode,
-          country,
-        },
+        body: { firstName, lastName, phoneNumber, email, password, address, city, region, postalCode, country },
       },
       res,
     }) => {
@@ -56,7 +40,6 @@ const handler = mw({
         }
 
         const [passwordHash, passwordSalt] = await hashPassword(password);
-
         const addedUser = await UserModel.query()
           .insert({
             email,
@@ -94,7 +77,6 @@ const handler = mw({
             url: `${process.env.API_URL}/mails/confirmation?id=${addedUser.id}`,
           },
         };
-
         sgMail.send(msg);
         res.send({ success: true });
       } catch (error) {

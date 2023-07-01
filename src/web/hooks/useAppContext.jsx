@@ -75,6 +75,8 @@ export const AppContextProvider = (props) => {
         localStorage.setItem("products", JSON.stringify([...localStorageProducts, product]));
         setCart([...cart, product]);
 
+      if (currentProduct.quantity - 1 === 0) {
+        deleteProductFromCart(product);
         return;
       }
 
@@ -146,6 +148,7 @@ return;
         cart,
       },
     };
+
   }, [api, cart, session, signUp, signIn, signOut, getLoggedUser, setCart, addToCart, removeProductFromCart, deleteProductFromCart]);
 
   return (

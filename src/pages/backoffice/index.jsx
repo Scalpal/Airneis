@@ -4,7 +4,9 @@ import checkToken from "@/web/services/checkToken";
 import checkIsAdmin from "@/web/services/checkIsAdmin";
 
 const Backoffice = () => {
-  return <h2>Page index backoffice</h2>;
+  return (
+    <h2>Page index backoffice</h2>
+  );
 };
 
 Backoffice.getLayout = function (page) {
@@ -31,5 +33,4 @@ export const getServerSideProps = async (context) => {
     },
   };
 };
-
 export default Backoffice;

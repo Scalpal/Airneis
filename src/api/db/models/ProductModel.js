@@ -12,11 +12,6 @@ class ProductModel extends BaseModel {
       query.limit(limit).offset((page - 1) * limit),
   };
 
-  static modifiers = {
-    paginate: (query, limit, page) =>
-      query.limit(limit).offset((page - 1) * limit),
-  };
-
   static relationMappings() {
     return {
       category: {

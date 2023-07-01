@@ -1,7 +1,6 @@
 import styles from "@/styles/backoffice/statsPages.module.css";
 import Layout from "@/web/components/backoffice/Layout";
 import { useCallback, useEffect, useState } from "react";
-import { useCallback, useEffect, useState } from "react";
 import Table from "@/web/components/backoffice/Table";
 import { classnames } from "@/pages/_app";
 import { nunito } from "@/pages/_app";
@@ -122,11 +121,9 @@ const BackofficeProducts = (props) => {
 
   const sumTotalProducts = () => {
     const sumTotalProducts = productsProps.reduce(
-    const sumTotalProducts = productsProps.reduce(
       (sum, value) => sum + value.stock,
       0
     );
-
 
     return sumTotalProducts;
   };
@@ -160,7 +157,6 @@ const BackofficeProducts = (props) => {
       <div className={styles.topStats}>
         <div>
           <p>Total of unique products</p>
-          <p> {count}</p>
           <p> {count}</p>
         </div>
 

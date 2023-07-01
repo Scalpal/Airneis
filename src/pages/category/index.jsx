@@ -1,30 +1,28 @@
-import Banner from "@/web/components/Banner"
-import CategoriesBlocks from "@/web/components/CategoriesBlocks"
-import Axios from "axios"
-import routes from "@/web/routes"
+import Banner from "@/web/components/Banner";
+import CategoriesBlocks from "@/web/components/CategoriesBlocks";
+import Axios from "axios";
+import routes from "@/web/routes";
 
 export const getServerSideProps = async () => {
   try {
-    const {
-      data: { categories },
-    } = await Axios.get(`${process.env.API_URL}${routes.api.categories.base()}`)
+    const { data: { categories } } = await Axios.get(`${process.env.API_URL}${routes.api.categories.base()}`);
 
     return {
       props: {
-        categories: categories,
-      },
-    }
+        categories: categories
+      }
+    };
   } catch (error) {
     return {
       props: {
-        categories: [],
-      },
-    }
+        categories: []
+      }
+    };
   }
-}
+};
 
 const Categories = (props) => {
-  const { categories } = props
+  const { categories } = props;
 
   return (
     <>
@@ -34,7 +32,7 @@ const Categories = (props) => {
         <CategoriesBlocks categories={categories} />
       </main>
     </>
-  )
-}
+  );
+};
 
-export default Categories
+export default Categories;

@@ -1,6 +1,5 @@
 import BaseModel from "@/api/db/models/BaseModel.js";
 import ProductModel from "./ProductModel";
-import ProductModel from "./ProductModel";
 
 class MaterialModel extends BaseModel {
   static tableName = "materials";

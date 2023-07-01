@@ -86,6 +86,54 @@ const ProductFilterMenu = (props) => {
     return bool;
   }, [queryParams]);
 
+  const handlePriceLowToHigh = useCallback(() => {
+    setQueryParams({
+      ...queryParams,
+      order: "asc",
+      orderField: "price"
+    });
+  }, [queryParams, setQueryParams]);
+
+  const handlePriceHighToLow = useCallback(() => {
+    setQueryParams({
+      ...queryParams,
+      order: "desc",
+      orderField: "price"
+    });
+  }, [queryParams, setQueryParams]);
+
+  const handleNoSort = useCallback(() => {
+    setQueryParams({
+      ...queryParams,
+      order: "",
+      orderField: ""
+    });
+  }, [queryParams, setQueryParams]);
+
+  const handleSort = useCallback((value) => {
+    if (value === "1") {
+      handleNoSort();
+
+      return;
+    }
+
+    if (value === "2") {
+      handlePriceLowToHigh();
+      
+      return;
+    }
+
+    handlePriceHighToLow();
+    
+    return;
+  }, [handlePriceLowToHigh, handlePriceHighToLow, handleNoSort]); 
+
+  const isValueChecked = useCallback((queryKey, value) => {
+    const bool = queryParams[queryKey].findIndex((elt) => elt.value === value) === -1 ? false : true;
+
+    return bool;
+  }, [queryParams]);
+
   return (
     <>
       <button

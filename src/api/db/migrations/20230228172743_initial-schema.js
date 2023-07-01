@@ -23,29 +23,14 @@ module.exports.up = async (knex) => {
     table.bool("mainAddress").notNullable().defaultTo(false);
     table.integer("userId").notNullable().references("id").inTable("users");
   });
-    table.increments("id");
-    table.text("address");
-    table.text("city");
-    table.text("region");
-    table.text("postalCode");
-    table.text("country");
-    table.bool("mainAddress").notNullable().defaultTo(false);
-    table.integer("userId").notNullable().references("id").inTable("users");
-  });
 
   // Related to products
   await knex.schema.createTable("categories", (table) => {
     table.increments("id");
     table.text("name").notNullable();
   });
-    table.increments("id");
-    table.text("name").notNullable();
-  });
 
   await knex.schema.createTable("materials", (table) => {
-    table.increments("id");
-    table.text("name").notNullable();
-  });
     table.increments("id");
     table.text("name").notNullable();
   });
@@ -68,9 +53,6 @@ module.exports.up = async (knex) => {
       .inTable("categories");
     table.timestamps(true, true, true);
   });
-      .inTable("categories");
-    table.timestamps(true, true, true);
-  });
 
   await knex.schema.createTable("products_images", (table) => {
     table.increments("id");
@@ -83,10 +65,6 @@ module.exports.up = async (knex) => {
     table.string("imageSrc").notNullable();
     table.timestamps(true, true, true);
   });
-      .notNullable();
-    table.string("imageSrc").notNullable();
-    table.timestamps(true, true, true);
-  });
 
   await knex.schema.createTable("products_materials_relation", (table) => {
     table
@@ -94,14 +72,10 @@ module.exports.up = async (knex) => {
       .notNullable()
       .references("id")
       .inTable("products");
-      .inTable("products");
     table
       .integer("materialId")
       .notNullable()
       .references("id")
-      .inTable("materials");
-    table.primary(["productId", "materialId"]);
-  });
       .inTable("materials");
     table.primary(["productId", "materialId"]);
   });
@@ -121,13 +95,10 @@ module.exports.up = async (knex) => {
   await knex.schema.createTable("orders", (table) => {
     table.increments("id");
     table.integer("userId").notNullable().references("id").inTable("users");
-    table.increments("id");
-    table.integer("userId").notNullable().references("id").inTable("users");
     table
       .integer("deliveryAddress")
       .notNullable()
       .references("id")
-      .inTable("addresses");
       .inTable("addresses");
     table
       .enum("status", ["cancelled", "on standby", "delivered"])
@@ -149,12 +120,6 @@ module.exports.up = async (knex) => {
     table.integer("rank").unique();
   });
 };
-    table.increments("id");
-    table.text("src").notNullable().unique();
-    table.boolean("visible").notNullable().defaultTo(true);
-    table.integer("rank").unique();
-  });
-};
 
 module.exports.down = async (knex) => {
   await knex.schema.dropTable("image_home_carousel");
@@ -169,15 +134,4 @@ module.exports.down = async (knex) => {
   await knex.schema.dropTable("addresses");
   await knex.schema.dropTable("users");
 };
-  await knex.schema.dropTable("image_home_carousel");
-  await knex.schema.dropTable("orders_products_relation");
-  await knex.schema.dropTable("orders");
-  await knex.schema.dropTable("reviews");
-  await knex.schema.dropTable("products_materials_relation");
-  await knex.schema.dropTable("products_images");
-  await knex.schema.dropTable("products");
-  await knex.schema.dropTable("materials");
-  await knex.schema.dropTable("categories");
-  await knex.schema.dropTable("addresses");
-  await knex.schema.dropTable("users");
-};
+

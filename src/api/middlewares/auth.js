@@ -23,17 +23,13 @@ const auth = () => {
     const isTokenExpired = Date.now() >= decodedToken.exp * 1000;
 
     if (isTokenExpired) {
-      res.status(500).send({ error: "Token expired" });
+      res.status(500).send({ error: "Token expired" }); 
 
       return;
     }
 
-    const {
-      payload: {
-        user: { id },
-      },
-    } = jsonwebtoken.verify(jwt, config.security.jwt.secret);
-    locals.userId = id;
+    const { payload: { user: { id } } } = jsonwebtoken.verify(jwt, config.security.jwt.secret);
+    locals.userId = id; 
 
     try {
       const user = await UserModel.query().findOne({ id });
@@ -58,5 +54,4 @@ const auth = () => {
     }
   };
 };
-
 export default auth;

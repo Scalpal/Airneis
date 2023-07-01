@@ -21,7 +21,7 @@ export const getServerSideProps = async (context) => {
   const badTokenRedirect = await checkToken(token);
 
   if (badTokenRedirect) {
-    return badTokenRedirect; 
+    return badTokenRedirect;
   }
 
   const notAdminRedirect = await checkIsAdmin(context);
@@ -33,20 +33,24 @@ export const getServerSideProps = async (context) => {
   const reqInstance = getApiClient(context);
 
   try {
-    const { data: { users, count } } = await reqInstance.get(`${process.env.API_URL}/${routes.api.users.collection()}`);
+    const {
+      data: { users, count },
+    } = await reqInstance.get(
+      `${process.env.API_URL}/${routes.api.users.collection()}`
+    );
 
     return {
       props: {
         usersProps: users,
-        count: count
-      }
+        count: count,
+      },
     };
   } catch (error) {
     return {
       redirect: {
-        destination: "/home",
+        destination: "/",
         permanent: false
-      }
+      },
     };
   }
 };
@@ -59,8 +63,8 @@ const BackofficeUsers = (props) => {
 
   const [alert, setAlert] = useState({ status: "", message: ""}); 
   const [showAlert, setShowAlert] = useState(false); 
-  const [users, setUsers] = useState({ users: usersProps, count: count });
-  const [activeUser, setActiveUser] = useState(null); 
+  const [users,setUsers] = useState({ users: usersProps,count: count });
+  const [activeUser, setActiveUser] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [activeTab, setActiveTab] = useState(""); 
   const [queryParams, setQueryParams] = useState({
@@ -156,16 +160,10 @@ const BackofficeUsers = (props) => {
   }, [queryParams, updateUsers]);
 
   return (
-    <main
-      className={classnames(
-        styles.mainContainer,
-        nunito.className
-      )}
-    >
+    <main className={classnames(styles.mainContainer, nunito.className)}>
       <div className={styles.topStats}>
         <div>
           <p>Total of users</p>
-          <p>{count}</p>
           <p>{count}</p>
         </div>
 
@@ -201,12 +199,19 @@ const BackofficeUsers = (props) => {
           safeArray={usersProps}
           queryParams={queryParams}
           sortColumn={sortColumn}
-          visibleColumns={["id", "email", "firstName", "lastName", "phoneNumber", "active", "isAdmin"]}
+          visibleColumns={[
+            "id",
+            "email",
+            "firstName",
+            "lastName",
+            "phoneNumber",
+            "active",
+            "isAdmin",
+          ]}
           showSpecificRowFunction={showSpecificUser}
           deleteRowFunction={desactivateUser}
         />
       </div>
-
       <Modal showModal={showModal} setShowModal={setShowModal}>
         {activeTab === userInfoTab && (
           <SpecificUserPageContent

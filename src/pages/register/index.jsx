@@ -100,6 +100,7 @@ const Register = () => {
               showError={true}
               required={true}
             />
+            
             <LoginField
               name="email"
               type="text"
@@ -133,18 +134,21 @@ const Register = () => {
                 label="City"
                 showError={true}
               />
+              
               <LoginField
                 name="region"
                 type="text"
                 label="Region"
                 showError={true}
               />
+              
               <LoginField
                 name="postalCode"
                 type="text"
                 label="Postal code"
                 showError={true}
               />
+              
               <LoginField
                 name="country"
                 type="text"
@@ -161,16 +165,6 @@ const Register = () => {
             >
               Register
             </Button>
-
-            <div className={styles.haveAccountText}>
-              <p>
-                {t("alreadyAccountText")}{" "}
-                <span onClick={() => router.push(routes.login())}>
-                  {" "}
-                  {translate("alreadyAccountTLink")}{" "}
-                </span>
-              </p>
-            </div>
           </Form>
         )}
       </Formik>

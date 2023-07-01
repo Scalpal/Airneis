@@ -52,17 +52,9 @@
   white-space: nowrap;
 }
 
-.noAccountText p:hover {
-  cursor: default;
-}
-
-.noAccountText p>span {
+.noAccountText p > span {
   font-weight: 600;
   color: black;
-}
-
-.noAccountText p>span:hover {
-  cursor: pointer;
 }
 
 .noAccountText a:hover {

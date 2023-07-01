@@ -47,7 +47,7 @@ const navLinks = [
 ];
 
 const Navbar = () => {
-  const { data } = useUser()
+  const { data } = useUser(); 
 
   return (
     <nav className={

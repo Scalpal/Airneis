@@ -14,10 +14,17 @@ const CheckboxItem = (props) => {
         value={value}
         name={name}
         id={name}
+        checked={checked}
         disabled={disabled}
         onChange={onChange}
       />
-      <label htmlFor={name} className={checked ? styles.checked : ""}>
+      <label
+        htmlFor={name}
+        className={classnames(
+          checked ? styles.checked : "",
+          disabled ? styles.disabled : ""
+        )}
+      >
         {checked && <CheckIcon className={styles.icon} />}
       </label>
       <p>{name}</p>
