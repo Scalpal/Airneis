@@ -9,7 +9,7 @@ export const seed = async (knex) => {
 
   for (let i = 0; i < loop; i++) {
     const categoryName = faker.commerce.product();
-    categories.push({ name: categoryName, slug: createSlug(categoryName) });
+    categories.push({ name: categoryName, slug: createSlug(categoryName), description: faker.commerce.productDescription() });
   }
 
   let uniqueCategories = categories.filter(

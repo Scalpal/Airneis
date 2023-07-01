@@ -24,6 +24,19 @@
   border-top-right-radius: 1rem;
 }
 
+.textarea {
+  width: 100%;
+  min-width: 500px;
+  max-width: 750px;
+  min-height: 100px;
+  max-height: 250px;
+  padding: 0.5rem;
+  border: 1px solid var(--light-grey);
+  border-radius: 10px;
+  outline: 0;
+  font-family: inherit;
+}
+
 .toggleWrapper {
   display: flex;
   flex-direction: row;

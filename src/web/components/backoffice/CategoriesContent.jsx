@@ -112,6 +112,8 @@ const CategoriesContent = () => {
             activeCategory={activeCategory}
             setShowModal={setShowModal}
             refreshCategories={refreshCategories}
+            setAlert={setAlert}
+            setShowAlert={setShowAlert}
           />
         </Modal>
       )}

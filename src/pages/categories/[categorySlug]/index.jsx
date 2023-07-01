@@ -54,8 +54,7 @@ const Category = (props) => {
 
       <main>
         <p className={styles.descriptionText}>
-          Nos chaises, fabriquée en bois de chêne sont d’une qualité premium,
-          idéale pour une maison moderne.
+          {category.description}
         </p>
 
         <div className={styles.productsList}>

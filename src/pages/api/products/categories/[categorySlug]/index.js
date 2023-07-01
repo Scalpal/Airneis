@@ -53,6 +53,7 @@ const handler = mw({
       },
       body: {
         name: stringValidator,
+        description: stringValidator,
         visible: boolValidator,
         visibleInHome: boolValidator
       }
@@ -60,7 +61,7 @@ const handler = mw({
     async({
       locals: {
         query: { categorySlug },
-        body: { name, visible, visibleInHome }
+        body: { name, description, visible, visibleInHome }
       },
       res
     }) => {
@@ -78,6 +79,7 @@ const handler = mw({
         const [updatedCategory] = await CategoryModel.query()
           .patch({
             name,
+            description,
             visible, 
             visibleInHome,
             slug: createSlug(name)

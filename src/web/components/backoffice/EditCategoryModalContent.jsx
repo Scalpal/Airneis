@@ -2,20 +2,20 @@ import styles from "@/styles/backoffice/EditCategoryModalContent.module.css";
 import { useCallback, useState } from "react";
 import Toggle from "../Toggle";
 import Button from "../Button";
-import CustomAlert from "../CustomAlert";
 import editCategory from "@/web/services/categories/editCategory";
 
 const EditCategoryModalContent = (props) => {
   const {
     activeCategory,
     setShowModal,
-    refreshCategories
+    refreshCategories,
+    setAlert,
+    setShowAlert
   } = props;
 
-  const [alert, setAlert] = useState({ status: "", message: "" });
-  const [showAlert, setShowAlert] = useState(false);
   const [currentCategory, setCurrentCategory] = useState(activeCategory);
   const [newCategoryName, setNewCategoryName] = useState(activeCategory.name);
+  const [newDescription, setNewDescription] = useState(activeCategory.description);
 
   const handleActiveCategoryVisibility = useCallback(() => {
     setCurrentCategory({
@@ -34,6 +34,7 @@ const EditCategoryModalContent = (props) => {
   const changeCategoryInformations = useCallback(async () => {
     const body = {
       name: newCategoryName,
+      description: newDescription,
       visible: currentCategory.visible,
       visibleInHome: currentCategory.visibleInHome
     };
@@ -47,11 +48,11 @@ const EditCategoryModalContent = (props) => {
       return;
     }
     
-    refreshCategories();
     setShowModal(false);
-    setAlert({ status: "success", message: response.data.message });
+    setAlert({ status: response.data.status, message: response.data.message });
     setShowAlert(true);
-  }, [refreshCategories, newCategoryName, setShowModal, currentCategory]);
+    refreshCategories();
+  }, [refreshCategories, newCategoryName, newDescription, setShowModal, currentCategory, setAlert, setShowAlert]);
 
   return (
     <div className={styles.editForm}>
@@ -63,6 +64,14 @@ const EditCategoryModalContent = (props) => {
         defaultValue={newCategoryName}
         onChange={(e) => setNewCategoryName(e.target.value)}
       />
+
+      <textarea
+        className={styles.textarea}
+        defaultValue={newDescription}
+        onChange={(e) => setNewDescription(e.target.value)}
+      >
+
+      </textarea>
 
       <div className={styles.toggleWrapper}>
         <p>Visible</p>
@@ -99,12 +108,6 @@ const EditCategoryModalContent = (props) => {
       >
         Close
       </Button>
-
-      <CustomAlert
-        alert={alert}
-        showAlert={showAlert}
-        setShowAlert={setShowAlert}
-      />
     </div>
   );
 };

@@ -29,6 +29,7 @@ module.exports.up = async (knex) => {
     table.increments("id");
     table.text("name").notNullable();
     table.text("slug").notNullable().unique();
+    table.text("description").notNullable();
     table.text("imageSrc").notNullable().defaultTo("/meuble-1.jpeg");
     table.boolean("visible").notNullable().defaultTo(true);
     table.boolean("visibleInHome").notNullable().defaultTo(false);
