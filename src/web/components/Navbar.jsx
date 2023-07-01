@@ -11,20 +11,24 @@ const Navbar = (props) => {
   const { fixed, isDrawerToggledState } = props; 
 
   const [isDrawerToggled, setIsDrawerToggled] = isDrawerToggledState; 
-  
+
   useEffect(() => {
     const navbar = document.querySelector("#navbar");
 
     if (fixed) {
-      const carouselObserver = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting === true || isDrawerToggled === true) {
-          navbar.classList.remove("navbarBackground");
-        } else {
-          navbar.classList.add("navbarBackground");
-        }
-      }, { threshold: [0.1] });
+      const carousel = document.querySelector("#carousel");
 
-      carouselObserver.observe(document.querySelector("#carousel"));
+      if (carousel) {
+        const carouselObserver = new IntersectionObserver((entries) => {
+          if (entries[0].isIntersecting === true || isDrawerToggled === true) {
+            navbar.classList.remove("navbarBackground");
+          } else {
+            navbar.classList.add("navbarBackground");
+          }
+        }, { threshold: [0.1] });
+
+        carouselObserver.observe(carousel);
+      }
     } else {
       navbar.classList.remove("navbarBackground");
     }

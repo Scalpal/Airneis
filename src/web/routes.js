@@ -23,9 +23,9 @@ const routes = {
   },
   backoffice: {
     base: () => "/backoffice",
-    users: () => "backoffice/users",
-    products: () => "backoffice/products",
-    shop: () => "backoffice/shop",
+    users: () => "/backoffice/users",
+    products: () => "/backoffice/products",
+    shop: () => "/backoffice/shop",
   },
   api: {
     register: () => "/users/register",
