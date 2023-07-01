@@ -20,6 +20,12 @@ const ProductImageList = (props) => {
   const [alert, setAlert] = useState({ status: "", message: "" });
   const [showAlert, setShowAlert] = useState(false);
 
+  const removeImage = useCallback((index) => {
+    const updatedImagesToUpload = currentProductImages.filter((_, i) => i !== index); 
+
+    setCurrentProductImages(updatedImagesToUpload);
+  }, [currentProductImages, setCurrentProductImages]);
+
   const deleteImage = useCallback(async(imageName) => {
     const [error, { data }] = await deleteProductImage(imageName, productSlug);
 
@@ -79,6 +85,7 @@ const ProductImageList = (props) => {
               <p
                 key={index}
                 className={styles.newProductImageRow}
+                onClick={() => removeImage(index)}
               >
                 {image.name}
                 <XMarkIcon className={styles.newProductImageRowIcon} />

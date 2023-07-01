@@ -86,7 +86,7 @@ const SpecificProductPageContent = (props) => {
     
     try {
       if (newImages.length > 0) {
-        newImages.map(async (file) => {
+        await Promise.all(newImages.map(async (file) => {
           const [error, response] = await uploadProductImage(file, currentProduct.slug);
 
           if (error) {
@@ -97,7 +97,7 @@ const SpecificProductPageContent = (props) => {
           }
 
           setCurrentProduct(response.data.product);
-        });
+        }));
       }
 
       const { data } = await reqInstance.patch(routes.api.products.single(currentProduct.slug), values);
