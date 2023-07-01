@@ -1,6 +1,7 @@
 import routes from "@/web/routes";
 
-const signUp = ({ api }) =>
+const signUp =
+  ({ api }) =>
   async (values) => {
     try {
       const { data } = await api.post(routes.api.register(), values);

@@ -119,3 +119,4 @@ module.exports.down = async (knex) => {
   await knex.schema.dropTable("addresses");
   await knex.schema.dropTable("users");
 };
+

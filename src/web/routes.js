@@ -12,6 +12,7 @@ const routes = {
   home: () => "/",
   register: () => "/register",
   login: () => "/login",
+  cgu: () => "terms-of-use",
   legalMentions: () => "/legal-mentions",
   products: {
     base: () => `/products`,
@@ -42,10 +43,11 @@ const routes = {
     },
     images: {
       homeCarousel: {
-        base: (queryString) => `/api/images/homeCarousel${queryString ? queryString : ""}`,
+        base: (queryString) =>
+          `/api/images/homeCarousel${queryString ? queryString : ""}`,
         single: (imageId) => `/api/images/homeCarousel/${imageId}`,
         upload: () => "/api/images/homeCarousel/upload",
-      }
+      },
     },
     categories: {
       base: (queryString) => `/api/products/categories${queryString ? queryString : ""}`,
