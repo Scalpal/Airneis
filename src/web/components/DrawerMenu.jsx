@@ -68,7 +68,7 @@ const DrawerMenu = (props) => {
         {!userIsLoading && user.isAdmin && (
           <Link href={routes.backoffice.users()}>Backoffice</Link>
         )}
-        <Link href="">CGU</Link>
+        <Link href={routes.cgu()}>CGU</Link>
         <Link href={routes.legalMentions()}>Legal mentions</Link>
         <Link href="">Contact</Link>
         <Link href="">About us</Link>
