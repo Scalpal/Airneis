@@ -1,25 +1,27 @@
 import styles from "@/styles/backoffice/ProductImageList.module.css";
 import { XMarkIcon } from "@heroicons/react/24/solid";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import deleteProductImage from "@/web/services/products/deleteProductImage";
 import ImageCard from "./ImageCard";
 import ImageInput from "./ImageInput";
 import IconButton from "../IconButton";
+import CustomAlert from "../CustomAlert";
 
 
 const ProductImageList = (props) => {
   const {
-    productId,
+    productSlug,
     currentProductImages,
     setCurrentProductImages,
-    setAlert,
-    setShowAlert,
     setCurrentProduct,
     editMode
   } = props; 
 
+  const [alert, setAlert] = useState({ status: "", message: "" });
+  const [showAlert, setShowAlert] = useState(false);
+
   const deleteImage = useCallback(async(imageName) => {
-    const [error, { data }] = await deleteProductImage(imageName, productId);
+    const [error, { data }] = await deleteProductImage(imageName, productSlug);
 
     if (error) {
       setAlert({ status: "error", message: "Error on image deletion." });
@@ -31,7 +33,7 @@ const ProductImageList = (props) => {
     setAlert({ status: data.status, message: data.message });
     setShowAlert(true);
     setCurrentProduct(data.product); 
-  }, [productId, setAlert, setShowAlert, setCurrentProduct]);
+  }, [productSlug, setAlert, setShowAlert, setCurrentProduct]);
 
   return (
     <div className={styles.container}>
@@ -86,6 +88,11 @@ const ProductImageList = (props) => {
         })}
       </div>
 
+      <CustomAlert
+        alert={alert}
+        showAlert={showAlert}
+        setShowAlert={setShowAlert}
+      />
 
     </div>
   );

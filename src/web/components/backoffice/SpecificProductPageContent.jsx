@@ -8,7 +8,6 @@ import Button from "../Button";
 import CustomAlert from "../CustomAlert";
 import { createValidator, numberValidator, stringValidator } from "@/validator";
 import { splitCamelCase } from "@/web/services/SplitCamelCase";
-import useAppContext from "@/web/hooks/useAppContext";
 import routes from "@/web/routes";
 import { AxiosError } from "axios";
 import CollapseMenu from "../CollapseMenu";
@@ -18,6 +17,7 @@ import BackButton from "./BackButton";
 import { useGetCategories } from "@/web/hooks/useGetCategories";
 import ProductImageList from "./ProductImageList";
 import uploadProductImage from "@/web/services/products/uploadProductImage";
+import getApiClient from "@/web/services/getApiClient";
 
 const validationSchema = createValidator({
   name: stringValidator.required(),
@@ -31,7 +31,6 @@ const mappableKeys = ["name", "description", "price", "stock"];
 
 const SpecificProductPageContent = (props) => {
   const { product, setActiveProduct, refreshProducts, showModal, setShowModal } = props;
-  const { actions: { api } } = useAppContext();
 
   const [currentProduct, setCurrentProduct] = useState(product);
   const [currentProductImages, setCurrentProductImages] = useState(product.productImages);
@@ -76,6 +75,7 @@ const SpecificProductPageContent = (props) => {
   }, []);
 
   const handleSubmit = useCallback(async (values) => {
+    const reqInstance = getApiClient();
     values.price = Number.parseInt(values.price);
     values.stock = Number.parseInt(values.stock);
   
@@ -87,7 +87,7 @@ const SpecificProductPageContent = (props) => {
     try {
       if (newImages.length > 0) {
         newImages.map(async (file) => {
-          const [error, response] = await uploadProductImage(file, currentProduct.id);
+          const [error, response] = await uploadProductImage(file, currentProduct.slug);
 
           if (error) {
             setShowAlert(true);
@@ -100,7 +100,7 @@ const SpecificProductPageContent = (props) => {
         });
       }
 
-      const { data } = await api.patch(routes.api.products.update(currentProduct.id), values);
+      const { data } = await reqInstance.patch(routes.api.products.single(currentProduct.slug), values);
 
       setEditMode(false);
       setCurrentProduct(data.product);
@@ -113,7 +113,7 @@ const SpecificProductPageContent = (props) => {
         setAlert({ status: error.response.status, message: error.response.message });
       }
     }
-  }, [api, currentProduct.id, refreshProducts, currentProductImages]); 
+  }, [currentProduct.slug, refreshProducts, currentProductImages]); 
 
   const isMaterialChecked = (values, id) => {
     const productMaterialIds = values.reduce((acc, { id }) => [...acc, id], []); 
@@ -129,7 +129,7 @@ const SpecificProductPageContent = (props) => {
 
   useEffect(() => {
     setCurrentProductImages(currentProduct.productImages);
-  }, [currentProduct]); 
+  }, [currentProduct.productImages]); 
 
   return (
     <main
@@ -198,11 +198,9 @@ const SpecificProductPageContent = (props) => {
                     <p className={styles.contentTitle}> Product images </p>
                     
                     <ProductImageList
-                      productId={currentProduct.id}
+                      productSlug={currentProduct.slug}
                       currentProductImages={currentProductImages}
                       setCurrentProductImages={setCurrentProductImages}
-                      setAlert={setAlert}
-                      setShowAlert={setShowAlert}
                       setCurrentProduct={setCurrentProduct}
                       editMode={editMode}
                     />
