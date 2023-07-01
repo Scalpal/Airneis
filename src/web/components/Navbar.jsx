@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { classnames } from "@/pages/_app";
 import CartButton from "./CartButton";
 import SearchProductOverlay from "./SearchProductOverlay";
+import routes from "../routes";
 
 const Navbar = (props) => {
   const { fixed, isDrawerToggledState } = props; 
@@ -51,19 +52,19 @@ const Navbar = (props) => {
         styles.midLinks
       )}>
         <li>
-          <Link href="/" className={styles.navbarLink}>
+          <Link href={routes.home()} className={styles.navbarLink}>
             Home
           </Link>
         </li>
 
         <li>
-          <Link href="/products" className={styles.navbarLink}>
+          <Link href={routes.products.base()} className={styles.navbarLink}>
             Products
           </Link>
         </li>
 
         <li>
-          <Link href="/category" className={styles.navbarLink}>
+          <Link href={routes.categories.base()} className={styles.navbarLink}>
             Categories
           </Link>
         </li>

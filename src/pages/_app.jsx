@@ -1,10 +1,9 @@
 import "@/styles/global.css";
 import "@/styles/inputRange.css";
 import Layout from "@/web/components/Layout";
-import Head from "next/head";
-import { Montserrat } from "@next/font/google";
-import { Nunito } from "@next/font/google";
+import { Montserrat, Nunito } from "@next/font/google";
 import { AppContextProvider } from "@/web/hooks/useAppContext.jsx";
+import Head from "next/head";
 
 export const classnames = require("classnames");
 
@@ -37,8 +36,9 @@ export default function App({ Component, pageProps }) {
         <title> Airneis </title>
         <meta name="description" content="Airneis" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/circle.png" />
       </Head>
+      
       {renderWithLayout(
         <Component {...pageProps} />
       )}

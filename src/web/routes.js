@@ -18,8 +18,8 @@ const routes = {
     single: (productSlug) => `/products/${productSlug}`,
   },
   categories: {
-    base: () => "/category",
-    single: (categorySlug) => `/category/${categorySlug}`,
+    base: () => "/categories",
+    single: (categorySlug) => `/categories/${categorySlug}`,
   },
   backoffice: {
     base: () => "/backoffice",
