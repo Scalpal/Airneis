@@ -37,7 +37,7 @@ const Navbar = (props) => {
       id="navbar"
     >
       <Link
-        href="/home"
+        href="/"
         className={classnames(
           "navbarLogo",
           styles.navbarLogo
@@ -51,7 +51,7 @@ const Navbar = (props) => {
         styles.midLinks
       )}>
         <li>
-          <Link href="/home" className={styles.navbarLink}>
+          <Link href="/" className={styles.navbarLink}>
             Home
           </Link>
         </li>

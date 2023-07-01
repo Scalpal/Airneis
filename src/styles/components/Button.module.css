@@ -28,7 +28,6 @@
   background-color:rgba(0, 0, 0, 0.2);
 }
 
-
 @media only screen and (min-width: 768px) {
   .contained:hover {
     background-color: var(--secondary);
@@ -44,6 +43,7 @@
     outline: 2px solid transparent;
     color: white;
     outline-offset: 0.5rem;
+    cursor: pointer;
   }
 
   .disabled:hover {

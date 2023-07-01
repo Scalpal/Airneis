@@ -7,11 +7,8 @@ import ParamBadge from "@/web/components/ParamBadge";
 import useGetProducts from "@/web/hooks/useGetProducts";
 import Button from "@/web/components/Button";
 import Loader from "@/web/components/Loader";
-import {
-  MagnifyingGlassIcon,
-  ShoppingBagIcon,
-  XMarkIcon
-} from "@heroicons/react/24/outline";
+import { MagnifyingGlassIcon, ShoppingBagIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import Head from "next/head";
 
 const limit = 10; 
 
@@ -174,6 +171,10 @@ const Products = () => {
 
   return (
     <>
+      <Head>
+        <title>Airneis - Products</title>
+      </Head>  
+
       <Banner />
 
       <main className={styles.main}>

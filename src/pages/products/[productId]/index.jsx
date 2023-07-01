@@ -9,6 +9,7 @@ import useAppContext from "@/web/hooks/useAppContext";
 import SeeMoreButton from "@/web/components/SeeMoreButton";
 import ProductReviews from "@/web/components/ProductReviews";
 import { useState } from "react"; 
+import Head from "next/head";
 
 export const getServerSideProps = async (context) => {
   const { productId } = context.query;  
@@ -36,6 +37,10 @@ const ProductPage = (props) => {
 
   return (
     <>
+      <Head>
+        <title>Airneis - </title>
+      </Head>  
+      
       <Banner title={product.name} />
 
       <main>

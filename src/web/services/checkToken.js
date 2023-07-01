@@ -4,7 +4,7 @@ const checkToken = async (token) => {
   if (!token) {
     return {
       redirect: {
-        destination: "/home",
+        destination: "/",
         permanent: false
       }
     };
@@ -16,7 +16,7 @@ const checkToken = async (token) => {
   if (isTokenExpired) {
     return {
       redirect: {
-        destination: "/home",
+        destination: "/",
         permanent: false
       }
     };

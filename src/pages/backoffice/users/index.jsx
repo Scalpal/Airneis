@@ -15,21 +15,18 @@ import getApiClient from "@/web/services/getApiClient";
 import checkIsAdmin from "@/web/services/checkIsAdmin";
 import Modal from "@/web/components/Modal";
 import SpecificUserPageContent from "@/web/components/backoffice/SpecificUserPageContent";
+import Head from "next/head";
 
 export const getServerSideProps = async (context) => {
   const { token } = parseCookies(context);
   const badTokenRedirect = await checkToken(token);
-
-  if (badTokenRedirect) {
-    return badTokenRedirect;
-  }
-
   const notAdminRedirect = await checkIsAdmin(context);
 
-  if (notAdminRedirect) {
-    return notAdminRedirect;
-  }
 
+  if (badTokenRedirect || notAdminRedirect) {
+    return badTokenRedirect || notAdminRedirect; 
+  }
+  
   const reqInstance = getApiClient(context);
 
   try {
@@ -48,7 +45,7 @@ export const getServerSideProps = async (context) => {
   } catch (error) {
     return {
       redirect: {
-        destination: "/home",
+        destination: "/",
         permanent: false
       }
     };
@@ -176,6 +173,10 @@ const BackofficeUsers = (props) => {
         nunito.className
       )}
     >
+      <Head>
+        <title>Airneis - Backoffice : Users</title>
+      </Head>  
+
       <div className={styles.topStats}>
         <div>
           <p>Total of users</p>

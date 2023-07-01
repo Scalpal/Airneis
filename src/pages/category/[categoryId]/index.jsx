@@ -6,6 +6,7 @@ import useGetProducts from "@/web/hooks/useGetProducts";
 import { useCallback } from "react";
 import Loader from "@/web/components/Loader";
 import Button from "@/web/components/Button";
+import Head from "next/head";
 
 export const getServerSideProps = async (context) => {
   const { categoryId } = context.query;
@@ -32,6 +33,10 @@ const Category = (props) => {
 
   return (
     <>
+      <Head>
+        <title>Airneis - Category</title>
+      </Head>        
+
       <Banner title={router.query.categoryName} />
 
       <main>

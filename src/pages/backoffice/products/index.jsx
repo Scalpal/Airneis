@@ -17,6 +17,7 @@ import SpecificProductPageContent from "@/web/components/backoffice/SpecificProd
 import AddProductPageContent from "@/web/components/backoffice/AddProductPageContent";
 import useGetProductsSWR from "@/web/hooks/useGetProductsSWR";
 import Loader from "@/web/components/Loader";
+import Head from "next/head";
 
 const addProductTab = "add-product";
 const productInfoTab = "product-info";
@@ -158,6 +159,10 @@ const BackofficeProducts = (props) => {
 
   return (
     <main className={classnames(styles.mainContainer, nunito.className)}>
+      <Head>
+        <title>Airneis - Backoffice : Products</title>
+      </Head>  
+
       <div className={styles.topStats}>
         <div>
           <p>Total of unique products</p>

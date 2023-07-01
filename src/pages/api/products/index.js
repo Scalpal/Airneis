@@ -22,12 +22,13 @@ const handler = mw({
         page: pageValidator,
         orderField: orderFieldValidator(["id", "name", "price", "stock"]).default("id"),
         order: orderValidator.default("asc"),
-        search: searchValidator
+        search: searchValidator,
+        showInHome: boolValidator
       }
     }),
     async ({
       locals: {
-        query: { priceMin, priceMax, materials, onlyInStock, categories, limit, page, orderField, order, search}
+        query: { priceMin, priceMax, materials, onlyInStock, categories, limit, page, orderField, order, search, showInHome}
       },
       res
     }) => {
@@ -79,12 +80,15 @@ const handler = mw({
           query.where("stock", ">", 0);
         }
 
+        if (showInHome === true) {
+          query.where("showInHome", true);
+        }
+
         const countQuery = query.clone();
         const [{ count }] = await countQuery.clearSelect().clearOrder().count();
 
-        const products = await query
-          .modify("paginate", limit, page)
-          .select("id", "name", "description", "price", "stock")
+        const products = await query.modify("paginate", limit, page)
+          .select("id", "name", "description", "price", "stock", "showInHome")
           .withGraphFetched("category")
           .withGraphFetched("materials")
           .withGraphFetched("reviews");

@@ -18,7 +18,7 @@ const runPa11y = async () => {
       includeNotices: false
     };
 
-    const urls = [pa11y("http://localhost:3000/home", options)];
+    const urls = [pa11y("http://localhost:3000/", options)];
 
     const results = await Promise.all(urls);
 

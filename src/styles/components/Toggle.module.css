@@ -1,0 +1,35 @@
+.wrapper {
+  display: flex;
+  flex-direction: row;
+  background-color: black;
+  width: 60px;
+  height: fit-content;
+  padding: 0.3rem;
+  border-radius: 1rem;
+  border: 1px solid #B1B1B1;
+}
+
+.wrapperToggled {
+  background-color: #B1B1B1;
+}
+
+.wrapperNotToggled {
+  background-color: var(--secondary);
+}
+
+.ball {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #B1B1B1;
+  transition-duration: 300ms;
+}
+
+.toggled {
+  transform: translateX(30px);
+  background-color: white;
+}
+
+.notToggled {
+  transform: translateX(0);
+}

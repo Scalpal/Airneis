@@ -22,7 +22,10 @@ module.exports = {
     quotes: [
       "error",
       "double",
-      { avoidEscape: true, allowTemplateLiterals: true }
+      {
+        avoidEscape: true,
+        allowTemplateLiterals: true
+      }
     ],
     semi: [1, "always"],
     "no-console": "error",
@@ -75,6 +78,10 @@ module.exports = {
     "react/react-in-jsx-scope": "off",
     "react/prop-types": "off"
   },
-  settings: { react: { version: "detect" } },
+  settings: {
+    react: {
+      version: "detect"
+    }
+  }
 };
 

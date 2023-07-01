@@ -1,0 +1,53 @@
+.wrapper {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  gap: 0.3rem;
+  border: 1px solid var(--primary);
+  border-radius: 1rem;
+  overflow: hidden;
+  background-color: var(--secondary);
+  font-size: inherit;
+  z-index: 2;
+  transition-duration: 300ms;
+  margin: 0 auto;
+}
+
+.button {
+  border: 0;
+  outline: 0;
+  padding: 0.3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--secondary);
+}
+
+.icons {
+  width: 25px;
+  height: 25px;
+}
+
+.input {
+  flex: 1;
+  border: 0;
+  outline: 0;
+  background-color: var(--secondary);
+}
+
+/* Sizes */
+.small {
+  max-width: 200px;
+}
+
+.medium {
+  max-width: 350;
+}
+
+.large {
+  max-width: 500px;
+}
+
+.fitToParent {
+  max-width: 100%;
+}
