@@ -1,4 +1,4 @@
-import jsonwebtoken from "jsonwebtoken"
+import jsonwebtoken from "jsonwebtoken";
 
 const checkToken = async (token) => {
   if (!token) {
@@ -21,6 +21,6 @@ const checkToken = async (token) => {
       }
     };
   }
-}
+};
 
 export default checkToken;

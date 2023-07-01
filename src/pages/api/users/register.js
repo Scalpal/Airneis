@@ -10,6 +10,7 @@ import config from "@/api/config.js";
 
 const handler = mw({
   POST: [
+    slowDown(500),
     validate({
       body: {
         firstName: stringValidator.required(),
@@ -84,6 +85,6 @@ const handler = mw({
       }
     },
   ],
-})
+});
 
-export default handler
+export default handler;

@@ -1,14 +1,13 @@
 import styles from "@/styles/components/ParamBadge.module.css";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import styles from "@/styles/components/ParamBadge.module.css";
-import { XMarkIcon } from "@heroicons/react/24/outline";
 
 const ParamBadge = (props) => {
-  const { label, appliedQueryParams, queryKey, handleAppliedQueryParams } = props;
+  const { label, appliedQueryParams, queryKey, handleAppliedQueryParams } =
+    props;
 
   return (
     <>
-      {Array.isArray(appliedQueryParams[queryKey]) && (
+      {Array.isArray(appliedQueryParams[queryKey]) &&
         appliedQueryParams[queryKey].map(({ name, value }, index) => (
           <p
             key={index}
@@ -18,13 +17,14 @@ const ParamBadge = (props) => {
             {label} : {name}
             <XMarkIcon className={styles.filterBadgeIcon} />
           </p>
-        ))
-      )}
+        ))}
 
       {typeof appliedQueryParams[queryKey] === "boolean" && (
         <p
           className={styles.filterBadge}
-          onClick={() => handleAppliedQueryParams(queryKey, appliedQueryParams[queryKey])}
+          onClick={() =>
+            handleAppliedQueryParams(queryKey, appliedQueryParams[queryKey])
+          }
         >
           {label}
           <XMarkIcon className={styles.filterBadgeIcon} />
@@ -46,7 +46,10 @@ const ParamBadge = (props) => {
           className={styles.filterBadge}
           onClick={() => handleAppliedQueryParams()}
         >
-          {label} price : {appliedQueryParams[queryKey] === "asc" ? "low to high" : "high to low"}
+          {label} price :{" "}
+          {appliedQueryParams[queryKey] === "asc"
+            ? "low to high"
+            : "high to low"}
           <XMarkIcon className={styles.filterBadgeIcon} />
         </p>
       )}

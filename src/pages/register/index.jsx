@@ -123,7 +123,7 @@ const Register = () => {
             />
 
             <CollapseMenu
-              title={t("addressRegisterTitle")}
+              title="Address"
               key={"address"}
             >
               <LoginField
