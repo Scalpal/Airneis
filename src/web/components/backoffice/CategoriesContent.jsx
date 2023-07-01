@@ -38,8 +38,8 @@ const CategoriesContent = () => {
   }, [activeCategory]);
 
   // Categories
-  const changeCategoryImage = useCallback(async (categoryId, file) => {
-    const [error, response] = await uploadCategoryImage(categoryId, file); 
+  const changeCategoryImage = useCallback(async (categorySlug, file) => {
+    const [error, response] = await uploadCategoryImage(categorySlug, file); 
 
     if (error) {
       setAlert({ status: "error", message: error.message });
@@ -67,7 +67,7 @@ const CategoriesContent = () => {
       visibleInHome: activeCategory.visibleInHome
     };
 
-    const [error, response] = await editCategory(activeCategory.id, body);
+    const [error, response] = await editCategory(activeCategory.slug, body);
 
     if (error) {
       setAlert({ status: "error", message: error.message });

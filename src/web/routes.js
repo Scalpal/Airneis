@@ -19,7 +19,7 @@ const routes = {
   },
   categories: {
     base: () => "/category",
-    single: (categoryId) => `/category/${categoryId}`,
+    single: (categorySlug) => `/category/${categorySlug}`,
   },
   backoffice: {
     base: () => "/backoffice",
@@ -49,8 +49,8 @@ const routes = {
     },
     categories: {
       base: (queryString) => `/api/products/categories${queryString ? queryString : ""}`,
-      single: (categoryId) => `/api/products/categories/${categoryId}`,
-      upload: (categoryId) => `/api/products/categories/${categoryId}/upload`,
+      single: (categorySlug) => `/api/products/categories/${categorySlug}`,
+      upload: (categorySlug) => `/api/products/categories/${categorySlug}/upload`,
       products: (categoryId) => `/api/products?categories=${categoryId}`,
     },
     users: {

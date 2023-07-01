@@ -13,7 +13,7 @@ const CategoriesBlocks = (props) => {
         return (
           <div
             key={index}
-            onClick={() => router.push(routes.categories.single(category.id)) }
+            onClick={() => router.push(routes.categories.single(category.slug)) }
           >
             <p>{category.name}</p>
 
