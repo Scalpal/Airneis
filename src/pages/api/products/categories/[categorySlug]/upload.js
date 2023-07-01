@@ -30,9 +30,9 @@ const handler = mw({
           return;
         } 
 
-        const categoryId = parseInt(req.query.categoryId); 
+        const slug = req.query.categorySlug;
 
-        const category = await CategoryModel.query().findOne({id: categoryId});
+        const category = await CategoryModel.query().findOne({ slug });
 
         if (!category) {
           res.status(404).send({ error: "Category not found." });
@@ -49,7 +49,7 @@ const handler = mw({
             .patch({
               imageSrc: uploadedImage.Key
             })
-            .where("id", categoryId)
+            .where("id", category.id)
             .returning("*");
                     
           const signedImageUrl = await getImageWithSignedUrl(updatedCategory.imageSrc);

@@ -18,21 +18,15 @@ const DetailedProductCard = (props) => {
     >
       <div
         className={styles.productCardImageContainer}
-        onClick={() => router.push(routes.products.single(product.id))}
+        onClick={() => router.push(routes.products.single(product.slug))}
       >
-        {/* <Image
-          className={styles.productCardImage}
-          src={typeof product.productImages[0] !== "undefined" ?  product.productImages[0].imageUrl : "/product-image-placeholder.jpg"}
-          alt={product.name} 
+        <ImageWithFallback
+          className={styles.image}
+          alt={"Product image"}
+          src={product.productImages[0].imageUrl ? product.productImages[0].imageUrl : `${process.env.AWS_BUCKET_URL}${product.productImages[0].imageSrc}`}
+          fallbackSrc={`/placeholder-image.png`}
           fill
-        /> */}
-      <ImageWithFallback
-        className={styles.image}
-        alt={"Product image"}
-        src={product.productImages[0].imageUrl ? product.productImages[0].imageUrl : `${process.env.AWS_BUCKET_URL}${product.productImages[0].imageSrc}`}
-        fallbackSrc={`/placeholder-image.png`}
-        fill
-      />
+        />
       </div>
 
       <div

@@ -10,14 +10,11 @@ import SeeMoreButton from "@/web/components/SeeMoreButton";
 import ProductReviews from "@/web/components/ProductReviews";
 import { useState } from "react"; 
 import Head from "next/head";
-import { useTranslation } from "next-i18next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 export const getServerSideProps = async (context) => {
-  const { productId } = context.query;
-  const locale = context.locale;
+  const { productSlug } = context.query;  
 
-  const { data: { product } } = await Axios.get(`${process.env.API_URL}${routes.api.products.single(productId)}`); 
+  const { data: { product } } = await Axios.get(`${process.env.API_URL}${routes.api.products.single(productSlug)}`); 
 
   const specificCategory = `?categories=${Number.parseInt(product.category.id)}&`;
   const { data: { products } } = await Axios.get(`${process.env.API_URL}${routes.api.products.collection(specificCategory, 1)}`);
@@ -25,25 +22,22 @@ export const getServerSideProps = async (context) => {
   return ({
     props: {
       product: product,
-      categoryProducts: products,
-      ...(await serverSideTranslations(locale, ["productPage", "footer", "drawerMenu", "navbar"])),
-    },
-  };
+      categoryProducts: products
+    }
+  }); 
 };
 
 const ProductPage = (props) => {
-  const { t } = useTranslation("productPage");
   const { product, categoryProducts } = props;
 
   const { actions: { addToCart } } = useAppContext(); 
   const [limit] = useState(4);
   const [page, setPage] = useState(1); 
 
-
   return (
     <>
       <Head>
-        <title>Airneis - </title>
+        <title>Airneis - {product.name}</title>
       </Head>  
       
       <Banner title={product.name} />
@@ -86,13 +80,15 @@ const ProductPage = (props) => {
         </section>
 
         <div className={styles.addToCartBtnWrapper} id="productReviewAnchor">
-          <Button onClick={() => addToCart(product)}>
-            {t("addToCartButton")}
+          <Button
+            onClick={() => addToCart(product)}
+          >
+            Add to cart
           </Button>
         </div>
 
         <ProductReviews
-          productId={product.id}
+          productSlug={product.slug}
           page={page}
           setPage={setPage}
           limit={limit}
@@ -100,7 +96,7 @@ const ProductPage = (props) => {
 
         <div className={styles.titleWrapper}>
           <div className={styles.line}></div>
-          <p className={styles.title}>{t("similarProductTitle")}</p>
+          <p className={styles.title}>Similar products</p>
           <div className={styles.line}></div>
         </div>
 
@@ -113,7 +109,7 @@ const ProductPage = (props) => {
           </div>
 
           <SeeMoreButton route={routes.products.base()}>
-            {t("viewAllProductButton")}
+            View all products
           </SeeMoreButton>
 
         </section>

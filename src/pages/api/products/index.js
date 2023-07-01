@@ -7,6 +7,7 @@ import slowDown from "@/api/middlewares/slowDown";
 import validate from "@/api/middlewares/validate";
 import mw from "@/api/mw";
 import { arrayOrStringValidator, arrayValidator, boolValidator, limitValidator, numberValidator, orderFieldValidator, orderValidator, pageValidator, searchValidator, stringValidator } from "@/validator";
+import createSlug from "@/web/helpers/createSlug";
 import getProductsAverageRating from "@/web/services/products/getProductsAverageRating";
 import getProductsImagesWithSignedUrls from "@/web/services/products/getProductsImagesWithSignedUrl";
 
@@ -85,7 +86,7 @@ const handler = mw({
         const [{ count }] = await countQuery.clearSelect().clearOrder().count();
 
         const products = await query.modify("paginate", limit, page)
-          .select("id", "name", "description", "price", "stock", "showInHome")
+          .select("id", "name", "description", "price", "stock", "showInHome", "slug")
           .withGraphFetched("category")
           .withGraphFetched("materials")
           .withGraphFetched("reviews")
@@ -138,7 +139,8 @@ const handler = mw({
             description: description,
             price: price,
             stock: stock,
-            categoryId: categoryId
+            categoryId: categoryId,
+            slug: createSlug(name)
           })
           .returning("*");
         
