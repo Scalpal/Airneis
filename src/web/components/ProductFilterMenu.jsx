@@ -1,4 +1,4 @@
-import styles from "@/styles/components/ProductFilterMenu.module.css"; 
+import styles from "@/styles/components/ProductFilterMenu.module.css";
 import CollapseMenu from "./CollapseMenu";
 import CheckboxItem from "./CheckboxItem";
 import Button from "./Button";
@@ -10,14 +10,23 @@ import InputRange from "./InputRange";
 import RadioItem from "./RadioItem";
 
 const ProductFilterMenu = (props) => {
-  const { handleQueryParamsFilters, setQueryParams, queryParams, setAppliedQueryParams } = props; 
-  const { materialsData, materialsIsLoading, materialsError } = useGetMaterials(); 
-  const { categoriesData, categoriesIsLoading, categoriesError } = useGetCategories(); 
+  const {
+    handleQueryParamsFilters,
+    setQueryParams,
+    queryParams,
+    setAppliedQueryParams,
+  } = props;
+  const { materialsData, materialsIsLoading, materialsError } =
+    useGetMaterials();
+  const { categoriesData, categoriesIsLoading, categoriesError } =
+    useGetCategories();
 
-  const [isOpen, setIsOpen] = useState(false); 
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    isOpen ? document.body.style.position = "fixed" : document.body.style.position = "initial"; 
+    isOpen
+      ? (document.body.style.position = "fixed")
+      : (document.body.style.position = "initial");
   }, [isOpen, setIsOpen]);
 
   const handleResetButton = useCallback(() => {
@@ -26,7 +35,7 @@ const ProductFilterMenu = (props) => {
       priceMax: 0,
       materials: [],
       onlyInStock: false,
-      categories: []
+      categories: [],
     });
 
     setAppliedQueryParams({
@@ -34,7 +43,7 @@ const ProductFilterMenu = (props) => {
       priceMax: 0,
       materials: [],
       onlyInStock: false,
-      categories: []
+      categories: [],
     });
   }, [setQueryParams, setAppliedQueryParams]);
 
@@ -42,7 +51,7 @@ const ProductFilterMenu = (props) => {
     setQueryParams({
       ...queryParams,
       order: "asc",
-      orderField: "price"
+      orderField: "price",
     });
   }, [queryParams, setQueryParams]);
 
@@ -50,7 +59,7 @@ const ProductFilterMenu = (props) => {
     setQueryParams({
       ...queryParams,
       order: "desc",
-      orderField: "price"
+      orderField: "price",
     });
   }, [queryParams, setQueryParams]);
 
@@ -58,33 +67,42 @@ const ProductFilterMenu = (props) => {
     setQueryParams({
       ...queryParams,
       order: "",
-      orderField: ""
+      orderField: "",
     });
   }, [queryParams, setQueryParams]);
 
-  const handleSort = useCallback((value) => {
-    if (value === "1") {
-      handleNoSort();
+  const handleSort = useCallback(
+    (value) => {
+      if (value === "1") {
+        handleNoSort();
+
+        return;
+      }
+
+      if (value === "2") {
+        handlePriceLowToHigh();
+
+        return;
+      }
+
+      handlePriceHighToLow();
 
       return;
-    }
+    },
+    [handlePriceLowToHigh, handlePriceHighToLow, handleNoSort]
+  );
 
-    if (value === "2") {
-      handlePriceLowToHigh();
-      
-      return;
-    }
+  const isValueChecked = useCallback(
+    (queryKey, value) => {
+      const bool =
+        queryParams[queryKey].findIndex((elt) => elt.value === value) === -1
+          ? false
+          : true;
 
-    handlePriceHighToLow();
-    
-    return;
-  }, [handlePriceLowToHigh, handlePriceHighToLow, handleNoSort]); 
-
-  const isValueChecked = useCallback((queryKey, value) => {
-    const bool = queryParams[queryKey].findIndex((elt) => elt.value === value) === -1 ? false : true;
-
-    return bool;
-  }, [queryParams]);
+      return bool;
+    },
+    [queryParams]
+  );
 
   return (
     <>
@@ -93,59 +111,71 @@ const ProductFilterMenu = (props) => {
         onClick={() => setIsOpen(!isOpen)}
       >
         F<br />
-        I<br/>
-        L<br/>
-        T<br/>
-        E<br/>
-        R<br/>
-        S<br/>
+        I<br />
+        L<br />
+        T<br />
+        E<br />
+        R<br />
+        S<br />
       </button>
-      
-      <div className={classnames(
-        styles.filterMenu,
-        isOpen ? styles.open : styles.closed
-      )}>
-        <div
-          className={styles.contentWrapper}
-        >
+
+      <div
+        className={classnames(
+          styles.filterMenu,
+          isOpen ? styles.open : styles.closed
+        )}
+      >
+        <div className={styles.contentWrapper}>
           <p className={styles.menuTitle}>Filters</p>
 
           <div className={styles.priceRangeWrapper}>
             <InputRange
               label={"Price min"}
               currentValue={queryParams.priceMin}
-              handler={(e) => handleQueryParamsFilters("priceMin", e.target.value)}
+              handler={(e) =>
+                handleQueryParamsFilters("priceMin", e.target.value)
+              }
             />
 
             <InputRange
               label={"Price max"}
               currentValue={queryParams.priceMax}
-              handler={(e) => handleQueryParamsFilters("priceMax", e.target.value)}
+              handler={(e) =>
+                handleQueryParamsFilters("priceMax", e.target.value)
+              }
             />
           </div>
 
           <CollapseMenu title="Categories">
-            {!categoriesIsLoading && !categoriesError && categoriesData.map(({ name, id }, index) => (
-              <CheckboxItem
-                key={index}
-                name={name}
-                value={id}
-                checked={isValueChecked("categories", id)}
-                onChange={() => handleQueryParamsFilters("categories", id, name)}
-              />
-            ))}
+            {!categoriesIsLoading &&
+              !categoriesError &&
+              categoriesData.map(({ name, id }, index) => (
+                <CheckboxItem
+                  key={index}
+                  name={name}
+                  value={id}
+                  checked={isValueChecked("categories", id)}
+                  onChange={() =>
+                    handleQueryParamsFilters("categories", id, name)
+                  }
+                />
+              ))}
           </CollapseMenu>
 
           <CollapseMenu title="Materials">
-            {!materialsIsLoading && !materialsError && materialsData.map(({ name, id }, index) => (
-              <CheckboxItem
-                key={index}
-                name={name}
-                value={id}
-                checked={isValueChecked("materials", id)}
-                onChange={() => handleQueryParamsFilters("materials", id, name)}
-              />
-            ))}
+            {!materialsIsLoading &&
+              !materialsError &&
+              materialsData.map(({ name, id }, index) => (
+                <CheckboxItem
+                  key={index}
+                  name={name}
+                  value={id}
+                  checked={isValueChecked("materials", id)}
+                  onChange={() =>
+                    handleQueryParamsFilters("materials", id, name)
+                  }
+                />
+              ))}
           </CollapseMenu>
 
           <CollapseMenu title="Sort by">
@@ -164,7 +194,10 @@ const ProductFilterMenu = (props) => {
               inputId="priceAsc"
               value={2}
               onClick={(e) => handleSort(e.target.value)}
-              checked={queryParams.order === "asc" && queryParams.orderField === "price"}
+              checked={
+                queryParams.order === "asc" &&
+                queryParams.orderField === "price"
+              }
             />
 
             <RadioItem
@@ -173,7 +206,10 @@ const ProductFilterMenu = (props) => {
               inputId="priceDesc"
               value={3}
               onClick={(e) => handleSort(e.target.value)}
-              checked={queryParams.order === "desc" && queryParams.orderField === "price"}
+              checked={
+                queryParams.order === "desc" &&
+                queryParams.orderField === "price"
+              }
             />
           </CollapseMenu>
 
@@ -190,32 +226,26 @@ const ProductFilterMenu = (props) => {
         </div>
 
         <div className={styles.buttonsWrapper}>
-          <Button
-            variant="outlined"
-            onClick={() => handleResetButton()}
-          >
+          <Button variant="outlined" onClick={() => handleResetButton()}>
             Reset
           </Button>
 
-          <Button
-            variant="contained"
-            onClick={() => setAppliedQueryParams(queryParams)}
-          >
+          <Button variant="contained" onClick={handleQueryParamsFilters}>
             Apply
           </Button>
         </div>
 
         <div className={styles.closeButton}>
           <Button
-            onClick={() => { setIsOpen(false); }}
+            onClick={() => {
+              setIsOpen(false);
+            }}
           >
             Close
           </Button>
         </div>
-
       </div>
     </>
-
   );
 };
 

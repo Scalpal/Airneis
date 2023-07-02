@@ -8,7 +8,6 @@ import Button from "../Button";
 import CustomAlert from "../CustomAlert";
 import { createValidator, numberValidator, stringValidator } from "@/validator";
 import { splitCamelCase } from "@/web/services/SplitCamelCase";
-import useAppContext from "@/web/hooks/useAppContext";
 import routes from "@/web/routes";
 import { AxiosError } from "axios";
 import CollapseMenu from "../CollapseMenu";
@@ -18,6 +17,7 @@ import BackButton from "./BackButton";
 import { useGetCategories } from "@/web/hooks/useGetCategories";
 import ProductImageList from "./ProductImageList";
 import uploadProductImage from "@/web/services/products/uploadProductImage";
+import getApiClient from "@/web/services/getApiClient";
 
 const validationSchema = createValidator({
   name: stringValidator.required(),
@@ -31,15 +31,15 @@ const mappableKeys = ["name", "description", "price", "stock"];
 
 const SpecificProductPageContent = (props) => {
   const { product, setActiveProduct, refreshProducts, showModal, setShowModal } = props;
-  const { actions: { api } } = useAppContext();
-  const { materialsData, materialsError, materialsIsLoading } = useGetMaterials(); 
-  const materials = (!materialsIsLoading && !materialsError) ? materialsData : [];
 
   const [currentProduct, setCurrentProduct] = useState(product);
   const [currentProductImages, setCurrentProductImages] = useState(product.productImages);
   const [editMode, setEditMode] = useState(false);
   const [alert, setAlert] = useState({ status: "", message: "" });
   const [showAlert, setShowAlert] = useState(false);
+
+  const { materialsData, materialsError, materialsIsLoading } = useGetMaterials(); 
+  const materials = (!materialsIsLoading && !materialsError) ? materialsData : [];
 
   const { categoriesData, categoriesError, categoriesIsLoading } = useGetCategories();
   const categories = (!categoriesIsLoading && !categoriesError) ? categoriesData : [];
@@ -75,6 +75,7 @@ const SpecificProductPageContent = (props) => {
   }, []);
 
   const handleSubmit = useCallback(async (values) => {
+    const reqInstance = getApiClient();
     values.price = Number.parseInt(values.price);
     values.stock = Number.parseInt(values.stock);
   
@@ -85,8 +86,8 @@ const SpecificProductPageContent = (props) => {
     
     try {
       if (newImages.length > 0) {
-        newImages.map(async (file) => {
-          const [error, response] = await uploadProductImage(file, currentProduct.id);
+        await Promise.all(newImages.map(async (file) => {
+          const [error, response] = await uploadProductImage(file, currentProduct.slug);
 
           if (error) {
             setShowAlert(true);
@@ -96,10 +97,10 @@ const SpecificProductPageContent = (props) => {
           }
 
           setCurrentProduct(response.data.product);
-        });
+        }));
       }
 
-      const { data } = await api.patch(routes.api.products.update(currentProduct.id), values);
+      const { data } = await reqInstance.patch(routes.api.products.single(currentProduct.slug), values);
 
       setEditMode(false);
       setCurrentProduct(data.product);
@@ -112,7 +113,7 @@ const SpecificProductPageContent = (props) => {
         setAlert({ status: error.response.status, message: error.response.message });
       }
     }
-  }, [api, currentProduct.id, refreshProducts, currentProductImages]); 
+  }, [currentProduct.slug, refreshProducts, currentProductImages]); 
 
   const isMaterialChecked = (values, id) => {
     const productMaterialIds = values.reduce((acc, { id }) => [...acc, id], []); 
@@ -128,7 +129,7 @@ const SpecificProductPageContent = (props) => {
 
   useEffect(() => {
     setCurrentProductImages(currentProduct.productImages);
-  }, [currentProduct]); 
+  }, [currentProduct.productImages]); 
 
   return (
     <main
@@ -147,7 +148,7 @@ const SpecificProductPageContent = (props) => {
         enableReinitialize={true}
         initialValues={initialValues}
       >
-      {({ values, isValid, dirty, isSubmitting, handleReset }) => {
+        {({ values, isSubmitting, handleReset }) => {          
           return (
             <Form className={styles.contentContainer}>
               <div className={styles.contentWrapper}> 
@@ -197,12 +198,11 @@ const SpecificProductPageContent = (props) => {
                     <p className={styles.contentTitle}> Product images </p>
                     
                     <ProductImageList
-                      productId={currentProduct.id}
+                      productSlug={currentProduct.slug}
                       currentProductImages={currentProductImages}
                       setCurrentProductImages={setCurrentProductImages}
-                      setAlert={setAlert}
-                      setShowAlert={setShowAlert}
                       setCurrentProduct={setCurrentProduct}
+                      editMode={editMode}
                     />
                   </div>
           
@@ -210,16 +210,15 @@ const SpecificProductPageContent = (props) => {
                     {({ push, remove }) => (
                       <CollapseMenu title="Materials" defaultCollapsed={true} size="small">
                         {materials.map(({ id, name }, index) => (
-                            <CheckboxItem
-                              key={index}
-                              name={name}
-                              value={id}
-                              onClick={() => !isMaterialChecked(values.materials, id) ? push({ id: id, name: name }) : remove(values.materials.findIndex(elt => elt.id === id))}
-                              checked={isMaterialChecked(values.materials, id)}
-                              disabled={!editMode}
-                            />
-                          ))
-                        }
+                          <CheckboxItem
+                            key={index}
+                            name={name}
+                            value={id}
+                            onChange={() => !isMaterialChecked(values.materials, id) ? push({ id: id, name: name }) : remove(values.materials.findIndex(elt => elt.id === id))}
+                            checked={isMaterialChecked(values.materials, id)}
+                            disabled={!editMode}
+                          />
+                        ))}
                       </CollapseMenu>
                     )}
                   </FieldArray>
@@ -229,7 +228,7 @@ const SpecificProductPageContent = (props) => {
               {editMode && (
                 <Button
                   type={"submit"}
-                  disabled={!(dirty && isValid) || isSubmitting}
+                  disabled={isSubmitting}
                 >
                   Save
                 </Button>

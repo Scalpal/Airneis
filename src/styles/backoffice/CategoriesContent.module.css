@@ -1,0 +1,26 @@
+.container {
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-gap: 0.5rem;
+}
+
+.container > div {
+  width: 100%;
+  aspect-ratio: 16/9;
+}
+
+.notVisible {
+  opacity: 0.5;
+}
+
+.visibleInHome:before {
+  content: "Visible in home";
+  z-index: 9999999;
+  font-size: 0.7rem;
+  background-color: var(--primary);
+  color: var(--secondary);
+  padding: 0.3rem;
+  position: absolute;
+  border-bottom-right-radius: 10px;
+}

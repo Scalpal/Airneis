@@ -10,11 +10,7 @@ const Backoffice = () => {
 };
 
 Backoffice.getLayout = function (page) {
-  return (
-    <Layout>
-      {page}
-    </Layout>
-  );
+  return <Layout>{page}</Layout>;
 };
 
 export const getServerSideProps = async (context) => {
@@ -22,7 +18,7 @@ export const getServerSideProps = async (context) => {
   const badTokenRedirect = await checkToken(token);
 
   if (badTokenRedirect) {
-    return badTokenRedirect; 
+    return badTokenRedirect;
   }
 
   const notAdminRedirect = await checkIsAdmin(context);
@@ -33,9 +29,8 @@ export const getServerSideProps = async (context) => {
 
   return {
     props: {
-      prototype: "nothing"
-    }
+      prototype: "nothing",
+    },
   };
 };
-
-export default Backoffice; 
+export default Backoffice;

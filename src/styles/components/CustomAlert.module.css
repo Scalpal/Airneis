@@ -12,7 +12,7 @@
   padding: 0.8rem;
   font-size: 0.8rem;
   transition-duration: 300ms; 
-  z-index: 1000;
+  z-index: 999999999;
   white-space: nowrap;
   color: white;
 }
@@ -21,9 +21,15 @@
   background-color: green;
 }
 
+.warning {
+  background-color: var(--warning);
+}
+
 .error {
   background-color: var(--error);
 }
+
+
 
 .showError {
   transform: translateX(calc(-100% - 1rem));

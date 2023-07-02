@@ -1,23 +1,33 @@
 import styles from "@/styles/backoffice/ProductImageList.module.css";
-import Image from "next/image";
-import ProductImageInput from "../ProductImageInput";
 import { XMarkIcon } from "@heroicons/react/24/solid";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import deleteProductImage from "@/web/services/products/deleteProductImage";
+import ImageCard from "./ImageCard";
+import ImageInput from "./ImageInput";
+import IconButton from "../IconButton";
+import CustomAlert from "../CustomAlert";
 
 
 const ProductImageList = (props) => {
   const {
-    productId,
+    productSlug,
     currentProductImages,
     setCurrentProductImages,
-    setAlert,
-    setShowAlert,
-    setCurrentProduct
+    setCurrentProduct,
+    editMode
   } = props; 
 
+  const [alert, setAlert] = useState({ status: "", message: "" });
+  const [showAlert, setShowAlert] = useState(false);
+
+  const removeImage = useCallback((index) => {
+    const updatedImagesToUpload = currentProductImages.filter((_, i) => i !== index); 
+
+    setCurrentProductImages(updatedImagesToUpload);
+  }, [currentProductImages, setCurrentProductImages]);
+
   const deleteImage = useCallback(async(imageName) => {
-    const [error, { data }] = await deleteProductImage(imageName, productId);
+    const [error, { data }] = await deleteProductImage(imageName, productSlug);
 
     if (error) {
       setAlert({ status: "error", message: "Error on image deletion." });
@@ -29,7 +39,7 @@ const ProductImageList = (props) => {
     setAlert({ status: data.status, message: data.message });
     setShowAlert(true);
     setCurrentProduct(data.product); 
-  }, [productId, setAlert, setShowAlert, setCurrentProduct]);
+  }, [productSlug, setAlert, setShowAlert, setCurrentProduct]);
 
   return (
     <div className={styles.container}>
@@ -37,35 +47,29 @@ const ProductImageList = (props) => {
         {currentProductImages.map((image, index) => {
           if (!(image instanceof File)) {
             return (
-              <div
+              <ImageCard
                 key={index}
-                className={styles.imageWrapper}
-              > 
-                <Image
-                  className={styles.image}
-                  alt={"Product image"}
-                  src={image.imageUrl ? image.imageUrl : `${process.env.AWS_BUCKET_URL}${image.imageSrc}`}
-                  fill
-                />
-
-                <div className={styles.imageOverlay}>
-                  <XMarkIcon
-                    onClick={() => deleteImage(image.imageSrc)}
-                    className={styles.imageOverlayIcon}
+                image={image}
+                deleteButton={
+                  <IconButton 
+                    Icon={XMarkIcon}
+                    tooltip={"Delete"}
+                    onPress={() => deleteImage(image.imageSrc)}
                   />
-                </div>
-              </div>
+                }
+              />
             );
           }
         })}
 
-        <ProductImageInput
-          images={currentProductImages}
-          onChangeEvent={setCurrentProductImages}
+        <ImageInput
+          id={"productImageInput"}
+          text={"Add a product image"}
+          disabled={!editMode}
+          onChangeEvent={(e) => setCurrentProductImages([...currentProductImages, e.target.files[0]])}
         />
       </div>
 
-      
       <div className={styles.newProductImagesWrapper}> 
         {currentProductImages.filter(elt => elt instanceof File).length > 0 && (
           <p
@@ -81,6 +85,7 @@ const ProductImageList = (props) => {
               <p
                 key={index}
                 className={styles.newProductImageRow}
+                onClick={() => removeImage(index)}
               >
                 {image.name}
                 <XMarkIcon className={styles.newProductImageRowIcon} />
@@ -90,6 +95,11 @@ const ProductImageList = (props) => {
         })}
       </div>
 
+      <CustomAlert
+        alert={alert}
+        showAlert={showAlert}
+        setShowAlert={setShowAlert}
+      />
 
     </div>
   );

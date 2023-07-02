@@ -16,6 +16,7 @@ import { useRouter } from "next/router";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/solid";
 import CollapseMenu from "@/web/components/CollapseMenu";
 import useAppContext from "@/web/hooks/useAppContext";
+import Head from "next/head";
 
 const validationSchema = createValidator({
   firstName: stringValidator
@@ -75,6 +76,10 @@ const Register = () => {
 
   return (
     <main className={styles.container}>
+      <Head>
+        <title>Airneis - Register</title>
+      </Head>
+
       <Formik
         onSubmit={handleSubmit}
         validationSchema={validationSchema}

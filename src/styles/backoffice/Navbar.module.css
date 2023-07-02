@@ -82,7 +82,6 @@
   background-color: #d7d7d7;
 }
 
-
 /* ------------- Hover effects on navbar --------- */
 .navbar:hover {
   width: 20%;
@@ -91,4 +90,8 @@
 
 .navbar:hover > .adminInfosBlock {
   opacity: 1;
+}
+
+.logoutIcon:hover {
+  cursor: pointer;
 }
