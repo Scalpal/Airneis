@@ -49,12 +49,13 @@ export const seed = async (knex) => {
   const categories = [];
 
   for (let i = 0; i < loop; i++) {
-    const categoryName = genericCategories[i].name;
+    const category = genericCategories[i];
+    const categoryName = category.name;
 
     categories.push({
       name: categoryName,
       slug: createSlug(categoryName),
-      description: genericCategories[i].description
+      description: category.description
     });
   }
 

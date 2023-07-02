@@ -2,13 +2,11 @@ import { faker } from "@faker-js/faker";
 import hashPassword from "../hashPassword.js";
 
 export const seed = async (knex) => {
-  const loop = 10;
+  const loop = 100;
 
   const users = [];
   for (let i = 0; i < loop; i++) {
-    const [passwordHash, passwordSalt] = await hashPassword(
-      faker.internet.password()
-    );
+    const [passwordHash, passwordSalt] = await hashPassword(faker.internet.password());
     const user = {
       firstName: faker.person.firstName(),
       lastName: faker.person.lastName(),
@@ -25,15 +23,16 @@ export const seed = async (knex) => {
 
   const addresses = [];
   for (let i = 0; i < loop; i++) {
-    const address = {
+    const userId = userIds[i].id;
+
+    addresses.push({
       address: faker.location.streetAddress(),
       city: faker.location.city(),
       region: faker.location.state(),
       postalCode: faker.location.zipCode(),
       country: faker.location.country(),
-      userId: userIds[i].id
-    };
-    addresses.push(address);
+      userId
+    });
   }
   const addressIds = await knex("addresses")
     .insert(addresses)
@@ -44,32 +43,36 @@ export const seed = async (knex) => {
   if (productIds.length !== 0) {
     const reviews = [];
     for (let i = 0; i < loop; i++) {
-      const randomStars = faker.helpers.arrayElement([1, 2, 3, 4, 5]);
-      const review = {
+      const rating = faker.helpers.arrayElement([1, 2, 3, 4, 5]);
+      const productId = productIds[i];
+      const userId = userIds[i].id;
+
+      reviews.push({
         title: faker.lorem.lines(1),
         content: faker.lorem.text(),
-        rating: randomStars,
-        productId: productIds[i],
-        userId: userIds[i].id
-      };
-      reviews.push(review);
+        rating,
+        productId,
+        userId
+      });
     }
     await knex("reviews").insert(reviews);
   }
 
   const orders = [];
   for (let i = 0; i < loop; i++) {
-    const randomStatus = faker.helpers.arrayElement([
+    const status = faker.helpers.arrayElement([
       "cancelled",
       "on standby",
       "delivered"
     ]);
-    const order = {
-      status: randomStatus,
-      deliveryAddress: addressIds[i].id,
-      userId: userIds[i].id
-    };
-    orders.push(order);
+    const addressId = addressIds[i].id;
+    const userId = userIds[i].id;
+
+    orders.push({
+      status,
+      deliveryAddress: addressId,
+      userId
+    });
   }
   await knex("orders").insert(orders);
 };

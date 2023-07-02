@@ -12,7 +12,7 @@ export const seed = async (knex) => {
   for (let i = 0; i < loop; i++) {
     const product = genericProducts[i];
 
-    const [categoryId] = await knex("categories")
+    const [category] = await knex("categories")
       .where({ name: product.category })
       .returning("id");
         
@@ -20,9 +20,13 @@ export const seed = async (knex) => {
       name: product.name,
       description: product.description,
       slug: createSlug(product.name),
-      price: faker.commerce.price({ min: 10, max: 1000, dec: 0 }),
+      price: faker.commerce.price({
+        min: 10,
+        max: 1000,
+        dec: 0
+      }),
       stock: faker.number.int(100),
-      categoryId: categoryId.id
+      categoryId: category.id
     });
   }
 
@@ -33,19 +37,19 @@ export const seed = async (knex) => {
   // Add product images
   const productsImages = [];
   for (let i = 0; i < loop; i++) {
+    const productId = productIds[i].id; 
     productsImages.push({
       imageSrc: "/meuble-2.jpeg",
-      productId: productIds[i].id
+      productId
     });
   }
-
   await knex("products_images").insert(productsImages);
 
   // Add relation between products and their materials
   const productsMaterialsRelation = [];
   for (let i = 0; i < loop; i++) {
-    const product = genericProducts[i]; 
-    const materialsList = product.materials;
+    const productId = productIds[i].id; 
+    const materialsList = genericProducts[i].materials;
 
     // Find materials by name
     const materialIds = await knex("materials")
@@ -54,9 +58,10 @@ export const seed = async (knex) => {
     
     // Add relation between material and product
     for (let j = 0; j < materialIds.length; j++) {
+      const materialId = materialIds[j].id;
       productsMaterialsRelation.push({
-        productId: productIds[i].id,
-        materialId: materialIds[j].id
+        productId,
+        materialId
       });
     }
   }
