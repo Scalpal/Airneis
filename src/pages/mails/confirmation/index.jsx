@@ -9,7 +9,7 @@ import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 const MailConfirmation = () => {
-    const { t } = useTranslation("confirmationMail");
+  const { t } = useTranslation("confirmationMail");
   const [err, setErr] = useState(false);
   const [answer, setAnswer] = useState(null);
   const router = useRouter();
@@ -55,11 +55,9 @@ const MailConfirmation = () => {
 
   return (
     <div className={styles.div}>
-      {err ? (
-        <span className={styles.error}>{t("accountErrorText")}</span>
-      ) : (
-        <span className={styles.success}>{t("accountValidateText")}</span>
-      )}
+      <span className={classNames(styles.answer, { [styles.error]: err })}>
+        {answer}
+      </span>
       <button className={styles.button} onClick={handleclick}>
         {t("returnHomeButton")}
       </button>

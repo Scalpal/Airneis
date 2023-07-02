@@ -5,7 +5,13 @@ import LoginLayout from "@/web/components/LoginLayout";
 import { Form, Formik } from "formik";
 import styles from "@/styles/register.module.css";
 import { useCallback, useState } from "react";
-import { createValidator, emailValidator, passwordValidator, phoneValidator, stringValidator } from "@/validator";
+import {
+  createValidator,
+  emailValidator,
+  passwordValidator,
+  phoneValidator,
+  stringValidator,
+} from "@/validator";
 import { useRouter } from "next/router";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/solid";
 import CollapseMenu from "@/web/components/CollapseMenu";
@@ -47,25 +53,26 @@ const initialValues = {
 const Register = () => {
   const { t } = useTranslation(["register"]);
   const router = useRouter();
-    const {
+  const {
     services: {
       users: { register },
     },
   } = useAppContext();
   const [error, setError] = useState(null);
 
-  const handleSubmit = useCallback(async (values) => {
-    const [error] = await register(values);
+  const handleSubmit = useCallback(
+    async (values) => {
+      const [error] = await register(values);
 
-   if (error) {
+      if (error) {
         if (error) {
           setError(error);
-             return;
+
+          return;
         }
       }
 
-
-       router.push(routes.email.sent());
+      router.push(routes.email.sent());
     },
     [router, register]
   );
@@ -169,7 +176,7 @@ const Register = () => {
               />
             </CollapseMenu>
 
-                        <p className={styles.requiredText}>
+            <p className={styles.requiredText}>
               {" "}
               <span className={styles.requiredStar}>*</span>{" "}
               {t("fieldRequired")}
