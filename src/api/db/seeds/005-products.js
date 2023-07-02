@@ -1,5 +1,7 @@
 import { faker } from "@faker-js/faker";
 
+const createSlug = (string) => string.split(" ").join("-").toLowerCase();
+
 export const seed = async (knex) => {
   const genericProducts = [
     {
@@ -64,51 +66,54 @@ export const seed = async (knex) => {
     }
   ];
 
-  const loop = genericProducts.length;
-
-  const createSlug = (string) => string.split(" ").join("-").toLowerCase();
-
   const products = [];
-  for (let i = 0; i < loop; i++) {
+  for (let i = 0; i < genericProducts.length; i++) {
+    const product = genericProducts[i];
+
     const [categoryId] = await knex("categories")
-      .where({ name: genericProducts[i].category })
+      .where({ name: product.category })
       .returning("id");
         
-    const productName = genericProducts[i].name;
-    const slug = createSlug(productName);
-
     products.push({
-      name: productName,
-      description: genericProducts[i].description,
-      slug: slug,
+      name: product.name,
+      description: product.description,
+      slug: createSlug(product.name),
       price: faker.commerce.price({ min: 10, max: 1000, dec: 0 }),
       stock: faker.number.int(100),
       categoryId: categoryId.id
     });
   }
+
   const productIds = await knex("products")
     .insert(products)
     .returning("id");
 
+  // Add product images
   const productsImages = [];
-  for (let i = 0; i < loop; i++) {
+  for (let i = 0; i < genericProducts.length; i++) {
     productsImages.push({
       imageSrc: "/meuble-2.jpeg",
       productId: productIds[i].id
     });
   }
+
   await knex("products_images").insert(productsImages);
 
+  // Add relation between products and it's materials
   const productsMaterialsRelation = [];
-  for (let i = 0; i < loop; i++) {
-    const materailList = genericProducts[i].material;
+  for (let i = 0; i < genericProducts.length; i++) {
+    const product = genericProducts[i]; 
+    const materialList = product.material;
+
+    // Find material by name
     const materialIds = await knex("materials")
-      .whereIn("name", materailList.split(", "))
+      .whereIn("name", materialList.split(", "))
       .returning("id");
     
+    // Add relation between material and product
     for (let j = 0; j < materialIds.length; j++) {
       productsMaterialsRelation.push({
-        productId: productIds[i].id,
+        productId: product.id,
         materialId: materialIds[j].id
       });
     }
