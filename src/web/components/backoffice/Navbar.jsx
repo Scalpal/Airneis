@@ -57,17 +57,15 @@ const Navbar = () => {
     <nav className={classnames(styles.navbar, nunito.className)}>
       <div className={styles.adminInfosBlock}>
         <p>Hello administrator </p>
-        <p>{user.lastName} {user.firstName}</p>
+        <p>
+          {user.lastName} {user.firstName}
+        </p>
       </div>
 
       <div className={styles.midBlock}>
         {navLinks.map((link, index) => {
           return (
-            <Link
-              key={index}
-              href={link.route}
-              className={styles.links}
-            >
+            <Link key={index} href={link.route} className={styles.links}>
               {link.icon}
               <p className={styles.linksText}>{link.text}</p>
             </Link>
