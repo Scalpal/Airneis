@@ -2,7 +2,7 @@ import { faker } from "@faker-js/faker";
 import hashPassword from "../hashPassword.js";
 
 export const seed = async (knex) => {
-  const loop = 100;
+  const loop = 10;
 
   const users = [];
   for (let i = 0; i < loop; i++) {
@@ -19,12 +19,9 @@ export const seed = async (knex) => {
     };
     users.push(user);
   }
-  let userIds = [];
-  await knex("users")
+  const userIds = await knex("users")
     .insert(users)
-    .returning("id")
-    .then((ids) => (userIds = ids));
-  userIds = userIds.map((user) => user.id);
+    .returning("id");
 
   const addresses = [];
   for (let i = 0; i < loop; i++) {
@@ -34,16 +31,13 @@ export const seed = async (knex) => {
       region: faker.location.state(),
       postalCode: faker.location.zipCode(),
       country: faker.location.country(),
-      userId: userIds[i]
+      userId: userIds[i].id
     };
     addresses.push(address);
   }
-  let addressIds = [];
-  await knex("addresses")
+  const addressIds = await knex("addresses")
     .insert(addresses)
-    .returning("id")
-    .then((ids) => (addressIds = ids));
-  addressIds = addressIds.map((address) => address.id);
+    .returning("id");
 
   const productIds = await knex("products").pluck("id");
 
@@ -54,9 +48,9 @@ export const seed = async (knex) => {
       const review = {
         title: faker.lorem.lines(1),
         content: faker.lorem.text(),
-        stars: randomStars,
+        rating: randomStars,
         productId: productIds[i],
-        userId: userIds[i]
+        userId: userIds[i].id
       };
       reviews.push(review);
     }
@@ -72,8 +66,8 @@ export const seed = async (knex) => {
     ]);
     const order = {
       status: randomStatus,
-      deliveryAddress: addressIds[i],
-      userId: userIds[i]
+      deliveryAddress: addressIds[i].id,
+      userId: userIds[i].id
     };
     orders.push(order);
   }
