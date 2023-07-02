@@ -1,16 +1,11 @@
 import Button from "@/web/components/Button";
 import LoginField from "@/web/components/LoginField";
+import routes from "@/web/routes";
 import LoginLayout from "@/web/components/LoginLayout";
 import { Form, Formik } from "formik";
 import styles from "@/styles/register.module.css";
 import { useCallback, useState } from "react";
-import {
-  createValidator,
-  emailValidator,
-  passwordValidator,
-  phoneValidator,
-  stringValidator,
-} from "@/validator";
+import { createValidator, emailValidator, passwordValidator, phoneValidator, stringValidator } from "@/validator";
 import { useRouter } from "next/router";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/solid";
 import CollapseMenu from "@/web/components/CollapseMenu";
@@ -52,30 +47,27 @@ const initialValues = {
 const Register = () => {
   const { t } = useTranslation(["register"]);
   const router = useRouter();
-  const {
-    actions: { signUp },
+    const {
+    services: {
+      users: { register },
+    },
   } = useAppContext();
   const [error, setError] = useState(null);
 
-  const handleSubmit = useCallback(
-    async (values) => {
-      const [error] = await signUp(values);
+  const handleSubmit = useCallback(async (values) => {
+    const [error] = await register(values);
 
-      if (error) {
-        if (error[0].response.status === 409) {
-          setError("E-mail already used.");
-
-          return;
-        } else {
-          setError("Oops, something went wrong.");
-
-          return;
+   if (error) {
+        if (error) {
+          setError(error);
+             return;
         }
       }
 
-      router.push("/login");
+
+       router.push(routes.email.sent());
     },
-    [router, signUp]
+    [router, register]
   );
 
   return (
@@ -177,7 +169,7 @@ const Register = () => {
               />
             </CollapseMenu>
 
-            <p className={styles.requiredText}>
+                        <p className={styles.requiredText}>
               {" "}
               <span className={styles.requiredStar}>*</span>{" "}
               {t("fieldRequired")}
@@ -189,6 +181,15 @@ const Register = () => {
             >
               {t("registerButton")}
             </Button>
+            <div className={styles.haveAccountText}>
+              <p>
+                Already have an account ?{" "}
+                <span onClick={() => router.push(routes.login())}>
+                  {" "}
+                  Login here{" "}
+                </span>
+              </p>
+            </div>
           </Form>
         )}
       </Formik>
@@ -203,7 +204,6 @@ export async function getStaticProps({ locale }) {
     },
   };
 }
-
 Register.getLayout = function (page) {
   return <LoginLayout>{page}</LoginLayout>;
 };

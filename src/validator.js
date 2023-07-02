@@ -2,7 +2,7 @@ import * as yup from "yup";
 import "yup-phone";
 
 // Base
-export const stringValidator = yup.string("Only strings are accepted."); 
+export const stringValidator = yup.string("Only strings are accepted.");
 export const numberValidator = yup.number();
 export const idValidator = yup.string("Only strings are accepted.").min(1);
 export const arrayValidator = yup.array().of(stringValidator);
@@ -38,13 +38,16 @@ export const passwordValidator = yup
     "Password must contain at least 1 upper & 1 lower case letters, 1 digit, 1 spe. character"
   )
   .required("This field cannot be empty");
-
-// products 
-export const materialsValidator = yup.mixed().oneOf([arrayValidator, stringValidator]);
-export const categoriesValidator = yup.mixed().oneOf([arrayValidator, stringValidator]);
-
-
-
+export const confirmPasswordValidator = yup
+  .string()
+  .oneOf([yup.ref("password")], "Passwords must be identical");
+// products
+export const materialsValidator = yup
+  .mixed()
+  .oneOf([arrayValidator, stringValidator]);
+export const categoriesValidator = yup
+  .mixed()
+  .oneOf([arrayValidator, stringValidator]);
 
 export const createValidator = (object) => yup.object().shape(object);
 

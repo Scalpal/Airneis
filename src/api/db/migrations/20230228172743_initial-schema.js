@@ -8,7 +8,8 @@ module.exports.up = async (knex) => {
     table.text("firstName").notNullable();
     table.text("lastName").notNullable();
     table.text("phoneNumber").notNullable();
-    table.boolean("active").notNullable().defaultTo(true);
+    table.boolean("active").notNullable().defaultTo(false);
+    table.boolean("resetPassword").notNullable().defaultTo(false);
     table.boolean("isAdmin").notNullable().defaultTo(false);
     table.timestamps(true, true, true);
   });

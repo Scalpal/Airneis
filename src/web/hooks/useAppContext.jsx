@@ -1,7 +1,6 @@
-import createAPIClient from "@/web/createAPIClient.js";
-import parseSession from "@/web/parseSession.js";
-import signInService from "@/web/services/signIn.js";
-import signUpService from "@/web/services/signUp.js";
+import createAPIClient from "@/web/createAPIClient";
+import parseSession from "@/web/parseSession";
+import prepareService from "@/web/prepareService";
 import {
   createContext,
   useCallback,
@@ -22,8 +21,7 @@ export const AppContextProvider = (props) => {
   const [jwt, setJWT] = useState(null);
   const api = createAPIClient({ jwt });
 
-  const signUp = signUpService({ api });
-  const signIn = signInService({ api, setSession, setJWT });
+  const services = prepareService({ api, setSession, setJWT, session });
   const signOut = useCallback(() => {
     document.cookie = "token" + "=;expires=Thu, 01 Jan 1970 00:00:01 GMT;";
     setSession(false);
@@ -155,8 +153,6 @@ export const AppContextProvider = (props) => {
     return {
       actions: {
         api,
-        signUp,
-        signIn,
         signOut,
         getLoggedUser,
         setCart,
@@ -164,6 +160,7 @@ export const AppContextProvider = (props) => {
         removeProductFromCart,
         deleteProductFromCart,
       },
+      services,
       state: {
         session,
         cart,
@@ -171,25 +168,23 @@ export const AppContextProvider = (props) => {
     };
   }, [
     api,
-    cart,
-    session,
-    signUp,
-    signIn,
     signOut,
     getLoggedUser,
-    setCart,
     addToCart,
     removeProductFromCart,
     deleteProductFromCart,
+    services,
+    session,
+    cart,
   ]);
 
   return <AppContext.Provider {...otherProps} value={contextValues} />;
 };
 
 const useAppContext = () => {
-  const { state, actions } = useContext(AppContext);
+  const { state, actions, services } = useContext(AppContext);
 
-  return { state, actions };
+  return { state, actions, services };
 };
 
 export default useAppContext;

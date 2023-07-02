@@ -1,22 +1,61 @@
 import { useRouter } from "next/router";
 import BackofficeLoginLayout from "@/web/components/backoffice/LoginLayout";
 import routes from "@/web/routes";
-import axios from "axios";
 import styles from "@/styles/mails/confirmation.module.css";
+import { useEffect, useState } from "react";
+import useAppContext from "@/web/hooks/useAppContext";
+import classNames from "classnames";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
-const MailConfirmation = ({ error }) => {
-  const { t } = useTranslation("confirmationMail");
+const MailConfirmation = () => {
+    const { t } = useTranslation("confirmationMail");
+  const [err, setErr] = useState(false);
+  const [answer, setAnswer] = useState(null);
   const router = useRouter();
-  
+  const { codedId } = router.query;
+  const id = decodeURIComponent(codedId);
+  const {
+    services: {
+      users: { confirmAccount },
+      security: { crypt },
+    },
+  } = useAppContext();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (codedId) {
+        const [{ getId }] = await crypt([{ id }]);
+
+        if (!getId) {
+          setAnswer("Invalid page");
+          setErr(true);
+
+          return;
+        }
+
+        const [error, results] = await confirmAccount(getId);
+
+        if (error) {
+          setAnswer(error);
+          setErr(true);
+
+          return;
+        }
+
+        setAnswer(results);
+      }
+    };
+    fetchData();
+  }, [codedId, confirmAccount, crypt, err, id]);
+
   const handleclick = () => {
     router.push(routes.home());
   };
 
   return (
     <div className={styles.div}>
-      {error ? (
+      {err ? (
         <span className={styles.error}>{t("accountErrorText")}</span>
       ) : (
         <span className={styles.success}>{t("accountValidateText")}</span>
@@ -27,33 +66,22 @@ const MailConfirmation = ({ error }) => {
     </div>
   );
 };
-
+MailConfirmation.isPublic = true;
 MailConfirmation.getLayout = function (page) {
   return <BackofficeLoginLayout>{page}</BackofficeLoginLayout>;
 };
 
 export default MailConfirmation;
 
-export async function getServerSideProps(context) {
-  const { id } = context.query;
-  const { locale } = context.locale;
-
-  try {
-    await axios.put(`
-    ${process.env.API_URL}/api/mail/confirmation?id=${id}`);
-
-    
-return {
-      props: {
-        error: null
-      }
-    };
-  } catch (error) {
-    return {
-      props: {
-        error: true,
-        ...(await serverSideTranslations(locale, ["confirmationMail"])),
-      },
-    };
-  }
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, [
+        "confirmationMail",
+        "footer",
+        "drawerMenu",
+        "navbar",
+      ])),
+    },
+  };
 }

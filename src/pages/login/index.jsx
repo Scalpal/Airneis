@@ -1,5 +1,6 @@
 import { createValidator, stringValidator, emailValidator } from "@/validator";
 import { Formik, Form } from "formik";
+import routes from "@/web/routes";
 import Button from "@/web/components/Button";
 import styles from "@/styles/login.module.css";
 import { useRouter } from "next/router";
@@ -90,13 +91,6 @@ const Login = () => {
               <p>
                 {t("forgotPassword")}
                 <span>{t("forgotPasswordLink")}</span>
-              </p>
-              <p>
-                {t("noAccount")}
-                <span onClick={() => router.push("/register")}>
-                  {" "}
-                  {t("noAccountLink")}
-                </span>
               </p>
             </div>
           </Form>
