@@ -1,33 +1,44 @@
-# Airneis
-B3 - Bachelor Dev : e-commerce project as a team of 4 people
+# AIRNEIS
 
-## Team 
+ÀIRNEIS ("furniture" in Scottish Gaelic) is a Scottish company, and we sell furniture designed by Scottish designers.
+Until now, we've sold products by mail order or via partner stores, but we've missed the initiative to move into the digital age.
+Today, we want to create our own e-commerce solution to reach an international clientele, but also more deeply the one we already have locally.
+The final deliverable required is a mobile-first e-commerce site as well as an Android and/or iOS mobile application mirroring the mobile web version, and a web backoffice to manage content, all with a secure payment system that can be maintained over time.
+
+## Developers team
+
 - Pascal Lim
-- Alexandre Schecht
 - Carsten Lopes
 - Alexandre Gautrot
+- Alexandre Schecht
 
-## Stack technique : 
+## Run the project
 
-### UI/UX
-* Figma
+- Start by cloning the project : `git clone https://github.com/Scalpal/Airneis.git`
+- Run the command `npm i` to install all the project dependencies
+- Setup your environment file (`.env`), it should look like this :
 
-Nous avons choisi de faire les maquettes du site sur Figma.
+```js
+DB_HOST=
+DB_PORT=
+DB_USER=
+DB_PASSWORD=
+DB_DATABASE=
 
-### Front-end
-* Next.js
-* React Native (iOS/Android)
+API_URL=
+SECURITY_JWT_SECRET=
+SECURITY_PASSWORD_PEPPER=
+SECURITY_ENCRYPT_KEY=
+SENDGRID_KEY=
 
-- Pour le front-end, nous nous sommes orientés vers Next.js pour l'application web, car étant une "extension" de React, c'est d'une part ce qu'on maîtrise le mieux et d'autre part ce qui va nous permettre de mettre d'avoir une application web prête pour la production plus rapidement et simplement.
-- Pour la partie mobile, nous nous sommes orientés vers React Native, car étant un langage mobile hybride, cela va nous permettre d'avoir une application fonctionnelle, à la fois sur iOS et sur Android, d'autant plus que React Native étant du React (très proche du moins), la mise en place ne va pas être très compliquée.
+AWS_BUCKET_NAME=
+AWS_BUCKET_REGION=
+AWS_ACCESS_KEY=
+AWS_SECRET_KEY=
+AWS_BUCKET_URL=
+```
 
-### Back-end
-* NodeJS
-* Express
-
-Pour la partie back-end, nous nous sommes orientés vers Node.js couplé à Express.js, car c'est un framework assez simple de compréhension et le fait que cela puisse gérer des requêtes de manières asynchrones sera performance-friendly pour l'application.
-
-### Database
-* MySQL
-
-Pour la base de données, nous avons choisi MySQL, car c'est ce que nous maîtrisons le mieux.
+- Once you have you're empty postgres database and your `.env` setup properly, run the command `npx knex migrate:latest` to create the tables in the database
+- Now run the command `npx knex seed:run --esm` to fill the database with rows
+- Now run : `npm run dev` to run the app locally and go to `http://localhost:3000`
+- **Have fun visiting our website Airneis !**
