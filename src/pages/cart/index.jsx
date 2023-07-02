@@ -11,13 +11,15 @@ import Head from "next/head";
 
 const Cart = () => {
   const router = useRouter();
-  const { state: { cart } } = useAppContext(); 
+  const {
+    state: { cart },
+  } = useAppContext();
 
   const [productsList, setProductsList] = useState([]);
   const [totalSum, setTotalSum] = useState(0);
-  
+
   useEffect(() => {
-    setProductsList(cart); 
+    setProductsList(cart);
   }, [cart]);
 
   useEffect(() => {
@@ -25,7 +27,8 @@ const Cart = () => {
       productsList.reduce(
         (sum, product) => sum + product.price * product.quantity,
         0.0
-      ));
+      )
+    );
   }, [productsList]);
 
   const handleSubmit = useCallback(() => {
@@ -40,7 +43,7 @@ const Cart = () => {
     <>
       <Head>
         <title>Airneis - Cart</title>
-      </Head>        
+      </Head>
 
       <div className={styles.mainContent}>
         {productsList.length === 0 ? (
@@ -48,17 +51,20 @@ const Cart = () => {
             <section className={styles.emptyCartContainer}>
               <ShoppingCartIcon className={styles.emptyCartIcon} />
 
-              <p className={styles.emptyCartTitle}>Your cart is currently empty </p>
+              <p className={styles.emptyCartTitle}>
+                Your cart is currently empty{" "}
+              </p>
 
               <div className={styles.emptyCartText}>
-                <p>Before proceed to checkout, you must add some products to your cart.</p>
+                <p>
+                  Before proceed to checkout, you must add some products to your
+                  cart.
+                </p>
                 <p>Won&apos;t you come here without buying anything...</p>
               </div>
 
               <div>
-                <Button
-                  onClick={() => redirectToHomePage()}
-                >
+                <Button onClick={() => redirectToHomePage()}>
                   Return to shop
                 </Button>
               </div>
@@ -82,7 +88,6 @@ const Cart = () => {
             </section>
 
             <section className={styles.recapContainer}>
-
               <div className={styles.recapTopRows}>
                 <div className={styles.recapRow}>
                   <p>Subtotal</p>
@@ -97,16 +102,10 @@ const Cart = () => {
 
               <div className={styles.recapTotalRow}>
                 <p>TOTAL</p>
-                <p>
-                  {(totalSum * 1.2).toFixed(2)}€
-                </p>
+                <p>{(totalSum * 1.2).toFixed(2)}€</p>
               </div>
 
-              <Button
-                onClick={() => handleSubmit()}
-              >
-                Order
-              </Button>
+              <Button onClick={() => handleSubmit()}>Order</Button>
             </section>
           </>
         )}
@@ -116,11 +115,7 @@ const Cart = () => {
 };
 
 Cart.getLayout = function (page) {
-  return (
-    <LayoutStickyNavbar>
-      {page}
-    </LayoutStickyNavbar>
-  );
+  return <LayoutStickyNavbar>{page}</LayoutStickyNavbar>;
 };
 
 export default Cart;

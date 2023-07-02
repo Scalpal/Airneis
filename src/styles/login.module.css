@@ -55,6 +55,7 @@
 .noAccountText p > span {
   font-weight: 600;
   color: black;
+  cursor: pointer;
 }
 
 .noAccountText a:hover {

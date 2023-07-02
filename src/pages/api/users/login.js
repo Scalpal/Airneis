@@ -22,16 +22,9 @@ const handler = mw({
       res,
     }) => {
       try {
-        const user = await UserModel.query()
-          .findOne({ email });
-        
+        const user = await UserModel.query().findOne({ email });
+
         if (!user) {
-          res.status(401).send({ error: "Wrong email or password." });
-
-          return;
-        }
-
-        if (!(await user.checkPassword(password))) {
           res.status(401).send({ error: "Wrong email or password." });
 
           return;
@@ -43,17 +36,24 @@ const handler = mw({
           return;
         }
 
-        const jwt = jsonwebtoken.sign({
-          payload: {
-            user: {
-              id: user.id,
+        if (!(await user.checkPassword(password))) {
+          res.status(401).send({ error: "Wrong email or password." });
+
+          return;
+        }
+
+        const jwt = jsonwebtoken.sign(
+          {
+            payload: {
+              user: {
+                id: user.id,
+              },
             },
           },
-        },
-        config.security.jwt.secret,
-        { expiresIn: config.security.jwt.expiresIn }
+          config.security.jwt.secret,
+          { expiresIn: config.security.jwt.expiresIn }
         );
-      
+
         res.send({ result: jwt });
       } catch (error) {
         res.status(500).send({ error: error });
