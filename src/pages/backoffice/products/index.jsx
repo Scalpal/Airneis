@@ -38,21 +38,21 @@ export const getServerSideProps = async (context) => {
 
     return {
       props: {
-        productsProps: products,
-      },
+        productsProps: products
+      }
     };
   } catch (error) {
     if (error instanceof AxiosError) {
       return {
         props: {
-          productsProps: [],
+          productsProps: []
         }
       };
     }
 
     return {
       props: {
-        productsProps: [],
+        productsProps: []
       }
     };
   }

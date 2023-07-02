@@ -10,18 +10,18 @@ import { useCallback, useEffect, useState } from "react";
 import {
   createValidator,
   passwordValidator,
-  confirmPasswordValidator,
+  confirmPasswordValidator
 } from "@/validator";
 const merge = require("deepmerge");
 
 const validationSchema = createValidator({
   password: passwordValidator.required(),
-  passwordConfirmation: confirmPasswordValidator.required(),
+  passwordConfirmation: confirmPasswordValidator.required()
 });
 
 const initialValues = {
   password: "",
-  passwordConfirmation: "",
+  passwordConfirmation: ""
 };
 
 const MailResetPassword = () => {
@@ -36,8 +36,8 @@ const MailResetPassword = () => {
   const {
     services: {
       users: { resetPassword },
-      security: { crypt },
-    },
+      security: { crypt }
+    }
   } = useAppContext();
 
   useEffect(() => {
@@ -72,7 +72,7 @@ const MailResetPassword = () => {
 
       const newValues = merge(values, {
         id: cryptoId,
-        timer: cryptoTimer,
+        timer: cryptoTimer
       });
       const [err] = await resetPassword(newValues);
 

@@ -9,7 +9,7 @@ class ProductModel extends BaseModel {
 
   static modifiers = {
     paginate: (query, limit, page) =>
-      query.limit(limit).offset((page - 1) * limit),
+      query.limit(limit).offset((page - 1) * limit)
   };
 
   static relationMappings() {
@@ -19,8 +19,8 @@ class ProductModel extends BaseModel {
         modelClass: CategoryModel,
         join: {
           from: "products.categoryId",
-          to: "categories.id",
-        },
+          to: "categories.id"
+        }
       },
       materials: {
         relation: BaseModel.ManyToManyRelation,
@@ -35,13 +35,13 @@ class ProductModel extends BaseModel {
         }
       },
       reviews: {
-        relation: BaseModel.HasManyRelation, 
-        modelClass: ReviewModel, 
+        relation: BaseModel.HasManyRelation,
+        modelClass: ReviewModel,
         join: {
           from: "products.id",
           to: "reviews.productId"
         },
-        modify: (query) => query.select("userId", "title", "content","rating")
+        modify: (query) => query.select("userId", "title", "content", "rating")
       },
       productImages: {
         relation: BaseModel.HasManyRelation,

@@ -12,7 +12,7 @@ const handler = mw({
     validate({
       query: {
         visible: boolValidator,
-        visibleInHome: boolValidator,
+        visibleInHome: boolValidator
       }
     }),
     async ({

@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "fix": "next lint --fix"
+    "fix": "next lint --fix",
+    "a11y": "node ./src/api/a11y/reporter.mjs"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.357.0",
@@ -45,7 +46,9 @@
   "devDependencies": {
     "@faker-js/faker": "^8.0.0",
     "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
     "formik": "^2.2.9",
+    "pa11y": "^6.2.3",
     "yup": "^0.32.11"
   }
 }

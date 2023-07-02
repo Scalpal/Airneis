@@ -7,7 +7,7 @@ import {
   useContext,
   useEffect,
   useMemo,
-  useState,
+  useState
 } from "react";
 import { parseCookies } from "nookies";
 import routes from "../routes";
@@ -157,13 +157,13 @@ export const AppContextProvider = (props) => {
         setCart,
         addToCart,
         changeValuesProductFromCart,
-        deleteProductFromCart,
+        deleteProductFromCart
       },
       services,
       state: {
         session,
-        cart,
-      },
+        cart
+      }
     };
   }, [
     api,
@@ -174,7 +174,7 @@ export const AppContextProvider = (props) => {
     deleteProductFromCart,
     services,
     session,
-    cart,
+    cart
   ]);
 
   return <AppContext.Provider {...otherProps} value={contextValues} />;

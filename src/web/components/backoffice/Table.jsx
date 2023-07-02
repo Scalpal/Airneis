@@ -6,7 +6,7 @@ import {
   ChevronUpIcon,
   ChevronDownIcon,
   CheckIcon,
-  XMarkIcon,
+  XMarkIcon
 } from "@heroicons/react/24/solid";
 import { splitCamelCase } from "@/web/services/SplitCamelCase";
 
@@ -18,7 +18,7 @@ const Table = (props) => {
     sortColumn,
     visibleColumns,
     showSpecificRowFunction,
-    deleteRowFunction,
+    deleteRowFunction
   } = props;
   // safeArray is the array coming from getServerSideProps, it is always not empty so in case array is empty
   // we still have the table headers

@@ -1,5 +1,5 @@
 import { classnames } from "@/pages/_app";
-import styles from "@/styles/components/CheckboxItem.module.css"; 
+import styles from "@/styles/components/CheckboxItem.module.css";
 import { CheckIcon } from "@heroicons/react/24/solid";
 
 const CheckboxItem = (props) => {

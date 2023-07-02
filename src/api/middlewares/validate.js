@@ -4,7 +4,7 @@ const validate = ({ body, params, query }) => {
   const validator = yup.object().shape({
     ...(body ? { body: yup.object(body).shape() } : {}),
     ...(params ? { params: yup.object(params).shape() } : {}),
-    ...(query ? { query: yup.object(query).shape() } : {}),
+    ...(query ? { query: yup.object(query).shape() } : {})
   });
 
   return async (ctx) => {
@@ -15,7 +15,7 @@ const validate = ({ body, params, query }) => {
         {
           body: req.body,
           params: req.params,
-          query: req.query,
+          query: req.query
         },
         { abortEarly: false }
       );
@@ -23,7 +23,7 @@ const validate = ({ body, params, query }) => {
       ctx.locals = {
         body,
         params,
-        query,
+        query
       };
 
       await next();

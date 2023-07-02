@@ -7,14 +7,14 @@ const handler = mw({
   PUT: [
     validate({
       query: {
-        id: idValidator.required(),
-      },
+        id: idValidator.required()
+      }
     }),
     async ({
       locals: {
-        query: { id },
+        query: { id }
       },
-      res,
+      res
     }) => {
       const user = await UserModel.query().findOne({ id });
 
@@ -27,8 +27,8 @@ const handler = mw({
       await UserModel.query().findOne({ id }).update({ activate: true });
 
       res.send({ success: true });
-    },
-  ],
+    }
+  ]
 });
 
 export default handler;

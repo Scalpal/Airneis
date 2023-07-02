@@ -12,7 +12,7 @@ const handler = mw({
       query: {
         productSlug: stringValidator.required(),
         limit: limitValidator.default(1),
-        page: pageValidator,
+        page: pageValidator
       }
     }),
     async ({

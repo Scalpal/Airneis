@@ -16,21 +16,21 @@ const routes = {
   cgu: () => "terms-of-use",
   legalMentions: () => "/legal-mentions",
   email: {
-    sent: () => "/mails/sent",
+    sent: () => "/mails/sent"
   },
   products: {
     base: () => `/products`,
-    single: (productSlug) => `/products/${productSlug}`,
+    single: (productSlug) => `/products/${productSlug}`
   },
   categories: {
     base: () => "/categories",
-    single: (categorySlug) => `/categories/${categorySlug}`,
+    single: (categorySlug) => `/categories/${categorySlug}`
   },
   backoffice: {
     base: () => "/backoffice",
     users: () => "/backoffice/users",
     products: () => "/backoffice/products",
-    shop: () => "/backoffice/shop",
+    shop: () => "/backoffice/shop"
   },
   api: {
     register: () => "/users/register",
@@ -51,15 +51,15 @@ const routes = {
       reviews: (productSlug, limit, page) =>
         `/api/products/${productSlug}/reviews?limit=${limit}&page=${page}`,
       addImage: (productId) => `/api/products/${productId}/images`,
-      deleteImage: (productId) => `/api/products/${productId}/deleteImage`,
+      deleteImage: (productId) => `/api/products/${productId}/deleteImage`
     },
     images: {
       homeCarousel: {
         base: (queryString) =>
           `/api/images/homeCarousel${queryString ? queryString : ""}`,
         single: (imageId) => `/api/images/homeCarousel/${imageId}`,
-        upload: () => "/api/images/homeCarousel/upload",
-      },
+        upload: () => "/api/images/homeCarousel/upload"
+      }
     },
     categories: {
       base: (queryString) =>
@@ -67,10 +67,10 @@ const routes = {
       single: (categorySlug) => `/api/products/categories/${categorySlug}`,
       upload: (categorySlug) =>
         `/api/products/categories/${categorySlug}/upload`,
-      products: (categoryId) => `/api/products?categories=${categoryId}`,
+      products: (categoryId) => `/api/products?categories=${categoryId}`
     },
     mails: {
-      resetPassword: () => "/mail/reset",
+      resetPassword: () => "/mail/reset"
     },
     users: {
       resetPassword: () => "/users/reset",
@@ -80,9 +80,9 @@ const routes = {
         createRouteWithQueryParams(`/api/users/${userId}`, query),
       self: () => "/api/users/self",
       patch: (userId) => createRouteWithQueryParams(`/users/${userId}`),
-      delete: (userId) => createRouteWithQueryParams(`/users/${userId}`),
-    },
-  },
+      delete: (userId) => createRouteWithQueryParams(`/users/${userId}`)
+    }
+  }
 };
 
 export default routes;

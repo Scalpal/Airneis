@@ -47,10 +47,10 @@ const handler = mw({
         const users = await query.modify("paginate", limit, page)
           .select("id", "email", "firstName", "lastName", "phoneNumber", "active", "isAdmin")
           .withGraphFetched("address");
-        
+
         res.send({ users: users, count: count });
       } catch (error) {
-        res.status(500).send({ error: error }); 
+        res.status(500).send({ error: error });
       }
     }
   ]

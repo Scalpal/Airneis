@@ -12,7 +12,7 @@ import Head from "next/head";
 const Cart = () => {
   const router = useRouter();
   const {
-    state: { cart },
+    state: { cart }
   } = useAppContext();
 
   const [productsList, setProductsList] = useState([]);

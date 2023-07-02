@@ -14,7 +14,7 @@ const ProductFilterMenu = (props) => {
     handleQueryParamsFilters,
     setQueryParams,
     queryParams,
-    setAppliedQueryParams,
+    setAppliedQueryParams
   } = props;
   const { materialsData, materialsIsLoading, materialsError } =
     useGetMaterials();
@@ -35,7 +35,7 @@ const ProductFilterMenu = (props) => {
       priceMax: 0,
       materials: [],
       onlyInStock: false,
-      categories: [],
+      categories: []
     });
 
     setAppliedQueryParams({
@@ -43,7 +43,7 @@ const ProductFilterMenu = (props) => {
       priceMax: 0,
       materials: [],
       onlyInStock: false,
-      categories: [],
+      categories: []
     });
   }, [setQueryParams, setAppliedQueryParams]);
 
@@ -51,7 +51,7 @@ const ProductFilterMenu = (props) => {
     setQueryParams({
       ...queryParams,
       order: "asc",
-      orderField: "price",
+      orderField: "price"
     });
   }, [queryParams, setQueryParams]);
 
@@ -59,7 +59,7 @@ const ProductFilterMenu = (props) => {
     setQueryParams({
       ...queryParams,
       order: "desc",
-      orderField: "price",
+      orderField: "price"
     });
   }, [queryParams, setQueryParams]);
 
@@ -67,7 +67,7 @@ const ProductFilterMenu = (props) => {
     setQueryParams({
       ...queryParams,
       order: "",
-      orderField: "",
+      orderField: ""
     });
   }, [queryParams, setQueryParams]);
 

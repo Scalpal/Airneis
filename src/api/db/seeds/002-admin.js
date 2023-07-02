@@ -10,7 +10,7 @@ export const seed = async (knex) => {
     phoneNumber: faker.phone.number(),
     passwordHash,
     passwordSalt,
-    isAdmin: true,
+    isAdmin: true
   });
 
   const [userId] = await knex("users").select("id").where({ isAdmin: true });
@@ -21,6 +21,6 @@ export const seed = async (knex) => {
     postalCode: faker.location.zipCode(),
     country: faker.location.country(),
     mainAddress: true,
-    userId: userId.id,
+    userId: userId.id
   });
 };

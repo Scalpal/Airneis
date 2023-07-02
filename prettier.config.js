@@ -1,1 +1,4 @@
-module.exports = { semi: true };
+module.exports = {
+  semi: true,
+  trailingComma: "none"
+};

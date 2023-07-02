@@ -1,5 +1,5 @@
-const { resolve } = require("path");
-const { config } = require("dotenv");
+import { resolve } from "path";
+import { config } from "dotenv";
 
 config();
 
@@ -10,15 +10,15 @@ const knexfile = {
     port: process.env.DB_PORT,
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE,
+    database: process.env.DB_DATABASE
   },
   migrations: {
     directory: resolve("src/api/db/migrations"),
-    stub: resolve("src/api/db/migration.stub"),
+    stub: resolve("src/api/db/migration.stub")
   },
   seeds: {
-    directory: resolve("src/api/db/seeds"),
-  },
+    directory: resolve("src/api/db/seeds")
+  }
 };
 
-module.exports = knexfile;
+export default knexfile;

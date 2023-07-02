@@ -7,6 +7,7 @@ export const seed = async (knex) => {
 
   const categoryIds = await knex("categories").pluck("id");
   const products = [];
+
   for (let i = 0; i < loop; i++) {
     const randomCategoryId = faker.helpers.arrayElement(categoryIds);
 
@@ -19,7 +20,7 @@ export const seed = async (knex) => {
       slug: slug,
       price: faker.commerce.price({ min: 10, max: 1000, dec: 0 }),
       stock: faker.number.int(100),
-      categoryId: randomCategoryId,
+      categoryId: randomCategoryId
     });
   }
   let productIds = [];
@@ -33,7 +34,7 @@ export const seed = async (knex) => {
   for (let i = 0; i < loop; i++) {
     productsImages.push({
       imageSrc: "/meuble-2.jpeg",
-      productId: productIds[i],
+      productId: productIds[i]
     });
   }
   await knex("products_images").insert(productsImages);
@@ -44,7 +45,7 @@ export const seed = async (knex) => {
     const randomMaterialId = faker.helpers.arrayElement(materialIds);
     productsMaterialsRelation.push({
       productId: productIds[i],
-      materialId: randomMaterialId,
+      materialId: randomMaterialId
     });
   }
   await knex("products_materials_relation").insert(productsMaterialsRelation);
