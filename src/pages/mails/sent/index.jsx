@@ -4,7 +4,9 @@ import BackofficeLoginLayout from "@/web/components/backoffice/LoginLayout";
 const MailSent = () => {
   return (
     <div className={styles.div}>
-      <span className={styles.answer}>Please check your mailbox</span>
+      <span className={styles.answer}>
+        We sent you an email. Please check your mailbox.
+      </span>
     </div>
   );
 };
