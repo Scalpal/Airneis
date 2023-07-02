@@ -4,7 +4,13 @@ import UserModel from "@/api/db/models/UserModel.js";
 import { transaction } from "objection";
 import validate from "@/api/middlewares/validate.js";
 import mw from "@/api/mw.js";
-import { emailValidator, phoneValidator, stringValidator, passwordValidator } from "@/validator";
+import { AES } from "crypto-js";
+import {
+  emailValidator,
+  phoneValidator,
+  stringValidator,
+  passwordValidator,
+} from "@/validator";
 import sgMail from "@sendgrid/mail";
 import config from "@/api/config.js";
 

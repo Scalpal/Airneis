@@ -10,12 +10,7 @@ const Footer = () => {
     <footer className={styles.footer}>
       <div className={styles.footerInfos}>
         <div>
-          <p className={styles.footerInfosBrandTitle}>Airneis</p>
-
-          {/* Social network icons */}
-          {/* <div>
-
-          </div> */}
+          <h2>Airneis</h2>
 
           <div className={styles.footerInfosLink}>
             <div className={styles.footerLink}>

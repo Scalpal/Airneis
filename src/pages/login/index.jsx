@@ -27,13 +27,15 @@ const Login = () => {
   const { t } = useTranslation("login");
   const router = useRouter();
   const {
-    actions: { signIn },
+    services: {
+      users: { login },
+    },
   } = useAppContext();
   const [error, setError] = useState(null);
 
   const handleSubmit = useCallback(
     async (values) => {
-      const [err] = await signIn(values);
+      const [err] = await login(values);
 
       if (err) {
         setError(err[0].response.data.error);
@@ -41,9 +43,9 @@ const Login = () => {
         return;
       }
 
-      router.push("/");
+      router.push(routes.home());
     },
-    [signIn, router]
+    [login, router]
   );
 
   return (
@@ -90,7 +92,15 @@ const Login = () => {
             <div className={styles.noAccountText}>
               <p>
                 {t("forgotPassword")}
-                <span>{t("forgotPasswordLink")}</span>
+                <span onClick={() => router.push(routes.reset())}>
+                  {t("forgotPasswordLink")}
+                </span>
+              </p>
+              <p>
+                {t("noAccount")}
+                <span onClick={() => router.push(routes.register())}>
+                  {t("noAccountLink")}
+                </span>
               </p>
             </div>
           </Form>

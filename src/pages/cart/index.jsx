@@ -16,16 +16,11 @@ const Cart = () => {
   const {
     state: { cart },
   } = useAppContext();
-  const {
-    state: { cart },
-  } = useAppContext();
 
   const [productsList, setProductsList] = useState([]);
   const [totalSum, setTotalSum] = useState(0);
 
-
   useEffect(() => {
-    setProductsList(cart);
     setProductsList(cart);
   }, [cart]);
 
@@ -34,8 +29,6 @@ const Cart = () => {
       productsList.reduce(
         (sum, product) => sum + product.price * product.quantity,
         0.0
-      )
-    );
       )
     );
   }, [productsList]);
@@ -132,7 +125,6 @@ export async function getStaticProps({ locale }) {
 }
 
 Cart.getLayout = function (page) {
-  return <LayoutStickyNavbar>{page}</LayoutStickyNavbar>;
   return <LayoutStickyNavbar>{page}</LayoutStickyNavbar>;
 };
 
