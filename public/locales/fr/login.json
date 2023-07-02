@@ -1,7 +1,8 @@
 {
+  "formHeadTitle": "Airneis - Connexion",
   "formTitle": "Connectez-vous à votre compte",
-  "email": "E-mail", 
-  "password": "Mot de passe", 
+  "email": "E-mail",
+  "password": "Mot de passe",
   "loginButton": "Connexion",
   "forgotPassword": "Vous avez oublié votre mot de passe ?",
   "forgotPasswordLink": "Cliquez ici",

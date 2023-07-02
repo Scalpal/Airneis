@@ -6,6 +6,7 @@ import { AppContextProvider } from "@/web/hooks/useAppContext.jsx";
 import Head from "next/head";
 import { appWithTranslation } from "next-i18next";
 
+
 export const classnames = require("classnames");
 
 export const montserrat = Montserrat({

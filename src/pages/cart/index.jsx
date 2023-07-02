@@ -13,13 +13,15 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 const Cart = () => {
   const { t } = useTranslation("cart");
   const router = useRouter();
-  const { state: { cart } } = useAppContext(); 
+  const {
+    state: { cart },
+  } = useAppContext();
 
   const [productsList, setProductsList] = useState([]);
   const [totalSum, setTotalSum] = useState(0);
-  
+
   useEffect(() => {
-    setProductsList(cart); 
+    setProductsList(cart);
   }, [cart]);
 
   useEffect(() => {
@@ -27,7 +29,8 @@ const Cart = () => {
       productsList.reduce(
         (sum, product) => sum + product.price * product.quantity,
         0.0
-      ));
+      )
+    );
   }, [productsList]);
 
   const handleSubmit = useCallback(() => {
@@ -41,8 +44,8 @@ const Cart = () => {
   return (
     <>
       <Head>
-        <title>Airneis - Cart</title>
-      </Head>        
+        <title>{t("emptyCartHeadTitle")}</title>
+      </Head>
 
       <div className={styles.mainContent}>
         {productsList.length === 0 ? (
@@ -82,7 +85,6 @@ const Cart = () => {
             </section>
 
             <section className={styles.recapContainer}>
-
               <div className={styles.recapTopRows}>
                 <div className={styles.recapRow}>
                   <p>{t("subtotal")}</p>
@@ -112,17 +114,18 @@ const Cart = () => {
 export async function getStaticProps({ locale }) {
   return {
     props: {
-      ...(await serverSideTranslations(locale, ["cart", "footer", "navbar","drawerMenu"])),
+      ...(await serverSideTranslations(locale, [
+        "cart",
+        "footer",
+        "navbar",
+        "drawerMenu",
+      ])),
     },
   };
 }
 
 Cart.getLayout = function (page) {
-  return (
-    <LayoutStickyNavbar>
-      {page}
-    </LayoutStickyNavbar>
-  );
+  return <LayoutStickyNavbar>{page}</LayoutStickyNavbar>;
 };
 
 export default Cart;

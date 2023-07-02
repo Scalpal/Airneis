@@ -128,7 +128,7 @@ const ProductFilterMenu = (props) => {
         )}
       >
         <div className={styles.contentWrapper}>
-          <p className={styles.menuTitle}>Filters</p>
+          <p className={styles.menuTitle}>{t("filterTitle")}</p>
 
           <div className={styles.priceRangeWrapper}>
             <InputRange
@@ -218,7 +218,7 @@ const ProductFilterMenu = (props) => {
           <div>
             <p className={styles.categoryTitle}>{t("stocks")}</p>
             <CheckboxItem
-              name={"In stock"}
+              name={t("inStock")}
               value={queryParams.onlyInStock}
               queryParams={queryParams}
               queryKey={"onlyInStock"}

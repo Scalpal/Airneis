@@ -1,4 +1,5 @@
 {
+  "filterTitle": "Filtres",
   "priceMin": "Prix min",
   "priceMax": "Prix max",
   "categoriesTitle": "Catégories",
@@ -8,6 +9,7 @@
   "priceAsc": "Prix : Par ordre croissant",
   "priceDesc": "Prix : Par ordre décroissant",
   "stocks": "Stock",
+  "inStock": "En stock",
   "resetButton": "Réinitialiser",
   "applyButton": "Appliquer",
   "closeButton": "Fermer",

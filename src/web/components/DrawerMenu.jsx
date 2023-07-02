@@ -10,7 +10,6 @@ import useAppContext from "../hooks/useAppContext";
 import { useTranslation } from "next-i18next";
 import LanguageSelect from "./LanguageSelect";
 
-
 const DrawerMenu = (props) => {
   const { t } = useTranslation(["drawerMenu"]);
   const { isDrawerToggledState } = props;
@@ -73,7 +72,7 @@ const DrawerMenu = (props) => {
           <Link href={routes.backoffice.users()}>{t("backoffice")}</Link>
         )}
         <Link href={routes.cgu()}>{t("termsOfUse")}</Link>
-        <Link href={routes.legalMention()}>{t("legalMentions")}</Link>
+        <Link href={routes.legalMentions()}>{t("legalMentions")}</Link>
         <Link href="/contact">{t("contact")}</Link>
         <Link href="/about-us">{t("aboutUs")}</Link>
         <LanguageSelect />
