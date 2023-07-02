@@ -28,8 +28,7 @@ const ReviewList = (props) => {
                 </div>
 
                 <p className={styles.userInfo}>
-                  By {review.user.firstName} {review.user.lastName},{" "}
-                  {formatDate(review.createdAt)}
+                  By {review.user.firstName} {review.user.lastName}, {formatDate(review.createdAt)}
                 </p>
               </div>
 

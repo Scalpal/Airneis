@@ -42,13 +42,17 @@ const Banner = (props) => {
         fill
       />
 
-      <button className={styles.anchorButton} onClick={() => handleClick()}>
+      <button
+        className={styles.anchorButton}
+        onClick={() => handleClick()}
+      >
         <ArrowSmallDownIcon className={styles.icon} />
       </button>
 
       <div ref={anchorRef} id="" className={styles.belowBanner}></div>
 
       <BackToTopButton onPress={handleClick} />
+
     </header>
   );
 };

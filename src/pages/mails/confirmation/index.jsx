@@ -39,7 +39,8 @@ export async function getServerSideProps(context) {
     await axios.put(`
     ${process.env.API_URL}/api/mail/confirmation?id=${id}`);
 
-    return {
+    
+return {
       props: {
         error: null
       }

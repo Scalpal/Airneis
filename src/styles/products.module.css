@@ -1,149 +1,72 @@
-.main {
-  margin: 0 0 10vh 0;
-  height: 100%;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+.wrapper {
+  height: fit-content;
 }
 
-/* Custom input */
-.customInputWrapper {
-  display: flex;
-  flex-direction: row;
-  width: 40%;
-  gap: 0.3rem;
-  border: 1px solid var(--primary);
-  border-radius: 1rem;
-  overflow: hidden;
-  background-color: var(--secondary);
-  font-size: inherit;
-  z-index: 2;
-  transition-duration: 300ms;
-  margin: 0 auto;
-
-  .button {
-    border: 0;
-    outline: 0;
-    padding: 0.3rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--secondary);
-  }
-
-  .icons {
-    width: 25px;
-    height: 25px;
-  }
-
-  .input {
-    flex: 1;
-    border: 0;
-    outline: 0;
-    background-color: var(--secondary);
-  }
-}
-
-.filterBadgesContainer {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  width: 80%;
-  margin: 3rem auto 3rem auto;
-  transition-duration: 500ms;
-}
-
-/* Filter menu / products container */
-.content {
+.button {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  gap: 1rem;
-  width: 95%;
-  margin: 0 auto;
-}
-
-.rightContent {
-  display: flex;
-  flex-direction: column;
-  /* gap: 1rem; */ /* Creates an empty space even where there's only one element */
-  width: 80%;
-}
-
-.productsContainer {
-  width: 100%;
-  display: grid;
-  justify-content: center;
   align-items: center;
-  grid-template-rows: auto;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  grid-gap: 1rem;
-  grid-row-start: auto;
-}
-
-.noProductsContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  border-radius: 1rem;
-  height: 100%;
-}
-
-.noProductsContainer p:nth-child(2) {
-  font-size: 1.7rem;
-  font-weight: 600;
-}
-
-.searchTerm {
-  font-weight: 600;
-}
-
-.productIcon {
-  width: 100px;
-  height: 100px;
-}
-
-.buttonWrapper {
-  display: flex;
-  flex-direction: column;
-  width: fit-content;
-  margin: 0 auto 0 auto;
-}
-
-.emptySpace {
+  gap: 0.5rem;
+  padding: 0.5rem 0;
   width: 100%;
-  height: 1rem;
+  background-color: var(--secondary);  
+  border: none;
+  z-index: 999;
+  font-size: 1rem;
+  font-weight: 600;
+  border-bottom: 1px solid rgb(203, 203, 203);
 }
 
-@media only screen and (max-width: 767px) {
-  .content {
-    justify-content: center;
-    width: 100%;
-  }
-
-  .rightContent {
-    width: 90%;
-  }
-
-  .customInputWrapper {
-    width: 80%;
-  }
-
-  .filterBadgesContainer {
-    width: 80%;
-  }
-
-  .filterMenu {
-    display: none;
-  }
-
-  .productsContainer {
-    width: 100%;
-  }
+.buttonIcon {
+  width: 25px;
+  height: 25px;
+  transition-duration: 300ms;
 }
+
+.iconCollapsed {
+  transform: rotate(-180deg);
+}
+
+/* Menu + content */
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem; 
+  font-size: 0.9rem;
+  overflow-y: scroll;
+  max-height: 250px;
+  transition-duration: 500ms;
+  opacity: 0;
+}
+
+.collapsed {
+  opacity: 1;
+  padding: 0.5rem;
+  padding-top: 1rem;
+  transition-duration: 500ms;
+}
+
+.close {
+  max-height: 0;
+  padding: 0rem;
+}
+
+/* Size styles */
+.collapsed.small {
+  max-height: 250px;
+}
+
+.collapsed.medium {
+  max-height: 350px;
+}
+
+.collapsed.large {
+  max-height: 500px;
+}
+
+.collapsed.fitToParent {
+  max-height: 100%;
+}
+
+

@@ -161,4 +161,5 @@ const Table = (props) => {
     </table>
   );
 };
+
 export default Table;

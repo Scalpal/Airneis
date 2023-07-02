@@ -12,12 +12,9 @@ const ActionBar = (props) => {
   const [searchValue, setSearchValue] = useState("");
 
   // Handle pagination
-  const setPage = useCallback(
-    (value) => {
-      handleQueryParams("page", value);
-    },
-    [handleQueryParams]
-  );
+  const setPage = useCallback((value) => {
+    handleQueryParams("page", value);
+  }, [handleQueryParams]);
 
   const firstPage = useCallback(() => {
     handleQueryParams("page", 1);
@@ -37,7 +34,7 @@ const ActionBar = (props) => {
     if (queryParams.page !== 1) {
       handleQueryParams("page", queryParams.page - 1);
     }
-  }, [handleQueryParams, queryParams.page]);
+  }, [handleQueryParams, queryParams.page]); 
 
   useEffect(() => {
     const searchInput = document.getElementById("searchInput");
@@ -81,8 +78,11 @@ const ActionBar = (props) => {
         </Select>
 
         {addRowFunction && (
-          <Button onClick={() => addRowFunction()}>Add a product</Button>
+          <Button onClick={() => addRowFunction()}>
+            Add a product
+          </Button>
         )}
+
       </div>
 
       {dataCount > 0 && (

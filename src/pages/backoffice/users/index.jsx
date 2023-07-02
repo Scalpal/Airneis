@@ -55,15 +55,13 @@ export const getServerSideProps = async (context) => {
 const userInfoTab = "user-info";
 
 const BackofficeUsers = (props) => {
-  const { usersProps, count } = props;
-  const {
-    actions: { api }
-  } = useAppContext();
+  const { usersProps, count } = props; 
+  const { actions: { api } } = useAppContext(); 
 
-  const [alert, setAlert] = useState({ status: "", message: "" });
-  const [showAlert, setShowAlert] = useState(false);
+  const [alert, setAlert] = useState({ status: "", message: ""}); 
+  const [showAlert, setShowAlert] = useState(false); 
   const [users, setUsers] = useState({ users: usersProps, count: count });
-  const [activeUser, setActiveUser] = useState(null);
+  const [activeUser, setActiveUser] = useState(null); 
   const [showModal, setShowModal] = useState(false);
   const [activeTab, setActiveTab] = useState(""); 
   const [queryParams, setQueryParams] = useState({
@@ -268,4 +266,5 @@ const BackofficeUsers = (props) => {
 BackofficeUsers.getLayout = function (page) {
   return <Layout>{page}</Layout>;
 };
+
 export default BackofficeUsers;

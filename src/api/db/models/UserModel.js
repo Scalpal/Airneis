@@ -29,16 +29,15 @@ class UserModel extends BaseModel {
           to: "orders.userId"
         }
       },
-      modify: (query) =>
-        query.select(
-          "id",
-          "email",
-          "firstName",
-          "lastName",
-          "phoneNumber",
-          "active",
-          "isAdmin"
-        )
+      modify: (query) => query.select(
+        "id",
+        "email",
+        "firstName",
+        "lastName",
+        "phoneNumber",
+        "active",
+        "isAdmin"
+      )
     };
   }
 

@@ -22,20 +22,17 @@ const initialValues = {
 
 const Login = () => {
   const router = useRouter();
-  const {
-    actions: { signIn }
-  } = useAppContext();
+  const { actions: { signIn } } = useAppContext();
   const [error, setError] = useState(null);
 
-  const handleSubmit = useCallback(
-    async (values) => {
-      const [err] = await signIn(values);
+  const handleSubmit = useCallback(async (values) => {
+    const [err] = await signIn(values);
 
-      if (err) {
-        setError(err[0].response.data.error);
+    if (err) {
+      setError(err[0].response.data.error);
 
-        return;
-      }
+      return;
+    }
 
     router.push("/");
   },[signIn, router]);
@@ -55,14 +52,14 @@ const Login = () => {
         {({ isValid, dirty, isSubmitting }) => (
           <Form className={styles.formContainer}>
             <p className={styles.formTitle}>Log into your account</p>
-
-            {error && (
+            
+            {error &&
               <p className={styles.error}>
                 <ExclamationTriangleIcon className={styles.errorIcon} />
                 {error}
               </p>
-            )}
-
+            }
+            
             <LoginField
               name="email"
               type="text"
@@ -77,22 +74,17 @@ const Login = () => {
               showError={false}
             />
 
-            <Button disabled={!(dirty && isValid) || isSubmitting}>
+            <Button
+              disabled={!(dirty && isValid) || isSubmitting}
+            >
               Login
             </Button>
 
             <div className={styles.noAccountText}>
-              <p>
-                Forgot your password ? <span> Click here </span>
-              </p>
-              <p>
-                Don&apos;t have an account ?{" "}
-                <span onClick={() => router.push("/register")}>
-                  {" "}
-                  Register here{" "}
-                </span>
-              </p>
+              <p>Forgot your password ? <span> Click here </span></p> 
+              <p>Don&apos;t have an account ? <span onClick={() => router.push("/register")}> Register here </span></p> 
             </div>
+
           </Form>
         )}
       </Formik>

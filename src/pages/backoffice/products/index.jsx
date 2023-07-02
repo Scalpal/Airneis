@@ -31,7 +31,7 @@ export const getServerSideProps = async (context) => {
     return badTokenRedirect || notAdminRedirect;
   }
 
-  const reqInstance = getApiClient(context);
+  const reqInstance = getApiClient(context); 
 
   try {
     const { data: { products } } = await reqInstance.get(`${process.env.API_URL}${routes.api.products.collection()}`);
@@ -85,20 +85,16 @@ const BackofficeProducts = (props) => {
     });
   }, [queryParams]);
 
-  const handleLimit = useCallback(
-    (value) => {
-      setQueryParams({
-        ...queryParams,
-        page: 1,
-        limit: value
-      });
-    },
-    [queryParams]
-  );
+  const handleLimit = useCallback((value) => {
+    setQueryParams({
+      ...queryParams,
+      page: 1,
+      limit: value
+    });
+  }, [queryParams]); 
 
-  const sortColumn = useCallback(
-    (column) => {
-      const notSortableKeys = ["description", "category", "materials"];
+  const sortColumn = useCallback((column) => {
+    const notSortableKeys = ["description", "category", "materials"];
 
     if (notSortableKeys.includes(column)) {
       return false; 
@@ -135,8 +131,8 @@ const BackofficeProducts = (props) => {
 
   const openAddProductModal = useCallback(() => {
     setActiveTab(addProductTab);
-    setShowModal(true);
-  }, []);
+    setShowModal(true); 
+  }, []); 
 
   const showSpecificProduct = useCallback((id) => {
     const product = productsData.products.find(elt => elt.id === id); 
@@ -203,7 +199,7 @@ const BackofficeProducts = (props) => {
       </div>
 
       <Modal showModal={showModal} setShowModal={setShowModal}>
-        {activeProduct && activeTab === productInfoTab && (
+        {(activeProduct && activeTab === productInfoTab) && (
           <SpecificProductPageContent
             showModal={showModal}
             setShowModal={setShowModal}
@@ -220,7 +216,7 @@ const BackofficeProducts = (props) => {
             refreshProducts={refreshProducts}
           />
         )}
-      </Modal>
+      </Modal> 
 
       <CustomAlert
         alert={alert}

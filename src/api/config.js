@@ -6,7 +6,6 @@ dotenv.config({ path: resolve(".env.local") });
 
 const config = {
   port: 3000,
-  baseURL: "http://localhost:3000",
   db: knexfile,
   security: {
     jwt: {

@@ -22,8 +22,9 @@ const handler = mw({
       res
     }) => {
       try {
-        const user = await UserModel.query().findOne({ email });
-
+        const user = await UserModel.query()
+          .findOne({ email });
+        
         if (!user) {
           res.status(401).send({ error: "Wrong email or password." });
 
@@ -52,7 +53,7 @@ const handler = mw({
         config.security.jwt.secret,
         { expiresIn: config.security.jwt.expiresIn }
         );
-
+      
         res.send({ result: jwt });
       } catch (error) {
         res.status(500).send({ error: error });

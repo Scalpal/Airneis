@@ -57,7 +57,9 @@ const Navbar = () => {
     <nav className={classnames(styles.navbar, nunito.className)}>
       <div className={styles.adminInfosBlock}>
         <p>Hello administrator </p>
-        <p>{user.lastName} {user.firstName}</p>
+        <p>
+          {user.lastName} {user.firstName}
+        </p>
       </div>
 
       <div className={styles.midBlock}>

@@ -10,23 +10,18 @@ const CollapseMenu = (props) => {
 
   const sizeStyle = () => {
     switch (size) {
-      case "large":
-        return styles.large;
+      case "large": return styles.large;
 
-      case "medium":
-        return styles.medium;
+      case "medium": return styles.medium;
 
-      case "small":
-        return styles.small;
+      case "small": return styles.small;
 
-      case "fit-to-parent":
-        return styles.fitToParent;
+      case "fit-to-parent": return styles.fitToParent;
 
-      default:
-        return styles.small;
+      default: return styles.small;
     }
   };
-
+  
   return (
     <div className={styles.wrapper}>
       <button

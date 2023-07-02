@@ -8,9 +8,8 @@ module.exports.up = async (knex) => {
     table.text("firstName").notNullable();
     table.text("lastName").notNullable();
     table.text("phoneNumber").notNullable();
-    table.boolean("active").notNullable().defaultTo(false);
+    table.boolean("active").notNullable().defaultTo(true);
     table.boolean("isAdmin").notNullable().defaultTo(false);
-    table.boolean("resetPassword").notNullable().defaultTo(false);
     table.timestamps(true, true, true);
   });
 
@@ -69,11 +68,7 @@ module.exports.up = async (knex) => {
   // Related to reviews
   await knex.schema.createTable("reviews", (table) => {
     table.increments("id");
-    table
-      .integer("productId")
-      .references("id")
-      .inTable("products")
-      .notNullable();
+    table.integer("productId").references("id").inTable("products").notNullable();
     table.integer("userId").references("id").inTable("users").notNullable();
     table.text("title").notNullable();
     table.text("content").notNullable();
@@ -90,17 +85,15 @@ module.exports.up = async (knex) => {
       .notNullable()
       .references("id")
       .inTable("addresses");
-    table.enum("status", ["cancelled", "on standby", "delivered"]).notNullable();
+    table
+      .enum("status", ["cancelled", "on standby", "delivered"])
+      .notNullable();
     table.timestamps(true, true, true);
   });
 
   await knex.schema.createTable("orders_products_relation", (table) => {
     table.integer("orderId").notNullable().references("id").inTable("orders");
-    table
-      .integer("productId")
-      .notNullable()
-      .references("id")
-      .inTable("products");
+    table.integer("productId").notNullable().references("id").inTable("products");
     table.integer("quantity").notNullable().defaultTo(1);
     table.primary(["orderId", "productId"]);
   });
@@ -126,4 +119,3 @@ module.exports.down = async (knex) => {
   await knex.schema.dropTable("addresses");
   await knex.schema.dropTable("users");
 };
-

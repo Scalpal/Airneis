@@ -53,16 +53,14 @@ const DetailedProductCard = (props) => {
             return name + comma;
           })}</p>
         </div>
-
-        <ProductRating
-          rating={product.rating}
-          totalReviews={product.reviews.length}
-        />
+    
+        <ProductRating rating={product.rating} totalReviews={product.reviews.length} />
 
         <div className={styles.priceStockWrapper}>
           <p className={styles.productCardInfoPrice}> {product.price}$ </p>
           <span className={styles.productCardInfoStock}>{product.stock} available</span>
         </div>
+
 
         <div className={styles.productCardInfoBtnWrapper}>
           <Button

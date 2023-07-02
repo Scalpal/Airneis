@@ -37,17 +37,18 @@ const handler = mw({
             "isAdmin"
           )
           .findOne({ id })
-          .withGraphFetched("address");
+          .withGraphFetched("address"); 
+
 
         if (!user) {
           res.status(404).send({ error: "User not found" });
-
-          return;
+  
+          return; 
         }
 
         res.send({ user: user });
       } catch (error) {
-        res.status(500).send({ error: error });
+        res.status(500).send({ error: error }); 
       }
     }
   ],
@@ -68,22 +69,19 @@ const handler = mw({
     }) => {
       try {
         const user = await UserModel.query().findById(userId);
-
+        
         if (!user) {
-          res.status(404).send({ error: "User not found" });
+          res.status(404).send({ error: "User not found" }); 
 
-          return;
+          return; 
         }
 
         const desactivatedUser = await UserModel.query()
           .patch({ active: false })
           .where({ id: userId })
-          .returning("*");
-
-        res.send({
-          status: "success",
-          message: `User ${desactivatedUser[0].id} successfully desactivated`
-        });
+          .returning("*"); 
+        
+        res.send({ status: "success" ,message: `User ${desactivatedUser[0].id} successfully desactivated` }); 
       } catch (error) {
         res.status(500).send({ error: error });
       }
@@ -115,11 +113,11 @@ const handler = mw({
     }) => {
       try {
         const user = await UserModel.query().findById(userId);
-
+        
         if (!user) {
-          res.status(404).send({ error: "User not found" });
+          res.status(404).send({ error: "User not found" }); 
 
-          return;
+          return; 
         }
 
         const updatedUser = await UserModel.query()
@@ -133,12 +131,8 @@ const handler = mw({
           })
           .where({ id: userId })
           .returning("*");
-
-        res.send({
-          status: "success",
-          message: `User ${updatedUser[0].id} updated successfully`,
-          user: updatedUser[0]
-        });
+        
+        res.send({ status: "success", message: `User ${updatedUser[0].id} updated successfully`, user: updatedUser[0]});
       } catch (error) {
         res.status(500).send({ error: error });
       }
