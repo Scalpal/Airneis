@@ -1,0 +1,11 @@
+{
+  "overrides": [
+    {
+      "files": "*.jsx",
+      "options": {
+        "object-curly-newline": false,
+        "printWidth": 10000
+      }
+    }
+  ]
+}

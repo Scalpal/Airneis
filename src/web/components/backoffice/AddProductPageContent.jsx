@@ -10,12 +10,11 @@ import { useGetMaterials } from "@/web/hooks/useGetMaterials";
 import { useCallback, useState } from "react";
 import CollapseMenu from "../CollapseMenu";
 import CheckboxItem from "../CheckboxItem";
-import routes from "@/web/routes";
-import useAppContext from "@/web/hooks/useAppContext";
 import CustomAlert from "../CustomAlert";
 import uploadProductImage from "@/web/services/products/uploadProductImage";
 import ProductImageInput from "../ProductImageInput";
 import { XMarkIcon } from "@heroicons/react/24/solid";
+import addProduct from "@/web/services/products/addProduct";
 
 const validationSchema = createValidator({
   name: stringValidator.required(),
@@ -38,8 +37,7 @@ const initialValues = {
 const mappableKeys = ["name", "description", "price", "stock"];
 
 const AddProductPageContent = (props) => {
-  const { setShowModal, updateProducts } = props; 
-  const { actions: { api } } = useAppContext();
+  const { setShowModal, refreshProducts } = props; 
   const { materialsData, materialsError, materialsIsLoading } = useGetMaterials();
   const materials = (!materialsIsLoading && !materialsError) ? materialsData : [];
 
@@ -57,31 +55,39 @@ const AddProductPageContent = (props) => {
     const materials = values.materials.reduce((acc, { id }) => [...acc, id], []);
     values.materials = materials;
 
-    try {
-      const { data } = await api.post(routes.api.products.add(), values);
+    const [error, data] = await addProduct(values);
 
+    if (error) {
+      setAlert({ status: "error" , message: "Error on add." });
+      setShowAlert(true);
+
+      return;
+    }
+
+    try { 
       if (imagesToUpload.length > 0) {
-        imagesToUpload.map(async(imageFile) => {
-          const [error] = await uploadProductImage(imageFile, data.product.id);
+        await Promise.all(imagesToUpload.map(async(imageFile) => {
+          const [err] = await uploadProductImage(imageFile, data.product.slug);
 
-          if (error) {
+          if (err) {
             setAlert({ status: "error" , message: "Error on add." });
             setShowAlert(true);
 
             return;
           }
-        });
+        }));
       } 
 
       setAlert({ status: "success" , message: data.message });
       setShowAlert(true);
-      updateProducts();
+      refreshProducts();
       resetForm(); 
+      setShowModal(false);
     } catch (error) {
       setAlert({ status: 500, message: error });
       setShowAlert(true);
     }
-  }, [api, updateProducts, imagesToUpload]);
+  }, [refreshProducts, imagesToUpload, setShowModal]);
 
   const isMaterialChecked = (values, id) => {
     const productMaterialIds = values.reduce((acc, { id }) => [...acc, id], []); 

@@ -13,6 +13,7 @@ const Button = (props) => {
         variant === "outlined" ? styles.outlined : styles.contained,
         disabled ? styles.disabled : ""
       )}
+      disabled={disabled}
       {...otherProps}
     >
       {children}

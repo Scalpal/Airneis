@@ -10,8 +10,8 @@ import {
   useState,
 } from "react";
 import { parseCookies } from "nookies";
-import Axios from "axios";
-import routes from "@/web/routes";
+import routes from "../routes";
+import getApiClient from "../services/getApiClient";
 
 const AppContext = createContext();
 
@@ -32,12 +32,13 @@ export const AppContextProvider = (props) => {
       return;
     }
 
-    try {
-      const {
-        data: { user },
-      } = await Axios.get(routes.api.users.single(session.user.id));
+    const reqInstance = getApiClient();
+    const url = `${process.env.API_URL}${routes.api.users.self()}`;
 
-      return user;
+    try {
+      const { data } = await reqInstance.get(url);
+
+      return data;
     } catch (error) {
       return error;
     }
@@ -109,21 +110,22 @@ export const AppContextProvider = (props) => {
     [setCart]
   );
 
-  const setQuantitiesProductFromCart = useCallback(
-    (values) => {
-      if (values.values === 0) {
-        deleteProductFromCart(values.product);
+  const removeProductFromCart = useCallback(
+    (product) => {
+      const localStorageProducts = JSON.parse(localStorage.getItem("products"));
+
+      const productIndex = localStorageProducts.findIndex(
+        (elt) => elt.id === product.id
+      );
+      const currentProduct = localStorageProducts[productIndex];
+
+      if (currentProduct.quantity - 1 === 0) {
+        deleteProductFromCart(product);
 
         return;
       }
 
-      const localStorageProducts = JSON.parse(localStorage.getItem("products"));
-
-      const productIndex = localStorageProducts.findIndex(
-        (elt) => elt.id === values.product.id
-      );
-
-      localStorageProducts[productIndex].quantity = values.values;
+      localStorageProducts[productIndex].quantity--;
       localStorage.setItem("products", localStorageProducts);
       setCart(localStorageProducts);
     },
@@ -155,7 +157,7 @@ export const AppContextProvider = (props) => {
         getLoggedUser,
         setCart,
         addToCart,
-        setQuantitiesProductFromCart,
+        removeProductFromCart,
         deleteProductFromCart,
       },
       services,
@@ -169,7 +171,7 @@ export const AppContextProvider = (props) => {
     signOut,
     getLoggedUser,
     addToCart,
-    setQuantitiesProductFromCart,
+    removeProductFromCart,
     deleteProductFromCart,
     services,
     session,

@@ -1,6 +1,7 @@
-const { GetObjectCommand } = require("@aws-sdk/client-s3");
-const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
-const { s3CmdClient } = require("../S3");
+import { GetObjectCommand } from "@aws-sdk/client-s3";
+import { s3CmdClient } from "../S3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+
 
 const getProductsImagesWithSignedUrls = async (products) => {
   const finalProducts = await Promise.all(products.map(async (product) => {

@@ -5,25 +5,30 @@ import { useEffect } from "react";
 import { classnames } from "@/pages/_app";
 import CartButton from "./CartButton";
 import SearchProductOverlay from "./SearchProductOverlay";
+import routes from "../routes";
 
 const Navbar = (props) => {
   const { fixed, isDrawerToggledState } = props; 
 
   const [isDrawerToggled, setIsDrawerToggled] = isDrawerToggledState; 
-  
+
   useEffect(() => {
     const navbar = document.querySelector("#navbar");
 
     if (fixed) {
-      const carouselObserver = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting === true || isDrawerToggled === true) {
-          navbar.classList.remove("navbarBackground");
-        } else {
-          navbar.classList.add("navbarBackground");
-        }
-      }, { threshold: [0.1] });
+      const carousel = document.querySelector("#carousel");
 
-      carouselObserver.observe(document.querySelector("#carousel"));
+      if (carousel) {
+        const carouselObserver = new IntersectionObserver((entries) => {
+          if (entries[0].isIntersecting === true || isDrawerToggled === true) {
+            navbar.classList.remove("navbarBackground");
+          } else {
+            navbar.classList.add("navbarBackground");
+          }
+        }, { threshold: [0.1] });
+
+        carouselObserver.observe(carousel);
+      }
     } else {
       navbar.classList.remove("navbarBackground");
     }
@@ -37,7 +42,7 @@ const Navbar = (props) => {
       id="navbar"
     >
       <Link
-        href="/home"
+        href="/"
         className={classnames(
           "navbarLogo",
           styles.navbarLogo
@@ -51,19 +56,19 @@ const Navbar = (props) => {
         styles.midLinks
       )}>
         <li>
-          <Link href="/home" className={styles.navbarLink}>
+          <Link href={routes.home()} className={styles.navbarLink}>
             Home
           </Link>
         </li>
 
         <li>
-          <Link href="/products" className={styles.navbarLink}>
+          <Link href={routes.products.base()} className={styles.navbarLink}>
             Products
           </Link>
         </li>
 
         <li>
-          <Link href="/category" className={styles.navbarLink}>
+          <Link href={routes.categories.base()} className={styles.navbarLink}>
             Categories
           </Link>
         </li>

@@ -16,9 +16,11 @@ const routes = {
   email: {
     sent: () => "/mails/sent",
   },
+  cgu: () => "terms-of-use",
+  legalMentions: () => "/legal-mentions",
   products: {
     base: () => `/products`,
-    single: (productId) => `/products/${productId}`,
+    single: (productSlug) => `/products/${productSlug}`,
   },
   categories: {
     base: () => "/category",
@@ -34,7 +36,6 @@ const routes = {
       add: () => "/backoffice/products/add",
       single: (productId) =>
         createRouteWithQueryParams(`/backoffice/products/${productId}`),
-      delivery: () => "/order/delivery",
     },
   },
   api: {
@@ -65,9 +66,6 @@ const routes = {
     categories: {
       base: () => "/api/products/categories",
       products: (categoryId) => `/api/products?categories=${categoryId}`,
-    },
-    mails: {
-      resetPassword: () => "/mail/reset",
     },
     users: {
       resetPassword: () => "/users/reset",

@@ -9,26 +9,35 @@ const CustomAlert = (props) => {
   let customStyle = "";
 
   switch (alert.status) {
-    case "success": 
+    case "success":
       customStyle = styles.success;
 
       break;
-  
-    case "error": 
+    
+    case "warning":
+      customStyle = styles.warning;
+
+      break;
+
+    case "error":
       customStyle = styles.error;
 
       break;
-    
+
     default:
-      customStyle = styles.error;
+      customStyle = styles.success;
 
       break;
   }
 
   useEffect(() => {
-    setTimeout(() => {
+    const timeoutId = setTimeout(() => {
       setShowAlert(false);
-    }, [5000]);
+    }, 3500);
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
   }, [showAlert, setShowAlert]);
   
   return (
@@ -39,6 +48,7 @@ const CustomAlert = (props) => {
     )}
     >
       {alert.status === "success" && <CheckBadgeIcon className={styles.icon} />}
+      {alert.status === "warning" && <ExclamationTriangleIcon className={styles.icon} />}
       {alert.status === "error" && <ExclamationTriangleIcon className={styles.icon} />}
       <p>{alert.message}</p>
     </div>

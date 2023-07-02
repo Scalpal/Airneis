@@ -1,7 +1,6 @@
 import useSWRInfinite from "swr/infinite"; 
 import routes from "../routes";
 import getApiClient from "../services/getApiClient";
-import { AxiosError } from "axios";
 import { createQueryString } from "../services/createQueryString";
 
 const getKey = (pageIndex, previousPageData, queryParams) => {
@@ -21,10 +20,6 @@ const fetcher = async(url) => {
 
     return { products, count }; 
   } catch (error) {
-    if (error instanceof AxiosError) {
-      return { error: "Error on products fetching" }; 
-    }
-
     return { products: [], count: 0 };
   }
 };

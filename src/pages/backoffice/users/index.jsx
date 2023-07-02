@@ -15,36 +15,37 @@ import getApiClient from "@/web/services/getApiClient";
 import checkIsAdmin from "@/web/services/checkIsAdmin";
 import Modal from "@/web/components/Modal";
 import SpecificUserPageContent from "@/web/components/backoffice/SpecificUserPageContent";
+import Head from "next/head";
 
 export const getServerSideProps = async (context) => {
   const { token } = parseCookies(context);
   const badTokenRedirect = await checkToken(token);
-
-  if (badTokenRedirect) {
-    return badTokenRedirect; 
-  }
-
   const notAdminRedirect = await checkIsAdmin(context);
 
-  if (notAdminRedirect) {
-    return notAdminRedirect;
-  }
 
+  if (badTokenRedirect || notAdminRedirect) {
+    return badTokenRedirect || notAdminRedirect; 
+  }
+  
   const reqInstance = getApiClient(context);
 
   try {
-    const { data: { users, count } } = await reqInstance.get(`${process.env.API_URL}/${routes.api.users.collection()}`);
+    const {
+      data: { users, count },
+    } = await reqInstance.get(
+      `${process.env.API_URL}/${routes.api.users.collection()}`
+    );
 
     return {
       props: {
         usersProps: users,
-        count: count
-      }
+        count: count,
+      },
     };
   } catch (error) {
     return {
       redirect: {
-        destination: "/home",
+        destination: "/",
         permanent: false
       }
     };
@@ -71,85 +72,110 @@ const BackofficeUsers = (props) => {
     search: ""
   });
 
-  const handleQueryParams = useCallback((key, value) => {
-    setQueryParams({
-      ...queryParams,
-      [key]: value
-    });
-  }, [queryParams]);
+  const handleQueryParams = useCallback(
+    (key, value) => {
+      setQueryParams({
+        ...queryParams,
+        [key]: value,
+      });
+    },
+    [queryParams]
+  );
 
-  const sortColumn = useCallback((column) => {
-    const notSortableKeys = ["email", "phoneNumber", "active", "isAdmin"];
+  const sortColumn = useCallback(
+    (column) => {
+      const notSortableKeys = ["email", "phoneNumber", "active", "isAdmin"];
 
-    if (notSortableKeys.includes(column)) {
-      return false; 
-    }
-    
-    // By default, when we sort a column, we set it to ASC
-    if (column !== queryParams["orderField"]) {
+      if (notSortableKeys.includes(column)) {
+        return false;
+      }
+
+      // By default, when we sort a column, we set it to ASC
+      if (column !== queryParams["orderField"]) {
+        setQueryParams({
+          ...queryParams,
+          page: 1,
+          orderField: column,
+          order: "asc",
+        });
+
+        return;
+      }
+
       setQueryParams({
         ...queryParams,
         page: 1,
         orderField: column,
-        order: "asc"
-      }); 
-      
-      return;
-    }
+        order: queryParams["order"] === "asc" ? "desc" : "asc",
+      });
+    },
+    [queryParams]
+  );
 
-    setQueryParams({
-      ...queryParams,
-      page: 1,
-      orderField: column,
-      order: queryParams["order"] === "asc" ? "desc" : "asc"
-    }); 
-  }, [queryParams]); 
-
-  const handleLimit = useCallback((value) => {
-    setQueryParams({
-      ...queryParams,
-      page: 1,
-      limit: value
-    });
-  }, [queryParams]); 
+  const handleLimit = useCallback(
+    (value) => {
+      setQueryParams({
+        ...queryParams,
+        page: 1,
+        limit: value,
+      });
+    },
+    [queryParams]
+  );
 
   const updateUsers = useCallback(async () => {
     const reqInstance = getApiClient();
-  
-    try {
-      const { data: { users, count} } = await reqInstance.get(`${process.env.API_URL}${routes.api.users.collection(queryParams)}`);
 
-      setUsers({users, count}); 
+    try {
+      const {
+        data: { users, count },
+      } = await reqInstance.get(
+        `${process.env.API_URL}${routes.api.users.collection(queryParams)}`
+      );
+
+      setUsers({ users, count });
     } catch (error) {
       if (error instanceof AxiosError) {
         setShowAlert(true);
-        setAlert({ status: error.response.status, message: error.response.message });
+        setAlert({
+          status: error.response.status,
+          message: error.response.message,
+        });
       }
     }
   }, [queryParams]);
 
-  const showSpecificUser = useCallback((id) => {
-    const user = users.users.find(elt => elt.id === id); 
+  const showSpecificUser = useCallback(
+    (id) => {
+      const user = users.users.find((elt) => elt.id === id);
 
-    setShowModal(true);
-    setActiveTab(userInfoTab);
-    setActiveUser(user);
-  }, [users]);
+      setShowModal(true);
+      setActiveTab(userInfoTab);
+      setActiveUser(user);
+    },
+    [users]
+  );
 
-  const desactivateUser = useCallback(async (userId) => {
-    try {
-      const { data } = await api.delete(routes.api.users.delete(userId));
+  const desactivateUser = useCallback(
+    async (userId) => {
+      try {
+        const { data } = await api.delete(routes.api.users.delete(userId));
 
-      updateUsers();
-      setShowAlert(true);
-      setAlert({ status: data.status, message: data.message });
-    } catch (error) {
-      if (error instanceof AxiosError) {
+        updateUsers();
         setShowAlert(true);
-        setAlert({ status: error.response.status, message: error.response.message });
+        setAlert({ status: data.status, message: data.message });
+      } catch (error) {
+        if (error instanceof AxiosError) {
+          setShowAlert(true);
+          setAlert({
+            status: error.response.status,
+            message: error.response.message,
+          });
+        }
       }
-    }
-  }, [api, updateUsers]);
+    },
+    [api, updateUsers]
+  );
 
   useEffect(() => {
     updateUsers();
@@ -162,6 +188,10 @@ const BackofficeUsers = (props) => {
         nunito.className
       )}
     >
+      <Head>
+        <title>Airneis - Backoffice : Users</title>
+      </Head>  
+
       <div className={styles.topStats}>
         <div>
           <p>Total of users</p>
@@ -200,12 +230,19 @@ const BackofficeUsers = (props) => {
           safeArray={usersProps}
           queryParams={queryParams}
           sortColumn={sortColumn}
-          visibleColumns={["id", "email", "firstName", "lastName", "phoneNumber", "active", "isAdmin"]}
+          visibleColumns={[
+            "id",
+            "email",
+            "firstName",
+            "lastName",
+            "phoneNumber",
+            "active",
+            "isAdmin",
+          ]}
           showSpecificRowFunction={showSpecificUser}
           deleteRowFunction={desactivateUser}
         />
       </div>
-
       <Modal showModal={showModal} setShowModal={setShowModal}>
         {activeTab === userInfoTab && (
           <SpecificUserPageContent
@@ -227,11 +264,7 @@ const BackofficeUsers = (props) => {
 };
 
 BackofficeUsers.getLayout = function (page) {
-  return (
-    <Layout>
-      {page}
-    </Layout>
-  );
+  return <Layout>{page}</Layout>;
 };
 
-export default BackofficeUsers; 
+export default BackofficeUsers;
