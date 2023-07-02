@@ -12,6 +12,11 @@ The final deliverable required is a mobile-first e-commerce site as well as an A
 - Alexandre Gautrot
 - Alexandre Schecht
 
+## Links
+* Repository: [GitHub](https://github.com/Scalpal/Airneis)
+* Mockups: [Figma](https://www.figma.com/file/WRR0gHrcCuluag9HsKHyoB/%C3%80irneis-Mockups?type=design&node-id=0%3A1&t=ECz8BpoLrr3KwMvC-1)
+* Project management: [GitHub](https://github.com/users/Scalpal/projects/2)
+
 ## Run the project
 
 - Start by cloning the project : `git clone https://github.com/Scalpal/Airneis.git`
