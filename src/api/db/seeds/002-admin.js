@@ -4,16 +4,17 @@ import hashPassword from "../hashPassword.js";
 export const seed = async (knex) => {
   const adminEmail = "lorem@ipsum.fr";
   const adminPassword = "1oremIpsum_!";
-  const [admin] = await knex("users")
+
+  const [adminExists] = await knex("users")
     .where("email", adminEmail)
     .returning("id");
-    
-  if (admin !== undefined) {
+  
+  if (adminExists !== undefined) {
     await knex("addresses")
-      .where({ userId: admin.id })
+      .where({ userId: adminExists.id })
       .del();
     await knex("users")
-      .where({ id: admin.id })
+      .where({ id: adminExists.id })
       .del();
   }
   

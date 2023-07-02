@@ -1,73 +1,15 @@
 import { faker } from "@faker-js/faker";
+import data from "./genericProducts.json";
 
 const createSlug = (string) => string.split(" ").join("-").toLowerCase();
 
 export const seed = async (knex) => {
-  const genericProducts = [
-    {
-      name: "Aria Dining Table",
-      description: "Featuring a sleek glass top supported by a solid wood base, this contemporary dining table adds a touch of elegance to any dining space.",
-      category: "Dining",
-      material: "Wood, Metal, Glass, Stone/Marble, Composite materials"
-    },
-    {
-      name: "Hudson Leather Sofa",
-      description: "Crafted with genuine leather upholstery and a sturdy wooden frame, this sofa offers both comfort and durability. Its modern design with clean lines adds a stylish touch to any living room.",
-      category: "Seating",
-      material: "Wood, Metal, Leather, Fabric, Upholstery"
-    },
-    {
-      name: "Luna Upholstered Bed",
-      description: "This luxurious upholstered bed features a padded headboard and sleek wooden legs, providing a cozy and stylish focal point for your bedroom.",
-      category: "Beds",
-      material: "Wood, Metal, Leather, Fabric, Upholstery"
-    },
-    {
-      name: "Harper Bookshelf",
-      description: "Constructed with a sturdy metal frame and wooden shelves, this bookshelf combines functionality with a modern industrial aesthetic, offering ample storage for books and decor items.",
-      category: "Storage",
-      material: "Wood, Metal, Glass, Composite materials"
-    },
-    {
-      name: "Palermo Outdoor Armchair",
-      description: "Made with a durable aluminum frame wrapped in weather-resistant wicker, this outdoor armchair comes with plush cushions for comfort and is perfect for enjoying your patio or garden.",
-      category: "Outdoor",
-      material: "Metal, Wicker/Rattan, Upholstery"
-    },
-    {
-      name: "Caden TV Stand",
-      description: "Featuring a combination of wood and metal elements, this TV stand offers a contemporary design with open shelving and concealed storage compartments, ideal for organizing your entertainment essentials.",
-      category: "Entertainment",
-      material: "Wood, Metal, Glass, Composite materials"
-    },
-    {
-      name: "Linden Writing Desk",
-      description: "This sleek and functional writing desk features a minimalist design with a wooden top supported by metal legs. It provides a spacious workspace for productivity in your home office.",
-      category: "Office",
-      material: "Wood, Metal, Glass, Composite materials"
-    },
-    {
-      name: "Eames Dining Chair",
-      description: "This iconic dining chair showcases a molded plastic seat on a metal or wooden base, combining style and comfort to create a timeless piece for your dining area.",
-      category: "Dining",
-      material: "Wood, Metal, Upholstery, Leather, Fabric"
-    },
-    {
-      name: "Adventure Bunk Bed",
-      description: "Designed with safety and fun in mind, this bunk bed features a sturdy metal frame, built-in ladder, and colorful upholstery accents, creating a playful sleeping solution for kids' bedrooms.",
-      category: "Kids",
-      material: "Wood, Metal, Plastic, Upholstery"
-    },
-    {
-      name: "Aria Table Lamp",
-      description: "This elegant table lamp features a wooden or metal base with a glass globe shade, providing a warm and atmospheric glow to your living space.",
-      category: "Lighting",
-      material: "Wood, Metal, Glass, Plastic"
-    }
-  ];
+  const genericProducts = data;
+
+  const loop = genericProducts.length;
 
   const products = [];
-  for (let i = 0; i < genericProducts.length; i++) {
+  for (let i = 0; i < loop; i++) {
     const product = genericProducts[i];
 
     const [categoryId] = await knex("categories")
@@ -90,7 +32,7 @@ export const seed = async (knex) => {
 
   // Add product images
   const productsImages = [];
-  for (let i = 0; i < genericProducts.length; i++) {
+  for (let i = 0; i < loop; i++) {
     productsImages.push({
       imageSrc: "/meuble-2.jpeg",
       productId: productIds[i].id
@@ -99,21 +41,21 @@ export const seed = async (knex) => {
 
   await knex("products_images").insert(productsImages);
 
-  // Add relation between products and it's materials
+  // Add relation between products and their materials
   const productsMaterialsRelation = [];
-  for (let i = 0; i < genericProducts.length; i++) {
+  for (let i = 0; i < loop; i++) {
     const product = genericProducts[i]; 
-    const materialList = product.material;
+    const materialsList = product.materials;
 
-    // Find material by name
+    // Find materials by name
     const materialIds = await knex("materials")
-      .whereIn("name", materialList.split(", "))
+      .whereIn("name", materialsList.split(", "))
       .returning("id");
     
     // Add relation between material and product
     for (let j = 0; j < materialIds.length; j++) {
       productsMaterialsRelation.push({
-        productId: product.id,
+        productId: productIds[i].id,
         materialId: materialIds[j].id
       });
     }

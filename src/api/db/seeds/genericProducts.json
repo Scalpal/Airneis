@@ -1,0 +1,602 @@
+[
+  {
+    "name": "Plush Leather Recliner",
+    "description": "A luxurious and comfortable leather recliner with plush cushioning and a reclining mechanism for ultimate relaxation",
+    "category": "Seating",
+    "materials": "Leather, Upholstery"
+  },
+  {
+    "name": "Vintage Oak Dining Table",
+    "description": "A beautifully restored oak dining table with intricate carved details and a vintage charm",
+    "category": "Tables",
+    "materials": "Wood"
+  },
+  {
+    "name": "Multi-Purpose Storage Cabinet",
+    "description": "A versatile storage cabinet with multiple compartments and drawers, perfect for organizing various items",
+    "category": "Storage",
+    "materials": "Wood, Metal"
+  },
+  {
+    "name": "King Size Canopy Bed",
+    "description": "A majestic king-sized bed with an elegant canopy frame and a plush upholstered headboard",
+    "category": "Beds",
+    "materials": "Wood, Upholstery"
+  },
+  {
+    "name": "Outdoor Lounge Set",
+    "description": "A complete outdoor lounge set with a sofa, chairs, and a coffee table, designed for comfort and durability",
+    "category": "Outdoor",
+    "materials": "Wicker/Rattan, Metal, Fabric"
+  },
+  {
+    "name": "Entertainment Center with Fireplace",
+    "description": "A modern entertainment center featuring a built-in electric fireplace and ample storage space for media equipment",
+    "category": "Entertainment",
+    "materials": "Wood, Metal, Glass"
+  },
+  {
+    "name": "Ergonomic Office Chair",
+    "description": "An ergonomic office chair with adjustable features, lumbar support, and breathable upholstery for maximum comfort",
+    "category": "Office",
+    "materials": "Metal, Upholstery"
+  },
+  {
+    "name": "Extendable Dining Table",
+    "description": "A practical and stylish dining table with an extendable design, allowing for more seating space when needed",
+    "category": "Dining",
+    "materials": "Wood, Metal"
+  },
+  {
+    "name": "Children's Playroom Storage Bench",
+    "description": "A functional storage bench for children's playrooms, providing seating and storage compartments for toys and books",
+    "category": "Kids",
+    "materials": "Wood, Upholstery"
+  },
+  {
+    "name": "Contemporary Floor Lamp with Shelf",
+    "description": "A sleek floor lamp with a built-in shelf, combining lighting and storage in one stylish design",
+    "category": "Lighting",
+    "materials": "Metal, Fabric"
+  },
+  {
+    "name": "Mid-Century Modern Sofa",
+    "description": "A chic and stylish mid-century modern sofa with clean lines, tufted upholstery, and tapered wooden legs",
+    "category": "Seating",
+    "materials": "Fabric, Wood"
+  },
+  {
+    "name": "Marble Top Coffee Table",
+    "description": "A sophisticated coffee table with a luxurious marble top and a sleek metal base, adding elegance to any living room",
+    "category": "Tables",
+    "materials": "Marble, Metal"
+  },
+  {
+    "name": "Industrial Style Bookcase",
+    "description": "An industrial-inspired bookcase with a sturdy metal frame and wooden shelves, perfect for displaying books and decor",
+    "category": "Storage",
+    "materials": "Wood, Metal"
+  },
+  {
+    "name": "Tufted Upholstered Platform Bed",
+    "description": "A stunning platform bed with a tufted headboard and low-profile design, creating a luxurious focal point in the bedroom",
+    "category": "Beds",
+    "materials": "Upholstery, Wood"
+  },
+  {
+    "name": "Outdoor Dining Set",
+    "description": "A complete outdoor dining set with a spacious table and chairs, designed for al fresco meals and gatherings",
+    "category": "Outdoor",
+    "materials": "Metal, Wicker/Rattan, Upholstery"
+  },
+  {
+    "name": "Floating TV Stand",
+    "description": "A modern floating TV stand with a sleek design and wall-mounted installation, providing a clean and minimalist look",
+    "category": "Entertainment",
+    "materials": "Wood"
+  },
+  {
+    "name": "Adjustable Standing Desk",
+    "description": "A versatile standing desk with an adjustable height feature, allowing for ergonomic work positions",
+    "category": "Office",
+    "materials": "Wood, Metal"
+  },
+  {
+    "name": "Modern Glass Dining Table",
+    "description": "A contemporary glass dining table with a sculptural base, creating a visually stunning centerpiece in the dining area",
+    "category": "Dining",
+    "materials": "Glass, Metal"
+  },
+  {
+    "name": "Children's Bunk Bed with Slide",
+    "description": "A playful bunk bed for kids with a built-in slide, making bedtime fun and exciting",
+    "category": "Kids",
+    "materials": "Wood, Upholstery, Plastic"
+  },
+  {
+    "name": "Tripod Floor Lamp",
+    "description": "A stylish floor lamp with a tripod base and a fabric drum shade, adding a touch of elegance to any room",
+    "category": "Lighting",
+    "materials": "Metal, Fabric"
+  },
+  {
+    "name": "Leather Sectional Sofa",
+    "description": "A spacious and luxurious leather sectional sofa with multiple seating options and a sleek modern design",
+    "category": "Seating",
+    "materials": "Leather, Upholstery"
+  },
+  {
+    "name": "Rustic Wooden Console Table",
+    "description": "A rustic console table with a distressed wood finish and ample storage space, perfect for entryways or living rooms",
+    "category": "Tables",
+    "materials": "Wood, Metal"
+  },
+  {
+    "name": "Wall-Mounted Coat Rack with Storage",
+    "description": "A practical and space-saving wall-mounted coat rack with hooks and storage compartments for hats and accessories",
+    "category": "Storage",
+    "materials": "Wood, Metal"
+  },
+  {
+    "name": "Canopy Bed with Storage",
+    "description": "A stylish canopy bed with built-in storage drawers, combining elegance and functionality in the bedroom",
+    "category": "Beds",
+    "materials": "Wood, Upholstery"
+  },
+  {
+    "name": "Outdoor Patio Set",
+    "description": "A versatile outdoor patio set with a table and chairs, designed for relaxing and entertaining in outdoor spaces",
+    "category": "Outdoor",
+    "materials": "Wicker/Rattan, Metal, Upholstery"
+  },
+  {
+    "name": "Modern TV Stand with LED Lights",
+    "description": "A sleek and contemporary TV stand with built-in LED lights, creating a vibrant and futuristic entertainment setup",
+    "category": "Entertainment",
+    "materials": "Wood, Metal"
+  },
+  {
+    "name": "Leather Office Chair",
+    "description": "A sophisticated leather office chair with a high back, ergonomic features, and a professional look",
+    "category": "Office",
+    "materials": "Leather, Metal"
+  },
+  {
+    "name": "Rectangular Wood Dining Table",
+    "description": "A classic rectangular dining table with a sturdy wood construction, providing a timeless centerpiece for family meals",
+    "category": "Dining",
+    "materials": "Wood"
+  },
+  {
+    "name": "Children's Play Kitchen Set",
+    "description": "A colorful and interactive play kitchen set for children, encouraging imaginative play and creativity",
+    "category": "Kids",
+    "materials": "Wood, Plastic"
+  },
+  {
+    "name": "Chandelier Pendant Light",
+    "description": "An exquisite chandelier pendant light with sparkling crystals, adding a touch of glamour and elegance to any space",
+    "category": "Lighting",
+    "materials": "Crystal, Metal"
+  },
+  {
+    "name": "Upholstered Accent Chair",
+    "description": "A stylish and comfortable upholstered accent chair, perfect for adding a pop of color and personality to a room",
+    "category": "Seating",
+    "materials": "Fabric, Wood"
+  },
+  {
+    "name": "Round Glass Coffee Table",
+    "description": "A sleek and modern round coffee table with a tempered glass top and a minimalist design",
+    "category": "Tables",
+    "materials": "Glass, Metal"
+  },
+  {
+    "name": "Mid-Century Modern Bookshelf",
+    "description": "A mid-century modern bookshelf with asymmetrical shelves and a unique geometric design, adding a retro touch to any room",
+    "category": "Storage",
+    "materials": "Wood, Metal"
+  },
+  {
+    "name": "Platform Storage Bed with Headboard",
+    "description": "A platform bed with built-in storage drawers and a padded headboard, combining style and functionality",
+    "category": "Beds",
+    "materials": "Wood, Upholstery"
+  },
+  {
+    "name": "Outdoor Swing Chair",
+    "description": "A comfortable and stylish outdoor swing chair, perfect for relaxing and enjoying the outdoors in comfort",
+    "category": "Outdoor",
+    "materials": "Wicker/Rattan, Upholstery"
+  },
+  {
+    "name": "Home Theater Recliner Seating",
+    "description": "A luxurious home theater recliner with multiple seating options and built-in cup holders, providing a cinematic experience at home",
+    "category": "Entertainment",
+    "materials": "Leather, Upholstery"
+  },
+  {
+    "name": "Mesh Office Chair with Lumbar Support",
+    "description": "A breathable mesh office chair with adjustable lumbar support and a sleek modern design",
+    "category": "Office",
+    "materials": "Metal, Upholstery"
+  },
+  {
+    "name": "Live Edge Dining Table",
+    "description": "A stunning dining table with a live edge wooden top, showcasing the natural beauty of the wood grain",
+    "category": "Dining",
+    "materials": "Wood, Metal"
+  },
+  {
+    "name": "Children's Art Desk and Chair Set",
+    "description": "A functional art desk and chair set for children, featuring storage compartments and a spacious work surface",
+    "category": "Kids",
+    "materials": "Wood, Plastic"
+  },
+  {
+    "name": "Pendant Ceiling Light",
+    "description": "A stylish pendant ceiling light with a modern design, adding a warm and inviting glow to any space",
+    "category": "Lighting",
+    "materials": "Metal"
+  },
+  {
+    "name": "Velvet Chaise Lounge",
+    "description": "A luxurious velvet chaise lounge with a tufted design and a curved silhouette, perfect for lounging and relaxation",
+    "category": "Seating",
+    "materials": "Velvet, Wood"
+  },
+  {
+    "name": "Rectangular Marble Dining Table",
+    "description": "A sophisticated rectangular dining table with a marble top and sleek metal legs, creating an elegant dining experience",
+    "category": "Tables",
+    "materials": "Marble, Metal"
+  },
+  {
+    "name": "Industrial Storage Bench",
+    "description": "An industrial-style storage bench with a metal frame and wooden seat, offering seating and storage solutions in one",
+    "category": "Storage",
+    "materials": "Wood, Metal"
+  },
+  {
+    "name": "Upholstered Platform Bed",
+    "description": "A stylish upholstered platform bed with a low-profile design and a comfortable headboard, enhancing the bedroom decor",
+    "category": "Beds",
+    "materials": "Upholstery, Wood"
+  },
+  {
+    "name": "Outdoor Barbecue Grill Station",
+    "description": "A fully-equipped outdoor barbecue grill station with a grill, countertop, and storage compartments, perfect for outdoor cooking and entertaining",
+    "category": "Outdoor",
+    "materials": "Metal, Wicker/Rattan, Upholstery"
+  },
+  {
+    "name": "Modern L-Shaped Desk",
+    "description": "A sleek and functional L-shaped desk with a contemporary design, providing ample workspace for productivity",
+    "category": "Office",
+    "materials": "Wood, Metal"
+  },
+  {
+    "name": "Round Dining Table with Lazy Susan",
+    "description": "A round dining table with a rotating lazy Susan in the center, allowing for convenient serving and dining",
+    "category": "Dining",
+    "materials": "Wood"
+  },
+  {
+    "name": "Convertible Crib and Changing Table Set",
+    "description": "A versatile crib and changing table set for babies, offering functionality and style in the nursery",
+    "category": "Kids",
+    "materials": "Wood"
+  },
+  {
+    "name": "Floor Lamp with Shelf",
+    "description": "A practical floor lamp with built-in shelves, providing both lighting and storage space in a compact design",
+    "category": "Lighting",
+    "materials": "Metal, Wood"
+  },
+  {
+    "name": "Linen Upholstered Dining Chairs",
+    "description": "Elegant and comfortable linen upholstered dining chairs, perfect for adding sophistication to the dining area",
+    "category": "Seating",
+    "materials": "Fabric, Wood"
+  },
+  {
+    "name": "Oval Glass Top Coffee Table",
+    "description": "A contemporary coffee table with an oval glass top and a sleek metal base, creating a modern focal point in the living room",
+    "category": "Tables",
+    "materials": "Glass, Metal"
+  },
+  {
+    "name": "Modern Storage Ottoman",
+    "description": "A versatile storage ottoman with a padded top, providing extra seating and hidden storage space in a stylish design",
+    "category": "Storage",
+    "materials": "Fabric, Wood"
+  },
+  {
+    "name": "Sleeper Sofa with Pull-Out Bed",
+    "description": "A practical sleeper sofa with a pull-out bed, offering a comfortable sleeping option for guests",
+    "category": "Seating",
+    "materials": "Fabric, Upholstery"
+  },
+  {
+    "name": "Wooden Sideboard with Wine Rack",
+    "description": "A functional sideboard with a built-in wine rack, drawers, and cabinets, perfect for storing and displaying wine and dinnerware",
+    "category": "Tables",
+    "materials": "Wood"
+  },
+  {
+    "name": "Mid-Century Modern Lounge Chair",
+    "description": "A retro-inspired lounge chair with a curved design, upholstered seat, and wooden legs, adding a vintage touch to any space",
+    "category": "Seating",
+    "materials": "Fabric, Wood"
+  },
+  {
+    "name": "Glass Display Cabinet",
+    "description": "A sleek glass display cabinet with shelves and lighting, ideal for showcasing collectibles, trophies, or decorative items",
+    "category": "Storage",
+    "materials": "Glass, Wood"
+  },
+  {
+    "name": "Canopy Daybed",
+    "description": "A stylish canopy daybed with a comfortable mattress and an adjustable canopy, creating a cozy and relaxing outdoor retreat",
+    "category": "Outdoor",
+    "materials": "Wicker/Rattan, Upholstery"
+  },
+  {
+    "name": "Executive Leather Office Chair",
+    "description": "A luxurious leather office chair with a high back, ergonomic features, and a professional look",
+    "category": "Office",
+    "materials": "Leather, Metal"
+  },
+  {
+    "name": "Wooden Dining Bench",
+    "description": "A rustic wooden dining bench with a simple design, offering a versatile seating option for dining or entryways",
+    "category": "Dining",
+    "materials": "Wood"
+  },
+  {
+    "name": "Children's Play Tent",
+    "description": "A playful and imaginative play tent for children, providing a private and fun space for creative play",
+    "category": "Kids",
+    "materials": "Fabric"
+  },
+  {
+    "name": "Crystal Chandelier",
+    "description": "An elegant crystal chandelier with multiple tiers and sparkling crystals, adding a touch of glamour to any room",
+    "category": "Lighting",
+    "materials": "Crystal, Metal"
+  },
+  {
+    "name": "Velvet Accent Chair",
+    "description": "A chic and comfortable velvet accent chair with a curved back and a plush seat, perfect for adding a luxurious touch to any space",
+    "category": "Seating",
+    "materials": "Velvet, Wood"
+  },
+  {
+    "name": "Rectangular Wood Coffee Table",
+    "description": "A classic rectangular coffee table with a wooden construction, offering a timeless and versatile centerpiece for the living room",
+    "category": "Tables",
+    "materials": "Wood"
+  },
+  {
+    "name": "Modern TV Stand with Storage",
+    "description": "A sleek and functional TV stand with ample storage space for media equipment and accessories",
+    "category": "Entertainment",
+    "materials": "Wood, Metal"
+  },
+  {
+    "name": "Leather Reclining Sofa",
+    "description": "A stylish leather reclining sofa with plush cushioning and a reclining mechanism for ultimate comfort",
+    "category": "Seating",
+    "materials": "Leather, Upholstery"
+  },
+  {
+    "name": "Round Marble Side Table",
+    "description": "A chic and modern side table with a round marble top and a sleek metal base, adding sophistication to any space",
+    "category": "Tables",
+    "materials": "Marble, Metal"
+  },
+  {
+    "name": "Sleek TV Stand with Storage",
+    "description": "A sleek TV stand with built-in storage compartments, providing a modern and organized entertainment setup",
+    "category": "Entertainment",
+    "materials": "Wood, Metal"
+  },
+  {
+    "name": "Velvet Dining Chairs",
+    "description": "Elegant and luxurious dining chairs with velvet upholstery and a sleek metal base, adding glamour to the dining area",
+    "category": "Seating",
+    "materials": "Velvet, Metal"
+  },
+  {
+    "name": "Round Marble Dining Table",
+    "description": "A stunning round dining table with a marble top and a sculptural metal base, creating a sophisticated dining experience",
+    "category": "Tables",
+    "materials": "Marble, Metal"
+  },
+  {
+    "name": "Modern Shoe Cabinet",
+    "description": "A modern shoe cabinet with multiple compartments and a sleek design, keeping shoes organized and hidden",
+    "category": "Storage",
+    "materials": "Wood"
+  },
+  {
+    "name": "Upholstered Platform Bed with Storage",
+    "description": "A stylish platform bed with an upholstered headboard and built-in storage drawers, combining comfort and functionality",
+    "category": "Beds",
+    "materials": "Upholstery, Wood"
+  },
+  {
+    "name": "Outdoor Hanging Egg Chair",
+    "description": "A trendy outdoor hanging chair with an egg-shaped design, providing a cozy and relaxing spot in outdoor spaces",
+    "category": "Outdoor",
+    "materials": "Wicker/Rattan, Upholstery"
+  },
+  {
+    "name": "Modern Writing Desk",
+    "description": "A minimalist writing desk with a sleek design and a spacious work surface, perfect for productivity in home offices",
+    "category": "Office",
+    "materials": "Wood, Metal"
+  },
+  {
+    "name": "Glass Display Coffee Table",
+    "description": "A contemporary coffee table with a glass display top, showcasing decorative items or collectibles",
+    "category": "Tables",
+    "materials": "Glass, Metal"
+  },
+  {
+    "name": "Convertible Toddler Bed",
+    "description": "A convertible toddler bed that can be transformed from a crib to a toddler bed, providing a safe and comfortable sleeping space",
+    "category": "Kids",
+    "materials": "Wood"
+  },
+  {
+    "name": "Crystal Table Lamp",
+    "description": "An elegant table lamp with a crystal base and a fabric shade, creating a glamorous and ambient lighting effect",
+    "category": "Lighting",
+    "materials": "Crystal, Fabric"
+  },
+  {
+    "name": "Leather Reclining Sectional",
+    "description": "A luxurious leather sectional sofa with reclining seats and ample seating space, offering comfort and style in the living room",
+    "category": "Seating",
+    "materials": "Leather, Upholstery"
+  },
+  {
+    "name": "Vintage Leather Armchair",
+    "description": "A vintage-inspired leather armchair with tufted details and a distressed finish, adding a touch of classic elegance to any space",
+    "category": "Seating",
+    "materials": "Leather, Wood"
+  },
+  {
+    "name": "Console Table with Mirror",
+    "description": "A stylish console table with a mirrored surface and a sleek metal frame, creating a glamorous entryway centerpiece",
+    "category": "Tables",
+    "materials": "Glass, Metal"
+  },
+  {
+    "name": "Industrial Metal Storage Cabinet",
+    "description": "An industrial-style storage cabinet with metal construction and multiple shelves, providing ample storage space for various items",
+    "category": "Storage",
+    "materials": "Metal"
+  },
+  {
+    "name": "Platform Bed with Floating Nightstands",
+    "description": "A contemporary platform bed with floating nightstands, offering a sleek and minimalist sleeping solution",
+    "category": "Beds",
+    "materials": "Wood"
+  },
+  {
+    "name": "Outdoor Bar Set",
+    "description": "A compact outdoor bar set with a bar table and stools, perfect for enjoying drinks and outdoor gatherings",
+    "category": "Outdoor",
+    "materials": "Metal, Upholstery"
+  },
+  {
+    "name": "Modern Floating Shelf",
+    "description": "A minimalist floating shelf with a clean design, ideal for displaying books, decor, and other small items",
+    "category": "Storage",
+    "materials": "Wood"
+  },
+  {
+    "name": "Rocking Chair with Ottoman",
+    "description": "A comfortable rocking chair with a matching ottoman, providing a cozy spot for relaxation and leisure",
+    "category": "Seating",
+    "materials": "Fabric, Wood"
+  },
+  {
+    "name": "Adjustable Height Coffee Table",
+    "description": "A versatile coffee table with an adjustable height feature, allowing for customized use and functionality",
+    "category": "Tables",
+    "materials": "Wood, Metal"
+  },
+  {
+    "name": "Children's Study Desk",
+    "description": "A functional study desk for children with a spacious surface, storage compartments, and a comfortable chair",
+    "category": "Kids",
+    "materials": "Wood"
+  },
+  {
+    "name": "Sputnik Chandelier",
+    "description": "A unique and eye-catching sputnik chandelier with multiple arms and light bulbs, creating a statement piece in any room",
+    "category": "Lighting",
+    "materials": "Metal"
+  },
+  {
+    "name": "Upholstered Bench with Storage",
+    "description": "A stylish upholstered bench with hidden storage, offering a combination of seating and organization",
+    "category": "Seating",
+    "materials": "Fabric, Wood"
+  },
+  {
+    "name": "Glass Top End Table",
+    "description": "A modern end table with a glass top and a sleek metal base, providing a contemporary accent to any living space",
+    "category": "Tables",
+    "materials": "Glass, Metal"
+  },
+  {
+    "name": "L-Shaped Sectional Sofa",
+    "description": "A spacious L-shaped sectional sofa with plush cushions and a versatile design, offering ample seating for lounging and entertaining",
+    "category": "Seating",
+    "materials": "Fabric, Upholstery"
+  },
+  {
+    "name": "Modern TV Console",
+    "description": "A sleek and modern TV console with open shelves and cabinets, providing storage space for media equipment and accessories",
+    "category": "Entertainment",
+    "materials": "Wood, Metal"
+  },
+  {
+    "name": "Contemporary Writing Desk",
+    "description": "A contemporary writing desk with a unique design and functional features, enhancing productivity in modern workspaces",
+    "category": "Office",
+    "materials": "Wood, Metal"
+  },
+  {
+    "name": "Velvet Accent Stool",
+    "description": "A glamorous velvet accent stool with a gold metal base, adding a luxurious and stylish touch to any room",
+    "category": "Seating",
+    "materials": "Velvet, Metal"
+  },
+  {
+    "name": "Marble Console Table",
+    "description": "A sophisticated console table with a marble top and sleek metal legs, creating an elegant focal point in entryways or living rooms",
+    "category": "Tables",
+    "materials": "Marble, Metal"
+  },
+  {
+    "name": "Mid-Century Modern Sideboard",
+    "description": "A mid-century modern sideboard with clean lines and ample storage space, offering both style and functionality",
+    "category": "Storage",
+    "materials": "Wood"
+  },
+  {
+    "name": "Platform Bed with Upholstered Headboard",
+    "description": "A contemporary platform bed with an upholstered headboard and a minimalist design, elevating the bedroom decor",
+    "category": "Beds",
+    "materials": "Upholstery, Wood"
+  },
+  {
+    "name": "Outdoor Lounge Chair Set",
+    "description": "A set of comfortable outdoor lounge chairs with cushions, perfect for relaxing by the pool or in the garden",
+    "category": "Outdoor",
+    "materials": "Wicker/Rattan, Upholstery"
+  },
+  {
+    "name": "Task Desk Lamp",
+    "description": "A functional task desk lamp with an adjustable arm and a focused light, providing optimal illumination for work or study",
+    "category": "Lighting",
+    "materials": "Metal"
+  },
+  {
+    "name": "Floating Wall Shelf",
+    "description": "A modern floating wall shelf with a minimalist design, perfect for displaying books, plants, or decorative items",
+    "category": "Storage",
+    "materials": "Wood"
+  },
+  {
+    "name": "Convertible Sofa Bed",
+    "description": "A versatile sofa that easily converts into a comfortable bed, providing a convenient sleeping solution for guests",
+    "category": "Seating",
+    "materials": "Fabric, Upholstery"
+  }
+]
