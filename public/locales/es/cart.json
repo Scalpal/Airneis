@@ -1,0 +1,11 @@
+{
+  "emptyCartHeadTitle": "Airneis - Cesta",
+  "emptyCartTitle": "Su cesta está vacía",
+  "emptyCartText": "Antes de pasar por caja, debe añadir algunos productos a su cesta.",
+  "emptyCartTextSeconde": "¿No vendrás aquí sin comprar nada...",
+  "cartReturnButton": "Volver a la tienda",
+  "subtotal": "Subtotal",
+  "tax": "IMPUESTO (20%)",
+  "total": "TOTAL",
+  "order": "Ordenar"
+}

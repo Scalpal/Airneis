@@ -7,8 +7,11 @@ import routes from "../routes";
 import { useEffect } from "react";
 import { useUser } from "../hooks/useUser";
 import useAppContext from "../hooks/useAppContext";
+import { useTranslation } from "next-i18next";
+import LanguageSelect from "./LanguageSelect";
 
 const DrawerMenu = (props) => {
+  const { t } = useTranslation(["drawerMenu"]);
   const { isDrawerToggledState } = props;
   const [isDrawerToggled, setIsDrawerToggled] = isDrawerToggledState;
 
@@ -56,22 +59,23 @@ const DrawerMenu = (props) => {
           onClick={() => setIsDrawerToggled(!isDrawerToggled)}
         />
         {session ? (
-          <Link href="/profil">My profil</Link>
+          <Link href="/profil">{t("myProfil")}</Link>
         ) : (
-          <Link href={routes.login()}>Login</Link>
+          <Link href={routes.login()}>{t("login")}</Link>
         )}
         {session ? (
-          <a onClick={logout}>Logout</a>
+          <a onClick={logout}>{t("logout")}</a>
         ) : (
-          <Link href={routes.register()}>Register</Link>
+          <Link href={routes.register()}>{t("register")}</Link>
         )}
         {!userIsLoading && user.isAdmin && (
-          <Link href={routes.backoffice.users()}>Backoffice</Link>
+          <Link href={routes.backoffice.users()}>{t("backoffice")}</Link>
         )}
-        <Link href={routes.cgu()}>CGU</Link>
-        <Link href={routes.legalMentions()}>Legal mentions</Link>
-        <Link href="">Contact</Link>
-        <Link href="">About us</Link>
+        <Link href={routes.cgu()}>{t("termsOfUse")}</Link>
+        <Link href={routes.legalMentions()}>{t("legalMentions")}</Link>
+        <Link href="/contact">{t("contact")}</Link>
+        <Link href="/about-us">{t("aboutUs")}</Link>
+        <LanguageSelect />
       </div>
     </>
   );

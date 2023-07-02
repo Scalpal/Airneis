@@ -8,8 +8,10 @@ import { useGetMaterials } from "../hooks/useGetMaterials";
 import { useGetCategories } from "../hooks/useGetCategories";
 import InputRange from "./InputRange";
 import RadioItem from "./RadioItem";
+import { useTranslation } from "next-i18next";
 
 const ProductFilterMenu = (props) => {
+  const { t } = useTranslation(["productFilter"]);
   const {
     handleQueryParamsFilters,
     setQueryParams,
@@ -126,11 +128,11 @@ const ProductFilterMenu = (props) => {
         )}
       >
         <div className={styles.contentWrapper}>
-          <p className={styles.menuTitle}>Filters</p>
+          <p className={styles.menuTitle}>{t("filterTitle")}</p>
 
           <div className={styles.priceRangeWrapper}>
             <InputRange
-              label={"Price min"}
+              label={t("priceMin")}
               currentValue={queryParams.priceMin}
               handler={(e) =>
                 handleQueryParamsFilters("priceMin", e.target.value)
@@ -138,7 +140,7 @@ const ProductFilterMenu = (props) => {
             />
 
             <InputRange
-              label={"Price max"}
+              label={t("priceMax")}
               currentValue={queryParams.priceMax}
               handler={(e) =>
                 handleQueryParamsFilters("priceMax", e.target.value)
@@ -146,7 +148,7 @@ const ProductFilterMenu = (props) => {
             />
           </div>
 
-          <CollapseMenu title="Categories">
+          <CollapseMenu title={t("categoriesTitle")}>
             {!categoriesIsLoading &&
               !categoriesError &&
               categoriesData.map(({ name, id }, index) => (
@@ -162,7 +164,7 @@ const ProductFilterMenu = (props) => {
               ))}
           </CollapseMenu>
 
-          <CollapseMenu title="Materials">
+          <CollapseMenu title={t("materialsTitle")}>
             {!materialsIsLoading &&
               !materialsError &&
               materialsData.map(({ name, id }, index) => (
@@ -178,9 +180,9 @@ const ProductFilterMenu = (props) => {
               ))}
           </CollapseMenu>
 
-          <CollapseMenu title="Sort by">
+          <CollapseMenu title={t("sortByTitle")}>
             <RadioItem
-              label="No sort"
+              label={t("noSort")}
               name="sortOption"
               inputId="noSort"
               value={1}
@@ -189,7 +191,7 @@ const ProductFilterMenu = (props) => {
             />
 
             <RadioItem
-              label="Price : low to high"
+              label={t("priceAsc")}
               name="sortOption"
               inputId="priceAsc"
               value={2}
@@ -201,7 +203,7 @@ const ProductFilterMenu = (props) => {
             />
 
             <RadioItem
-              label="Price : high to low"
+              label={t("priceDesc")}
               name="sortOption"
               inputId="priceDesc"
               value={3}
@@ -214,9 +216,9 @@ const ProductFilterMenu = (props) => {
           </CollapseMenu>
 
           <div>
-            <p className={styles.categoryTitle}>Stocks</p>
+            <p className={styles.categoryTitle}>{t("stocks")}</p>
             <CheckboxItem
-              name={"In stock"}
+              name={t("inStock")}
               value={queryParams.onlyInStock}
               queryParams={queryParams}
               queryKey={"onlyInStock"}
@@ -226,12 +228,16 @@ const ProductFilterMenu = (props) => {
         </div>
 
         <div className={styles.buttonsWrapper}>
-          <Button variant="outlined" onClick={() => handleResetButton()}>
-            Reset
+          <Button
+            variant="outlined"
+            name="onlyInStock"
+            onClick={handleResetButton}
+          >
+            {t("resetButton")}
           </Button>
 
           <Button variant="contained" onClick={handleQueryParamsFilters}>
-            Apply
+            {t("applyButton")}
           </Button>
         </div>
 
@@ -241,7 +247,7 @@ const ProductFilterMenu = (props) => {
               setIsOpen(false);
             }}
           >
-            Close
+            {t("closeButton")}
           </Button>
         </div>
       </div>

@@ -1,0 +1,18 @@
+{
+  "registerHeadTitle": "Airneis - Inscription",
+  "registerTitle": "Inscription",
+  "firstName": "Prénom",
+  "lastName": "Nom",
+  "phoneNumber": "Numéro de téléphone",
+  "email": "E-mail",
+  "password": "Mot de passe",
+  "address": "Adresse",
+  "city": "Ville",
+  "region": "Region",
+  "postalCode": "Code postal",
+  "country": "Pays",
+  "fieldRequired": ": Ce champ est obligatoire",
+  "registerButton": "S'inscrire",
+  "alreadyAccount": "Vous avez déjà un compte ?",
+  "loginButton": "Connectez vous ici"
+}

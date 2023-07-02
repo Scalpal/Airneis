@@ -1,0 +1,19 @@
+{
+  "filterTitle": "Filters",
+  "priceMin": "Price min",
+  "priceMax": "Price max",
+  "categoriesTitle": "Categories",
+  "materialsTitle": "Materials",
+  "sortByTitle": "Sort by",
+  "noSort": "No sort",
+  "priceAsc": "Price : low to high",
+  "priceDesc": "Price : high to low",
+  "stocks": "Stock",
+  "inStock": "In stock",
+  "resetButton": "Reset",
+  "applyButton": "Apply",
+  "closeButton": "Close",
+  "sorryMessage": "Sorry !",
+  "noProductFoundMessage": "There is no products found for the search",
+  "noProductFound": "No products found"
+}

@@ -13,7 +13,7 @@ const checkIsAdmin = async(context) => {
         redirect: {
           destination: "/",
           permanent: false
-        }
+        },
       };
     }
   } catch (error) {
@@ -22,7 +22,7 @@ const checkIsAdmin = async(context) => {
         redirect: {
           destination: "/",
           permanent: false
-        }
+        },
       };
     }
   }

@@ -18,6 +18,7 @@ const routes = {
   email: {
     sent: () => "/mails/sent",
   },
+  contact: () => "/contact",
   products: {
     base: () => `/products`,
     single: (productSlug) => `/products/${productSlug}`,

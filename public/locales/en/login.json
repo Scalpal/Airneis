@@ -1,0 +1,11 @@
+{
+  "formHeadTitle": "Airneis - Login",
+  "formTitle": "Log into your account",
+  "email": "E-mail",
+  "password": "Password",
+  "loginButton": "Login",
+  "forgotPassword": "Forgot your password ?",
+  "forgotPasswordLink": "Click here",
+  "noAccount": "Don't have an account ?",
+  "noAccountLink": "Register here"
+}

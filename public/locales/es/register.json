@@ -1,0 +1,18 @@
+{
+  "registerHeadTitle": "Airneis - Registro",
+  "registerTitle": "Registro",
+  "firstName": "Nombre",
+  "lastName": "Apellido",
+  "phoneNumber": "Número de teléfono",
+  "email": "E-mail",
+  "password": "Contraseña",
+  "address": "Dirección",
+  "city": "Ciudad",
+  "region": "Región",
+  "postalCode": "Código postal",
+  "country": "País",
+  "fieldRequired": ": Este campo es obligatorio",
+  "registerButton": "Registrarse",
+  "alreadyAccount": "¿Tiene ya una cuenta?",
+  "loginButton": "Conectarse aquí"
+}

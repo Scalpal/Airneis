@@ -1,0 +1,11 @@
+{
+  "formHeadTitle": "Airneis - Conexión",
+  "formTitle": "Acceda a su cuenta ",
+  "email": "Email",
+  "password": "Contraseña",
+  "loginButton": "Conexión",
+  "forgotPassword": "¿Ha olvidado su contraseña?",
+  "forgotPasswordLink": "Pulse aquí",
+  "noAccount": "¿Aún no tiene cuenta?",
+  "noAccountLink": "Cree su cuenta aquí"
+}

@@ -8,8 +8,10 @@ import styles from "@/styles/cart.module.css";
 import useAppContext from "@/web/hooks/useAppContext";
 import routes from "@/web/routes";
 import Head from "next/head";
-
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 const Cart = () => {
+  const { t } = useTranslation("cart");
   const router = useRouter();
   const {
     state: { cart },
@@ -42,7 +44,7 @@ const Cart = () => {
   return (
     <>
       <Head>
-        <title>Airneis - Cart</title>
+        <title>{t("emptyCartHeadTitle")}</title>
       </Head>
 
       <div className={styles.mainContent}>
@@ -51,21 +53,16 @@ const Cart = () => {
             <section className={styles.emptyCartContainer}>
               <ShoppingCartIcon className={styles.emptyCartIcon} />
 
-              <p className={styles.emptyCartTitle}>
-                Your cart is currently empty{" "}
-              </p>
+              <p className={styles.emptyCartTitle}>{t("emptyCartTitle")}</p>
 
               <div className={styles.emptyCartText}>
-                <p>
-                  Before proceed to checkout, you must add some products to your
-                  cart.
-                </p>
-                <p>Won&apos;t you come here without buying anything...</p>
+                <p>{t("emptyCartText")}</p>
+                <p>{t("emptyCartTextSeconde")}</p>
               </div>
 
               <div>
                 <Button onClick={() => redirectToHomePage()}>
-                  Return to shop
+                  {t("cartReturnButton")}
                 </Button>
               </div>
             </section>
@@ -90,22 +87,22 @@ const Cart = () => {
             <section className={styles.recapContainer}>
               <div className={styles.recapTopRows}>
                 <div className={styles.recapRow}>
-                  <p>Subtotal</p>
-                  <p>{totalSum.toFixed(2)}€</p>
+                  <p>{t("subtotal")}</p>
+                  <p>{totalSum.toFixed(2)}$</p>
                 </div>
 
                 <div className={styles.recapRow}>
-                  <p>TAX (20%)</p>
-                  <p>{(totalSum * 0.2).toFixed(2)}€</p>
+                  <p>{t("tax")}</p>
+                  <p>{(totalSum * 0.2).toFixed(2)}$</p>
                 </div>
               </div>
 
               <div className={styles.recapTotalRow}>
-                <p>TOTAL</p>
-                <p>{(totalSum * 1.2).toFixed(2)}€</p>
+                <p>{t("total")}</p>
+                <p>{(totalSum * 1.2).toFixed(2)}$</p>
               </div>
 
-              <Button onClick={() => handleSubmit()}>Order</Button>
+              <Button onClick={() => handleSubmit()}>{t("order")}</Button>
             </section>
           </>
         )}
@@ -113,6 +110,19 @@ const Cart = () => {
     </>
   );
 };
+
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, [
+        "cart",
+        "footer",
+        "navbar",
+        "drawerMenu",
+      ])),
+    },
+  };
+}
 
 Cart.getLayout = function (page) {
   return <LayoutStickyNavbar>{page}</LayoutStickyNavbar>;

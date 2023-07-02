@@ -1,20 +1,39 @@
 import styles from "@/styles/legalMentions.module.css";
 import Banner from "@/web/components/Banner";
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import Head from "next/head";
 
 const Mentions = () => {
+  const { t } = useTranslation(["legalMentions"]);
+
   return (
     <>
-      <Banner className={styles.title} title={"Legal mentions"} />
-      <p className={styles.informations}>SAS ÀIRNEIS</p>
-      <p className={styles.informations}>Numéro de SIRET: 750102030458</p>
-      <p className={styles.informations}>
-        Adresse: 32 Spring Drive, Glasgow, United Kingdom
-      </p>
-      <p className={styles.informations}>Téléphone: +44 38 0946 5200</p>
-      <p className={styles.informations}>Email: airneis@contact.com</p>
+      <Head>
+        <title>{t("legalMentionsHeadTitle")}</title>
+      </Head>
+      <Banner className={styles.title} title={t("legalMentionsTitle")} />
+      <p className={styles.informations}>{t("legalMentionsEnterprise")}</p>
+      <p className={styles.informations}>{t("legalMentionsSiretNumber")}</p>
+      <p className={styles.informations}>{t("legalMentionsAddress")}</p>
+      <p className={styles.informations}>{t("legalMentionsPhone")}</p>
+      <p className={styles.informations}>{t("legalMentionsEmail")}</p>
     </>
   );
 };
+
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, [
+        "legalMentions",
+        "footer",
+        "drawerMenu",
+        "navbar",
+      ])),
+    },
+  };
+}
 
 Mentions.isPublic = true;
 export default Mentions;

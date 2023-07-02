@@ -5,10 +5,12 @@ import { useEffect } from "react";
 import { classnames } from "@/pages/_app";
 import CartButton from "./CartButton";
 import SearchProductOverlay from "./SearchProductOverlay";
+import { useTranslation } from "next-i18next";
 import routes from "../routes";
 
 const Navbar = (props) => {
-  const { fixed, isDrawerToggledState } = props; 
+  const { t } = useTranslation(["navbar"]);
+  const { fixed, isDrawerToggledState } = props;
 
   const [isDrawerToggled, setIsDrawerToggled] = isDrawerToggledState; 
 
@@ -36,40 +38,29 @@ const Navbar = (props) => {
 
   return (
     <nav
-      className={classnames(
-        fixed ? styles.navbar : styles.navbarNotFixed)
-      }
+      className={classnames(fixed ? styles.navbar : styles.navbarNotFixed)}
       id="navbar"
     >
-      <Link
-        href="/"
-        className={classnames(
-          "navbarLogo",
-          styles.navbarLogo
-        )}
-      >
-        Airneis
+      <Link href="/" className={classnames("navbarLogo", styles.navbarLogo)}>
+        {t("airneis")}
       </Link>
 
-      <ul className={classnames(
-        styles.navbarList,
-        styles.midLinks
-      )}>
+      <ul className={classnames(styles.navbarList, styles.midLinks)}>
         <li>
           <Link href={routes.home()} className={styles.navbarLink}>
-            Home
+            {t("home")}
           </Link>
         </li>
 
         <li>
           <Link href={routes.products.base()} className={styles.navbarLink}>
-            Products
+            {t("product")}
           </Link>
         </li>
 
         <li>
           <Link href={routes.categories.base()} className={styles.navbarLink}>
-            Categories
+            {t("categories")}
           </Link>
         </li>
       </ul>

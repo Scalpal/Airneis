@@ -9,10 +9,27 @@ import Button from "@/web/components/Button";
 import Loader from "@/web/components/Loader";
 import { MagnifyingGlassIcon, ShoppingBagIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import Head from "next/head";
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, [
+        "productFilter",
+        "productPage",
+        "footer",
+        "drawerMenu",
+        "navbar",
+      ])),
+    },
+  };
+}
 
 const limit = 10; 
 
 const Products = () => {
+  const { t } = useTranslation(["productFilter"]);
   const [queryParams, setQueryParams] = useState({
     priceMin: 0,
     priceMax: 0,
@@ -265,14 +282,18 @@ const Products = () => {
               ): (
                 <div className={styles.noProductsContainer}>
                   <ShoppingBagIcon className={styles.productIcon} />
-                    <p>Sorry !</p>
-                    {appliedQueryParams.search.length > 0 ? (
-                      <p>
-                        There is no products found for the search <span className={styles.searchTerm}>&quot;{appliedQueryParams.search}&quot;</span>.
-                      </p>
-                    ) : (
-                      <p>No products found</p>
-                    )}
+                  <p>{t("sorryMessage")}</p>
+                  {appliedQueryParams.search.length > 0 ? (
+                    <p>
+                        {t("noProductFoundMessage")}
+                      <span className={styles.searchTerm}>
+                        &quot;{appliedQueryParams.search}&quot;
+                      </span>
+                      .
+                    </p>
+                  ) : (
+                        <p>{t("noProductFound")}</p>
+                  )}
                 </div>
               )
             ) : (

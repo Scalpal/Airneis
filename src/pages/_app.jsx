@@ -4,6 +4,8 @@ import Layout from "@/web/components/Layout";
 import { Montserrat, Nunito } from "@next/font/google";
 import { AppContextProvider } from "@/web/hooks/useAppContext.jsx";
 import Head from "next/head";
+import { appWithTranslation } from "next-i18next";
+
 
 export const classnames = require("classnames");
 
@@ -19,15 +21,11 @@ export const nunito = Nunito({
   subsets: ["latin"],
 });
 
-export default function App({ Component, pageProps }) {
+function App({ Component, pageProps }) {
   const renderWithLayout =
     Component.getLayout ||
     ((page) => {
-      return (
-        <Layout>
-          {page}
-        </Layout>
-      );
+      return <Layout>{page}</Layout>;
     });
 
   return (
@@ -45,3 +43,5 @@ export default function App({ Component, pageProps }) {
     </AppContextProvider>
   );
 }
+
+export default appWithTranslation(App);

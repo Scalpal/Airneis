@@ -17,6 +17,8 @@ import { ExclamationTriangleIcon } from "@heroicons/react/24/solid";
 import CollapseMenu from "@/web/components/CollapseMenu";
 import useAppContext from "@/web/hooks/useAppContext";
 import Head from "next/head";
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 const validationSchema = createValidator({
   firstName: stringValidator
@@ -49,6 +51,7 @@ const initialValues = {
 };
 
 const Register = () => {
+  const { t } = useTranslation(["register"]);
   const router = useRouter();
   const {
     services: {
@@ -77,7 +80,7 @@ const Register = () => {
   return (
     <main className={styles.container}>
       <Head>
-        <title>Airneis - Register</title>
+        <title>{t("registerHeadTitle")}</title>
       </Head>
 
       <Formik
@@ -88,7 +91,7 @@ const Register = () => {
       >
         {({ isValid, dirty, isSubmitting }) => (
           <Form className={styles.formContainer}>
-            <p className={styles.formTitle}>Register</p>
+            <p className={styles.formTitle}>{t("registerTitle")}</p>
 
             {error && (
               <p className={styles.error}>
@@ -96,11 +99,10 @@ const Register = () => {
                 {error}
               </p>
             )}
-
             <LoginField
               name="firstName"
               type="text"
-              label="First name"
+              label={t("firstName")}
               showError={true}
               required={true}
             />
@@ -108,7 +110,7 @@ const Register = () => {
             <LoginField
               name="lastName"
               type="text"
-              label="Last name"
+              label={t("lastName")}
               showError={true}
               required={true}
             />
@@ -116,7 +118,7 @@ const Register = () => {
             <LoginField
               name="phoneNumber"
               type="text"
-              label="Phone number"
+              label={t("phoneNumber")}
               showError={true}
               required={true}
             />
@@ -124,7 +126,7 @@ const Register = () => {
             <LoginField
               name="email"
               type="text"
-              label="E-mail"
+              label={t("email")}
               showError={true}
               required={true}
             />
@@ -132,7 +134,7 @@ const Register = () => {
             <LoginField
               name="password"
               type="password"
-              label="Password"
+              label={t("password")}
               showError={true}
               required={true}
             />
@@ -141,50 +143,50 @@ const Register = () => {
               <LoginField
                 name="address"
                 type="text"
-                label="Address"
+                label={t("address")}
                 showError={true}
               />
 
               <LoginField
                 name="city"
                 type="text"
-                label="City"
+                label={t("city")}
                 showError={true}
               />
 
               <LoginField
                 name="region"
                 type="text"
-                label="Region"
+                label={t("region")}
                 showError={true}
               />
 
               <LoginField
                 name="postalCode"
                 type="text"
-                label="Postal code"
+                label={t("postalCode")}
                 showError={true}
               />
 
               <LoginField
                 name="country"
                 type="text"
-                label="Country"
+                label={t("country")}
                 showError={true}
               />
             </CollapseMenu>
 
             <p className={styles.requiredText}>
               {" "}
-              <span className={styles.requiredStar}>*</span> : This field is
-              required
+              <span className={styles.requiredStar}>*</span>{" "}
+              {t("fieldRequired")}
             </p>
 
             <Button
               disabled={!(dirty && isValid) || isSubmitting}
               type={"submit"}
             >
-              Register
+              {t("registerButton")}
             </Button>
             <div className={styles.haveAccountText}>
               <p>
@@ -202,6 +204,13 @@ const Register = () => {
   );
 };
 
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["register"])),
+    },
+  };
+}
 Register.getLayout = function (page) {
   return <LoginLayout>{page}</LoginLayout>;
 };

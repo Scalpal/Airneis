@@ -1,0 +1,19 @@
+{
+  "filterTitle": "Filtres",
+  "priceMin": "Prix min",
+  "priceMax": "Prix max",
+  "categoriesTitle": "Catégories",
+  "materialsTitle": "Matériels",
+  "sortByTitle": "Trier par",
+  "noSort": "Aucun trie",
+  "priceAsc": "Prix : Par ordre croissant",
+  "priceDesc": "Prix : Par ordre décroissant",
+  "stocks": "Stock",
+  "inStock": "En stock",
+  "resetButton": "Réinitialiser",
+  "applyButton": "Appliquer",
+  "closeButton": "Fermer",
+  "sorryMessage": "Désole !",
+  "noProductFoundMessage": "Il n'y a aucun produits lors de la recherche",
+  "noProductFound": "Aucun produits trouvés"
+}
