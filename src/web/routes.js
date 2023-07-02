@@ -12,6 +12,7 @@ const routes = {
   home: () => "/",
   register: () => "/register",
   login: () => "/login",
+  reset: () => "/reset",
   cgu: () => "terms-of-use",
   legalMentions: () => "/legal-mentions",
   email: {
@@ -68,7 +69,12 @@ const routes = {
         `/api/products/categories/${categorySlug}/upload`,
       products: (categoryId) => `/api/products?categories=${categoryId}`,
     },
+    mails: {
+      resetPassword: () => "/mail/reset",
+    },
     users: {
+      resetPassword: () => "/users/reset",
+      confirmAccount: () => "/users/activate",
       collection: (query) => createRouteWithQueryParams("/api/users", query),
       single: (userId, query) =>
         createRouteWithQueryParams(`/api/users/${userId}`, query),

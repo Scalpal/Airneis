@@ -71,7 +71,7 @@ const ResetPassword = () => {
               Reset Password
             </Button>
 
-            <div className={styles.moreTextCompartiment}>
+            <div className={styles.noAccountText}>
               <p>
                 Already have an account ?{" "}
                 <span onClick={() => router.push(routes.login())}>
