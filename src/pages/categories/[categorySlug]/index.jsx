@@ -12,11 +12,13 @@ import routes from "@/web/routes";
 export const getServerSideProps = async (context) => {
   const { categorySlug } = context.query;
 
-  const url = `${process.env.API_URL}${routes.api.categories.single(categorySlug)}`;
+  const url = `${process.env.API_URL}${routes.api.categories.single(
+    categorySlug
+  )}`;
 
   try {
     const { data } = await Axios.get(url);
-    
+
     return {
       props: {
         categoryProps: data
@@ -32,30 +34,35 @@ export const getServerSideProps = async (context) => {
 };
 
 const Category = (props) => {
-  const { categoryProps: { category } } = props;
+  const {
+    categoryProps: { category }
+  } = props;
 
-  const { data, isLoading, isValidating, size, setSize } = useGetProducts({ categories: category.id, limit: 3 });
-  const products = data ? data.reduce((acc, { products }) => [...acc, ...products], []) : [];
-  const totalPages = data && data[0] ? Math.ceil(data[0].count / 3 ) : 0;
+  const { data, isLoading, isValidating, size, setSize } = useGetProducts({
+    categories: category.id,
+    limit: 3
+  });
+  const products = data
+    ? data.reduce((acc, { products }) => [...acc, ...products], [])
+    : [];
+  const totalPages = data && data[0] ? Math.ceil(data[0].count / 3) : 0;
   const isEndReached = size === totalPages;
 
-  const handleLoadMore = useCallback(() => { 
+  const handleLoadMore = useCallback(() => {
     setSize((previousSize) => previousSize + 1);
-  }, [setSize]); 
+  }, [setSize]);
 
   return (
     <>
       <Head>
         <title>Airneis - {category.name}</title>
         <meta key={"Specific category head"} />
-      </Head>        
+      </Head>
 
       <Banner title={category.name} image={category.imageUrl} />
 
       <main>
-        <p className={styles.descriptionText}>
-          {category.description}
-        </p>
+        <p className={styles.descriptionText}>{category.description}</p>
 
         <div className={styles.productsList}>
           {products.map((product, index) => {
@@ -65,23 +72,19 @@ const Category = (props) => {
 
         <div className={styles.buttonWrapper}>
           <span className={styles.emptySpace}></span>
-          {(!isLoading && products.length > 0) && (
-            isEndReached ? (
+          {!isLoading &&
+            products.length > 0 &&
+            (isEndReached ? (
               <p>No more products</p>
             ) : (
               <>
                 {isValidating ? (
                   <Loader />
                 ) : (
-                  <Button
-                    onClick={() => handleLoadMore()}
-                  > 
-                    See more
-                  </Button>
+                  <Button onClick={() => handleLoadMore()}>See more</Button>
                 )}
               </>
-            )
-          )}
+            ))}
         </div>
       </main>
     </>

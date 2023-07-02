@@ -12,8 +12,12 @@ const routes = {
   home: () => "/",
   register: () => "/register",
   login: () => "/login",
+  reset: () => "/reset",
   cgu: () => "terms-of-use",
   legalMentions: () => "/legal-mentions",
+  email: {
+    sent: () => "/mails/sent"
+  },
   products: {
     base: () => `/products`,
     single: (productSlug) => `/products/${productSlug}`
@@ -33,11 +37,19 @@ const routes = {
     login: () => "/users/login",
     products: {
       base: () => "/api/products",
-      single: (productSlug, query) => createRouteWithQueryParams(`/api/products/${productSlug}`, query),
-      collection: (queryString, page) =>`/api/products${queryString ? queryString : ""}${page ? `page=${page}` : ""}`,
-      search: (searchValue) => `/api/products?limit=30&${searchValue.length > 0 ? `search=${searchValue}` : ""}`,
+      single: (productSlug, query) =>
+        createRouteWithQueryParams(`/api/products/${productSlug}`, query),
+      collection: (queryString, page) =>
+        `/api/products${queryString ? queryString : ""}${
+          page ? `page=${page}` : ""
+        }`,
+      search: (searchValue) =>
+        `/api/products?limit=30&${
+          searchValue.length > 0 ? `search=${searchValue}` : ""
+        }`,
       materials: () => "/api/products/materials",
-      reviews: (productSlug, limit, page) => `/api/products/${productSlug}/reviews?limit=${limit}&page=${page}`,
+      reviews: (productSlug, limit, page) =>
+        `/api/products/${productSlug}/reviews?limit=${limit}&page=${page}`,
       addImage: (productId) => `/api/products/${productId}/images`,
       deleteImage: (productId) => `/api/products/${productId}/deleteImage`
     },
@@ -50,12 +62,19 @@ const routes = {
       }
     },
     categories: {
-      base: (queryString) => `/api/products/categories${queryString ? queryString : ""}`,
+      base: (queryString) =>
+        `/api/products/categories${queryString ? queryString : ""}`,
       single: (categorySlug) => `/api/products/categories/${categorySlug}`,
-      upload: (categorySlug) => `/api/products/categories/${categorySlug}/upload`,
+      upload: (categorySlug) =>
+        `/api/products/categories/${categorySlug}/upload`,
       products: (categoryId) => `/api/products?categories=${categoryId}`
     },
+    mails: {
+      resetPassword: () => "/mail/reset"
+    },
     users: {
+      resetPassword: () => "/users/reset",
+      confirmAccount: () => "/users/activate",
       collection: (query) => createRouteWithQueryParams("/api/users", query),
       single: (userId, query) =>
         createRouteWithQueryParams(`/api/users/${userId}`, query),
