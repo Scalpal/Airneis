@@ -13,20 +13,20 @@ import Head from "next/head";
 
 const validationSchema = createValidator({
   email: emailValidator.required(),
-  password: stringValidator.required(),
+  password: stringValidator.required()
 });
 
 const initialValues = {
   email: "",
-  password: "",
+  password: ""
 };
 
 const Login = () => {
   const router = useRouter();
   const {
     services: {
-      users: { login },
-    },
+      users: { login }
+    }
   } = useAppContext();
   const [error, setError] = useState(null);
 

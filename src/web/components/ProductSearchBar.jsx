@@ -13,7 +13,7 @@ const ProductSearchBar = (props) => {
     id,
     placeholder,
     showSuggestions,
-    closeOverlay,
+    closeOverlay
   } = props;
 
   const [inputFocused, setInputFocused] = useState(false);

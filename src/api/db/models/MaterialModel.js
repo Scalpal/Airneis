@@ -17,7 +17,7 @@ class MaterialModel extends BaseModel {
           },
           to: "products.id"
         }
-      },
+      }
     };
   }
 }

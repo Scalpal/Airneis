@@ -17,14 +17,14 @@ const prepareService = ({ api, setSession, setJWT }) => {
       register: signUpService({ api }),
       login: signInService({ api, setSession, setJWT }),
       resetPassword: resetPasswordService({ api }),
-      confirmAccount: confirmAccountService({ api }),
+      confirmAccount: confirmAccountService({ api })
     },
     mails: {
-      resetPassword: sendResetPasswordServices({ api }),
+      resetPassword: sendResetPasswordServices({ api })
     },
     security: {
-      crypt: cryptService({ api }),
-    },
+      crypt: cryptService({ api })
+    }
   };
 };
 

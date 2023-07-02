@@ -21,26 +21,26 @@ export const getServerSideProps = async (context) => {
 
     return {
       props: {
-        categoryProps: data,
-      },
+        categoryProps: data
+      }
     };
   } catch (error) {
     return {
       props: {
-        category: { id: 1 },
-      },
+        category: { id: 1 }
+      }
     };
   }
 };
 
 const Category = (props) => {
   const {
-    categoryProps: { category },
+    categoryProps: { category }
   } = props;
 
   const { data, isLoading, isValidating, size, setSize } = useGetProducts({
     categories: category.id,
-    limit: 3,
+    limit: 3
   });
   const products = data
     ? data.reduce((acc, { products }) => [...acc, ...products], [])

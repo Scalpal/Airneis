@@ -19,7 +19,7 @@ const handler = mw({
     }),
     async ({
       locals: {
-        query: { userId },
+        query: { userId }
       },
       res
     }) => {

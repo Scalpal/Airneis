@@ -5,9 +5,9 @@ const mailResetPassword =
   async (id) => {
     try {
       const {
-        data: { result },
+        data: { result }
       } = await api.patch(routes.api.users.confirmAccount(), {
-        id,
+        id
       });
 
       return [null, Array.isArray(result) ? result : [result]];

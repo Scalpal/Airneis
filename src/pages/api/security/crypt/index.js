@@ -8,14 +8,14 @@ const handler = mw({
   GET: [
     validate({
       query: {
-        CryptoValues: stringValidator.nullable(),
-      },
+        CryptoValues: stringValidator.nullable()
+      }
     }),
     async ({
       locals: {
-        query: { CryptoValues },
+        query: { CryptoValues }
       },
-      res,
+      res
     }) => {
       const values = JSON.parse(CryptoValues);
 
@@ -35,8 +35,8 @@ const handler = mw({
       });
 
       res.send({ CryptoKey: decryptValues });
-    },
-  ],
+    }
+  ]
 });
 
 export default handler;

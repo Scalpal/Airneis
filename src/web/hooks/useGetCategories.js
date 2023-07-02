@@ -25,6 +25,6 @@ export const useGetCategories = (queryParams) => {
     categoriesData: data,
     categoriesError: error,
     categoriesIsLoading: isLoading,
-    refreshCategories: mutate,
+    refreshCategories: mutate
   };
 };

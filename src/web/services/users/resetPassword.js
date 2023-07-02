@@ -8,7 +8,7 @@ const resetPassword =
         id,
         password,
         passwordConfirmation,
-        timer,
+        timer
       });
 
       return [null, data];

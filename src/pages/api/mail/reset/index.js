@@ -10,14 +10,14 @@ const handler = mw({
   GET: [
     validate({
       query: {
-        email: emailValidator.required(),
-      },
+        email: emailValidator.required()
+      }
     }),
     async ({
       locals: {
-        query: { email },
+        query: { email }
       },
-      res,
+      res
     }) => {
       const user = await UserModel.query().findOne({ email });
 
@@ -53,9 +53,9 @@ const handler = mw({
         dynamic_template_data: {
           firstname: user.firstName,
           lastname: user.lastName,
-          url: `${config.baseURL}/mails/reset?codedId=${idCypted}&codedTimer=${timerCrypted}`,
+          url: `${config.baseURL}/mails/reset?codedId=${idCypted}&codedTimer=${timerCrypted}`
         },
-        hideWarnings: true,
+        hideWarnings: true
       };
 
       try {
@@ -64,8 +64,8 @@ const handler = mw({
       } catch (error) {
         res.status(404).send({ success: error });
       }
-    },
-  ],
+    }
+  ]
 });
 
 export default handler;

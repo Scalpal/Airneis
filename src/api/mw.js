@@ -21,11 +21,11 @@ const logger = winston.createLogger({
 
           return info;
         })()
-      ),
-    }),
+      )
+    })
   ],
   levels: { ...winston.config.cli.levels, sql: 10 },
-  level: 0,
+  level: 0
 });
 
 db.on("query", ({ sql }) => logger.sql(sql));
@@ -59,7 +59,7 @@ const mw = (methodHandlers) => async (req, res) => {
       handlerIndex += 1;
 
       await handler(ctx);
-    },
+    }
   };
 
   await ctx.next();

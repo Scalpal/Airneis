@@ -21,7 +21,7 @@ const validationSchema = createValidator({
   description: stringValidator.required(),
   price: numberValidator.required(),
   stock: numberValidator.required(),
-  categoryId: numberValidator.required(),
+  categoryId: numberValidator.required()
 });
 
 const initialValues = {

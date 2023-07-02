@@ -1,7 +1,7 @@
 export class AppError extends Error {
-  #errors = null
-  #httpCode = null
-  #errorCode = "error.app"
+  #errors = null;
+  #httpCode = null;
+  #errorCode = "error.app";
 
   constructor(
     errors = ["Oops. Something went wrong"],
