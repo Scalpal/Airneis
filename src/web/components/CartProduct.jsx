@@ -42,7 +42,7 @@ const CartProduct = (props) => {
     <div className={styles.cartProduct}>
       <div className={styles.cartProductImageContainer}>
         <Image
-          src={product.images[0].imageSrc}
+          src={product.productImages[0].imageSrc}
           alt="Image du produit"
           fill
           className={styles.cartProductImage}
