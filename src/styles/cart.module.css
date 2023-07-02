@@ -7,14 +7,14 @@
   width: 90vw;
   min-height: 80vh;
   gap: 1rem;
-  margin:5vh auto; 
+  margin: 5vh auto;
 }
 
 /* ---------- Product list ----------- */
 .productListContainer {
   display: flex;
   flex-direction: column;
-  gap: 1rem; 
+  gap: 1rem;
   width: 70%;
 }
 
@@ -63,7 +63,6 @@
   font-size: 1.3rem;
   font-weight: 300;
 }
-
 
 /* --------------- Empty cart block ---------------*/
 .emptyCartContainer {
@@ -124,6 +123,6 @@
   }
 
   .recapContainer {
-    flex: 0; 
+    flex: 0;
   }
 }
