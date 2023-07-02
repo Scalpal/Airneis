@@ -64,6 +64,7 @@
   font-size: 0.7rem;
   margin-top: -1rem;
   color: #6d6d6d;
+  white-space: nowrap;
 }
 
 /* -------------- Cart product right part --------------- */
@@ -131,14 +132,15 @@
   color: #0f1111;
   width: 4vw;
   border: none;
+  text-align: center;
   padding: 0.3em 0.5em;
   border-radius: 0.25vw;
-  letter-spacing: 0.07em;
-  font-weight: bolder;
+  font-family: inherit;
   font-size: 0.65rem;
   border: #919191 solid 0.01em;
   background: #f0f2f2;
   box-shadow: 0 2px 5px rgba(15, 17, 17, 0.15);
+  appearance: textfield;
   -moz-appearance: textfield;
 }
 .cartProductInputValues::-webkit-inner-spin-button,
@@ -228,5 +230,13 @@
 
   .cartProductControls {
     gap: 0.5rem;
+  }
+
+  .unityPrice {
+    margin-top: -0.5rem;
+  }
+
+  .cartProductInputValues {
+    width: 50%;
   }
 }

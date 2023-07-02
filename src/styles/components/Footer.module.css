@@ -5,7 +5,8 @@
   align-items: flex-start;
   gap: 3rem;
   padding: 3rem 0 1.5rem 0;
-  background-color: var(--secondary);
+  background-color: var(--primary);
+  color: var(--secondary);
   font-size: 1rem;
   font-weight: 300;
   margin: 20vh 0 0 0;
@@ -19,6 +20,12 @@
   font-weight: 300;
 }
 
+.footerInfos > div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
 .footerInfosBrandTitle {
   font-size: 1.7rem; 
 }
@@ -28,4 +35,11 @@
   margin: 0 auto;
   font-size: 1rem;
   font-weight: 300;
+}
+
+@media only screen and (max-width: 480px) {
+  .footerInfos {
+    flex-direction: column;
+    gap: 1rem;
+  }
 }

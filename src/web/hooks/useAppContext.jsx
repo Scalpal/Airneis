@@ -110,22 +110,21 @@ export const AppContextProvider = (props) => {
     [setCart]
   );
 
-  const removeProductFromCart = useCallback(
-    (product) => {
-      const localStorageProducts = JSON.parse(localStorage.getItem("products"));
-
-      const productIndex = localStorageProducts.findIndex(
-        (elt) => elt.id === product.id
-      );
-      const currentProduct = localStorageProducts[productIndex];
-
-      if (currentProduct.quantity - 1 === 0) {
-        deleteProductFromCart(product);
+  const changeValuesProductFromCart = useCallback(
+    (values) => {
+      if (values.values === 0) {
+        deleteProductFromCart(values.product);
 
         return;
       }
 
-      localStorageProducts[productIndex].quantity--;
+      const localStorageProducts = JSON.parse(localStorage.getItem("products"));
+
+      const productIndex = localStorageProducts.findIndex(
+        (elt) => elt.id === values.product.id
+      );
+
+      localStorageProducts[productIndex].quantity = values.values;
       localStorage.setItem("products", localStorageProducts);
       setCart(localStorageProducts);
     },
@@ -157,7 +156,7 @@ export const AppContextProvider = (props) => {
         getLoggedUser,
         setCart,
         addToCart,
-        removeProductFromCart,
+        changeValuesProductFromCart,
         deleteProductFromCart
       },
       services,
@@ -171,7 +170,7 @@ export const AppContextProvider = (props) => {
     signOut,
     getLoggedUser,
     addToCart,
-    removeProductFromCart,
+    changeValuesProductFromCart,
     deleteProductFromCart,
     services,
     session,
