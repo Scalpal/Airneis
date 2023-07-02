@@ -42,7 +42,7 @@ const ProductToShowList = (props) => {
     setSearch("");
   }, []);
 
-  const editProductVisibility = useCallback(async (productId, boolean) => {
+  const editProductVisibility = useCallback(async (productSlug, boolean) => {
     if (visibleProductsCount === 4 && boolean === false) {
       setAlert({ status: "warning", message: "You can't have less than 4 products displayed in home page." });
       setShowAlert(true);
@@ -50,7 +50,7 @@ const ProductToShowList = (props) => {
       return;
     }
 
-    const [error, data] = await editShowInHome(productId, boolean);
+    const [error, data] = await editShowInHome(productSlug, boolean);
 
     if (error) {
       setAlert({ status: "error", message: error.message });
@@ -115,7 +115,7 @@ const ProductToShowList = (props) => {
                     <IconButton
                       Icon={product.showInHome ? EyeSlashIcon : EyeIcon}
                       tooltip={product.showInHome ? "Hide product" : "Show product"}
-                      onPress={() => editProductVisibility(product.id, product.showInHome ? false : true)}
+                      onPress={() => editProductVisibility(product.slug, product.showInHome ? false : true)}
                     />
                   </div>
                 </div>

@@ -12,53 +12,47 @@ const routes = {
   home: () => "/",
   register: () => "/register",
   login: () => "/login",
+  cgu: () => "terms-of-use",
   legalMentions: () => "/legal-mentions",
   products: {
     base: () => `/products`,
-    single: (productId) => `/products/${productId}`
+    single: (productSlug) => `/products/${productSlug}`
   },
   categories: {
-    base: () => "/category",
-    single: (categoryId) => `/category/${categoryId}`
+    base: () => "/categories",
+    single: (categorySlug) => `/categories/${categorySlug}`
   },
   backoffice: {
     base: () => "/backoffice",
-    users: () => "backoffice/users",
-    products: () => "backoffice/products",
-    shop: () => "backoffice/shop"
+    users: () => "/backoffice/users",
+    products: () => "/backoffice/products",
+    shop: () => "/backoffice/shop"
   },
   api: {
     register: () => "/users/register",
     login: () => "/users/login",
     products: {
-      collection: (queryString, page) =>
-        `/api/products${queryString ? queryString : ""}${
-          page ? `page=${page}` : ""
-        }`,
-      single: (productId, query) =>
-        createRouteWithQueryParams(`/api/products/${productId}`, query),
-      search: (searchValue) =>
-        `/api/products?limit=30&${
-          searchValue.length > 0 ? `search=${searchValue}` : ""
-        }`,
-      update: (productId) => `/products/${productId}`,
+      base: () => "/api/products",
+      single: (productSlug, query) => createRouteWithQueryParams(`/api/products/${productSlug}`, query),
+      collection: (queryString, page) =>`/api/products${queryString ? queryString : ""}${page ? `page=${page}` : ""}`,
+      search: (searchValue) => `/api/products?limit=30&${searchValue.length > 0 ? `search=${searchValue}` : ""}`,
       materials: () => "/api/products/materials",
-      add: () => "/api/products",
-      reviews: (productId, limit, page) => `/api/products/${productId}/reviews?limit=${limit}&page=${page}`,
-      productImage: (productId) => `/api/products/${productId}/images`,
+      reviews: (productSlug, limit, page) => `/api/products/${productSlug}/reviews?limit=${limit}&page=${page}`,
+      addImage: (productId) => `/api/products/${productId}/images`,
       deleteImage: (productId) => `/api/products/${productId}/deleteImage`
     },
     images: {
       homeCarousel: {
-        base: (queryString) => `/api/images/homeCarousel${queryString ? queryString : ""}`,
+        base: (queryString) =>
+          `/api/images/homeCarousel${queryString ? queryString : ""}`,
         single: (imageId) => `/api/images/homeCarousel/${imageId}`,
         upload: () => "/api/images/homeCarousel/upload"
       }
     },
     categories: {
       base: (queryString) => `/api/products/categories${queryString ? queryString : ""}`,
-      single: (categoryId) => `/api/products/categories/${categoryId}`,
-      upload: (categoryId) => `/api/products/categories/${categoryId}/upload`,
+      single: (categorySlug) => `/api/products/categories/${categorySlug}`,
+      upload: (categorySlug) => `/api/products/categories/${categorySlug}/upload`,
       products: (categoryId) => `/api/products?categories=${categoryId}`
     },
     users: {

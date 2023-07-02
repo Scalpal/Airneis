@@ -82,7 +82,6 @@ const Register = () => {
                 {error}
               </p>
             }
-
             <LoginField
               name="firstName"
               type="text"
@@ -98,7 +97,6 @@ const Register = () => {
               showError={true}
               required={true}
             />
-
 
             <LoginField
               name="phoneNumber"
@@ -124,7 +122,10 @@ const Register = () => {
               required={true}
             />
 
-            <CollapseMenu title="Address" key={"address"}>
+            <CollapseMenu
+              title="Address"
+              key={"address"}
+            >
               <LoginField
                 name="address"
                 type="text"

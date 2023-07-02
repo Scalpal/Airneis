@@ -104,7 +104,9 @@ const HomeCarouselContent = () => {
                 }
               />
             ))) : (
-              <p>There is currently no images on the home carousel.</p>
+              <div className={styles.noImageWrapper}>
+                <p>There is currently no images on the home carousel.</p>
+              </div>
             )
           ) : (
             <div>

@@ -185,7 +185,7 @@ const BackofficeProducts = (props) => {
         {!productsIsLoading ? (
           <Table
             array={products}
-            safeArray={productsProps} // The first item is used to get the table headers, and as we need it, it mustn't be undefined and props don't change
+            safeArray={productsProps} // The first item is used to get the table headers, and as we need it, it mustn't be undefined
             visibleColumns={["id", "name", "description", "price", "stock", "category", "materials"]}
             queryParams={queryParams}
             sortColumn={sortColumn}

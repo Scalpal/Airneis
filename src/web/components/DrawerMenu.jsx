@@ -18,10 +18,9 @@ const DrawerMenu = (props) => {
   } = useAppContext();
 
   const { userData, userError, userIsLoading } = useUser();
-  const user = (!userError && !userIsLoading) ? userData : {};
+  const user = !userError && !userIsLoading ? userData : {};
 
   const router = useRouter();
-
   useEffect(() => {
     if (isDrawerToggled === true) {
       document.body.style.overflow = "hidden";
@@ -29,7 +28,7 @@ const DrawerMenu = (props) => {
       return;
     }
 
-    document.body.style.overflow = ""; 
+    document.body.style.overflow = "";
   }, [isDrawerToggled]);
 
   const logout = () => {
@@ -56,10 +55,20 @@ const DrawerMenu = (props) => {
           className={styles.drawerMenuIcon}
           onClick={() => setIsDrawerToggled(!isDrawerToggled)}
         />
-        {session ? <Link href="/profil">My profil</Link> : <Link href={routes.login()}>Login</Link>}
-        {session ? <a onClick={logout}>Logout</a> : <Link href={routes.register()}>Register</Link>}
-        {(!userIsLoading && user.isAdmin) && <Link href={routes.backoffice.users()}>Backoffice</Link>}
-        <Link href="">CGU</Link>
+        {session ? (
+          <Link href="/profil">My profil</Link>
+        ) : (
+          <Link href={routes.login()}>Login</Link>
+        )}
+        {session ? (
+          <a onClick={logout}>Logout</a>
+        ) : (
+          <Link href={routes.register()}>Register</Link>
+        )}
+        {!userIsLoading && user.isAdmin && (
+          <Link href={routes.backoffice.users()}>Backoffice</Link>
+        )}
+        <Link href={routes.cgu()}>CGU</Link>
         <Link href={routes.legalMentions()}>Legal mentions</Link>
         <Link href="">Contact</Link>
         <Link href="">About us</Link>
@@ -68,4 +77,4 @@ const DrawerMenu = (props) => {
   );
 };
 
-export default DrawerMenu; 
+export default DrawerMenu;

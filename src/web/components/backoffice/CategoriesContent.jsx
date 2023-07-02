@@ -5,41 +5,28 @@ import IconButton from "../IconButton";
 import Loader from "../Loader";
 import CollapseMenu from "../CollapseMenu";
 import ImageCard from "./ImageCard";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { useGetCategories } from "@/web/hooks/useGetCategories";
 import uploadCategoryImage from "@/web/services/categories/uploadCategoryImage";
-import editCategory from "@/web/services/categories/editCategory";
-import Button from "../Button";
 import Modal from "../Modal";
-import Toggle from "../Toggle";
+import EditCategoryModalContent from "./EditCategoryModalContent";
 
 const CategoriesContent = () => {
   const [alert, setAlert] = useState({ status: "", message: "" });
   const [showAlert, setShowAlert] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [activeCategory, setActiveCategory] = useState(null); 
-  const [newCategoryName, setNewCategoryName] = useState("");
 
   const { categoriesData, categoriesError, categoriesIsLoading, refreshCategories } = useGetCategories();
   const categories = (!categoriesError && !categoriesIsLoading) ? categoriesData : [];
 
-  const handleActiveCategoryVisibility = useCallback(() => {
-    setActiveCategory({
-      ...activeCategory,
-      visible: activeCategory.visible ? false : true
-    });
-  }, [activeCategory]);
-
-  const handleActiveCategoryVisibilityInHome = useCallback(() => {
-    setActiveCategory({
-      ...activeCategory,
-      visibleInHome: activeCategory.visibleInHome ? false : true
-    });
-  }, [activeCategory]);
-
   // Categories
-  const changeCategoryImage = useCallback(async (categoryId, file) => {
-    const [error, response] = await uploadCategoryImage(categoryId, file); 
+  const changeCategoryImage = useCallback(async (categorySlug, file) => {
+    if (!file) {
+      return;
+    }
+
+    const [error, response] = await uploadCategoryImage(categorySlug, file); 
 
     if (error) {
       setAlert({ status: "error", message: error.message });
@@ -59,34 +46,6 @@ const CategoriesContent = () => {
     setShowModal(true);
     setActiveCategory(category);
   }, [categoriesData]);
-
-  const changeCategoryInformations = useCallback(async () => {
-    const body = {
-      name: newCategoryName,
-      visible: activeCategory.visible,
-      visibleInHome: activeCategory.visibleInHome
-    };
-
-    const [error, response] = await editCategory(activeCategory.id, body);
-
-    if (error) {
-      setAlert({ status: "error", message: error.message });
-      setShowAlert(true);
-
-      return;
-    }
-
-    setShowModal(false);
-    setAlert({ status: "success", message: response.data.message });
-    setShowAlert(true);
-    refreshCategories();
-  }, [refreshCategories, activeCategory, newCategoryName]);
-
-  useEffect(() => {
-    if (activeCategory) {
-      setNewCategoryName(activeCategory.name);
-    }
-  }, [activeCategory]);
 
   return (
     <>
@@ -114,7 +73,7 @@ const CategoriesContent = () => {
                         name="file"
                         id={`categoryFileInput${index}`}
                         hidden
-                        onChange={(e) => changeCategoryImage(category.id, e.target.files[0])}
+                        onChange={(e) => changeCategoryImage(category.slug, e.target.files[0])}
                       />
 
                       <label htmlFor={`categoryFileInput${index}`}>
@@ -149,52 +108,13 @@ const CategoriesContent = () => {
           setShowModal={setShowModal}
           size={"fit-to-content"}
         >
-          <div className={styles.editForm}>
-            <p className={styles.editFormTitle}>Edit category name</p>
-
-            <input
-              type="text"
-              className={styles.editFormInput}
-              defaultValue={newCategoryName}
-              onChange={(e) => setNewCategoryName(e.target.value)}
-            />
-
-            <div className={styles.toggleWrapper}>
-              <p>Visible</p>
-
-              {(activeCategory) && (
-                <Toggle
-                  toggled={activeCategory.visible}
-                  onPress={() => handleActiveCategoryVisibility()}
-                />
-              )}
-            </div>
-
-            <div className={styles.toggleWrapper}>
-              <p>Visible in home page</p>
-
-              {activeCategory && (
-                <Toggle
-                  toggled={activeCategory.visibleInHome}
-                  onPress={() => handleActiveCategoryVisibilityInHome()}
-                />
-              )}
- 
-            </div>
-
-            <Button
-              onClick={() => changeCategoryInformations()}
-            >
-              Save
-            </Button>
-
-            <Button
-              variant={"outlined"}
-              onClick={() => setShowModal(false)}
-            >
-              Close
-            </Button>
-          </div>
+          <EditCategoryModalContent
+            activeCategory={activeCategory}
+            setShowModal={setShowModal}
+            refreshCategories={refreshCategories}
+            setAlert={setAlert}
+            setShowAlert={setShowAlert}
+          />
         </Modal>
       )}
 

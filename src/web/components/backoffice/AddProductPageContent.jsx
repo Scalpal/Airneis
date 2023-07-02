@@ -66,8 +66,8 @@ const AddProductPageContent = (props) => {
 
     try { 
       if (imagesToUpload.length > 0) {
-        imagesToUpload.map(async(imageFile) => {
-          const [err] = await uploadProductImage(imageFile, data.product.id);
+        await Promise.all(imagesToUpload.map(async(imageFile) => {
+          const [err] = await uploadProductImage(imageFile, data.product.slug);
 
           if (err) {
             setAlert({ status: "error" , message: "Error on add." });
@@ -75,7 +75,7 @@ const AddProductPageContent = (props) => {
 
             return;
           }
-        });
+        }));
       } 
 
       setAlert({ status: "success" , message: data.message });

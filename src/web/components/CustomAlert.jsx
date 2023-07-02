@@ -9,7 +9,7 @@ const CustomAlert = (props) => {
   let customStyle = "";
 
   switch (alert.status) {
-    case "success": 
+    case "success":
       customStyle = styles.success;
 
       break;
@@ -18,12 +18,12 @@ const CustomAlert = (props) => {
       customStyle = styles.warning;
 
       break;
-  
-    case "error": 
+
+    case "error":
       customStyle = styles.error;
 
       break;
-    
+
     default:
       customStyle = styles.success;
 

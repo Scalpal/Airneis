@@ -31,19 +31,27 @@ const handler = mw({
 
           return;
         } 
-
-        const productId = parseInt(req.query.productId); 
+        
+        const slug = req.query.productSlug;
 
         try {
+          const product = await ProductModel.query().findOne({ slug });
+
+          if (!product) {
+            res.status(404).send({ error: "Product not found" });
+
+            return;
+          }
+
           const uploadedImage = await uploadImageToS3(req.file, "products-images/");
 
           await ProductImageModel.query().insert({
-            productId: productId,
+            productId: product.id,
             imageSrc: uploadedImage.Key
           }).returning("*");
 
           const updatedProduct = await ProductModel.query()
-            .findOne({ id: productId })
+            .findOne({ id: product.id })
             .withGraphFetched("category")
             .withGraphFetched("materials")
             .withGraphFetched("reviews")

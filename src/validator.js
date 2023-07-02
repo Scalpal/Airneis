@@ -26,7 +26,9 @@ export const arrayOrStringValidator = yup.mixed().test("isArrayOfStrings", "Inva
 export const displayNameValidator = yup.string().min(1).max(255);
 export const phoneValidator = yup.string().phone("FR", false, "The phone number has to be valid in France.");
 export const roleValidator = yup.string().oneOf(["admin", "utilisateur"]);
-export const emailValidator = yup.string().email("Incorrect email address format. Please enter a valid email address.");
+export const emailValidator = yup
+  .string()
+  .email("Incorrect email address format. Please enter a valid email address.");
 export const boolValidator = yup.boolean();
 export const passwordValidator = yup
   .string()
@@ -51,4 +53,4 @@ export const limitValidator = yup.number().integer().min(1).max(100);
 export const pageValidator = yup.number().integer().min(1).default(1);
 export const orderFieldValidator = (fields) => yup.string().oneOf(fields);
 export const orderValidator = yup.string().lowercase().oneOf(["asc", "desc"]);
-export const searchValidator = yup.string().lowercase().default(""); 
+export const searchValidator = yup.string().lowercase().default("");

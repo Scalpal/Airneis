@@ -41,7 +41,6 @@ const handler = mw({
         }
 
         const [passwordHash, passwordSalt] = await hashPassword(password);
-
         const addedUser = await UserModel.query()
           .insert({
             email,
@@ -79,7 +78,6 @@ const handler = mw({
             url: `${process.env.API_URL}/mails/confirmation?id=${addedUser.id}`
           }
         };
-
         sgMail.send(msg);
         res.send({ success: true });
       } catch (error) {

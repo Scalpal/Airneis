@@ -13,16 +13,20 @@ const CategoriesBlocks = (props) => {
         return (
           <div
             key={index}
-            onClick={() => router.push(routes.categories.single(category.id)) }
+            onClick={() => router.push(routes.categories.single(category.slug)) }
           >
             <p>{category.name}</p>
 
             <ImageWithFallback
               className={styles.categoriesContainerImage}
-              src={category.imageUrl ? category.imageUrl : `${process.env.AWS_BUCKET_URL}${category.imageSrc}`}
+              src={
+                category.imageUrl
+                  ? category.imageUrl
+                  : `${process.env.AWS_BUCKET_URL}${category.imageSrc}`
+              }
               alt={category.name}
               fallbackSrc={"/placeholder-image.png"}
-              fill 
+              fill
             />
           </div>
         );
@@ -30,5 +34,6 @@ const CategoriesBlocks = (props) => {
     </div>
   );
 };
+
 
 export default CategoriesBlocks; 
