@@ -14,6 +14,9 @@ const routes = {
   login: () => "/login",
   cgu: () => "terms-of-use",
   legalMentions: () => "/legal-mentions",
+  email: {
+    sent: () => "/mails/sent",
+  },
   products: {
     base: () => `/products`,
     single: (productSlug) => `/products/${productSlug}`,
