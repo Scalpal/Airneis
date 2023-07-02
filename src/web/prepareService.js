@@ -10,10 +10,6 @@ import sendResetPasswordServices from "@/web/services/mails/mailResetPassword";
 // security services
 import cryptService from "@/web/services/security/crypt";
 
-// backoffice services
-// import checkTokenService from "@/web/services/backoffice/checkToken";
-// import checkIsAdminService from "@/web/services/backoffice/checkIsAdmin";
-
 // eslint-disable-next-line no-unused-vars
 const prepareService = ({ api, setSession, setJWT }) => {
   return {
@@ -29,10 +25,6 @@ const prepareService = ({ api, setSession, setJWT }) => {
     security: {
       crypt: cryptService({ api }),
     },
-    // backOffice: {
-    //   checkToken: checkTokenService(),
-    //   checkIsAdmin: checkIsAdminService(),
-    // },
   };
 };
 
