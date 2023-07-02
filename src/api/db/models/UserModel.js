@@ -1,7 +1,7 @@
 import hashPassword from "@/api/db/hashPassword.js";
 import BaseModel from "@/api/db/models/BaseModel.js";
-import AddressModel from "./AddressModel";
-import OrderModel from "./OrderModel";
+import AddressModel from "@/api/db/models/AddressModel.js";
+import OrderModel from "@/api/db/models/OrderModel.js";
 
 class UserModel extends BaseModel {
   static tableName = "users";
@@ -18,26 +18,27 @@ class UserModel extends BaseModel {
         modelClass: AddressModel,
         join: {
           from: "users.id",
-          to: "addresses.userId"
+          to: "addresses.userId",
         },
       },
       orders: {
-        relation: BaseModel.ManyToManyRelation,
+        relation: BaseModel.HasManyRelation,
         modelClass: OrderModel,
         join: {
           from: "users.id",
-          to: "orders.userId"
-        }
+          to: "orders.userId",
+        },
+        modify: (query) =>
+          query.select(
+            "id",
+            "email",
+            "firstName",
+            "lastName",
+            "phoneNumber",
+            "active",
+            "isAdmin"
+          ),
       },
-      modify: (query) => query.select(
-        "id",
-        "email",
-        "firstName",
-        "lastName",
-        "phoneNumber",
-        "active",
-        "isAdmin"
-      ),
     };
   }
 

@@ -11,7 +11,7 @@ import {
 } from "react";
 import { parseCookies } from "nookies";
 import Axios from "axios";
-import routes from "@/web/utils/routes";
+import routes from "@/web/routes";
 
 const AppContext = createContext();
 

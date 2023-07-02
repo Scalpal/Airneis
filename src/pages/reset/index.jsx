@@ -2,7 +2,7 @@ import Button from "@/web/components/Button";
 import LoginField from "@/web/components/LoginField";
 import LoginLayout from "@/web/components/LoginLayout";
 import { Form, Formik } from "formik";
-import routes from "@/web/utils/routes.js";
+import routes from "@/web/routes.js";
 import styles from "@/styles/login.module.css";
 import { useRouter } from "next/router";
 import useAppContext from "@/web/hooks/useAppContext";

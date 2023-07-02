@@ -1,6 +1,6 @@
 import Button from "@/web/components/Button";
 import LoginField from "@/web/components/LoginField";
-import routes from "@/web/utils/routes";
+import routes from "@/web/routes";
 import LoginLayout from "@/web/components/LoginLayout";
 import { Form, Formik } from "formik";
 import styles from "@/styles/register.module.css";

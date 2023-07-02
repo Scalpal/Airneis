@@ -1,6 +1,6 @@
 import { createValidator, stringValidator, emailValidator } from "@/validator";
 import { Formik, Form } from "formik";
-import routes from "@/web/utils/routes";
+import routes from "@/web/routes";
 import Button from "@/web/components/Button";
 import styles from "@/styles/login.module.css";
 import { useRouter } from "next/router";

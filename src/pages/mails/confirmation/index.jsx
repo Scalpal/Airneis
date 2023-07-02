@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import BackofficeLoginLayout from "@/web/components/backoffice/LoginLayout";
-import routes from "@/web/utils/routes";
+import routes from "@/web/routes";
 import styles from "@/styles/mails/confirmation.module.css";
 import { useEffect, useState } from "react";
 import useAppContext from "@/web/hooks/useAppContext";
