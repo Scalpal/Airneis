@@ -1,7 +1,7 @@
-import UserModel from "@/api/db/models/UserModel.js"
-import validate from "@/api/middlewares/validate.js"
-import mw from "@/api/mw.js"
-import { stringValidator } from "@/validator"
+import UserModel from "@/api/db/models/UserModel.js";
+import validate from "@/api/middlewares/validate.js";
+import mw from "@/api/mw.js";
+import { stringValidator } from "@/validator";
 
 const handler = mw({
   PATCH: [
@@ -16,21 +16,21 @@ const handler = mw({
       },
       res,
     }) => {
-      const user = await UserModel.query().findOne({ id })
+      const user = await UserModel.query().findOne({ id });
 
       if (!user) {
         res.status(404).send({
           error: "We cannot activate your account, please retry later",
-        })
+        });
 
-        return
+        return;
       }
 
-      await UserModel.query().findOne({ id }).update({ active: true })
+      await UserModel.query().findOne({ id }).update({ active: true });
 
-      res.send({ result: "Your account is validate with success" })
+      res.send({ result: "Your account is validate with success" });
     },
   ],
-})
+});
 
-export default handler
+export default handler;
