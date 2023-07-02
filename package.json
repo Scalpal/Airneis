@@ -45,6 +45,7 @@
   "devDependencies": {
     "@faker-js/faker": "^8.0.0",
     "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
     "formik": "^2.2.9",
     "pa11y": "^6.2.3",
     "yup": "^0.32.11"

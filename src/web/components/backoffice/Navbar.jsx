@@ -4,7 +4,7 @@ import {
   HomeIcon,
   UserIcon,
   BuildingStorefrontIcon,
-  TagIcon, 
+  TagIcon,
   ChartBarIcon,
   ArrowRightOnRectangleIcon,
   ReceiptPercentIcon
@@ -50,45 +50,30 @@ const navLinks = [
 const Navbar = () => {
   const router = useRouter();
 
-  const { userData, userError, userIsLoading } = useUser(); 
-  const user = (!userError && !userIsLoading) ? userData : {};
+  const { userData, userError, userIsLoading } = useUser();
+  const user = !userError && !userIsLoading ? userData : {};
 
   return (
-    <nav
-      className={classnames(
-        styles.navbar,
-        nunito.className
-      )}
-    > 
+    <nav className={classnames(styles.navbar, nunito.className)}>
       <div className={styles.adminInfosBlock}>
         <p>Hello administrator </p>
         <p>{user.lastName} {user.firstName}</p>
       </div>
 
-
       <div className={styles.midBlock}>
-        {navLinks.map((link,index) => {
+        {navLinks.map((link, index) => {
           return (
-            <Link
-              key={index}
-              href={link.route}
-              className={styles.links}
-            >
+            <Link key={index} href={link.route} className={styles.links}>
               {link.icon}
               <p className={styles.linksText}>{link.text}</p>
             </Link>
-          ); 
+          );
         })}
       </div>
 
-      <div
-        className={styles.bottomBlock}
-      >
+      <div className={styles.bottomBlock}>
         <ArrowRightOnRectangleIcon
-          className={classnames(
-            styles.linksIcon,
-            styles.logoutIcon
-          )}
+          className={classnames(styles.linksIcon, styles.logoutIcon)}
           onClick={() => router.push("/")}
         />
       </div>

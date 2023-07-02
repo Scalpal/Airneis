@@ -9,14 +9,23 @@ const nextConfig = {
     AWS_SECRET_KEY: process.env.SECRET_KEY,
     AWS_BUCKET_URL: process.env.AWS_BUCKET_URL
   },
-  images: {
-    remotePatterns: [
+	images: {
+		remotePatterns: [
+			{
+				protocol: "https",
+				hostname:	"airneis-ecommerce-shop.s3.eu-north-1.amazonaws.com",
+			},
+		],
+  },
+  async redirects() {
+    return [
       {
-        protocol: "https",
-        hostname: "airneis-ecommerce-shop.s3.eu-north-1.amazonaws.com"
-      }
-    ]
-  }
+        source: "/_error",
+        destination: "/",
+        permanent: false
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;

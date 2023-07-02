@@ -7,13 +7,11 @@ import ReviewList from "./ReviewList";
 import { useRouter } from "next/router";
 
 const ProductReviews = (props) => {
-  const { productId, setPage, page, limit } = props;
+  const { productSlug, setPage, page, limit } = props;
   const router = useRouter(); 
 
-  const {
-    productReviewsData,
-    productReviewsLoading
-  } = useGetProductReviews(routes.api.products.reviews(productId, limit, page));
+  const { productReviewsData, productReviewsError, productReviewsLoading} = useGetProductReviews(routes.api.products.reviews(productSlug, limit, page));
+  const reviews = (!productReviewsLoading && !productReviewsError) ? productReviewsData.reviews : [];
 
   // Handle pagination
   const setToPage = useCallback((value) => {
@@ -65,31 +63,32 @@ const ProductReviews = (props) => {
 
       <ReviewList
         key={page}
-        productId={productId}
+        productSlug={productSlug}
         page={page}
         limit={limit}
       />
 
       <div className={styles.prefetchedList}>
         <ReviewList
-          productId={productId}
+          productSlug={productSlug}
           page={page + 1}
           limit={limit}
         />
       </div>
 
-      {(!productReviewsLoading && productReviewsData.reviews.length > 0) && (
-        <Pagination
-          dataCount={productReviewsData.count}
-          page={page}
-          limit={limit}
-          setPage={setToPage}
-          nextPage={nextPage}
-          previousPage={previousPage}
-          firstPage={firstPage}
-          lastPage={lastPage}
-        />
-      )}
+      {(typeof reviews !== "undefined" && reviews.length > 0) && (
+          <Pagination
+            dataCount={productReviewsData.count}
+            page={page}
+            limit={limit}
+            setPage={setToPage}
+            nextPage={nextPage}
+            previousPage={previousPage}
+            firstPage={firstPage}
+            lastPage={lastPage}
+          />
+        )
+      }
 
     </section>
   );

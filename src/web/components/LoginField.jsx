@@ -13,15 +13,12 @@ const LoginField = (props) => {
     <Field name={name}>
       {({ field, meta }) => {
         return (
-          <div
-            name={label}
-            className={styles.wrapper}
-          >
+          <div name={label} className={styles.wrapper}>
             <label
               name={label}
               className={classnames(
                 styles.label,
-                disabled ? styles.labelDisabled : "", 
+                disabled ? styles.labelDisabled : "",
                 meta.error ? styles.labelError : ""
               )}
               htmlFor={label}

@@ -29,6 +29,8 @@ module.exports.up = async (knex) => {
   await knex.schema.createTable("categories", (table) => {
     table.increments("id");
     table.text("name").notNullable();
+    table.text("slug").notNullable().unique();
+    table.text("description").notNullable();
     table.text("imageSrc").notNullable().defaultTo("/meuble-1.jpeg");
     table.boolean("visible").notNullable().defaultTo(true);
     table.boolean("visibleInHome").notNullable().defaultTo(false);
@@ -43,6 +45,7 @@ module.exports.up = async (knex) => {
     table.increments("id");
     table.text("name").notNullable();
     table.text("description").notNullable();
+    table.text("slug").notNullable().unique();
     table.integer("price").notNullable();
     table.integer("stock").notNullable().defaultTo(1);
     table.integer("categoryId").notNullable().references("id").inTable("categories");
@@ -123,3 +126,4 @@ module.exports.down = async (knex) => {
   await knex.schema.dropTable("addresses");
   await knex.schema.dropTable("users");
 };
+

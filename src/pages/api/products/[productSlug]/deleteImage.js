@@ -16,7 +16,7 @@ const handler = mw({
     checkIsAdmin(),
     validate({
       query: {
-        productId: idValidator.required()
+        productSlug: idValidator.required()
       },
       body: {
         imageName: stringValidator.required()
@@ -24,13 +24,15 @@ const handler = mw({
     }),
     async({
       locals: {
-        query: { productId },
+        query: { productSlug },
         body: { imageName }
       },
       res
     }) => {
+      const slug = productSlug;
+
       try {
-        const product = await ProductModel.query().findOne({ id: productId });
+        const product = await ProductModel.query().findOne({ slug });
 
         if (!product) {
           res.status(404).send("Product not found");
@@ -41,7 +43,7 @@ const handler = mw({
         // Delete product image from database
         await ProductImageModel.query()
           .delete()
-          .where("productId", productId)
+          .where("productId", product.id)
           .andWhere("imageSrc", imageName)
           .returning("*");
         
@@ -49,7 +51,7 @@ const handler = mw({
         await deleteImageFromS3(imageName);
 
         const updatedProduct = await ProductModel.query()
-          .findOne({ id: productId })
+          .findOne({ id: product.id })
           .select("id", "name", "description", "price", "stock")
           .withGraphFetched("category")
           .withGraphFetched("materials")

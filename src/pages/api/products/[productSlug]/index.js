@@ -7,6 +7,7 @@ import slowDown from "@/api/middlewares/slowDown";
 import validate from "@/api/middlewares/validate";
 import mw from "@/api/mw";
 import { arrayValidator, boolValidator, idValidator, numberValidator, stringValidator } from "@/validator";
+import createSlug from "@/web/helpers/createSlug";
 import getProductsAverageRating from "@/web/services/products/getProductsAverageRating";
 import getProductsImagesWithSignedUrls from "@/web/services/products/getProductsImagesWithSignedUrl";
 
@@ -15,21 +16,21 @@ const handler = mw({
     slowDown(500),
     validate({
       query: {
-        productId: idValidator.required()
+        productSlug: idValidator.required()
       }
     }),
     async({
       locals: {
-        query: { productId }
+        query: { productSlug }
       },
       res
     }) => {
-      const id = productId;
+      const slug = productSlug;
 
       try {
         const product = await ProductModel.query()
-          .findOne({ id })
-          .select("id", "name", "description", "price", "stock")
+          .findOne({ slug })
+          .select("id", "name", "description", "price", "stock", "slug")
           .withGraphFetched("category")
           .withGraphFetched("materials")
           .withGraphFetched("reviews")
@@ -59,7 +60,7 @@ const handler = mw({
     checkIsAdmin(),
     validate({
       query: { 
-        productId: idValidator
+        productSlug: stringValidator.required()
       },
       body: {
         name: stringValidator,
@@ -73,15 +74,15 @@ const handler = mw({
     }), 
     async({
       locals: {
-        query: { productId },
+        query: { productSlug },
         body: { name, description, price, stock, categoryId, materials, showInHome }
       }, 
       res
     }) => {
-      const id = productId;
+      const slug = productSlug;
       
       try {
-        const product = await ProductModel.query().findOne({ id }).withGraphFetched("materials");
+        const product = await ProductModel.query().findOne({ slug }).withGraphFetched("materials");
 
         if (!product) {
           res.status(404).send({ status: 404, message: "Product not found" }); 
@@ -97,7 +98,7 @@ const handler = mw({
             const materialId = Number.parseInt(id);
 
             if (!productMaterialIds.includes(materialId)) {
-              return { productId: Number.parseInt(productId), materialId: materialId };
+              return { productId: Number.parseInt(product.id), materialId: materialId };
             } 
           }).filter(elt => elt !== undefined);
 
@@ -119,7 +120,7 @@ const handler = mw({
             await ProductMaterialRelationModel.query()
               .delete()
               .whereIn("materialId", materialsToDelete)
-              .andWhere("productId", id)
+              .andWhere("productId", product.id)
               .returning("*");
           }
         }
@@ -130,10 +131,11 @@ const handler = mw({
             ...(description ? { description } : {}),
             ...(price ? { price } : {}),
             ...(stock ? { stock } : {}),
+            ...(name ? { slug: createSlug(name) } : {}),
             ...(categoryId ? { categoryId } : {}),
             ...(showInHome !== null ? { showInHome } : {})
           })
-          .where("id", id)
+          .where("id", product.id)
           .returning("*")
           .withGraphFetched("materials")
           .withGraphFetched("category")

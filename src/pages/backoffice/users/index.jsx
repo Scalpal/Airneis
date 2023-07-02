@@ -74,47 +74,56 @@ const BackofficeUsers = (props) => {
     search: ""
   });
 
-  const handleQueryParams = useCallback((key, value) => {
-    setQueryParams({
-      ...queryParams,
-      [key]: value
-    });
-  }, [queryParams]);
+  const handleQueryParams = useCallback(
+    (key, value) => {
+      setQueryParams({
+        ...queryParams,
+        [key]: value
+      });
+    },
+    [queryParams]
+  );
 
-  const sortColumn = useCallback((column) => {
-    const notSortableKeys = ["email", "phoneNumber", "active", "isAdmin"];
+  const sortColumn = useCallback(
+    (column) => {
+      const notSortableKeys = ["email", "phoneNumber", "active", "isAdmin"];
 
-    if (notSortableKeys.includes(column)) {
-      return false; 
-    }
-    
-    // By default, when we sort a column, we set it to ASC
-    if (column !== queryParams["orderField"]) {
+      if (notSortableKeys.includes(column)) {
+        return false;
+      }
+
+      // By default, when we sort a column, we set it to ASC
+      if (column !== queryParams["orderField"]) {
+        setQueryParams({
+          ...queryParams,
+          page: 1,
+          orderField: column,
+          order: "asc"
+        });
+
+        return;
+      }
+
       setQueryParams({
         ...queryParams,
         page: 1,
         orderField: column,
-        order: "asc"
-      }); 
-      
-      return;
-    }
+        order: queryParams["order"] === "asc" ? "desc" : "asc"
+      });
+    },
+    [queryParams]
+  );
 
-    setQueryParams({
-      ...queryParams,
-      page: 1,
-      orderField: column,
-      order: queryParams["order"] === "asc" ? "desc" : "asc"
-    }); 
-  }, [queryParams]); 
-
-  const handleLimit = useCallback((value) => {
-    setQueryParams({
-      ...queryParams,
-      page: 1,
-      limit: value
-    });
-  }, [queryParams]); 
+  const handleLimit = useCallback(
+    (value) => {
+      setQueryParams({
+        ...queryParams,
+        page: 1,
+        limit: value
+      });
+    },
+    [queryParams]
+  );
 
   const updateUsers = useCallback(async () => {
     const reqInstance = getApiClient();
@@ -142,25 +151,33 @@ const BackofficeUsers = (props) => {
     (id) => {
       const user = users.users.find((elt) => elt.id === id);
 
-    setShowModal(true);
-    setActiveTab(userInfoTab);
-    setActiveUser(user);
-  }, [users]);
+      setShowModal(true);
+      setActiveTab(userInfoTab);
+      setActiveUser(user);
+    },
+    [users]
+  );
 
-  const desactivateUser = useCallback(async (userId) => {
-    try {
-      const { data } = await api.delete(routes.api.users.delete(userId));
+  const desactivateUser = useCallback(
+    async (userId) => {
+      try {
+        const { data } = await api.delete(routes.api.users.delete(userId));
 
-      updateUsers();
-      setShowAlert(true);
-      setAlert({ status: data.status, message: data.message });
-    } catch (error) {
-      if (error instanceof AxiosError) {
+        updateUsers();
         setShowAlert(true);
-        setAlert({ status: error.response.status, message: error.response.message });
+        setAlert({ status: data.status, message: data.message });
+      } catch (error) {
+        if (error instanceof AxiosError) {
+          setShowAlert(true);
+          setAlert({
+            status: error.response.status,
+            message: error.response.message
+          });
+        }
       }
-    }
-  }, [api, updateUsers]);
+    },
+    [api, updateUsers]
+  );
 
   useEffect(() => {
     updateUsers();
@@ -228,7 +245,6 @@ const BackofficeUsers = (props) => {
           deleteRowFunction={desactivateUser}
         />
       </div>
-
       <Modal showModal={showModal} setShowModal={setShowModal}>
         {activeTab === userInfoTab && (
           <SpecificUserPageContent
@@ -250,11 +266,6 @@ const BackofficeUsers = (props) => {
 };
 
 BackofficeUsers.getLayout = function (page) {
-  return (
-    <Layout>
-      {page}
-    </Layout>
-  );
+  return <Layout>{page}</Layout>;
 };
-
-export default BackofficeUsers; 
+export default BackofficeUsers;

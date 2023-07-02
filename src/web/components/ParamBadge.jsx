@@ -2,7 +2,8 @@ import styles from "@/styles/components/ParamBadge.module.css";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 
 const ParamBadge = (props) => {
-  const { label, appliedQueryParams, queryKey, handleAppliedQueryParams } = props;
+  const { label, appliedQueryParams, queryKey, handleAppliedQueryParams } =
+    props;
 
   return (
     <>

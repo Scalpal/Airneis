@@ -30,43 +30,40 @@ const handler = mw({
           res.status(500).send({ error: err });
 
           return;
-        }
-
-        const productId = parseInt(req.query.productId);
+        } 
+        
+        const slug = req.query.productSlug;
 
         try {
-          const uploadedImage = await uploadImageToS3(
-            req.file,
-            "products-images/"
-          );
+          const product = await ProductModel.query().findOne({ slug });
 
-          await ProductImageModel.query()
-            .insert({
-              productId: productId,
-              imageSrc: uploadedImage.Key
-            })
-            .returning("*");
+          if (!product) {
+            res.status(404).send({ error: "Product not found" });
+
+            return;
+          }
+
+          const uploadedImage = await uploadImageToS3(req.file, "products-images/");
+
+          await ProductImageModel.query().insert({
+            productId: product.id,
+            imageSrc: uploadedImage.Key
+          }).returning("*");
 
           const updatedProduct = await ProductModel.query()
-            .findOne({ id: productId })
+            .findOne({ id: product.id })
             .withGraphFetched("category")
             .withGraphFetched("materials")
             .withGraphFetched("reviews")
             .withGraphFetched("productImages");
-
-          // Products with average rating
-          const productWithAverageRating = getProductsAverageRating([
-            updatedProduct
-          ]);
-
-          // Add signed url to all products images
-          const productWithSignedUrlImages =
-            await getProductsImagesWithSignedUrls(productWithAverageRating);
-
-          res.send({
-            image: uploadedImage.Location,
-            product: productWithSignedUrlImages[0]
-          });
+          
+            // Products with average rating
+            const productWithAverageRating = getProductsAverageRating([updatedProduct]); 
+                          
+            // Add signed url to all products images
+            const productWithSignedUrlImages = await getProductsImagesWithSignedUrls(productWithAverageRating);
+      
+          res.send({ image: uploadedImage.Location, product: productWithSignedUrlImages[0] });
         } catch (error) {
           res.status(500).send({ error: error });
         }
@@ -75,4 +72,4 @@ const handler = mw({
   ]
 });
 
-export default handler;
+export default handler; 

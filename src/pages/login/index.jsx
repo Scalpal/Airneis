@@ -103,4 +103,6 @@ const Login = () => {
 Login.getLayout = function (page) {
   return <LoginLayout>{page}</LoginLayout>;
 };
-export default Login;
+
+
+export default Login; 
