@@ -20,7 +20,7 @@ const CartProduct = (props) => {
 
   const getDisplayValue = (value) => {
     if (value === 0) {
-      return `${value} (supprimer)`;
+      return `${value} (Delete)`;
     } else if (value === 10) {
       return `${value}+`;
     } else {
@@ -61,7 +61,8 @@ const CartProduct = (props) => {
 
       <div className={styles.cartProductControls}>
         <p>{product.price * product.quantity}$</p>
-        <span className={styles.unityPrice}>({product.price}$ / unity)</span>
+
+        <span className={styles.unityPrice}>({product.price}$/each)</span>
 
         <div className={styles.cartProductSelectQuantity}>
           {product.quantity < 10 ? (
