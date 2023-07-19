@@ -24,7 +24,7 @@ const useGetProductsSWR = (queryParams) => {
 
   const config = { revalidateOnFocus: false, revalidateOnMount: true };
 
-  const { data, error, isLoading, mutate } = useSWR(`${process.env.API_URL}${routes.api.products.collection(queryString)}`, fetcher, config);
+  const { data, error, isLoading, mutate } = useSWR(routes.api.products.collection(queryString), fetcher, config);
 
   return {
     productsData: data,

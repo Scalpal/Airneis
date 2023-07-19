@@ -11,9 +11,14 @@ const fetcher = async (url) => {
       Authorization: `Bearer ${token}`
     }
   });
-  const { data } = await reqInstance.get(url); 
 
-  return data.user; 
+  try {
+    const { data } = await reqInstance.get(url); 
+
+    return data.user; 
+  } catch (err) {
+    return err;
+  }
 };
 
 export const useUser = () => {
@@ -21,7 +26,7 @@ export const useUser = () => {
     revalidateOnFocus: false
   };
 
-  const { data, error, isLoading } = useSWR(`${process.env.API_URL}${routes.api.users.self()}`,fetcher, config);
+  const { data, error, isLoading } = useSWR(routes.api.users.self(),fetcher, config);
 
   return {
     userData: data,
