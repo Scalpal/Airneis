@@ -29,8 +29,8 @@ export const getServerSideProps = async (context) => {
 
   return {
     props: {
-      prototype: "nothing",
-    },
+      prototype: "nothing"
+    }
   };
 };
 export default Backoffice;

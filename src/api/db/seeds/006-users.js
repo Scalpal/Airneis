@@ -6,76 +6,73 @@ export const seed = async (knex) => {
 
   const users = [];
   for (let i = 0; i < loop; i++) {
-    const [passwordHash, passwordSalt] = await hashPassword(
-      faker.internet.password()
-    );
+    const [passwordHash, passwordSalt] = await hashPassword(faker.internet.password());
     const user = {
       firstName: faker.person.firstName(),
       lastName: faker.person.lastName(),
       email: faker.internet.email(),
       phoneNumber: faker.phone.number(),
       passwordHash,
-      passwordSalt,
+      passwordSalt
     };
     users.push(user);
   }
-  let userIds = [];
-  await knex("users")
+  const userIds = await knex("users")
     .insert(users)
-    .returning("id")
-    .then((ids) => (userIds = ids));
-  userIds = userIds.map((user) => user.id);
+    .returning("id");
 
   const addresses = [];
   for (let i = 0; i < loop; i++) {
-    const address = {
+    const userId = userIds[i].id;
+
+    addresses.push({
       address: faker.location.streetAddress(),
       city: faker.location.city(),
       region: faker.location.state(),
       postalCode: faker.location.zipCode(),
       country: faker.location.country(),
-      userId: userIds[i],
-    };
-    addresses.push(address);
+      userId
+    });
   }
-  let addressIds = [];
-  await knex("addresses")
+  const addressIds = await knex("addresses")
     .insert(addresses)
-    .returning("id")
-    .then((ids) => (addressIds = ids));
-  addressIds = addressIds.map((address) => address.id);
+    .returning("id");
 
   const productIds = await knex("products").pluck("id");
 
   if (productIds.length !== 0) {
     const reviews = [];
     for (let i = 0; i < loop; i++) {
-      const randomStars = faker.helpers.arrayElement([1, 2, 3, 4, 5]);
-      const review = {
+      const rating = faker.helpers.arrayElement([1, 2, 3, 4, 5]);
+      const productId = productIds[i];
+      const userId = userIds[i].id;
+
+      reviews.push({
         title: faker.lorem.lines(1),
         content: faker.lorem.text(),
-        stars: randomStars,
-        productId: productIds[i],
-        userId: userIds[i],
-      };
-      reviews.push(review);
+        rating,
+        productId,
+        userId
+      });
     }
     await knex("reviews").insert(reviews);
   }
 
   const orders = [];
   for (let i = 0; i < loop; i++) {
-    const randomStatus = faker.helpers.arrayElement([
+    const status = faker.helpers.arrayElement([
       "cancelled",
       "on standby",
-      "delivered",
+      "delivered"
     ]);
-    const order = {
-      status: randomStatus,
-      deliveryAddress: addressIds[i],
-      userId: userIds[i],
-    };
-    orders.push(order);
+    const addressId = addressIds[i].id;
+    const userId = userIds[i].id;
+
+    orders.push({
+      status,
+      deliveryAddress: addressId,
+      userId
+    });
   }
   await knex("orders").insert(orders);
 };

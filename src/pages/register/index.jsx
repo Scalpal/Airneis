@@ -10,7 +10,7 @@ import {
   emailValidator,
   passwordValidator,
   phoneValidator,
-  stringValidator,
+  stringValidator
 } from "@/validator";
 import { useRouter } from "next/router";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/solid";
@@ -34,7 +34,7 @@ const validationSchema = createValidator({
   city: stringValidator,
   region: stringValidator,
   postalCode: stringValidator,
-  country: stringValidator,
+  country: stringValidator
 });
 
 const initialValues = {
@@ -47,7 +47,7 @@ const initialValues = {
   city: "",
   region: "",
   postalCode: "",
-  country: "",
+  country: ""
 };
 
 const Register = () => {
@@ -55,8 +55,8 @@ const Register = () => {
   const router = useRouter();
   const {
     services: {
-      users: { register },
-    },
+      users: { register }
+    }
   } = useAppContext();
   const [error, setError] = useState(null);
 

@@ -18,19 +18,19 @@ const orders = [
       {
         name: "Modern beechwood chair",
         price: 223,
-        stock: 25,
+        stock: 25
       },
       {
         name: "Chair",
         price: 98,
-        stock: 25,
+        stock: 25
       },
       {
         name: "Chair",
         price: 134,
-        stock: 25,
-      },
-    ],
+        stock: 25
+      }
+    ]
   },
   {
     id: 2,
@@ -40,20 +40,20 @@ const orders = [
       {
         name: "Modern beechwood chair",
         price: 223,
-        stock: 25,
+        stock: 25
       },
       {
         name: "Chair",
         price: 98,
-        stock: 25,
+        stock: 25
       },
       {
         name: "Chair",
         price: 134,
-        stock: 25,
-      },
-    ],
-  },
+        stock: 25
+      }
+    ]
+  }
 ];
 
 const BackofficeOrders = () => {
@@ -111,8 +111,8 @@ export const getServerSideProps = async (context) => {
 
   return {
     props: {
-      prototype: "nothing",
-    },
+      prototype: "nothing"
+    }
   };
 };
 export default BackofficeOrders;

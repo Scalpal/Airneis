@@ -14,7 +14,7 @@ const Cart = () => {
   const { t } = useTranslation("cart");
   const router = useRouter();
   const {
-    state: { cart },
+    state: { cart }
   } = useAppContext();
 
   const [productsList, setProductsList] = useState([]);

@@ -17,7 +17,7 @@ const DrawerMenu = (props) => {
 
   const {
     actions: { signOut },
-    state: { session },
+    state: { session }
   } = useAppContext();
 
   const { userData, userError, userIsLoading } = useUser();

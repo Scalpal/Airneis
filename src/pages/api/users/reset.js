@@ -6,7 +6,7 @@ import {
   idValidator,
   passwordValidator,
   confirmPasswordValidator,
-  stringValidator,
+  stringValidator
 } from "@/validator";
 
 const handler = mw({
@@ -16,14 +16,14 @@ const handler = mw({
         id: idValidator.required(),
         password: passwordValidator.required(),
         passwordConfirmation: confirmPasswordValidator.required(),
-        timer: stringValidator.required(),
-      },
+        timer: stringValidator.required()
+      }
     }),
     async ({
       locals: {
-        body: { id, password, passwordConfirmation, timer },
+        body: { id, password, passwordConfirmation, timer }
       },
-      res,
+      res
     }) => {
       if (password !== passwordConfirmation) {
         res.status(400).send({ error: "Password need to be conform." });
@@ -61,8 +61,8 @@ const handler = mw({
         .update({ passwordHash, passwordSalt });
 
       res.send({ success: true });
-    },
-  ],
+    }
+  ]
 });
 
 export default handler;

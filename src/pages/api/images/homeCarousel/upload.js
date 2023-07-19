@@ -14,7 +14,7 @@ export const config = {
 };
 
 const upload = multer({
-  storage: multer.memoryStorage(),
+  storage: multer.memoryStorage()
 }).single("file");
 
 const handler = mw({

@@ -11,9 +11,9 @@ class ProductMaterialRelationModel extends BaseModel {
         modelClass: MaterialModel,
         join: {
           from: "products_materials_relation.materialId",
-          to: "materials.id",
-        },
-      },
+          to: "materials.id"
+        }
+      }
     };
   }
 }

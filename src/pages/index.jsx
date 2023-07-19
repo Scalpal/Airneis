@@ -15,8 +15,8 @@ const reviews = [
   {
     review:
       "My experience with Mark is a complete sucess, from customer service, wide range of products, clean store, purchasing experience, the newsletter. Thank you.",
-    customerName: "Leona Paul",
-  },
+    customerName: "Leona Paul"
+  }
 ];
 
 export const getServerSideProps = async (context) => {

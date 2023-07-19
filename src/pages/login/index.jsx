@@ -15,12 +15,12 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 const validationSchema = createValidator({
   email: emailValidator.required(),
-  password: stringValidator.required(),
+  password: stringValidator.required()
 });
 
 const initialValues = {
   email: "",
-  password: "",
+  password: ""
 };
 
 const Login = () => {
@@ -28,8 +28,8 @@ const Login = () => {
   const router = useRouter();
   const {
     services: {
-      users: { login },
-    },
+      users: { login }
+    }
   } = useAppContext();
   const [error, setError] = useState(null);
 

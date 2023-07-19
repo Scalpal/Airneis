@@ -18,8 +18,8 @@ const MailConfirmation = () => {
   const {
     services: {
       users: { confirmAccount },
-      security: { crypt },
-    },
+      security: { crypt }
+    }
   } = useAppContext();
 
   useEffect(() => {

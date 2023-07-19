@@ -5,9 +5,9 @@ const mailResetPassword =
   async ({ email }) => {
     try {
       const {
-        data: { result },
+        data: { result }
       } = await api.get(routes.api.mails.resetPassword(), {
-        params: { email },
+        params: { email }
       });
 
       return [null, result];

@@ -10,11 +10,11 @@ import { useCallback, useState } from "react";
 import { createValidator, emailValidator } from "@/validator";
 
 const validationSchema = createValidator({
-  email: emailValidator.required(),
+  email: emailValidator.required()
 });
 
 const initialValues = {
-  email: "",
+  email: ""
 };
 
 const ResetPassword = () => {
@@ -22,8 +22,8 @@ const ResetPassword = () => {
 
   const {
     services: {
-      mails: { resetPassword },
-    },
+      mails: { resetPassword }
+    }
   } = useAppContext();
   const [error, setError] = useState(null);
 

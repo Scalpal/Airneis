@@ -1,11 +1,22 @@
-import { faker } from "@faker-js/faker";
-
 export const seed = async (knex) => {
-  const loop = 100;
+  const genericMaterials = [
+    "Wood",
+    "Metal",
+    "Glass",
+    "Leather",
+    "Fabric",
+    "Plastic",
+    "Wicker/Rattan",
+    "Upholstery",
+    "Stone/Marble",
+    "Composite materials"
+  ];
+
+  const loop = genericMaterials.length;
 
   const materials = [];
   for (let i = 0; i < loop; i++) {
-    materials.push({ name: faker.commerce.productMaterial() });
+    materials.push({ name: genericMaterials[i] });
   }
   let uniqueMaterials = materials.filter(
     (material, i, self) =>

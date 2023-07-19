@@ -46,7 +46,7 @@ const Carousel = (props) => {
                   : styles.carouselSlide
               }
               style={{
-                objectFit: "cover",
+                objectFit: "cover"
               }}
               fill
             />
@@ -58,7 +58,7 @@ const Carousel = (props) => {
           alt={"Home carousel image"}
           src={"/placeholder-image.png"}
           style={{
-            objectFit: "cover",
+            objectFit: "cover"
           }}
           fill
         />

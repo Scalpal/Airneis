@@ -5,11 +5,11 @@ const crypt =
   async (CryptoValues) => {
     try {
       const {
-        data: { CryptoKey },
+        data: { CryptoKey }
       } = await api.get(routes.api.security.crypt(), {
         params: {
-          CryptoValues: JSON.stringify(CryptoValues),
-        },
+          CryptoValues: JSON.stringify(CryptoValues)
+        }
       });
 
       return CryptoKey;

@@ -7,20 +7,20 @@ const handler = mw({
   PATCH: [
     validate({
       body: {
-        id: stringValidator.required(),
-      },
+        id: stringValidator.required()
+      }
     }),
     async ({
       locals: {
-        body: { id },
+        body: { id }
       },
-      res,
+      res
     }) => {
       const user = await UserModel.query().findOne({ id });
 
       if (!user) {
         res.status(404).send({
-          error: "We cannot activate your account, please retry later",
+          error: "We cannot activate your account, please retry later"
         });
 
         return;
@@ -29,8 +29,8 @@ const handler = mw({
       await UserModel.query().findOne({ id }).update({ active: true });
 
       res.send({ result: "Your account is validate with success" });
-    },
-  ],
+    }
+  ]
 });
 
 export default handler;

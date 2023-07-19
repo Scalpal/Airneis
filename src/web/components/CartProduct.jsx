@@ -7,7 +7,7 @@ import { useState } from "react";
 const CartProduct = (props) => {
   const { product } = props;
   const {
-    actions: { changeValuesProductFromCart, deleteProductFromCart },
+    actions: { changeValuesProductFromCart, deleteProductFromCart }
   } = useAppContext();
   const [inputValue, setInputValue] = useState(product.quantity);
 

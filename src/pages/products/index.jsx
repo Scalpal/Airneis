@@ -61,7 +61,7 @@ const Products = () => {
      if (typeof queryParams[key] === "boolean") {
       setQueryParams({
         ...queryParams,
-        [key]: !value,
+        [key]: !value
       });  
       
       return;
@@ -70,7 +70,7 @@ const Products = () => {
     if (typeof queryParams[key] === "number") {
       setQueryParams({
         ...queryParams,
-        [key]: Number.parseInt(value),
+        [key]: Number.parseInt(value)
       });
 
     return;
@@ -91,7 +91,7 @@ const Products = () => {
       [key]:
         queryParams[key].findIndex((elt) => elt.value === value) === -1 // If value not found
           ? [...queryParams[key], { name, value }]
-          : [...queryParams[key].filter((elt) => elt.value !== value)],
+          : [...queryParams[key].filter((elt) => elt.value !== value)]
     });
   }, [queryParams, setQueryParams]);
 
@@ -99,7 +99,7 @@ const Products = () => {
     if (typeof queryParams[key] === "boolean") {
       setAppliedQueryParams({
         ...queryParams,
-        [key]: !value,
+        [key]: !value
       });
       
       return;
@@ -117,7 +117,7 @@ const Products = () => {
     if (typeof queryParams[key] === "number") {
       setAppliedQueryParams({
         ...queryParams,
-        [key]: Number.parseInt(value),
+        [key]: Number.parseInt(value)
       });
       
       return;
@@ -129,7 +129,7 @@ const Products = () => {
       [key]:
         appliedQueryParams[key].findIndex((elt) => elt.value === value) === -1
           ? [...appliedQueryParams[key], { name, value }]
-          : [...appliedQueryParams[key].filter((elt) => elt.value !== value)],
+          : [...appliedQueryParams[key].filter((elt) => elt.value !== value)]
     });
   }, [appliedQueryParams, setAppliedQueryParams, queryParams]);
 

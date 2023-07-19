@@ -7,7 +7,7 @@ const signIn =
   async (values) => {
     try {
       const {
-        data: { result: jwt },
+        data: { result: jwt }
       } = await api.post(routes.api.login(), values);
 
       setSession(parseSession(jwt));
@@ -16,7 +16,7 @@ const signIn =
       // Stock the token in cookies for 30 days
       setCookie(null, "token", jwt, {
         maxAge: 30 * 24 * 60 * 60,
-        path: "/",
+        path: "/"
       });
 
       return [null, true];

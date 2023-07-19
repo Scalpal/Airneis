@@ -9,7 +9,7 @@ import {
   emailValidator,
   phoneValidator,
   stringValidator,
-  passwordValidator,
+  passwordValidator
 } from "@/validator";
 import sgMail from "@sendgrid/mail";
 import config from "@/api/config.js";
@@ -27,8 +27,8 @@ const handler = mw({
         city: stringValidator,
         region: stringValidator,
         postalCode: stringValidator,
-        country: stringValidator,
-      },
+        country: stringValidator
+      }
     }),
     async ({
       locals: {
@@ -42,10 +42,10 @@ const handler = mw({
           city,
           region,
           postalCode,
-          country,
-        },
+          country
+        }
       },
-      res,
+      res
     }) => {
       const user = await UserModel.query().findOne({ email });
 
@@ -67,7 +67,7 @@ const handler = mw({
             lastName,
             passwordHash,
             passwordSalt,
-            phoneNumber,
+            phoneNumber
           });
 
           return AddressModel.query().insert({
@@ -76,7 +76,7 @@ const handler = mw({
             region,
             postalCode,
             country,
-            userId: newUser.id,
+            userId: newUser.id
           });
         }
       );
@@ -102,8 +102,8 @@ const handler = mw({
         dynamic_template_data: {
           firstname: firstName,
           lastname: lastName,
-          url: `${config.baseURL}/mails/confirmation?codedId=${idCypted}`,
-        },
+          url: `${config.baseURL}/mails/confirmation?codedId=${idCypted}`
+        }
       };
 
       try {
@@ -112,8 +112,8 @@ const handler = mw({
       } catch (error) {
         res.status(404).send({ error: error });
       }
-    },
-  ],
+    }
+  ]
 });
 
 export default handler;

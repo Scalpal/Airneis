@@ -14,7 +14,7 @@ const handler = mw({
     checkIsAdmin(),
     validate({
       query: {
-        imageId: idValidator.required(),
+        imageId: idValidator.required()
       },
       body: {
         visible: boolValidator.required()
