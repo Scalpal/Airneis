@@ -78,8 +78,8 @@ export async function getStaticProps({ locale }) {
         "confirmationMail",
         "footer",
         "drawerMenu",
-        "navbar",
-      ])),
-    },
+        "navbar"
+      ]))
+    }
   };
 }

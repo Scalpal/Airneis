@@ -17,7 +17,7 @@ export const getServerSideProps = async (context) => {
   const { productSlug } = context.query;
 
   const {
-    data: { product },
+    data: { product }
   } = await Axios.get(
     `${process.env.API_URL}${routes.api.products.single(productSlug)}`
   );
@@ -26,7 +26,7 @@ export const getServerSideProps = async (context) => {
     product.category.id
   )}&`;
   const {
-    data: { products },
+    data: { products }
   } = await Axios.get(
     `${process.env.API_URL}${routes.api.products.collection(
       specificCategory,
@@ -44,9 +44,9 @@ export const getServerSideProps = async (context) => {
         "productPage",
         "footer",
         "drawerMenu",
-        "navbar",
-      ])),
-    },
+        "navbar"
+      ]))
+    }
   };
 };
 
@@ -56,7 +56,7 @@ const ProductPage = (props) => {
   const { product, categoryProducts } = props;
 
   const {
-    actions: { addToCart },
+    actions: { addToCart }
   } = useAppContext();
   const [limit] = useState(4);
   const [page, setPage] = useState(1);

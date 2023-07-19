@@ -49,9 +49,9 @@ export async function getStaticProps({ locale }) {
         "termsOfUse",
         "footer",
         "drawerMenu",
-        "navbar",
-      ])),
-    },
+        "navbar"
+      ]))
+    }
   };
 }
 

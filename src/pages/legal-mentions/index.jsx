@@ -29,9 +29,9 @@ export async function getStaticProps({ locale }) {
         "legalMentions",
         "footer",
         "drawerMenu",
-        "navbar",
-      ])),
-    },
+        "navbar"
+      ]))
+    }
   };
 }
 

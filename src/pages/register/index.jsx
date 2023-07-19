@@ -207,8 +207,8 @@ const Register = () => {
 export async function getStaticProps({ locale }) {
   return {
     props: {
-      ...(await serverSideTranslations(locale, ["register"])),
-    },
+      ...(await serverSideTranslations(locale, ["register"]))
+    }
   };
 }
 Register.getLayout = function (page) {

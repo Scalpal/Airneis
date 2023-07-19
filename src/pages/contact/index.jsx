@@ -27,9 +27,9 @@ export async function getStaticProps({ locale }) {
         "contact",
         "footer",
         "drawerMenu",
-        "navbar",
-      ])),
-    },
+        "navbar"
+      ]))
+    }
   };
 }
 

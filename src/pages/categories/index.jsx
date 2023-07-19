@@ -11,7 +11,7 @@ export const getServerSideProps = async (context) => {
 
   try {
     const {
-      data: { categories },
+      data: { categories }
     } = await Axios.get(
       `${process.env.API_URL}${routes.api.categories.base()}`
     );
@@ -23,9 +23,9 @@ export const getServerSideProps = async (context) => {
           "categoriesPage",
           "footer",
           "drawerMenu",
-          "navbar",
-        ])),
-      },
+          "navbar"
+        ]))
+      }
     };
   } catch (error) {
     return {
@@ -35,9 +35,9 @@ export const getServerSideProps = async (context) => {
           "categoriesPage",
           "footer",
           "drawerMenu",
-          "navbar",
-        ])),
-      },
+          "navbar"
+        ]))
+      }
     };
   }
 };

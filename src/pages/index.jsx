@@ -36,10 +36,10 @@ export const getServerSideProps = async (context) => {
   try {
     const responseCarousel = await Axios.get(carouselUrl);
     const {
-      data: { products },
+      data: { products }
     } = await Axios.get(popularProductsUrl);
     const {
-      data: { categories },
+      data: { categories }
     } = await Axios.get(categoriesUrl);
 
     return {
@@ -51,9 +51,9 @@ export const getServerSideProps = async (context) => {
           "common",
           "footer",
           "drawerMenu",
-          "navbar",
-        ])),
-      },
+          "navbar"
+        ]))
+      }
     };
   } catch (error) {
     return {
@@ -65,9 +65,9 @@ export const getServerSideProps = async (context) => {
           "common",
           "footer",
           "drawerMenu",
-          "navbar",
-        ])),
-      },
+          "navbar"
+        ]))
+      }
     };
   }
 };
