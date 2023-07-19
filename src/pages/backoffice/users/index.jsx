@@ -22,19 +22,17 @@ export const getServerSideProps = async (context) => {
   const badTokenRedirect = await checkToken(token);
   const notAdminRedirect = await checkIsAdmin(context);
 
-
   if (badTokenRedirect || notAdminRedirect) {
     return badTokenRedirect || notAdminRedirect; 
   }
   
   const reqInstance = getApiClient(context);
+  const url = process.env.API_URL + routes.api.users.collection();
 
   try {
     const {
       data: { users, count }
-    } = await reqInstance.get(
-      `${process.env.API_URL}/${routes.api.users.collection()}`
-    );
+    } = await reqInstance.get(url);
 
     return {
       props: {
@@ -72,66 +70,53 @@ const BackofficeUsers = (props) => {
     search: ""
   });
 
-  const handleQueryParams = useCallback(
-    (key, value) => {
-      setQueryParams({
-        ...queryParams,
-        [key]: value
-      });
-    },
-    [queryParams]
-  );
+  const handleQueryParams = useCallback((key, value) => {
+    setQueryParams((prevState) => ({
+      ...prevState,
+      [key]: value
+    }));
+  }, []);
 
-  const sortColumn = useCallback(
-    (column) => {
-      const notSortableKeys = ["email", "phoneNumber", "active", "isAdmin"];
+  const sortColumn = useCallback((column) => {
+    const notSortableKeys = ["email", "phoneNumber", "active", "isAdmin"];
 
-      if (notSortableKeys.includes(column)) {
-        return false;
-      }
+    if (notSortableKeys.includes(column)) {
+      return false;
+    }
 
-      // By default, when we sort a column, we set it to ASC
-      if (column !== queryParams["orderField"]) {
-        setQueryParams({
-          ...queryParams,
-          page: 1,
-          orderField: column,
-          order: "asc"
-        });
-
-        return;
-      }
-
-      setQueryParams({
-        ...queryParams,
+    // By default, when we sort a column, we set it to ASC
+    if (column !== queryParams["orderField"]) {
+      setQueryParams((prevState) => ({
+        ...prevState,
         page: 1,
         orderField: column,
-        order: queryParams["order"] === "asc" ? "desc" : "asc"
-      });
-    },
-    [queryParams]
-  );
+        order: "asc"
+      }));
 
-  const handleLimit = useCallback(
-    (value) => {
-      setQueryParams({
-        ...queryParams,
-        page: 1,
-        limit: value
-      });
-    },
-    [queryParams]
-  );
+      return;
+    }
+
+    setQueryParams((prevState) => ({
+      ...prevState,
+      page: 1,
+      orderField: column,
+      order: prevState["order"] === "asc" ? "desc" : "asc"
+    }));
+  }, [queryParams]);
+
+  const handleLimit = useCallback((value) => {
+    setQueryParams((prevState) => ({
+      ...prevState,
+      page: 1,
+      limit: value
+    }));
+  }, []);
 
   const updateUsers = useCallback(async () => {
     const reqInstance = getApiClient();
 
     try {
-      const {
-        data: { users, count }
-      } = await reqInstance.get(
-        `${process.env.API_URL}${routes.api.users.collection(queryParams)}`
-      );
+      const { data: { users, count } } = await reqInstance.get(routes.api.users.collection(queryParams));
 
       setUsers({ users, count });
     } catch (error) {
@@ -145,37 +130,31 @@ const BackofficeUsers = (props) => {
     }
   }, [queryParams]);
 
-  const showSpecificUser = useCallback(
-    (id) => {
-      const user = users.users.find((elt) => elt.id === id);
+  const showSpecificUser = useCallback((id) => {
+    const user = users.users.find((elt) => elt.id === id);
 
-      setShowModal(true);
-      setActiveTab(userInfoTab);
-      setActiveUser(user);
-    },
-    [users]
-  );
+    setShowModal(true);
+    setActiveTab(userInfoTab);
+    setActiveUser(user);
+  }, [users]);
 
-  const desactivateUser = useCallback(
-    async (userId) => {
-      try {
-        const { data } = await api.delete(routes.api.users.delete(userId));
+  const desactivateUser = useCallback(async (userId) => {
+    try {
+      const { data } = await api.delete(routes.api.users.delete(userId));
 
-        updateUsers();
+      updateUsers();
+      setShowAlert(true);
+      setAlert({ status: data.status, message: data.message });
+    } catch (error) {
+      if (error instanceof AxiosError) {
         setShowAlert(true);
-        setAlert({ status: data.status, message: data.message });
-      } catch (error) {
-        if (error instanceof AxiosError) {
-          setShowAlert(true);
-          setAlert({
-            status: error.response.status,
-            message: error.response.message
-          });
-        }
+        setAlert({
+          status: error.response.status,
+          message: error.response.message
+        });
       }
-    },
-    [api, updateUsers]
-  );
+    }
+  }, [api, updateUsers]);
 
   useEffect(() => {
     updateUsers();

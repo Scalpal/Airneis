@@ -32,9 +32,10 @@ export const getServerSideProps = async (context) => {
   }
 
   const reqInstance = getApiClient(context); 
+  const url = process.env.API_URL + routes.api.products.collection();
 
   try {
-    const { data: { products } } = await reqInstance.get(`${process.env.API_URL}${routes.api.products.collection()}`);
+    const { data: { products } } = await reqInstance.get(url);
 
     return {
       props: {

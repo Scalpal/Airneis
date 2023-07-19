@@ -16,15 +16,10 @@ Backoffice.getLayout = function (page) {
 export const getServerSideProps = async (context) => {
   const { token } = parseCookies(context);
   const badTokenRedirect = await checkToken(token);
-
-  if (badTokenRedirect) {
-    return badTokenRedirect;
-  }
-
   const notAdminRedirect = await checkIsAdmin(context);
 
-  if (notAdminRedirect) {
-    return notAdminRedirect;
+  if (badTokenRedirect || notAdminRedirect) {
+    return badTokenRedirect || notAdminRedirect;
   }
 
   return {
