@@ -1,7 +1,7 @@
 import jsonwebtoken from "jsonwebtoken";
 
 const checkToken = async (token) => {
-  if (!token) {
+  if (!token || token === "undefined") {
     return {
       redirect: {
         destination: "/",

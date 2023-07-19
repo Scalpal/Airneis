@@ -4,16 +4,17 @@ import routes from "../routes";
 
 const checkIsAdmin = async(context) => {
   const reqInstance = getApiClient(context);
+  const url = process.env.API_URL + routes.api.users.self();
 
   try {
-    const { data: { user } } = await reqInstance.get(`${process.env.API_URL}/${routes.api.users.self()}`);
+    const { data: { user } } = await reqInstance.get(url);
    
     if (!user.isAdmin) {
       return {
         redirect: {
           destination: "/",
           permanent: false
-        },
+        }
       };
     }
   } catch (error) {
@@ -22,7 +23,7 @@ const checkIsAdmin = async(context) => {
         redirect: {
           destination: "/",
           permanent: false
-        },
+        }
       };
     }
   }

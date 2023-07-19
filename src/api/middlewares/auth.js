@@ -15,11 +15,12 @@ const auth = () => {
    
     const jwt = req.headers.authorization.slice(7);
 
-    if (!jwt) {
+    if (!jwt || jwt === "undefined") {
       return res.status(401).json({ message: "No token provided" });
     }
 
     const decodedToken = jsonwebtoken.decode(jwt);
+
     const isTokenExpired = Date.now() >= decodedToken.exp * 1000;
 
     if (isTokenExpired) {
