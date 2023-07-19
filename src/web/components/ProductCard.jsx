@@ -10,7 +10,7 @@ const ProductCard = (props) => {
 
     <div
       className={styles.productCard}
-      onClick={() => router.push("/products/" + product.id)}
+      onClick={() => router.push("/products/" + product.slug)}
     >
       <div className={styles.productCardImageContainer}>
 

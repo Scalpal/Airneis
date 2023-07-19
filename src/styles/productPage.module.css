@@ -134,7 +134,12 @@
   flex-wrap: nowrap;
   padding: 0 1rem;
   gap: 1.5rem;
-  overflow-x: scroll;
+  overflow: scroll;
+}
+
+/* It modifies the product cards */
+.similarProductsContainer > div {
+  min-width: 250px;
 }
 
 .similarProductsContainer::webkit-scrollbar {
