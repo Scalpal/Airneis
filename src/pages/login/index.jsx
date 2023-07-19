@@ -33,20 +33,17 @@ const Login = () => {
   } = useAppContext();
   const [error, setError] = useState(null);
 
-  const handleSubmit = useCallback(
-    async (values) => {
-      const [err] = await login(values);
+  const handleSubmit = useCallback(async (values) => {
+    const [err] = await login(values);
 
-      if (err) {
-        setError(err[0].response.data.error);
+    if (err) {
+      setError("Erreur");
 
-        return;
-      }
+      return;
+    }
 
-      router.push(routes.home());
-    },
-    [login, router]
-  );
+    router.push(routes.home());
+  }, [login, router]);
 
   return (
     <main className={styles.container}>
@@ -113,8 +110,8 @@ const Login = () => {
 export async function getStaticProps({ locale }) {
   return {
     props: {
-      ...(await serverSideTranslations(locale, ["login"])),
-    },
+      ...(await serverSideTranslations(locale, ["login"]))
+    }
   };
 }
 

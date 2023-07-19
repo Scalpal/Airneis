@@ -1,59 +1,65 @@
+import config from "@/api/config.js";
 import UserModel from "@/api/db/models/UserModel.js";
-import auth from "@/api/middlewares/auth";
-import checkIsAdmin from "@/api/middlewares/checkIsAdmin";
 import slowDown from "@/api/middlewares/slowDown.js";
-import validate from "@/api/middlewares/validate";
+import validate from "@/api/middlewares/validate.js";
 import mw from "@/api/mw.js";
-import { limitValidator, orderFieldValidator, orderValidator, pageValidator, searchValidator } from "@/validator";
+import { emailValidator, stringValidator } from "@/validator";
+import jsonwebtoken from "jsonwebtoken";
 
 const handler = mw({
-  GET: [
+  POST: [
     slowDown(500),
-    auth(),
-    checkIsAdmin(),
     validate({
-      query: {
-        limit: limitValidator.default(10),
-        page: pageValidator,
-        orderField: orderFieldValidator(["id", "firstName", "lastName"]).default("id"),
-        order: orderValidator.default("asc"),
-        search: searchValidator
+      body: {
+        email: emailValidator.required(),
+        password: stringValidator.required()
       }
     }),
     async ({
       locals: {
-        query: { limit, page, orderField, order, search}
+        body: { email, password }
       },
       res
     }) => {
       try {
-        const searchValue = search.toLowerCase(); 
-        const query = UserModel.query();
+        const user = await UserModel.query().findOne({ email });
 
-        if (orderField) {
-          query.orderBy(orderField, order); 
+        if (!user) {
+          res.status(401).send({ error: "Wrong email or password." });
+
+          return;
         }
 
-        if (search) {
-          query
-            .whereRaw("LOWER(\"firstName\") LIKE ?", `%${searchValue}%`)
-            .orWhereRaw("LOWER(\"lastName\") LIKE ?", `%${searchValue}%`)
-            .orWhereRaw("LOWER(\"email\") LIKE ?", `%${searchValue}%`);
+        if (!user.active) {
+          res.status(401).send({ error: "Wrong email or password." });
+
+          return;
         }
 
-        const countQuery = query.clone();
-        const [{ count }] = await countQuery.clearSelect().clearOrder().count();
+        if (!(await user.checkPassword(password))) {
+          res.status(401).send({ error: "Wrong email or password." });
 
-        const users = await query.modify("paginate", limit, page)
-          .select("id", "email", "firstName", "lastName", "phoneNumber", "active", "isAdmin")
-          .withGraphFetched("address");
+          return;
+        }
+
+        const jwt = jsonwebtoken.sign(
+          {
+            payload: {
+              user: {
+                id: user.id
+              }
+            }
+          },
+          config.security.jwt.secret,
+          { expiresIn: config.security.jwt.expiresIn }
+        );
         
-        res.send({ users: users, count: count });
+        res.send({ result: jwt });
       } catch (error) {
-        res.status(500).send({ error: error }); 
+        res.status(500).send({ error: error });
       }
     }
   ]
 });
 
-export default handler; 
+export default handler;

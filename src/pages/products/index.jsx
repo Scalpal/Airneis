@@ -20,9 +20,9 @@ export async function getStaticProps({ locale }) {
         "productPage",
         "footer",
         "drawerMenu",
-        "navbar",
-      ])),
-    },
+        "navbar"
+      ]))
+    }
   };
 }
 

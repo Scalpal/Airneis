@@ -14,9 +14,9 @@ const nextConfig = {
 		remotePatterns: [
 			{
 				protocol: "https",
-				hostname:	"airneis-ecommerce-shop.s3.eu-north-1.amazonaws.com",
-			},
-		],
+				hostname:	"airneis-ecommerce-shop.s3.eu-north-1.amazonaws.com"
+			}
+		]
   },
   i18n,
   async redirects() {
@@ -25,9 +25,9 @@ const nextConfig = {
         source: "/_error",
         destination: "/",
         permanent: false
-      },
+      }
     ];
-  },
+  }
 };
 
 module.exports = nextConfig;
