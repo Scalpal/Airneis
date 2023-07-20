@@ -12,7 +12,7 @@ const uploadProductImage = async (file, productSlug) => {
       Accept: "application/json"
     }
   };
-  const url = `${process.env.API_URL}${routes.api.products.addImage(productSlug)}`;
+  const url = process.env.API_URL + routes.api.products.addImage(productSlug);
 
   try {
     const response = await reqInstance.post(url, formData, config);

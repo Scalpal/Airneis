@@ -113,7 +113,7 @@ const SpecificProductPageContent = (props) => {
         setAlert({ status: error.response.status, message: error.response.message });
       }
     }
-  }, [currentProduct.slug, refreshProducts, currentProductImages]); 
+  }, [currentProduct, refreshProducts, currentProductImages]); 
 
   const isMaterialChecked = (values, id) => {
     const productMaterialIds = values.reduce((acc, { id }) => [...acc, id], []); 

@@ -51,7 +51,7 @@ const routes = {
       materials: () => "/api/products/materials",
       reviews: (productSlug, limit, page) =>
         `/api/products/${productSlug}/reviews?limit=${limit}&page=${page}`,
-      addImage: (productId) => `/api/products/${productId}/images`,
+      addImage: (productSlug) => `/api/products/${productSlug}/images`,
       deleteImage: (productId) => `/api/products/${productId}/deleteImage`
     },
     images: {
