@@ -9,6 +9,8 @@ import Head from "next/head";
 import Axios from "axios";
 import routes from "@/web/routes";
 
+const limit = 10;
+
 export const getServerSideProps = async (context) => {
   const { categorySlug } = context.query;
 
@@ -34,9 +36,9 @@ export const getServerSideProps = async (context) => {
 const Category = (props) => {
   const { categoryProps: { category } } = props;
 
-  const { data, isLoading, isValidating, size, setSize } = useGetProducts({ categories: category.id, limit: 3 });
+  const { data, isLoading, isValidating, size, setSize } = useGetProducts({ categories: category.id, limit: limit });
   const products = data ? data.reduce((acc, { products }) => [...acc, ...products], []) : [];
-  const totalPages = data && data[0] ? Math.ceil(data[0].count / 3 ) : 0;
+  const totalPages = data && data[0] ? Math.ceil(data[0].count / limit ) : 0;
   const isEndReached = size === totalPages;
 
   const handleLoadMore = useCallback(() => {
