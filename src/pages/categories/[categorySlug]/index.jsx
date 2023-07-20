@@ -8,11 +8,13 @@ import Button from "@/web/components/Button";
 import Head from "next/head";
 import Axios from "axios";
 import routes from "@/web/routes";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 const limit = 10;
 
 export const getServerSideProps = async (context) => {
   const { categorySlug } = context.query;
+  const locale = context.locale;
 
   const url = `${process.env.API_URL}${routes.api.categories.single(categorySlug)}`;
 
@@ -21,7 +23,12 @@ export const getServerSideProps = async (context) => {
 
     return {
       props: {
-        categoryProps: data
+        categoryProps: data,
+        ...(await serverSideTranslations(locale, [
+          "footer",
+          "drawerMenu",
+          "navbar"
+        ]))
       }
     };
   } catch (error) {

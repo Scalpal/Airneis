@@ -15,6 +15,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 export const getServerSideProps = async (context) => {
   const { productSlug } = context.query;
+  const locale = context.locale;
 
   const {
     data: { product }
@@ -22,9 +23,7 @@ export const getServerSideProps = async (context) => {
     `${process.env.API_URL}${routes.api.products.single(productSlug)}`
   );
 
-  const specificCategory = `?categories=${Number.parseInt(
-    product.category.id
-  )}&`;
+  const specificCategory = `?categories=${Number.parseInt(product.category.id)}&`;
   const {
     data: { products }
   } = await Axios.get(
@@ -33,8 +32,6 @@ export const getServerSideProps = async (context) => {
       1
     )}`
   );
-
-  const locale = context.locale;
 
   return {
     props: {
