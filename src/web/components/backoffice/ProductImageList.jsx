@@ -26,7 +26,14 @@ const ProductImageList = (props) => {
     setCurrentProductImages(updatedImagesToUpload);
   }, [currentProductImages, setCurrentProductImages]);
 
-  const deleteImage = useCallback(async(imageName) => {
+  const deleteImage = useCallback(async (imageName) => {
+    if (currentProductImages.length === 1) {
+      setAlert({ status: "error", message: "A product must have at least 1 image." });
+      setShowAlert(true);
+      
+      return;
+    }
+
     const [error, { data }] = await deleteProductImage(imageName, productSlug);
 
     if (error) {
@@ -39,7 +46,7 @@ const ProductImageList = (props) => {
     setAlert({ status: data.status, message: data.message });
     setShowAlert(true);
     setCurrentProduct(data.product); 
-  }, [productSlug, setAlert, setShowAlert, setCurrentProduct]);
+  }, [productSlug, setAlert, setShowAlert, setCurrentProduct, currentProductImages]);
 
   return (
     <div className={styles.container}>

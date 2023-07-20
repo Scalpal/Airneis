@@ -52,7 +52,7 @@ const handler = mw({
 
         const updatedProduct = await ProductModel.query()
           .findOne({ id: product.id })
-          .select("id", "name", "description", "price", "stock")
+          .select("id", "name", "description", "price", "stock", "slug")
           .withGraphFetched("category")
           .withGraphFetched("materials")
           .withGraphFetched("productImages");

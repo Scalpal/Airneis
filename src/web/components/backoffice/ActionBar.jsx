@@ -5,12 +5,20 @@ import Pagination from "./Pagination";
 import { useCallback, useEffect, useState } from "react";
 import Button from "../Button";
 
-
 const ActionBar = (props) => {
-  const { label, handleLimit, dataCount, queryParams, setQueryParams, handleQueryParams, addRowFunction } = props;
+  const {
+    label,
+    handleLimit,
+    dataCount,
+    queryParams,
+    setQueryParams,
+    handleQueryParams,
+    addRowFunction,
+    additionnalSelect
+  } = props;
 
   const [searchValue, setSearchValue] = useState("");
-
+ 
   // Handle pagination
   const setPage = useCallback((value) => {
     handleQueryParams("page", value);
@@ -76,6 +84,8 @@ const ActionBar = (props) => {
           <option value={25}>25</option>
           <option value={50}>50</option>
         </Select>
+
+        {additionnalSelect}
 
         {addRowFunction && (
           <Button onClick={() => addRowFunction()}>

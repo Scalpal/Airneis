@@ -18,6 +18,8 @@ import AddProductPageContent from "@/web/components/backoffice/AddProductPageCon
 import useGetProductsSWR from "@/web/hooks/useGetProductsSWR";
 import Loader from "@/web/components/Loader";
 import Head from "next/head";
+import Select from "@/web/components/Select";
+import { useGetCategories } from "@/web/hooks/useGetCategories";
 
 const addProductTab = "add-product";
 const productInfoTab = "product-info";
@@ -72,12 +74,16 @@ const BackofficeProducts = (props) => {
     page: 1,
     order: "asc",
     orderField: "id",
-    search: ""
+    search: "",
+    categories: ""
   });
 
   const { productsData, productsError, productsIsLoading, refreshProducts } = useGetProductsSWR(queryParams);
   const products = (!productsIsLoading && !productsError) ? productsData.products : [];
   const count = (!productsIsLoading && !productsError) ? productsData.count : 0;
+
+  const { categoriesData, categoriesError, categoriesIsLoading } = useGetCategories(); 
+  const categories = (!categoriesIsLoading && !categoriesError) ? categoriesData : [];
 
   const handleQueryParams = useCallback((key, value) => {
     setQueryParams({
@@ -181,6 +187,25 @@ const BackofficeProducts = (props) => {
           setQueryParams={setQueryParams}
           handleQueryParams={handleQueryParams}
           addRowFunction={openAddProductModal}
+          additionnalSelect={
+            <Select
+              defaultValue={""}
+              onChange={(e) => handleQueryParams("categories", e.target.value)}
+            >
+              <option disabled>Categories</option>
+
+              <option value="">All</option>
+
+              {categories.map((category, index) => (
+                <option
+                  key={index}
+                  value={category.id}
+                >
+                  {category.name}
+                </option>
+              ))}
+            </Select>
+          }
         />
 
         {!productsIsLoading ? (

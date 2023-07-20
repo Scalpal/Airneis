@@ -17,7 +17,8 @@ const ProductCard = (props) => {
         <ImageWithFallback
           className={styles.productImage}
           alt={"Product image"}
-          src={typeof product.productImages[0] !== "undefined" ?  product.productImages[0].imageUrl : "/product-image-placeholder.jpg"}
+          src={(typeof product.productImages[0] !== "undefined" && product.productImages[0].imageUrl) ?
+            product.productImages[0].imageUrl : "/product-image-placeholder.jpg"}
           fallbackSrc={`/placeholder-image.png`}
           fill
         />

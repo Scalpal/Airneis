@@ -103,7 +103,7 @@ const ProductToShowList = (props) => {
                     <ImageWithFallback
                       className={styles.productImage}
                       alt={"Product image"}
-                      src={image && image.imageUrl ? image.imageUrl : `${process.env.AWS_BUCKET_URL}${image.imageSrc}`}
+                      src={(image && image.imageUrl) ? image.imageUrl : `${process.env.AWS_BUCKET_URL}${image.imageSrc}`}
                       fallbackSrc={`/placeholder-image.png`}
                       fill
                     />
