@@ -13,21 +13,21 @@ const Footer = () => {
         <div>
           <h2>Airneis</h2>
 
-          <p> Adress </p>
+          <p> {t("adress")} </p>
           <p> 23 rue de la tour, 75008 Paris </p>
         </div>
 
         <div>
           <h2>My Account </h2>
-          <Link href={routes.login()}>Login</Link>
-          <Link href={routes.register()}>Register</Link>
+          <Link href={routes.login()}>{t("login")}</Link>
+          <Link href={routes.register()}>{t("register")}</Link>
           <p>Order status</p>
         </div>
 
         <div>
           <h2>Shop</h2>
-          <Link href={routes.products.base()}>All products</Link>
-          <Link href={routes.categories.base()}>All categories</Link>
+          <Link href={routes.products.base()}>{t("allProducts")}</Link>
+          <Link href={routes.categories.base()}>{t("allCategories")}</Link>
         </div>
 
         <div>
@@ -41,7 +41,7 @@ const Footer = () => {
 
       <p className={styles.copyrightText}>
         {" "}
-        Copyright ©2022 Airneis. All Rights Reserved{" "}
+        Copyright ©2022 Airneis. {t("allRightsReserved")}{" "}
       </p>
     </footer>
   );

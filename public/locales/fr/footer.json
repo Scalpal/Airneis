@@ -1,5 +1,11 @@
 {
+  "adress": "Adresse",
+  "login": "Se connecter",
+  "register": "S'inscrire",
+  "allProducts" : "Tout les produits",
+  "allCategories": "Toute les catégories",
   "termsOfUse": "CGU",
   "legalMentions": "Mentions légales",
-  "contact": "Contact"
+  "contact": "Contact",
+  "allRightsReserved": "Tous droits reservés"
 }

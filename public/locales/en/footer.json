@@ -1,5 +1,12 @@
+
 {
+  "adress": "Adress",
+  "login": "Login",
+  "register": "Register",
+  "allProducts" : "All products",
+  "allCategories": "All categories",
   "termsOfUse": "TOU",
   "legalMentions": "Legal mentions",
-  "contact": "Contact"
+  "contact": "Contact",
+  "allRightsReserved": "All rights reserved"
 }
