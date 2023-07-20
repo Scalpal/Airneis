@@ -41,6 +41,7 @@
   height: 100%;
   object-fit: cover;
   transition-duration: 300ms;
+  transform: scale(1.2);
 }
 
 .categoriesContainer div > button {
@@ -59,6 +60,7 @@
 
   .categoriesContainer div:hover .categoriesContainerImage {
     opacity: 0.4;
+    transform: scale(1);
   }
 }
 

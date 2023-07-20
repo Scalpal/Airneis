@@ -23,11 +23,15 @@
   overflow-x: scroll;
 }
 
+.popularProductsList > div {
+  max-height: 300px;
+}
+
 /* Categories */
 .categoriesContainer {
   margin: 5rem 0;
 }
-
+ 
 .categoriesTitle {
   text-align: center;
   font-size: 2rem;
