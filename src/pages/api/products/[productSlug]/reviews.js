@@ -27,14 +27,15 @@ const handler = mw({
       try {
         const product = await ProductModel.query().findOne({ slug });
 
+        query.where("productId", product.id);
+
         const countQuery = query.clone();
         const [{ count }] = await countQuery.clearSelect().clearOrder().count();
 
         const reviews = await query.modify("paginate", limit, page)
           .select("*")
-          .where("productId", product.id)
           .withGraphFetched("user");
-
+        
         res.send({ reviews: reviews, count: Number.parseInt(count) });
       } catch (error) {
         res.status(500).send({ error: error });
