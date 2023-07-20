@@ -18,24 +18,24 @@ const Footer = () => {
         </div>
 
         <div>
-          <h2>My Account </h2>
+          <h2>{t("myAccount")} </h2>
           <Link href={routes.login()}>{t("login")}</Link>
           <Link href={routes.register()}>{t("register")}</Link>
           <p>Order status</p>
         </div>
 
         <div>
-          <h2>Shop</h2>
+          <h2>{t("shop")}</h2>
           <Link href={routes.products.base()}>{t("allProducts")}</Link>
           <Link href={routes.categories.base()}>{t("allCategories")}</Link>
         </div>
 
         <div>
-          <h2>Legal</h2>
+          <h2>{t("legal")}</h2>
           <Link href={routes.legalMentions()}>{t("legalMentions")}</Link>
           <Link href={routes.contact()}>{t("contact")}</Link>
           <Link href={routes.cgu()}>{t("termsOfUse")}</Link>
-          <p>Privacy & policy</p>
+          <p>{t("privacyAndPolicy")}</p>
         </div>
       </div>
 

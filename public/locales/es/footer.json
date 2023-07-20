@@ -1,11 +1,15 @@
 {
   "adress": "Dirección",
+  "myAccount": "Mi cuenta",
   "login": "Conectarse",
   "register": "Inscribirse",
+  "shop": "Tienda",
   "allProducts" : "Todos los productos",
   "allCategories": "Todas las categorias",
+  "legal": "Legal",
   "termsOfUse": "CGU",
   "legalMentions": "Menciones legales",
   "contact": "Contacto",
-  "allRightsReserved": "todos los derechos reservados"
+  "allRightsReserved": "todos los derechos reservados",
+  "privacyAndPolicy": "Privacidad y política"
 }
