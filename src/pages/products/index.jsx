@@ -30,6 +30,7 @@ const limit = 10;
 
 const Products = () => {
   const { t } = useTranslation(["productFilter"]);
+  
   const [queryParams, setQueryParams] = useState({
     priceMin: 0,
     priceMax: 0,

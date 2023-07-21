@@ -51,14 +51,13 @@ const routes = {
       collection: (queryString, page) => createRouteWithQueryParams(`/api/products`, queryString + (page ? `&page=${page}` : "")),
       search: (searchValue) => createRouteWithQueryParams("/api/products", `?limit=30&${searchValue.length > 0 ? `search=${searchValue}` : ""}`),
       materials: () => "/api/products/materials",
-      reviews: (productSlug, limit, page) =>
-        `/api/products/${productSlug}/reviews?limit=${limit}&page=${page}`,
+      reviews: (productSlug, limit, page) => `/api/products/${productSlug}/reviews?limit=${limit}&page=${page}`,
       addImage: (productSlug) => `/api/products/${productSlug}/images`,
       deleteImage: (productId) => `/api/products/${productId}/deleteImage`
     },
     images: {
       homeCarousel: {
-        base: (queryString) => `/api/images/homeCarousel${queryString ? queryString : ""}`,
+        base: (queryString) => createRouteWithQueryParams("/api/images/homeCarousel", queryString),
         single: (imageId) => `/api/images/homeCarousel/${imageId}`,
         upload: () => "/api/images/homeCarousel/upload"
       }

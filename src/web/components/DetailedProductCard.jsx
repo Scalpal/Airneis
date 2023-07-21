@@ -40,7 +40,7 @@ const DetailedProductCard = (props) => {
 
         <div
           className={styles.showMoreButton}
-          onClick={() => router.push(routes.products.single(product.id))}
+          onClick={() => router.push(routes.products.single(product.slug))}
         >
           <p>See more</p>
           <ArrowRightIcon className={styles.showMoreIcon} />
