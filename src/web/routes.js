@@ -40,10 +40,11 @@ const routes = {
       base: () => "/api/products",
       single: (productSlug, query) =>
         createRouteWithQueryParams(`/api/products/${productSlug}`, query),
-      collection: (queryString, page) =>
-        `/api/products${queryString ? queryString : ""}${
-          page ? `page=${page}` : ""
-        }`,
+      // collection: (queryString, page) =>
+      //   `/api/products${queryString ? queryString : ""}${
+      //     page ? `page=${page}` : ""
+      //   }`,
+      collection: (queryString, page) => createRouteWithQueryParams(`/api/products`, queryString + `&page=${page}`),
       search: (searchValue) =>
         `/api/products?limit=30&${
           searchValue.length > 0 ? `search=${searchValue}` : ""
@@ -63,11 +64,11 @@ const routes = {
       }
     },
     categories: {
-      base: (queryString) =>
-        `/api/products/categories${queryString ? queryString : ""}`,
+      // base: (queryString) =>
+        // `/api/products/categories${queryString ? queryString : ""}`,
+      base: (queryString) => createRouteWithQueryParams("/api/products/categories", queryString),
       single: (categorySlug) => `/api/products/categories/${categorySlug}`,
-      upload: (categorySlug) =>
-        `/api/products/categories/${categorySlug}/upload`,
+      upload: (categorySlug) => `/api/products/categories/${categorySlug}/upload`,
       products: (categoryId) => `/api/products?categories=${categoryId}`
     },
     mails: {
@@ -77,8 +78,7 @@ const routes = {
       resetPassword: () => "/users/reset",
       confirmAccount: () => "/users/activate",
       collection: (query) => createRouteWithQueryParams("/api/users", query),
-      single: (userId, query) =>
-        createRouteWithQueryParams(`/api/users/${userId}`, query),
+      single: (userId, query) => createRouteWithQueryParams(`/api/users/${userId}`, query),
       self: () => "/api/users/self",
       patch: (userId) => createRouteWithQueryParams(`/users/${userId}`),
       delete: (userId) => createRouteWithQueryParams(`/users/${userId}`)
