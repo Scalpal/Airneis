@@ -18,10 +18,12 @@ const ProductFilterMenu = (props) => {
     queryParams,
     setAppliedQueryParams
   } = props;
-  const { materialsData, materialsIsLoading, materialsError } =
-    useGetMaterials();
-  const { categoriesData, categoriesIsLoading, categoriesError } =
-    useGetCategories();
+
+  const { materialsData, materialsIsLoading, materialsError } = useGetMaterials();
+  const materials = (!materialsError && !materialsIsLoading) ? materialsData : [];
+  
+  const { categoriesData, categoriesIsLoading, categoriesError } = useGetCategories();
+  const categories = (!categoriesError && !categoriesIsLoading) ? categoriesData : [];
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -149,9 +151,7 @@ const ProductFilterMenu = (props) => {
           </div>
 
           <CollapseMenu title={t("categoriesTitle")}>
-            {!categoriesIsLoading &&
-              !categoriesError &&
-              categoriesData.map(({ name, id }, index) => (
+            {categories.map(({ name, id }, index) => (
                 <CheckboxItem
                   key={index}
                   name={name}
@@ -165,9 +165,7 @@ const ProductFilterMenu = (props) => {
           </CollapseMenu>
 
           <CollapseMenu title={t("materialsTitle")}>
-            {!materialsIsLoading &&
-              !materialsError &&
-              materialsData.map(({ name, id }, index) => (
+            {materials.map(({ name, id }, index) => (
                 <CheckboxItem
                   key={index}
                   name={name}
@@ -236,7 +234,7 @@ const ProductFilterMenu = (props) => {
             {t("resetButton")}
           </Button>
 
-          <Button variant="contained" onClick={handleQueryParamsFilters}>
+          <Button variant="contained" onClick={() => setAppliedQueryParams(queryParams)}>
             {t("applyButton")}
           </Button>
         </div>

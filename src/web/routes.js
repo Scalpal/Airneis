@@ -36,19 +36,20 @@ const routes = {
   api: {
     register: () => "/users/register",
     login: () => "/users/login",
+    users: {
+      resetPassword: () => "/users/reset",
+      confirmAccount: () => "/users/activate",
+      collection: (query) => createRouteWithQueryParams("/api/users", query),
+      single: (userId, query) => createRouteWithQueryParams(`/api/users/${userId}`, query),
+      self: () => "/api/users/self",
+      patch: (userId) => createRouteWithQueryParams(`/users/${userId}`),
+      delete: (userId) => createRouteWithQueryParams(`/users/${userId}`)
+    },
     products: {
       base: () => "/api/products",
-      single: (productSlug, query) =>
-        createRouteWithQueryParams(`/api/products/${productSlug}`, query),
-      // collection: (queryString, page) =>
-      //   `/api/products${queryString ? queryString : ""}${
-      //     page ? `page=${page}` : ""
-      //   }`,
-      collection: (queryString, page) => createRouteWithQueryParams(`/api/products`, queryString + `&page=${page}`),
-      search: (searchValue) =>
-        `/api/products?limit=30&${
-          searchValue.length > 0 ? `search=${searchValue}` : ""
-        }`,
+      single: (productSlug, query) => createRouteWithQueryParams(`/api/products/${productSlug}`, query),
+      collection: (queryString, page) => createRouteWithQueryParams(`/api/products`, queryString + (page ? `&page=${page}` : "")),
+      search: (searchValue) => createRouteWithQueryParams("/api/products", `?limit=30&${searchValue.length > 0 ? `search=${searchValue}` : ""}`),
       materials: () => "/api/products/materials",
       reviews: (productSlug, limit, page) =>
         `/api/products/${productSlug}/reviews?limit=${limit}&page=${page}`,
@@ -73,15 +74,6 @@ const routes = {
     },
     mails: {
       resetPassword: () => "/mail/reset"
-    },
-    users: {
-      resetPassword: () => "/users/reset",
-      confirmAccount: () => "/users/activate",
-      collection: (query) => createRouteWithQueryParams("/api/users", query),
-      single: (userId, query) => createRouteWithQueryParams(`/api/users/${userId}`, query),
-      self: () => "/api/users/self",
-      patch: (userId) => createRouteWithQueryParams(`/users/${userId}`),
-      delete: (userId) => createRouteWithQueryParams(`/users/${userId}`)
     }
   }
 };
