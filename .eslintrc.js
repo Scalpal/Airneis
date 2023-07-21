@@ -18,7 +18,7 @@ module.exports = {
   rules: {
     "comma-dangle": ["error", "never"],
     indent: "off",
-    "linebreak-style": ["error", "windows"],
+    "linebreak-style": ["error", "unix"],
     quotes: [
       "error",
       "double",
