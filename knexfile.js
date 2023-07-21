@@ -11,15 +11,15 @@ const knexfile = {
     user: process.env.PGUSER,
     password: process.env.PGPASSWORD,
     database: process.env.PGDATABASE,
-    ssl: { rejectUnauthorized: false },
+    ssl: { rejectUnauthorized: false }
   },
   migrations: {
     directory: resolve("src/api/db/migrations"),
-    stub: resolve("src/api/db/migration.stub"),
+    stub: resolve("src/api/db/migration.stub")
   },
   seeds: {
-    directory: resolve("src/api/db/seeds"),
-  },
+    directory: resolve("src/api/db/seeds")
+  }
 };
 
 module.exports = knexfile;
