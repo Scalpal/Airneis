@@ -11,7 +11,7 @@ const fetcher = async (url) => {
 };
 
 export const useGetMaterials = () => {
-  const { data, error, isLoading } = useSWR(`${process.env.API_URL}${routes.api.products.materials()}`, fetcher, { revalidateOnFocus: false });
+  const { data, error, isLoading } = useSWR(process.env.API_URL + routes.api.products.materials(), fetcher, { revalidateOnFocus: false });
 
   return {
     materialsData: data,

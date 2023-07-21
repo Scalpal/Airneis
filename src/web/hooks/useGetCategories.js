@@ -14,9 +14,7 @@ const fetcher = async (url) => {
 export const useGetCategories = (queryParams) => {
   const queryString = createQueryString(queryParams ? queryParams : {});
 
-  const url = `${process.env.API_URL}${routes.api.categories.base(
-    queryString
-  )}`;
+  const url = process.env.API_URL + routes.api.categories.base(queryString);
   const config = { revalidateOnFocus: false };
 
   const { data, error, isLoading, mutate } = useSWR(url, fetcher, config);
