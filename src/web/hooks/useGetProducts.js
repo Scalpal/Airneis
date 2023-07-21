@@ -9,7 +9,7 @@ const getKey = (pageIndex, previousPageData, queryParams) => {
   // Reached the end 
   if (previousPageData && !previousPageData.products.length) { return null; }
     
-  return process.env.API_URL + routes.api.products.collection(queryString, pageIndex + 1)
+  return routes.api.products.collection(queryString, pageIndex + 1)
     ;
 };
 
@@ -20,9 +20,7 @@ const fetcher = async(url) => {
     const { data: { products, count } } = await reqInstance.get(url);
 
     return { products, count }; 
-  } catch (error) {
-    console.log(error);
-    
+  } catch (error) {    
     return { products: [], count: 0 };
   }
 };

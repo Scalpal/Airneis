@@ -28,7 +28,7 @@ module.exports = {
       }
     ],
     semi: [1, "always"],
-    // "no-console": "error",
+    "no-console": "error",
     "no-implicit-globals": "error",
     "no-warning-comments": ["error", {
       terms: ["fixme", "todo"]

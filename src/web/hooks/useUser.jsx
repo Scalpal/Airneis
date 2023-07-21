@@ -22,11 +22,12 @@ const fetcher = async (url) => {
 };
 
 export const useUser = () => {
+  const url = routes.api.users.self();
   const config = {
     revalidateOnFocus: false
   };
 
-  const { data, error, isLoading } = useSWR(routes.api.users.self(),fetcher, config);
+  const { data, error, isLoading } = useSWR(url, fetcher, config);
 
   return {
     userData: data,

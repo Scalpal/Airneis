@@ -12,8 +12,6 @@ const fetcher = async (url) => {
       count
     };
   } catch (error) {
-    console.log(error);
-
     return {
       products: [],
       count: 0
@@ -24,9 +22,10 @@ const fetcher = async (url) => {
 const useGetProductsSWR = (queryParams) => {
   const queryString = createQueryString(queryParams); 
 
+  const url = routes.api.products.collection(queryString);
   const config = { revalidateOnFocus: false, revalidateOnMount: true };
 
-  const { data, error, isLoading, mutate } = useSWR(routes.api.products.collection(queryString), fetcher, config);
+  const { data, error, isLoading, mutate } = useSWR(url, fetcher, config);
 
   return {
     productsData: data,

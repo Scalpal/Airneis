@@ -13,7 +13,9 @@ const fetcher = async (url) => {
 };
 
 const useSearchProducts = (searchValue) => {
-  const { data, isLoading } = useSWR(process.env.API_URL + routes.api.products.search(searchValue), fetcher);
+  const url = routes.api.products.search(searchValue);
+
+  const { data, isLoading } = useSWR(url, fetcher);
 
   return {
     searchData: data,

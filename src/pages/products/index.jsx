@@ -57,10 +57,6 @@ const Products = () => {
   const totalPages = data && data[0] ? Math.ceil(data[0].count / limit ) : 0;
   const isEndReached = size === totalPages;
 
-  if (error) {
-    console.log(error);
-  }
-
   const handleQueryParamsFilters = useCallback((key, value, name) => {
      if (typeof queryParams[key] === "boolean") {
       setQueryParams({

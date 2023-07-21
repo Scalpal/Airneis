@@ -24,11 +24,7 @@ const ProductFilterMenu = (props) => {
   
   const { categoriesData, categoriesIsLoading, categoriesError } = useGetCategories();
   const categories = (!categoriesError && !categoriesIsLoading) ? categoriesData : [];
-
-  if (categoriesError) {
-    console.log(categoriesError);
-  }
-
+  
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {

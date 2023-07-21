@@ -16,7 +16,7 @@ const fetcher = async (url) => {
 const useGetHomeCarouselImage = (queryParams) => {
   const queryString = createQueryString(queryParams ? queryParams : {});
 
-  const url = process.env.API_URL + routes.api.images.homeCarousel.base(queryString);
+  const url = routes.api.images.homeCarousel.base(queryString);
   const config = {
     revalidateOnFocus: false
   };
