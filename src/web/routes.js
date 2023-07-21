@@ -58,15 +58,12 @@ const routes = {
     },
     images: {
       homeCarousel: {
-        base: (queryString) =>
-          `/api/images/homeCarousel${queryString ? queryString : ""}`,
+        base: (queryString) => `/api/images/homeCarousel${queryString ? queryString : ""}`,
         single: (imageId) => `/api/images/homeCarousel/${imageId}`,
         upload: () => "/api/images/homeCarousel/upload"
       }
     },
     categories: {
-      // base: (queryString) =>
-        // `/api/products/categories${queryString ? queryString : ""}`,
       base: (queryString) => createRouteWithQueryParams("/api/products/categories", queryString),
       single: (categorySlug) => `/api/products/categories/${categorySlug}`,
       upload: (categorySlug) => `/api/products/categories/${categorySlug}/upload`,
