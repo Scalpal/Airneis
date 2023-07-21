@@ -25,6 +25,10 @@ const ProductFilterMenu = (props) => {
   const { categoriesData, categoriesIsLoading, categoriesError } = useGetCategories();
   const categories = (!categoriesError && !categoriesIsLoading) ? categoriesData : [];
 
+  if (categoriesError) {
+    console.log(categoriesError);
+  }
+
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -234,7 +238,10 @@ const ProductFilterMenu = (props) => {
             {t("resetButton")}
           </Button>
 
-          <Button variant="contained" onClick={() => setAppliedQueryParams(queryParams)}>
+          <Button
+            variant="contained"
+            onClick={() => setAppliedQueryParams(queryParams)}
+          >
             {t("applyButton")}
           </Button>
         </div>
