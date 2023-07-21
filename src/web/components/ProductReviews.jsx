@@ -13,10 +13,6 @@ const ProductReviews = (props) => {
   const { productReviewsData, productReviewsError, productReviewsLoading} = useGetProductReviews(routes.api.products.reviews(productSlug, limit, page));
   const reviews = (!productReviewsLoading && !productReviewsError) ? productReviewsData.reviews : [];
 
-  console.log(reviews);
-
-  if (!productReviewsLoading) console.log(productReviewsData);
-
   // Handle pagination
   const setToPage = useCallback((value) => {
     setPage(value);
