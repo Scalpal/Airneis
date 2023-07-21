@@ -12,6 +12,8 @@ const fetcher = async (url) => {
       count
     };
   } catch (error) {
+    console.log(error);
+
     return {
       products: [],
       count: 0

@@ -6,9 +6,15 @@ import { createQueryString } from "../services/createQueryString";
 const fetcher = async (url) => {
   const reqInstance = getApiClient();
 
-  const { data } = await reqInstance.get(url);
+  try {
+    const { data } = await reqInstance.get(url);
 
-  return data.categories;
+    return data.categories;
+  } catch (error) {
+    console.log(error);
+    
+    return [];
+  }
 };
 
 export const useGetCategories = (queryParams) => {
