@@ -1,5 +1,5 @@
 export const createQueryString = (queryParams) => {
-    let queryString = "?";
+    let queryString = "";
 
     Object.entries(queryParams).map(([key, value]) => {
       if (Array.isArray(value)) {
