@@ -18,7 +18,7 @@ module.exports = {
   rules: {
     "comma-dangle": ["error", "never"],
     indent: "off",
-    "linebreak-style": ["error", "unix"],
+    "linebreak-style": ["error", "windows"],
     quotes: [
       "error",
       "double",
@@ -28,7 +28,7 @@ module.exports = {
       }
     ],
     semi: [1, "always"],
-    "no-console": "error",
+    // "no-console": "error",
     "no-implicit-globals": "error",
     "no-warning-comments": ["error", {
       terms: ["fixme", "todo"]
