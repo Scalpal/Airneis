@@ -9,7 +9,7 @@ import { useTranslation } from "next-i18next";
 import routes from "../routes";
 
 const Navbar = (props) => {
-  const { t } = useTranslation(["navbar"]);
+  const { t } = useTranslation("navbar");
   const { fixed, isDrawerToggledState } = props;
 
   const [isDrawerToggled, setIsDrawerToggled] = isDrawerToggledState; 
@@ -42,7 +42,7 @@ const Navbar = (props) => {
       id="navbar"
     >
       <Link href="/" className={classnames("navbarLogo", styles.navbarLogo)}>
-        {t("airneis")}
+        Airneis
       </Link>
 
       <ul className={classnames(styles.navbarList, styles.midLinks)}>

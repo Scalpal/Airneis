@@ -73,7 +73,7 @@ export const getServerSideProps = async (context) => {
 };
 
 const Home = (props) => {
-  const { t } = useTranslation(["common"]);
+  const { t } = useTranslation("common");
   const { carouselImages, popularProducts, categories } = props;
 
   return (
