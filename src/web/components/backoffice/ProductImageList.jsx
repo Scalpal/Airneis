@@ -73,7 +73,7 @@ const ProductImageList = (props) => {
           id={"productImageInput"}
           text={"Add a product image"}
           disabled={!editMode}
-          onChangeEvent={(e) => setCurrentProductImages([...currentProductImages, e.target.files[0]])}
+          onChangeEvent={(e) => setCurrentProductImages([...currentProductImages, ...e.target.files])}
         />
       </div>
 

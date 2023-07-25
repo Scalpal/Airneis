@@ -21,7 +21,7 @@ const DetailedProductCard = (props) => {
         onClick={() => router.push(routes.products.single(product.slug))}
       >
         <ImageWithFallback
-          className={styles.image}
+          className={styles.productCardImage}
           alt={"Product image"}
           src={product.productImages[0].imageUrl ? product.productImages[0].imageUrl : `${process.env.AWS_BUCKET_URL}${product.productImages[0].imageSrc}`}
           fallbackSrc={`/placeholder-image.png`}

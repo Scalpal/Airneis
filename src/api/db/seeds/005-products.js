@@ -35,15 +35,15 @@ export const seed = async (knex) => {
     .returning("id");
 
   // Add product images
-  const productsImages = [];
-  for (let i = 0; i < loop; i++) {
-    const productId = productIds[i].id; 
-    productsImages.push({
-      imageSrc: "/meuble-2.jpeg",
-      productId
-    });
-  }
-  await knex("products_images").insert(productsImages);
+  // const productsImages = [];
+  // for (let i = 0; i < loop; i++) {
+  //   const productId = productIds[i].id; 
+  //   productsImages.push({
+  //     imageSrc: "/meuble-2.jpeg",
+  //     productId
+  //   });
+  // }
+  // await knex("products_images").insert(productsImages);
 
   // Add relation between products and their materials
   const productsMaterialsRelation = [];

@@ -14,6 +14,7 @@ const ImageInput = (props) => {
         id={id}
         disabled={disabled}
         onChange={onChangeEvent}
+        multiple
       />
 
       <label
