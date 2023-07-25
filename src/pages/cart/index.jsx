@@ -118,7 +118,9 @@ export async function getStaticProps({ locale }) {
         "cart",
         "footer",
         "navbar",
-        "drawerMenu"
+        "drawerMenu",
+        "productSearchBar",
+        "searchProductOverlay"
       ]))
     }
   };

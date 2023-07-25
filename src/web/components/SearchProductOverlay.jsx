@@ -3,10 +3,12 @@ import styles from "@/styles/components/SearchProductOverlay.module.css";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import ProductSearchBar from "./ProductSearchBar";
 import { XMarkIcon } from "@heroicons/react/24/solid";
+import { useTranslation } from "next-i18next";
 
 
 
 const SearchProductOverlay = () => {
+  const { t } = useTranslation("searchProductOverlay");
   const [isOpened, setIsOpened] = useState(false);
 
   const closeOverlay = useCallback(() => {
@@ -58,7 +60,7 @@ const SearchProductOverlay = () => {
           </button>
 
           <div className={styles.contentWrapper}>
-            <p className={styles.title}>What are you looking for ?</p>
+            <p className={styles.title}>{t("whatAreYouLookingFor")}</p>
 
             <ProductSearchBar
               id={"searchInput"}

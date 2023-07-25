@@ -27,6 +27,8 @@ export const getServerSideProps = async (context) => {
         ...(await serverSideTranslations(locale, [
           "footer",
           "drawerMenu",
+          "productSearchBar",
+          "searchProductOverlay",
           "navbar"
         ]))
       }

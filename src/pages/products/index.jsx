@@ -20,6 +20,8 @@ export async function getStaticProps({ locale }) {
         "productPage",
         "footer",
         "drawerMenu",
+        "productSearchBar",
+        "searchProductOverlay",
         "navbar"
       ]))
     }

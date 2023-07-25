@@ -41,6 +41,8 @@ export const getServerSideProps = async (context) => {
         "productPage",
         "footer",
         "drawerMenu",
+        "productSearchBar",
+        "searchProductOverlay",
         "navbar"
       ]))
     }

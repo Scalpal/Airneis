@@ -7,6 +7,7 @@ import routes from "../routes";
 import Link from "next/link";
 import Loader from "./Loader";
 import CustomSearchBar from "./CustomSearchBar";
+import { useTranslation } from "next-i18next";
 
 const ProductSearchBar = (props) => {
   const {
@@ -16,6 +17,7 @@ const ProductSearchBar = (props) => {
     closeOverlay
   } = props;
 
+  const { t } = useTranslation("productSearchBar");
   const [inputFocused, setInputFocused] = useState(false);
   const [searchValue, setSearchValue] = useState("");
 
@@ -52,7 +54,7 @@ const ProductSearchBar = (props) => {
       >
         <p className={styles.suggestionsTitle}>
           {searchValue.length === 0 ?
-            "Suggested searches" : "Matching results"}
+            t("suggestedSearches") : t("matchingResults")}
         </p>
 
         {!searchLoading ? (products

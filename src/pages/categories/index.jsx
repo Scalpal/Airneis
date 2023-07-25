@@ -23,6 +23,8 @@ export const getServerSideProps = async (context) => {
           "categoriesPage",
           "footer",
           "drawerMenu",
+          "productSearchBar",
+          "searchProductOverlay",
           "navbar"
         ]))
       }
@@ -35,6 +37,8 @@ export const getServerSideProps = async (context) => {
           "categoriesPage",
           "footer",
           "drawerMenu",
+          "productSearchBar",
+          "searchProductOverlay",
           "navbar"
         ]))
       }
